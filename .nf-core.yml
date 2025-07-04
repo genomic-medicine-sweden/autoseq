@@ -1,0 +1,16 @@
+repository_type: pipeline
+
+nf_core_version: 3.3.1
+
+lint: {}
+
+template:
+  org: nf-core
+  name: autoseq
+  description: This Pipeline analyses the targeted panel sequencing data from liquid
+    biopsy samples with more accuracy
+  author: Sarath Murugan
+  version: 1.0.0dev
+  force: true
+  outdir: .
+  is_nfcore: true
