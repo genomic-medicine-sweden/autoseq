@@ -5,6 +5,7 @@
 */
 include { FASTQC                 } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
+include { FASTP                 } from '../modules/nf-core/fastp/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -32,6 +33,20 @@ workflow AUTOSEQ {
     )
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+
+    //
+    // MODULE: Run FastP
+    //
+    FASTP (
+        ch_samplesheet,
+        [], // adapter_fasta: not used in this pipeline
+        params.discard_trimmed_pass,
+        params.save_trimmed_fail,
+        params.save_merged
+    )
+    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.html.collect{it[0]})
+    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it[0]})
+    ch_versions = ch_versions.mix(FASTP.out.versions.first())
 
     //
     // Collate and save software versions
