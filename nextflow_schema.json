@@ -1,10 +1,10 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "https://raw.githubusercontent.com/nf-core/autoseq/main/nextflow_schema.json",
     "title": "nf-core/autoseq pipeline parameters",
     "description": "This Pipeline analyses the targeted panel sequencing data from liquid biopsy samples with more accuracy",
     "type": "object",
-    "$defs": {
+    "definitions": {
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -79,6 +79,100 @@
                     "fa_icon": "fas fa-ban",
                     "hidden": true,
                     "default": "s3://ngi-igenomes/igenomes/"
+                },
+                "ref_genomes_base": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "The base path to the HMF genome reference files",
+                    "fa_icon": "fas fa-ban"
+                },
+                "ref_genome_fasta": {
+                    "type": "string",
+                    "description": "Path to reference genome FASTA.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "ref_genome_fai": {
+                    "type": "string",
+                    "description": "Path to reference genome FAI.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "ref_genome_dict": {
+                    "type": "string",
+                    "description": "Path to reference genome dict.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "bwamem2_index": {
+                    "type": "string",
+                    "description": "Path to reference genome bwa-mem2 index.",
+                    "fa_icon": "far fa-file-code"
+                }
+            }
+        },
+        "other_options": {
+            "title": "Other options",
+            "type": "object",
+            "fa_icon": "fas fa-book",
+            "description": "Other options specific to this pipeline.",
+            "properties": {
+                "trim_fastq": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable FASTQ trimming",
+                    "help_text": "When enabled, performs quality and adapter trimming on input FASTQ files"
+                },
+                "discard_trimmed_pass": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Discard reads that pass trimming filters",
+                    "help_text": "When true, discards reads that successfully pass all trimming criteria"
+                },
+                "save_trimmed_fail": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Save reads that fail trimming filters",
+                    "help_text": "When true, saves reads that fail trimming quality filters to separate files"
+                },
+                "save_merged": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Save merged read pairs",
+                    "help_text": "When true, saves successfully merged paired-end reads to output files"
+                },
+                "umi_structure": {
+                    "type": "string",
+                    "default": "3M2S+T 3M2S+T",
+                    "description": "UMI structure pattern for read processing",
+                    "help_text": "Defines the UMI structure pattern. Format: 3M2S+T 3M2S+T where M=molecular barcode, S=spacer, T=template, + indicates read break",
+                    "pattern": "^[0-9MSTX+\\s]+$"
+                },
+                "duplex": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable duplex UMI processing",
+                    "help_text": "When enabled, processes UMIs in duplex mode for improved accuracy"
+                },
+                "min_reads": {
+                    "type": "string",
+                    "default": "1 1 0",
+                    "description": "Minimum number of reads required",
+                    "help_text": "Space-separated values specifying minimum read counts for different processing stages",
+                    "pattern": "^[0-9\\s]+$"
+                },
+                "min_baseq": {
+                    "type": "integer",
+                    "default": 30,
+                    "description": "Minimum base quality score",
+                    "help_text": "Minimum Phred quality score required for bases to be considered high quality",
+                    "minimum": 0,
+                    "maximum": 50
+                },
+                "max_base_error_rate": {
+                    "type": "number",
+                    "default": 0,
+                    "description": "Maximum base error rate allowed",
+                    "help_text": "Maximum allowable error rate for bases (0.0 = no errors allowed, 1.0 = all errors allowed)",
+                    "minimum": 0,
+                    "maximum": 1
                 }
             }
         },
@@ -230,16 +324,19 @@
     },
     "allOf": [
         {
-            "$ref": "#/$defs/input_output_options"
+            "$ref": "#/definitions/input_output_options"
         },
         {
-            "$ref": "#/$defs/reference_genome_options"
+            "$ref": "#/definitions/reference_genome_options"
         },
         {
-            "$ref": "#/$defs/institutional_config_options"
+            "$ref": "#/definitions/other_options"
         },
         {
-            "$ref": "#/$defs/generic_options"
+            "$ref": "#/definitions/institutional_config_options"
+        },
+        {
+            "$ref": "#/definitions/generic_options"
         }
     ]
 }
