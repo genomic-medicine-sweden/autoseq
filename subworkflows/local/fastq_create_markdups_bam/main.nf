@@ -28,13 +28,6 @@ workflow ALIGNMENT {
             return [meta, reads[0], reads[1]]
         }
 
-        
-    // BWAMEM2_ALIGN (
-    //     ch_fastq_reads,
-    //     ch_genome_fasta,
-    //     ch_bwamem2_index
-    // )
-
     BWAMEM2_MEM(
         ch_fastq_reads,
         ch_bwamem2_index,

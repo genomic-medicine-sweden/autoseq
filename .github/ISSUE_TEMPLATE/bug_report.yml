@@ -9,6 +9,7 @@ body:
 
         - [nf-core website: troubleshooting](https://nf-co.re/usage/troubleshooting)
         - [nf-core/autoseq pipeline documentation](https://nf-co.re/autoseq/usage)
+
   - type: textarea
     id: description
     attributes:

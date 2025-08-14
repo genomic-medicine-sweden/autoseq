@@ -13,7 +13,7 @@ include { FASTQC      } from '../modules/nf-core/fastqc/main'
 include { MULTIQC     } from '../modules/nf-core/multiqc/main'
 include { FASTP       }  from '../modules/nf-core/fastp/main'
 
-include { ALIGNMENT                                           } from '../subworkflows/local/fastq_alignment/main.nf'
+include { ALIGNMENT                                           } from '../subworkflows/local/fastq_create_markdups_bam/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
 
 /*
