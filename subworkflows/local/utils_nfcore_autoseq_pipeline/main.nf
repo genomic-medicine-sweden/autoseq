@@ -77,8 +77,11 @@ workflow PIPELINE_INITIALISATION {
         .map {
             meta, fastq_1, fastq_2, bam ->
             if (meta.lane && fastq_2 && !bam) {
-                meta = meta + [id: "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()]
-                meta = meta + [datatype: 'fastq']
+                meta = meta + [
+                    id: "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString(),
+                    datatype: 'fastq',
+                    single_end: false
+                ]
                 def readgroup = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
 
                 return [ meta, [ fastq_1, fastq_2 ] ]

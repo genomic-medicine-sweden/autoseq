@@ -23,7 +23,11 @@ workflow ALIGNMENT {
 
     ch_fastq_reads = ch_input_reads
         .map { meta, reads ->
-            meta  = meta + [read_group: "${meta.case_id}.${meta.sample_name}.${meta.lane}".toString(), split: null]
+            meta  = meta + [
+                id         : "${meta.case_id}_${meta.sample_name}.${meta.lane}".toString(),   
+                read_group : "${meta.case_id}.${meta.sample_name}.${meta.lane}".toString(), 
+                split      : null
+            ]
 
             return [meta, reads[0], reads[1]]
         }

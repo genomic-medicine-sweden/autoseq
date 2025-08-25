@@ -20,17 +20,21 @@
 
 ## Introduction
 
-**nf-core/autoseq** is a bioinformatics pipeline that ...
-
-<!-- TODO nf-core:
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
+**nf-core/autoseq** is a Nextflow pipeline designed for deep targeted resequencing and whole-exome data. It automates essential steps from quality control to variant calling. The pipeline annotates variants using VeP! and applies sophisticated semantic filters to eliminate irrelevant and non-significant calls. The final output is optimized for manual curation in tools like IGV and can be exported as a text, HTML, or PDF report.
 
 <!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/guidelines/graphic_design/workflow_diagrams#examples for examples.   -->
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+
+1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
+2. Adapter trimming ([`FastP`](https://github.com/OpenGene/fastp))
+3. Alignment to reference genome ([`BWAMEM2`]())
+4. Post-alignment QC ([`Picard`](https://broadinstitute.github.io/picard/))
+4. Somatic Variant Calling ([`GATK Mutect2`](), [`SAGE`]())
+5. Germline Variant Calling ([`GATK HaplotypeCaller`](), )
+6. Structural Variant Calling ([`GRIDSS`]())
+7. Copy Number Variant Calling ([`Jumble`]())
+8. Annotation of variants ([`VEP`](https://www.ensembl.org/info/docs/tools/vep/index.html))
+9. Summary of QC metrics ([`MultiQC`](http://multiqc.info/))
 
 ## Usage
 

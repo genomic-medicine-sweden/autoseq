@@ -3,18 +3,20 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { paramsSummaryMap       } from 'plugin/nf-schema'
-include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_autoseq_pipeline'
+include { paramsSummaryMap                                    } from 'plugin/nf-schema'
+include { paramsSummaryMultiqc                                } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML                              } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText                              } from '../subworkflows/local/utils_nfcore_autoseq_pipeline'
 
 
-include { FASTQC      } from '../modules/nf-core/fastqc/main'
-include { MULTIQC     } from '../modules/nf-core/multiqc/main'
-include { FASTP       }  from '../modules/nf-core/fastp/main'
+include { FASTQC                                              } from '../modules/nf-core/fastqc/main'
+include { MULTIQC                                             } from '../modules/nf-core/multiqc/main'
+include { FASTP                                               }  from '../modules/nf-core/fastp/main'
+include { CAT_FASTQ                                           } from '../modules/nf-core/cat/fastq/main'
 
 include { ALIGNMENT                                           } from '../subworkflows/local/fastq_create_markdups_bam/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
+include { BAM_QC_PICARD_SAMTOOLS                              } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -69,8 +71,27 @@ workflow AUTOSEQ {
 
     if (params.umi_structure) {
         
+        ch_input_reads
+            .map { meta, reads ->
+                def id = "${meta.case_id}.${meta.sample_name}".toString()
+                meta   = meta + [id: id]
+                return [meta.sample_name, [meta , reads]]
+            }
+            .groupTuple()
+            .map { sample_name, grouped_reads ->
+                def metas = grouped_reads.collect{it[0]}
+                def files = grouped_reads.collect{it[1]}.flatten()
+                return [metas[0], files]
+            }
+            .set { ch_input_reads }
+        
+        CAT_FASTQ (
+            ch_input_reads
+        )
+
+        
         UMI_PROCESSING(
-            ch_input_reads,
+            CAT_FASTQ.out.reads,
             ch_genome_fasta,
             ch_bwamem2_index,
             ch_dict,
@@ -98,7 +119,8 @@ workflow AUTOSEQ {
         ch_aligned_bam = ALIGNMENT.out.mapped_bam
     }
 
-    // ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.metrics.collect{it[1]})
+    
+
 
     //
     // Collate and save software versions
