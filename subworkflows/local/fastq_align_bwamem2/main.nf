@@ -20,30 +20,31 @@ workflow ALIGNMENT {
     //
     // MODULE: Run BWA-MEM2 alignment
     //
-
-    ch_fastq_reads = ch_input_reads
+    
+    ch_input_fastqs = ch_input_reads
         .map { meta, reads ->
             meta  = meta + [
-                id         : "${meta.case_id}_${meta.sample_name}.${meta.lane}".toString(),   
+                id         : "${meta.sample_name}.${meta.lane}".toString(),   
                 read_group : "${meta.case_id}.${meta.sample_name}.${meta.lane}".toString(), 
                 split      : null
             ]
 
-            return [meta, reads[0], reads[1]]
+            tuple(meta, reads)
         }
 
+    sort_bam = true
     BWAMEM2_MEM(
-        ch_fastq_reads,
+        ch_input_fastqs,
         ch_bwamem2_index,
         ch_genome_fasta,
-        true // sort_bam
+        sort_bam
     )
 
     ch_versions = ch_versions.mix(BWAMEM2_MEM.out.versions.first())
 
 
     ch_input_bam = BWAMEM2_MEM.out.bam
-        .map { meta, bam, bai ->
+        .map { meta, bam ->
             def id = "${meta.case_id}_${meta.sample_name}".toString()
             tuple(id, bam)
         }
@@ -51,7 +52,7 @@ workflow ALIGNMENT {
 
 
     ch_bam_meta = BWAMEM2_MEM.out.bam
-        .map { meta, bam, bai ->
+        .map { meta, bam ->
             def id = "${meta.case_id}_${meta.sample_name}".toString()
             tuple(id, meta.case_id, meta.sample_name, meta.sample_type)
         }
@@ -73,6 +74,7 @@ workflow ALIGNMENT {
             tuple(meta, bam)
         }
 
+
     MARKDUPLICATES (
         ch_input_bam,
         ch_genome_fasta.collect{it[1]},
@@ -83,7 +85,7 @@ workflow ALIGNMENT {
 
 
     emit:
-    bam        = MARKDUPLICATES.out.bam
-    metrics    = MARKDUPLICATES.out.metrics
-    versions   = ch_versions            // channel: versions.yml
+    dedup_bam        = MARKDUPLICATES.out.bam
+    dedup_metrics    = MARKDUPLICATES.out.metrics
+    versions         = ch_versions            // channel: versions.yml
 }

@@ -14,7 +14,7 @@ include { MULTIQC                                             } from '../modules
 include { FASTP                                               }  from '../modules/nf-core/fastp/main'
 include { CAT_FASTQ                                           } from '../modules/nf-core/cat/fastq/main'
 
-include { ALIGNMENT                                           } from '../subworkflows/local/fastq_create_markdups_bam/main.nf'
+include { ALIGNMENT                                           } from '../subworkflows/local/fastq_align_bwamem2/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
 include { BAM_QC_PICARD_SAMTOOLS                              } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
 
@@ -116,10 +116,11 @@ workflow AUTOSEQ {
         )
 
         ch_versions = ch_versions.mix(ALIGNMENT.out.versions.first())
-        ch_aligned_bam = ALIGNMENT.out.mapped_bam
+        ch_aligned_bam = ALIGNMENT.out.dedup_bam
     }
 
     
+
 
 
     //

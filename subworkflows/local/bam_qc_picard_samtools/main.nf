@@ -9,7 +9,8 @@ workflow BAM_QC_PICARD_SAMTOOLS {
     ch_input_bam // channel: input BAM files from alignment workflow
     ch_genome_fasta
     ch_genome_fai
-    
+    ch_genome_dict
+
     main:
 
     ch_versions = Channel.empty()
@@ -21,7 +22,7 @@ workflow BAM_QC_PICARD_SAMTOOLS {
     PICARD_COLLECTMULTIPLEMETRICS(
         ch_input_bam,
         ch_genome_fasta,
-        ch_bam_meta
+        ch_genome_fai
     )
 
     ch_versions = ch_versions.mix(PICARD_COLLECTMULTIPLEMETRICS.out.versions.first())
@@ -33,19 +34,18 @@ workflow BAM_QC_PICARD_SAMTOOLS {
     PICARD_COLLECTHSMETRICS(
         ch_input_bam,
         ch_genome_fasta,
-        ch_bam_meta
+        ch_genome_fai,
+        ch_genome_dict
     )
 
     ch_versions = ch_versions.mix(PICARD_COLLECTHSMETRICS.out.versions.first())
-    ch_versions = ch_versions.mix(PICARD_COLLECTHSMETRICS.out.versions.second())
     
     //
     // MODULE: Collect BAM metrics with Samtools
     //
 
     SAMTOOLS_FLAGSTAT(
-        ch_input_bam,
-        ch_bam_meta
+        ch_input_bam
     )
 
     emit:
