@@ -188,6 +188,18 @@ def getGenomeAttribute(attribute) {
 }
 
 //
+// Get attribute from panels config file e.g. bed file
+//
+def getPanelsAttribute(attribute) {
+    if (params.panels && params.panel && params.panels.containsKey(params.panel)) {
+        if (params.panels[ params.panel ].containsKey(attribute)) {
+            return params.panels[ params.panel ][ attribute ]
+        }
+    }
+    return null
+}
+
+//
 // Exit pipeline if incorrect --genome key provided
 //
 def genomeExistsError() {

@@ -11,12 +11,13 @@ include { methodsDescriptionText                              } from '../subwork
 
 include { FASTQC                                              } from '../modules/nf-core/fastqc/main'
 include { MULTIQC                                             } from '../modules/nf-core/multiqc/main'
-include { FASTP                                               }  from '../modules/nf-core/fastp/main'
+include { FASTP                                               } from '../modules/nf-core/fastp/main'
 include { CAT_FASTQ                                           } from '../modules/nf-core/cat/fastq/main'
+include { SAMTOOLS_INDEX                                      } from '../modules/nf-core/samtools/index/main'
 
 include { ALIGNMENT                                           } from '../subworkflows/local/fastq_align_bwamem2/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
-include { BAM_QC_PICARD_SAMTOOLS                              } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
+include { BAM_QC_PICARD_SAMTOOLS  as BAM_QC                   } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,7 +33,11 @@ workflow AUTOSEQ {
     ch_genome_fai
     ch_dict
     ch_bwamem2_index
-
+    ch_targets_bed
+    ch_targets_bed_gz
+    ch_interval_list
+    ch_interval_list_slopped20
+    ch_jumble_ref
 
     main:
 
@@ -45,7 +50,7 @@ workflow AUTOSEQ {
     FASTQC (
         ch_samplesheet
     )
-    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
+    
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
     //
@@ -59,10 +64,7 @@ workflow AUTOSEQ {
         params.save_merged
     )
 
-    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.html.collect{it[1]})
-    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it[1]})
     ch_versions = ch_versions.mix(FASTP.out.versions.first())
-
     ch_input_reads = FASTP.out.reads
 
     //
@@ -103,7 +105,13 @@ workflow AUTOSEQ {
             params.max_base_error_rate
         )
 
+        SAMTOOLS_INDEX(
+            UMI_PROCESSING.out.mappedconsensusbam
+        )
+
         ch_aligned_bam = UMI_PROCESSING.out.mappedconsensusbam
+            .join(SAMTOOLS_INDEX.out.bai)
+        
         ch_versions = ch_versions.mix(UMI_PROCESSING.out.versions.first())
 
     } else {
@@ -115,14 +123,24 @@ workflow AUTOSEQ {
             ch_bwamem2_index
         )
 
+        ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.dedup_metrics.collect{it[1]}.ifEmpty([]))
         ch_versions = ch_versions.mix(ALIGNMENT.out.versions.first())
         ch_aligned_bam = ALIGNMENT.out.dedup_bam
+            .join(ALIGNMENT.out.bai)
     }
 
+    // Module: QC  
     
+    BAM_QC(
+        ch_aligned_bam,
+        ch_genome_fasta,
+        ch_genome_fai,
+        ch_dict,
+        ch_interval_list_slopped20
+    )
 
 
-
+    
     //
     // Collate and save software versions
     //
@@ -138,6 +156,14 @@ workflow AUTOSEQ {
     //
     // MODULE: MultiQC
     //
+    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.multiple_metrics.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.hs_metrics.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.flagstat.collect{it[1]}.ifEmpty([]))
+
+
+
     ch_multiqc_config        = Channel.fromPath(
         "$projectDir/assets/multiqc_config.yml", checkIfExists: true)
     ch_multiqc_custom_config = params.multiqc_config ?

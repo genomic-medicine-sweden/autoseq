@@ -10,11 +10,12 @@ workflow BAM_QC_PICARD_SAMTOOLS {
     ch_genome_fasta
     ch_genome_fai
     ch_genome_dict
+    ch_interval_list
 
     main:
 
     ch_versions = Channel.empty()
-    
+
     //
     // MODULE: Collect BAM metrics with Picard
     //
@@ -27,12 +28,19 @@ workflow BAM_QC_PICARD_SAMTOOLS {
 
     ch_versions = ch_versions.mix(PICARD_COLLECTMULTIPLEMETRICS.out.versions.first())
 
+    ch_bam = ch_input_bam
+        .combine(ch_interval_list)
+        .map { meta, bam, bai, meta2, interval_list ->
+            [meta, bam, bai, interval_list, interval_list]
+        }
+        
+
     //
     // MODULE: Collect HS metrics with Picard
     //
 
     PICARD_COLLECTHSMETRICS(
-        ch_input_bam,
+        ch_bam,
         ch_genome_fasta,
         ch_genome_fai,
         ch_genome_dict
@@ -52,6 +60,6 @@ workflow BAM_QC_PICARD_SAMTOOLS {
     multiple_metrics = PICARD_COLLECTMULTIPLEMETRICS.out.metrics
     hs_metrics       = PICARD_COLLECTHSMETRICS.out.metrics
     flagstat         = SAMTOOLS_FLAGSTAT.out.flagstat 
-    versions = ch_versions.mix(PICARD_COLLECTHSMETRICS.out.versions.first())
+    versions         = ch_versions.mix(PICARD_COLLECTMULTIPLEMETRICS.out.versions.first())
 
 } 

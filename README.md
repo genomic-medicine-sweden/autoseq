@@ -1,7 +1,7 @@
 <h1>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-autoseq_logo_dark.png">
-    <img alt="nf-core/autoseq" src="docs/images/nf-core-autoseq_logo_light.png">
+    <img alt="nf-autoseq" src="docs/images/nf-core-autoseq_logo_light.png">
   </picture>
 </h1>
 

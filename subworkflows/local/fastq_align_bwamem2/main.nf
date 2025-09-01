@@ -86,6 +86,7 @@ workflow ALIGNMENT {
 
     emit:
     dedup_bam        = MARKDUPLICATES.out.bam
+    dedup_bai        = MARKDUPLICATES.out.bai
     dedup_metrics    = MARKDUPLICATES.out.metrics
     versions         = ch_versions            // channel: versions.yml
 }
