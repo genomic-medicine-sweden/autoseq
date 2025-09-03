@@ -68,7 +68,7 @@ workflow AUTOSEQ {
     //
 
     if (params.umi_structure) {
-        
+
         UMI_PROCESSING(
             ch_input_reads,
             ch_genome_fasta,

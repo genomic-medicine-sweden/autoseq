@@ -1,6 +1,6 @@
 //
-// 
-// 
+//
+//
 
 include { BWAMEM2_MEM } from '../../../modules/nf-core/bwamem2/mem/main'
 include { GATK4_MARKDUPLICATES as MARKDUPLICATES } from '../../../modules/nf-core/gatk4/markduplicates/main'
@@ -14,9 +14,9 @@ workflow ALIGNMENT {
     ch_bwamem2_index
 
     main:
-    
+
     ch_versions  = Channel.empty()
-    
+
     //
     // MODULE: Run BWA-MEM2 alignment
     //
@@ -52,18 +52,18 @@ workflow ALIGNMENT {
             tuple(id, meta.case_id, meta.sample_name, meta.sample_type)
         }
         .groupTuple()
-        .map { id, case_id, sample_name, sample_type -> 
+        .map { id, case_id, sample_name, sample_type ->
             def meta = [
-                id         : id, 
-                case_id    : case_id.unique()[0], 
-                sample_name: sample_name.unique()[0], 
+                id         : id,
+                case_id    : case_id.unique()[0],
+                sample_name: sample_name.unique()[0],
                 sample_type: sample_type.unique()[0]
             ]
 
             tuple(id, meta)
         }
         .combine(ch_input_bam, by: 0)
-    
+
     ch_input_bam = ch_bam_meta
         .map { id, meta, bam ->
             tuple(meta, bam)
