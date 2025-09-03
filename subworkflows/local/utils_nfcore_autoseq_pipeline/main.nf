@@ -72,28 +72,29 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
 
-    Channel
+    input_samples =  Channel
         .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
         .map {
-            meta, fastq_1, fastq_2 ->
-                if (!fastq_2) {
-                    return [ meta.id, meta + [ single_end:true ], [ fastq_1 ] ]
-                } else {
-                    return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ] ]
-                }
+            meta, fastq_1, fastq_2, bam ->
+            if (meta.lane && fastq_2 && !bam) {
+                meta = meta + [id: "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()]
+                meta = meta + [datatype: 'fastq']
+                def readgroup = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
+
+                return [ meta, [ fastq_1, fastq_2 ] ]
+            } else if (bam) {
+                meta = meta + [id: "${meta.case_id}_${meta.sample_name}".toString()]
+                meta = meta + [datatype: 'bam']
+
+                return [ meta, [ bam ] ]
+            } else {
+                error("Please check input samplesheet -> Invalid FASTQ/BAM files provided for sample: ${meta.case_id}")
+            }
         }
-        .groupTuple()
-        .map { samplesheet ->
-            validateInputSamplesheet(samplesheet)
-        }
-        .map {
-            meta, fastqs ->
-                return [ meta, fastqs.flatten() ]
-        }
-        .set { ch_samplesheet }
+
 
     emit:
-    samplesheet = ch_samplesheet
+    samplesheet = input_samples // channel: [ [meta, fastq_1, fastq_2, bam], ... ]
     versions    = ch_versions
 }
 

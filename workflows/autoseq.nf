@@ -3,12 +3,18 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { FASTQC                 } from '../modules/nf-core/fastqc/main'
-include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_autoseq_pipeline'
+
+
+include { FASTQC      } from '../modules/nf-core/fastqc/main'
+include { MULTIQC     } from '../modules/nf-core/multiqc/main'
+include { FASTP       }  from '../modules/nf-core/fastp/main'
+
+include { ALIGNMENT                                           } from '../subworkflows/local/fastq_create_markdups_bam/main.nf'
+include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -19,11 +25,18 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_auto
 workflow AUTOSEQ {
 
     take:
-    ch_samplesheet // channel: samplesheet read in from --input
+    ch_samplesheet     // channel: samplesheet read in from --input
+    ch_genome_fasta
+    ch_genome_fai
+    ch_dict
+    ch_bwamem2_index
+
+
     main:
 
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
+
     //
     // MODULE: Run FastQC
     //
@@ -32,6 +45,60 @@ workflow AUTOSEQ {
     )
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+
+    //
+    // MODULE: Run FastP
+    //
+    FASTP (
+        ch_samplesheet,
+        [], // adapter_fasta: not used in this pipeline
+        params.discard_trimmed_pass,
+        params.save_trimmed_fail,
+        params.save_merged
+    )
+
+    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.html.collect{it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it[1]})
+    ch_versions = ch_versions.mix(FASTP.out.versions.first())
+
+    ch_input_reads = FASTP.out.reads
+
+    //
+    // MODULE: ALIGNMENT
+    //
+
+    if (params.umi_structure) {
+        
+        UMI_PROCESSING(
+            ch_input_reads,
+            ch_genome_fasta,
+            ch_bwamem2_index,
+            ch_dict,
+            "paired",
+            "bwa-mem2",
+            params.duplex,
+            params.min_reads,
+            params.min_baseq,
+            params.max_base_error_rate
+        )
+
+        ch_aligned_bam = UMI_PROCESSING.out.mappedconsensusbam
+        ch_versions = ch_versions.mix(UMI_PROCESSING.out.versions.first())
+
+    } else {
+
+        ALIGNMENT(
+            ch_input_reads,
+            ch_genome_fasta,
+            ch_genome_fai,
+            ch_bwamem2_index
+        )
+
+        ch_versions = ch_versions.mix(ALIGNMENT.out.versions.first())
+        ch_aligned_bam = ALIGNMENT.out.mapped_bam
+    }
+
+    // ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.metrics.collect{it[1]})
 
     //
     // Collate and save software versions

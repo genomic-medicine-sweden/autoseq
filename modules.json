@@ -5,20 +5,95 @@
         "https://github.com/nf-core/modules.git": {
             "modules": {
                 "nf-core": {
+                    "bwa/index": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "bwa/mem": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "bwamem2/index": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "bwamem2/mem": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "fastp": {
+                        "branch": "master",
+                        "git_sha": "8864afe586537bf562eac7b83349c26207f3cb4d",
+                        "installed_by": ["modules"]
+                    },
                     "fastqc": {
                         "branch": "master",
                         "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["modules"]
+                    },
+                    "fgbio/callduplexconsensusreads": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "fgbio/callmolecularconsensusreads": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "fgbio/fastqtobam": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "fgbio/filterconsensusreads": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "fgbio/groupreadsbyumi": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "fgbio/zipperbams": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "gatk4/markduplicates": {
+                        "branch": "master",
+                        "git_sha": "bac25953a52ada60e04b3b1f28afd15fef691add",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
                         "installed_by": ["modules"]
+                    },
+                    "samtools/fastq": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
+                    },
+                    "samtools/sort": {
+                        "branch": "master",
+                        "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
+                        "installed_by": ["fastq_create_umi_consensus_fgbio"]
                     }
                 }
             },
             "subworkflows": {
                 "nf-core": {
+                    "fastq_create_umi_consensus_fgbio": {
+                        "branch": "master",
+                        "git_sha": "6d6019016541f1e33efcdcd5f5fd731fef288bc2",
+                        "installed_by": ["subworkflows"]
+                    },
                     "utils_nextflow_pipeline": {
                         "branch": "master",
                         "git_sha": "c2b22d85f30a706a3073387f30380704fcae013b",
