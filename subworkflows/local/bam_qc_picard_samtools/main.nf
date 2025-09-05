@@ -33,7 +33,7 @@ workflow BAM_QC_PICARD_SAMTOOLS {
         .map { meta, bam, bai, meta2, interval_list ->
             [meta, bam, bai, interval_list, interval_list]
         }
-        
+
 
     //
     // MODULE: Collect HS metrics with Picard
@@ -47,7 +47,7 @@ workflow BAM_QC_PICARD_SAMTOOLS {
     )
 
     ch_versions = ch_versions.mix(PICARD_COLLECTHSMETRICS.out.versions.first())
-    
+
     //
     // MODULE: Collect BAM metrics with Samtools
     //
@@ -59,7 +59,7 @@ workflow BAM_QC_PICARD_SAMTOOLS {
     emit:
     multiple_metrics = PICARD_COLLECTMULTIPLEMETRICS.out.metrics
     hs_metrics       = PICARD_COLLECTHSMETRICS.out.metrics
-    flagstat         = SAMTOOLS_FLAGSTAT.out.flagstat 
+    flagstat         = SAMTOOLS_FLAGSTAT.out.flagstat
     versions         = ch_versions.mix(PICARD_COLLECTMULTIPLEMETRICS.out.versions.first())
 
-} 
+}
