@@ -99,7 +99,7 @@
             },
             "mentions": [
                 {
-                    "@id": "#599dd694-8e05-4155-9fb2-e31ef257557d"
+                    "@id": "#cf9a1b67-28fe-429d-b256-8de822596c3e"
                 }
             ],
             "name": "nf-core/autoseq"
@@ -127,7 +127,7 @@
                 "ComputationalWorkflow"
             ],
             "dateCreated": "",
-            "dateModified": "2025-07-04T12:19:32Z",
+            "dateModified": "2025-09-03T12:06:20Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
             "keywords": [
                 "nf-core",
@@ -163,14 +163,14 @@
             "url": {
                 "@id": "https://www.nextflow.io/"
             },
-            "version": "!>=24.04.2"
+            "version": "!>=24.10.5"
         },
         {
-            "@id": "#599dd694-8e05-4155-9fb2-e31ef257557d",
+            "@id": "#cf9a1b67-28fe-429d-b256-8de822596c3e",
             "@type": "TestSuite",
             "instance": [
                 {
-                    "@id": "#31c95de0-bada-41d6-9a5d-c3e8eafacec4"
+                    "@id": "#3478c8f5-7f4f-4e68-b449-773780c52b08"
                 }
             ],
             "mainEntity": {
@@ -179,7 +179,7 @@
             "name": "Test suite for nf-core/autoseq"
         },
         {
-            "@id": "#31c95de0-bada-41d6-9a5d-c3e8eafacec4",
+            "@id": "#3478c8f5-7f4f-4e68-b449-773780c52b08",
             "@type": "TestInstance",
             "name": "GitHub Actions workflow for testing nf-core/autoseq",
             "resource": "repos/nf-core/autoseq/actions/workflows/nf-test.yml",

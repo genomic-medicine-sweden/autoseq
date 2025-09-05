@@ -50,7 +50,7 @@ workflow AUTOSEQ {
     FASTQC (
         ch_samplesheet
     )
-    
+
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
     //
@@ -72,7 +72,7 @@ workflow AUTOSEQ {
     //
 
     if (params.umi_structure) {
-        
+
         ch_input_reads
             .map { meta, reads ->
                 def id = "${meta.case_id}.${meta.sample_name}".toString()
@@ -86,12 +86,12 @@ workflow AUTOSEQ {
                 return [metas[0], files]
             }
             .set { ch_input_reads }
-        
+
         CAT_FASTQ (
             ch_input_reads
         )
 
-        
+
         UMI_PROCESSING(
             CAT_FASTQ.out.reads,
             ch_genome_fasta,
@@ -111,7 +111,7 @@ workflow AUTOSEQ {
 
         ch_aligned_bam = UMI_PROCESSING.out.mappedconsensusbam
             .join(SAMTOOLS_INDEX.out.bai)
-        
+
         ch_versions = ch_versions.mix(UMI_PROCESSING.out.versions.first())
 
     } else {
@@ -129,8 +129,8 @@ workflow AUTOSEQ {
             .join(ALIGNMENT.out.dedup_bai)
     }
 
-    // Module: QC  
-    
+    // Module: QC
+
     BAM_QC(
         ch_aligned_bam,
         ch_genome_fasta,
@@ -140,7 +140,7 @@ workflow AUTOSEQ {
     )
 
 
-    
+
     //
     // Collate and save software versions
     //
