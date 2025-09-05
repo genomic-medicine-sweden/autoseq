@@ -1,56 +1,56 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/nf-core/autoseq/main/assets/schema_input.json",
-  "title": "nf-core/autoseq pipeline - params.input schema",
-  "description": "Schema for the file provided with params.input",
-  "type": "array",
-  "items": {
-    "type": "object",
-    "properties": {
-      "case_id": {
-        "type": "string",
-        "pattern": "^\\S+$",
-        "errorMessage": "Case name must be provided and cannot contain spaces",
-        "meta": ["case_id"]
-      },
-      "sample_name": {
-        "type": "string",
-        "pattern": "^\\S+$",
-        "errorMessage": "Sample name must be provided and cannot contain spaces",
-        "meta": ["sample_name"]
-      },
-      "sample_type": {
-        "type": "string",
-        "pattern": "^\\S+$",
-        "errorMessage": "Sample type must be provided and cannot contain spaces",
-        "meta": ["sample_type"]
-      },
-      "lane": {
-        "type": "string",
-        "pattern": "^\\S+$",
-        "meta": ["lane"]
-      },
-      "fastq_1": {
-        "type": "string",
-        "format": "file-path",
-        "exists": true,
-        "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-        "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
-      },
-      "fastq_2": {
-        "type": "string",
-        "format": "file-path",
-        "exists": true,
-        "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-        "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
-      },
-      "bam": {
-        "type": "string",
-        "format": "file-path",
-        "exists": true,
-        "pattern": "^\\S+\\.bam$",
-        "errorMessage": "Bam file path cannot contain spaces and must have extension '.bam'"
-      }
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/nf-core/autoseq/main/assets/schema_input.json",
+    "title": "nf-core/autoseq pipeline - params.input schema",
+    "description": "Schema for the file provided with params.input",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "case_id": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "Case name must be provided and cannot contain spaces",
+                "meta": ["case_id"]
+            },
+            "sample_name": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "Sample name must be provided and cannot contain spaces",
+                "meta": ["sample_name"]
+            },
+            "sample_type": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "Sample type must be provided and cannot contain spaces",
+                "meta": ["sample_type"]
+            },
+            "lane": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "meta": ["lane"]
+            },
+            "fastq_1": {
+                "type": "string",
+                "format": "file-path",
+                "exists": true,
+                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
+                "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+            },
+            "fastq_2": {
+                "type": "string",
+                "format": "file-path",
+                "exists": true,
+                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
+                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+            },
+            "bam": {
+                "type": "string",
+                "format": "file-path",
+                "exists": true,
+                "pattern": "^\\S+\\.bam$",
+                "errorMessage": "Bam file path cannot contain spaces and must have extension '.bam'"
+            }
+        }
     }
-  }
 }
