@@ -1,7 +1,7 @@
 {
     "-profile test": {
         "content": [
-            9,
+            15,
             {
                 "BWAMEM2_MEM": {
                     "bwamem2": "2.2.1",
@@ -54,8 +54,34 @@
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_plots",
                 "multiqc/multiqc_report.html",
+                "picard",
+                "picard/1234_1234N.CollectHsMetrics.coverage_metrics",
+                "picard/1234_1234N.CollectMultipleMetrics.alignment_summary_metrics",
+                "picard/1234_1234N.CollectMultipleMetrics.base_distribution_by_cycle.pdf",
+                "picard/1234_1234N.CollectMultipleMetrics.base_distribution_by_cycle_metrics",
+                "picard/1234_1234N.CollectMultipleMetrics.insert_size_histogram.pdf",
+                "picard/1234_1234N.CollectMultipleMetrics.insert_size_metrics",
+                "picard/1234_1234N.CollectMultipleMetrics.quality_by_cycle.pdf",
+                "picard/1234_1234N.CollectMultipleMetrics.quality_by_cycle_metrics",
+                "picard/1234_1234N.CollectMultipleMetrics.quality_distribution.pdf",
+                "picard/1234_1234N.CollectMultipleMetrics.quality_distribution_metrics",
+                "picard/1234_1234N.CollectMultipleMetrics.read_length_histogram.pdf",
+                "picard/1234_1234T.CollectHsMetrics.coverage_metrics",
+                "picard/1234_1234T.CollectMultipleMetrics.alignment_summary_metrics",
+                "picard/1234_1234T.CollectMultipleMetrics.base_distribution_by_cycle.pdf",
+                "picard/1234_1234T.CollectMultipleMetrics.base_distribution_by_cycle_metrics",
+                "picard/1234_1234T.CollectMultipleMetrics.insert_size_histogram.pdf",
+                "picard/1234_1234T.CollectMultipleMetrics.insert_size_metrics",
+                "picard/1234_1234T.CollectMultipleMetrics.quality_by_cycle.pdf",
+                "picard/1234_1234T.CollectMultipleMetrics.quality_by_cycle_metrics",
+                "picard/1234_1234T.CollectMultipleMetrics.quality_distribution.pdf",
+                "picard/1234_1234T.CollectMultipleMetrics.quality_distribution_metrics",
+                "picard/1234_1234T.CollectMultipleMetrics.read_length_histogram.pdf",
                 "pipeline_info",
-                "pipeline_info/nf_core_autoseq_software_mqc_versions.yml"
+                "pipeline_info/nf_core_autoseq_software_mqc_versions.yml",
+                "samtools",
+                "samtools/1234_1234N.flagstat",
+                "samtools/1234_1234T.flagstat"
             ],
             [
                 "1234N.L3.bam:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -85,13 +111,37 @@
                 "1234_1234T.bam:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "1234_1234T.bam.metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "1234_1234T.cram:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.cram.crai:md5,d41d8cd98f00b204e9800998ecf8427e"
+                "1234_1234T.cram.crai:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectHsMetrics.coverage_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectMultipleMetrics.alignment_summary_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectMultipleMetrics.base_distribution_by_cycle.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectMultipleMetrics.base_distribution_by_cycle_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectMultipleMetrics.insert_size_histogram.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectMultipleMetrics.insert_size_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectMultipleMetrics.quality_by_cycle.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectMultipleMetrics.quality_by_cycle_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectMultipleMetrics.quality_distribution.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectMultipleMetrics.quality_distribution_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.CollectMultipleMetrics.read_length_histogram.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectHsMetrics.coverage_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectMultipleMetrics.alignment_summary_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectMultipleMetrics.base_distribution_by_cycle.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectMultipleMetrics.base_distribution_by_cycle_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectMultipleMetrics.insert_size_histogram.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectMultipleMetrics.insert_size_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectMultipleMetrics.quality_by_cycle.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectMultipleMetrics.quality_by_cycle_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectMultipleMetrics.quality_distribution.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectMultipleMetrics.quality_distribution_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.CollectMultipleMetrics.read_length_histogram.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234N.flagstat:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "1234_1234T.flagstat:md5,d41d8cd98f00b204e9800998ecf8427e"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-08-30T12:31:06.255052867"
+        "timestamp": "2025-09-05T13:26:29.222934081"
     }
 }
