@@ -70,10 +70,40 @@
                         "git_sha": "41dfa3f7c0ffabb96a6a813fe321c6d1cc5b6e46",
                         "installed_by": ["fastq_create_umi_consensus_fgbio"]
                     },
+                    "gatk4/calculatecontamination": {
+                        "branch": "master",
+                        "git_sha": "a57253204b8f4022edfeaa3ae2f5e2abecd8858b",
+                        "installed_by": ["bam_tumor_normal_somatic_variant_calling_gatk"]
+                    },
+                    "gatk4/filtermutectcalls": {
+                        "branch": "master",
+                        "git_sha": "a57253204b8f4022edfeaa3ae2f5e2abecd8858b",
+                        "installed_by": ["bam_tumor_normal_somatic_variant_calling_gatk"]
+                    },
+                    "gatk4/getpileupsummaries": {
+                        "branch": "master",
+                        "git_sha": "a57253204b8f4022edfeaa3ae2f5e2abecd8858b",
+                        "installed_by": ["bam_tumor_normal_somatic_variant_calling_gatk"]
+                    },
+                    "gatk4/haplotypecaller": {
+                        "branch": "master",
+                        "git_sha": "a57253204b8f4022edfeaa3ae2f5e2abecd8858b",
+                        "installed_by": ["modules"]
+                    },
+                    "gatk4/learnreadorientationmodel": {
+                        "branch": "master",
+                        "git_sha": "a57253204b8f4022edfeaa3ae2f5e2abecd8858b",
+                        "installed_by": ["bam_tumor_normal_somatic_variant_calling_gatk"]
+                    },
                     "gatk4/markduplicates": {
                         "branch": "master",
                         "git_sha": "bac25953a52ada60e04b3b1f28afd15fef691add",
                         "installed_by": ["modules"]
+                    },
+                    "gatk4/mutect2": {
+                        "branch": "master",
+                        "git_sha": "a57253204b8f4022edfeaa3ae2f5e2abecd8858b",
+                        "installed_by": ["bam_tumor_normal_somatic_variant_calling_gatk"]
                     },
                     "multiqc": {
                         "branch": "master",
@@ -114,6 +144,11 @@
             },
             "subworkflows": {
                 "nf-core": {
+                    "bam_tumor_normal_somatic_variant_calling_gatk": {
+                        "branch": "master",
+                        "git_sha": "4814a083857c82fa7d3e5468890705e77bb1b967",
+                        "installed_by": ["subworkflows"]
+                    },
                     "fastq_create_umi_consensus_fgbio": {
                         "branch": "master",
                         "git_sha": "6d6019016541f1e33efcdcd5f5fd731fef288bc2",
