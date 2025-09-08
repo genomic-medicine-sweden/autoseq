@@ -41,49 +41,44 @@
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
-     Explain what rows and columns represent. For instance (please edit as appropriate):
-
-First, prepare a samplesheet with your input data that looks as follows:
-
-`samplesheet.csv`:
+Create a samplesheet with your input data that looks as follows: `samplesheet.csv`
 
 ```csv
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+case_id,sample_name,sample_type,lane,fastq_1,fastq_2,bam
+PATIENT_ID,TUMOR_ID,tumor,L2,/path/to/SAMPLE_L2_R1_001.fastq.gz,/path/to/SAMPLE_L2_R2_001.fastq.gz,
+PATIENT_ID,TUMOR_ID,tumor,L3,/path/to/SAMPLE_L3_R1_001.fastq.gz,/path/to/SAMPLE_L3_R2_001.fastq.gz,
+PATIENT_ID,NORMAL_ID,normal,L4,/path/to/SAMPLE_L4_R1_001.fastq.gz,/path/to/SAMPLE_L4_R2_001.fastq.gz,
+PATIENT_ID,NORMAL_ID,normal,L5,/path/to/SAMPLE_L5_R1_001.fastq.gz,/path/to/SAMPLE_L5_R2_001.fastq.gz,
 ```
-
-Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
-
--->
 
 Now, you can run the pipeline using:
 
 <!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
 
 ```bash
-nextflow run nf-core/autoseq \
+nextflow run nf-autoseq/main.nf \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
-   --outdir <OUTDIR>
+   --outdir results/  \
+   --ref_genomes_base /path/to/ref_genomes_base/
 ```
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
-For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/autoseq/usage) and the [parameter documentation](https://nf-co.re/autoseq/parameters).
+For more details and further functionality, please refer to the [usage documentation]() and the [parameter documentation]().
 
 ## Pipeline output
 
-To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/autoseq/results) tab on the nf-core website pipeline page.
+To see the results of an example test run with a full size dataset refer to the [results]() tab on the nf-core website pipeline page.
 For more details about the output files and reports, please refer to the
-[output documentation](https://nf-co.re/autoseq/output).
+[output documentation]().
 
 ## Credits
 
-nf-core/autoseq was originally written by Sarath Murugan.
+`nf-autoseq` was originally written by Sarath Kumar Murugan.
 
-We thank the following people for their extensive assistance in the development of this pipeline:
+<!-- We thank the following people for their extensive assistance in the development of this pipeline: -->
 
 <!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 
