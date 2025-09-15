@@ -27,7 +27,7 @@
 
 1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
 2. Adapter trimming ([`FastP`](https://github.com/OpenGene/fastp))
-3. Alignment to reference genome ([`BWAMEM2`]())
+3. Alignment to reference genome ([`BWAMEM2`](https://github.com/bwa-mem2/bwa-mem2))
 4. Post-alignment QC ([`Picard - CollectHsMetrics, CollectMultipleMetrics`](https://broadinstitute.github.io/picard/))
 5. Somatic Variant Calling ([`GATK Mutect2`](https://gatk.broadinstitute.org/hc/en-us/articles/30332058799003-Mutect2), [`SAGE`](https://github.com/hartwigmedical/hmftools/tree/master/sage))
 6. Germline Variant Calling ([`GATK HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/30332006386459-HaplotypeCaller), )
