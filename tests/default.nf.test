@@ -6,6 +6,8 @@ nextflow_pipeline {
 
     test("-profile test") {
 
+        options "-stub"
+
         when {
             params {
                 outdir = "$outputDir"

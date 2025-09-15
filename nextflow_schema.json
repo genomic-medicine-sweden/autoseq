@@ -161,6 +161,31 @@
                     "help_text": "Maximum allowable error rate for bases (0.0 = no errors allowed, 1.0 = all errors allowed)",
                     "minimum": 0,
                     "maximum": 1
+                },
+                "panel": {
+                    "type": "string",
+                    "description": "Target panel for the sequencing run",
+                    "default": "probio_comprehensive3"
+                },
+                "targets_bed": {
+                    "type": "string",
+                    "description": "Path to the BED file containing target regions"
+                },
+                "targets_bed_gz": {
+                    "type": "string",
+                    "description": "Path to the gzipped BED file containing target regions"
+                },
+                "interval_list": {
+                    "type": "string",
+                    "description": "Path to the interval list file"
+                },
+                "interval_list_slopped20": {
+                    "type": "string",
+                    "description": "Path to the slopped interval list file"
+                },
+                "jumble_ref": {
+                    "type": "string",
+                    "description": "Path to the reference RDS (R data object) for Jumble"
                 }
             }
         },
@@ -256,7 +281,7 @@
                     "type": "string",
                     "fa_icon": "far fa-check-circle",
                     "description": "Base URL or local path to location of pipeline test dataset files",
-                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
+                    "default": "https://raw.githubusercontent.com/imsarath/test-data/refs/heads/main/",
                     "hidden": true
                 }
             }

@@ -15,10 +15,11 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { AUTOSEQ  } from './workflows/autoseq'
+include { AUTOSEQ                 } from './workflows/autoseq'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
+include { getPanelsAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,6 +34,13 @@ params.ref_genome_fasta   = getGenomeAttribute('fasta')
 params.ref_genome_fai     = getGenomeAttribute('fai')
 params.ref_genome_dict    = getGenomeAttribute('dict')
 params.bwamem2_index      = getGenomeAttribute('bwamem2_index')
+
+params.targets_bed             = getPanelsAttribute('targets_bed_slopped20')
+params.targets_bed_gz          = getPanelsAttribute('targets_bed_slopped20_gz')
+params.interval_list           = getPanelsAttribute('targets_interval_list')
+params.interval_list_slopped20 = getPanelsAttribute('targets_interval_list_slopped20')
+params.jumble_ref              = getPanelsAttribute('jumble_ref')
+
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,6 +67,12 @@ workflow NFCORE_AUTOSEQ {
     ch_bwamem2_index = params.bwamem2_index     ? Channel.fromPath(params.bwamem2_index).map{ it -> [[id:'bwamem2_index'], it]}.collect() : Channel.empty()
 
     //
+    ch_targets_bed             = params.targets_bed ? Channel.fromPath(params.targets_bed).map{ it -> [[id:'targets_bed'], it]}.collect() : Channel.empty()
+    ch_targets_bed_gz          = params.targets_bed_gz ? Channel.fromPath(params.targets_bed_gz).map{ it -> [[id:'targets_bed_gz'], it]}.collect() : Channel.empty()
+    ch_interval_list           = params.interval_list ? Channel.fromPath(params.interval_list).map{ it -> [[id:'interval_list'], it]}.collect() : Channel.empty()
+    ch_interval_list_slopped20 = params.interval_list_slopped20 ? Channel.fromPath(params.interval_list_slopped20).map{ it -> [[id:'interval_list_slopped20'], it]}.collect() : Channel.empty()
+    ch_jumble_ref              = params.jumble_ref ? Channel.fromPath(params.jumble_ref).map{ it -> [[id:'jumble_ref'], it]}.collect() : Channel.empty()
+    //
     // WORKFLOW: Run pipeline
     //
     AUTOSEQ (
@@ -66,7 +80,12 @@ workflow NFCORE_AUTOSEQ {
         ch_genome_fasta,
         ch_genome_fai,
         ch_dict,
-        ch_bwamem2_index
+        ch_bwamem2_index,
+        ch_targets_bed,
+        ch_targets_bed_gz,
+        ch_interval_list,
+        ch_interval_list_slopped20,
+        ch_jumble_ref
     )
     emit:
     multiqc_report = AUTOSEQ.out.multiqc_report // channel: /path/to/multiqc_report.html

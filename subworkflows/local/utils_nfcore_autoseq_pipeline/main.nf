@@ -77,8 +77,11 @@ workflow PIPELINE_INITIALISATION {
         .map {
             meta, fastq_1, fastq_2, bam ->
             if (meta.lane && fastq_2 && !bam) {
-                meta = meta + [id: "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()]
-                meta = meta + [datatype: 'fastq']
+                meta = meta + [
+                    id: "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString(),
+                    datatype: 'fastq',
+                    single_end: false
+                ]
                 def readgroup = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
 
                 return [ meta, [ fastq_1, fastq_2 ] ]
@@ -179,6 +182,18 @@ def getGenomeAttribute(attribute) {
     if (params.genomes && params.genome && params.genomes.containsKey(params.genome)) {
         if (params.genomes[ params.genome ].containsKey(attribute)) {
             return params.genomes[ params.genome ][ attribute ]
+        }
+    }
+    return null
+}
+
+//
+// Get attribute from panels config file e.g. bed file
+//
+def getPanelsAttribute(attribute) {
+    if (params.panels && params.panel && params.panels.containsKey(params.panel)) {
+        if (params.panels[ params.panel ].containsKey(attribute)) {
+            return params.panels[ params.panel ][ attribute ]
         }
     }
     return null
