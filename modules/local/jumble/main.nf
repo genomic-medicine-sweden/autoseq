@@ -1,37 +1,69 @@
 
-process JUMBLE_CNV {
+process JUMBLE_RUN {
     tag "${meta.id}"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container 'docker.io/sarathkumar-murugan/jumble:0.2.1'
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/rocker-r-ver:4.3.2' :
+        'rocker/r-ver:4.3.2' }"
 
     input:
-    tuple val(meta), path(bam), path(bai)
-    val jumble_ref
+    tuple val(meta), path(bam)
+    tuple val(meta2), path(jumbleref)
 
     output:
-    tuple val(meta), path("${meta.case_id}.jumble.cnv_calls.tsv")
+    tuple val(meta), path("*.cns"), emit: cns
+    tuple val(meta), path("*.cnr"), emit: cnr
+    tuple val(meta), path("*_dnacopy.seg"), emit: seg
+    tuple val(meta), path("*_profile_bedgraph"), emit: profile_bedgraph
+    tuple val(meta), path("*_segments_bedgraph"), emit: segments_bedgraph
+    tuple val(meta), path("*.RDS"), emit: rds , optional: true
+    path  "versions.yml"          , emit: versions
 
     script:
-    """
-    jumble-run.R  \\
-        --tumor_bam ${tumor_bam} \\
-        --normal_bam ${normal_bam} \\
-        --reference ${genome_fasta} \\
-        --genome_version ${genome_ver} \\
-        --output ${meta.case_id}.jumble.cnv_calls.tsv
+    def args = task.ext.args ?: ''
+    def targets_bed = targets ? "-t ${targets} " : ''
+    def prefix = task.ext.prefix ?: "${meta.id}"
 
+    """
+
+    # Run the tool
+    jumble-run.R \\
+        $args \\
+        -r ${jumbleref} \\
+        -b ${bam} \\
+        -o "./"
+
+    ## Convert to bedgraph for IGV visualization
+    awk -F'\\t' -v OFS='\\t' '\$1 != "chromosome" {print \$1"\\t"\$2"\\t"\$3"\\t"\$6}' \\
+         ${prefix}.cnr > ${prefix}_profile_bedgraph
+
+    awk -F'\\t' -v OFS='\\t' '\$1 != "chromosome" {print \$1"\\t"\$2"\\t"\$3"\\t"\$5}' \\
+         ${prefix}.cns > ${prefix}_segments_bedgraph
+
+    # Capture versions
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        jumble: \$(jumble --version | sed 's/^.* //')
+        jumble-run.R: \$( jumble-run.R --version 2>&1 | head -n 1 || echo "unknown" )
     END_VERSIONS
     """
 
     stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
     """
+    touch ${prefix}.cns
+    touch ${prefix}.cnr
+    touch ${prefix}_dnacopy.seg
+    touch ${prefix}_profile_bedgraph
+    touch ${prefix}_segments_bedgraph
+    touch ${prefix}.RDS
 
-
-    echo -e '${task.process}:\\n  stub: noversions\\n' > versions.yml
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        jumble-run.R: "stub"
+        R: \$( R --version | sed -n '1p' )
+    END_VERSIONS
     """
 }
