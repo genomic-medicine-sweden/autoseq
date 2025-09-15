@@ -20,7 +20,7 @@
 
 ## Introduction
 
-**nf-core/autoseq** is a Nextflow pipeline designed for deep targeted resequencing and whole-exome data. It automates essential steps from quality control to variant calling. The pipeline annotates variants using VeP! and applies sophisticated semantic filters to eliminate irrelevant and non-significant calls. The final output is optimized for manual curation in tools like IGV and can be exported as a text, HTML, or PDF report.
+**nf-core/autoseq** is a Nextflow pipeline designed for deep targeted sequencing and whole-exome data. It automates essential steps from quality control to variant calling. The pipeline annotates variants using [`VEP`](https://www.ensembl.org/info/docs/tools/vep/index.html)! and applies sophisticated semantic filters to eliminate irrelevant and non-significant calls. The final output is optimized for manual curation in tools like IGV and can be exported as a text, HTML, or PDF report.
 
 <!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/guidelines/graphic_design/workflow_diagrams#examples for examples.   -->
@@ -28,11 +28,11 @@
 1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
 2. Adapter trimming ([`FastP`](https://github.com/OpenGene/fastp))
 3. Alignment to reference genome ([`BWAMEM2`]())
-4. Post-alignment QC ([`Picard`](https://broadinstitute.github.io/picard/))
-5. Somatic Variant Calling ([`GATK Mutect2`](), [`SAGE`]())
-6. Germline Variant Calling ([`GATK HaplotypeCaller`](), )
-7. Structural Variant Calling ([`GRIDSS`]())
-8. Copy Number Variant Calling ([`Jumble`]())
+4. Post-alignment QC ([`Picard - CollectHsMetrics, CollectMultipleMetrics`](https://broadinstitute.github.io/picard/))
+5. Somatic Variant Calling ([`GATK Mutect2`](https://gatk.broadinstitute.org/hc/en-us/articles/30332058799003-Mutect2), [`SAGE`](https://github.com/hartwigmedical/hmftools/tree/master/sage))
+6. Germline Variant Calling ([`GATK HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/30332006386459-HaplotypeCaller), )
+7. Structural Variant Calling ([`GRIDSS`](https://github.com/PapenfussLab/gridss))
+8. Copy Number Variant Calling ([`Jumble`](https://github.com/ClinSeq/jumble))
 9. Annotation of variants ([`VEP`](https://www.ensembl.org/info/docs/tools/vep/index.html))
 10. Summary of QC metrics ([`MultiQC`](http://multiqc.info/))
 
