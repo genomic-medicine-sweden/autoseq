@@ -39,6 +39,10 @@ workflow AUTOSEQ {
     ch_interval_list
     ch_interval_list_slopped20
     ch_jumble_ref
+    ch_sage_known_hotspots_somatic
+    ch_sage_highconf_regions
+    ch_sage_pon
+    ch_ensembl_data_resources
 
     main:
 
@@ -190,7 +194,11 @@ workflow AUTOSEQ {
         [],
         [],
         [],
-        ch_interval_list_slopped20.collect{it[1]}
+        ch_interval_list_slopped20.collect{it[1]},
+        ch_sage_known_hotspots_somatic,
+        ch_sage_highconf_regions,
+        ch_sage_pon,
+        ch_ensembl_data_resources
     )
 
     //
