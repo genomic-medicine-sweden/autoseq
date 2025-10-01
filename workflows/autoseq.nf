@@ -18,7 +18,7 @@ include { SAMTOOLS_INDEX                                      } from '../modules
 include { ALIGNMENT                                           } from '../subworkflows/local/fastq_align_bwamem2/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
 include { BAM_QC_PICARD_SAMTOOLS  as BAM_QC                   } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
-include { CALL_SOMATIC_SNVS                                   } from '../subworkflows/local/bam_call_somatic_snvs/main.nf'
+include { CALL_SOMATIC_SNVS                                   } from '../subworkflows/local/call_somatic_snvs/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
