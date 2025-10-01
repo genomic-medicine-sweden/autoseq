@@ -4,9 +4,7 @@ process JUMBLE_RUN {
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/rocker-r-ver:4.3.2' :
-        'rocker/r-ver:4.3.2' }"
+    container "sarathmurugan01/jumble:v1.0.0"
 
     input:
     tuple val(meta), path(bam)

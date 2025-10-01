@@ -25,7 +25,7 @@ workflow ALIGNMENT {
         .map { meta, reads ->
             meta  = meta + [
                 id         : "${meta.sample_name}.${meta.lane}".toString(),
-                read_group : "${meta.case_id}.${meta.sample_name}.${meta.lane}".toString(),
+                read_group : "\"@RG\\tID:${meta.case_id}\\tSM:${meta.sample_name}_${meta.lane}\\tLB:${meta.sample_name}\\tPL:ILLUMINA\"".toString(),
                 split      : null
             ]
 
@@ -59,7 +59,7 @@ workflow ALIGNMENT {
         .groupTuple()
         .map { id, case_id, sample_name, sample_type ->
             def meta = [
-                id         : id,
+                id         : sample_name.unique()[0],
                 case_id    : case_id.unique()[0],
                 sample_name: sample_name.unique()[0],
                 sample_type: sample_type.unique()[0]
