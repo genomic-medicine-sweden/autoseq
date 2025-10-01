@@ -1,6 +1,11 @@
 
-include { SAGE_SOMATIC } from '../../../modules/local/sage/somatic/main'
+include { VT_DECOMPOSE      } from '../../../modules/nf-core/vt/decompose/main'
+include { VT_NORMALIZE      } from '../../../modules/nf-core/vt/normalize/main'
+include { BCFTOOLS_FILTER   } from '../../../modules/nf-core/bcftools/filter/main'
+include { SAGE_SOMATIC      } from '../../../modules/local/sage/somatic/main'
+
 include { BAM_TUMOR_NORMAL_SOMATIC_VARIANT_CALLING_GATK as CALL_GATK_MUTECT2 } from '../../../subworkflows/nf-core/bam_tumor_normal_somatic_variant_calling_gatk/main'
+
 
 
 
@@ -38,7 +43,10 @@ workflow CALL_SOMATIC_SNVS {
 
     versions = versions.mix(CALL_GATK_MUTECT2.out.versions)
 
-    genome_version  = '37' // hardcoded for now, could be passed in as a param if needed
+    VT_DECOMPOSE (CALL_GATK_MUTECT2.out.filtered_vcf)
+    VT_NORMALIZE (VT_DECOMPOSE.out.vcf, ch_fasta, ch_fai)
+
+    genome_version  = (params.genome =~ '37') ? '37' : '38' // hardcoded for now, could be passed in as a param if needed
     // Call somatic SNVs using SAGE in tumor-normal mode
     SAGE_SOMATIC(
         ch_input,
