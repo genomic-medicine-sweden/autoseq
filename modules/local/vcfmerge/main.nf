@@ -9,12 +9,13 @@ process SOMATIC_VCFMERGE {
         'community.wave.seqera.io/library/bcftools_tabix:04336756d7b46b1b' }"
 
     input:
-    tuple val(meta), path(mutect_vcf), path(sage_vcf)
-
+    tuple val(meta), path(mutect_vcf)
+    tuple val(meta), path(sage_vcf)
 
     output:
-    tuple val(meta), path("*merged.vcf"), emit: merged_vcf
-    path  "versions.yml"          , emit: versions
+    tuple val(meta), path("${prefix}-all.somatic.vcf.gz")    , emit: vcf
+    tuple val(meta), path("${prefix}-all.somatic.vcf.gz.tbi"), emit: tbi
+    path  "versions.yml"                                 , emit: versions
 
     script:
     def args = task.ext.args ?: ''

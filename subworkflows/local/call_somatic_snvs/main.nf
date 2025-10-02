@@ -1,12 +1,12 @@
 
-include { VT_DECOMPOSE      } from '../../../modules/nf-core/vt/decompose/main'
-include { VT_NORMALIZE      } from '../../../modules/nf-core/vt/normalize/main'
-include { BCFTOOLS_FILTER   } from '../../../modules/nf-core/bcftools/filter/main'
-include { SAGE_SOMATIC      } from '../../../modules/local/sage/somatic/main'
+include { VT_DECOMPOSE                                  } from '../../../modules/nf-core/vt/decompose/main'
+include { VT_NORMALIZE                                  } from '../../../modules/nf-core/vt/normalize/main'
+include { BCFTOOLS_FILTER as PASSFILTER_FOR_MUTECT2     } from '../../../modules/nf-core/bcftools/filter/main'
+include { BCFTOOLS_FILTER as PASSFILTER_FOR_SAGE        } from '../../../modules/nf-core/bcftools/filter/main'
+include { SAGE_SOMATIC                                  } from '../../../modules/local/sage/somatic/main'
+include { SOMATIC_VCFMERGE                              } from '../../../modules/local/vcfmerge/main'
 
 include { BAM_TUMOR_NORMAL_SOMATIC_VARIANT_CALLING_GATK as CALL_GATK_MUTECT2 } from '../../../subworkflows/nf-core/bam_tumor_normal_somatic_variant_calling_gatk/main'
-
-
 
 
 workflow CALL_SOMATIC_SNVS {
@@ -41,12 +41,11 @@ workflow CALL_SOMATIC_SNVS {
         ch_interval_file
     )
 
-    versions = versions.mix(CALL_GATK_MUTECT2.out.versions)
-
     VT_DECOMPOSE (CALL_GATK_MUTECT2.out.filtered_vcf)
     VT_NORMALIZE (VT_DECOMPOSE.out.vcf, ch_fasta, ch_fai)
 
-    genome_version  = (params.genome =~ '37') ? '37' : '38' // hardcoded for now, could be passed in as a param if needed
+    genome_version  = (params.genome.contains('37')) ? '37' : '38'
+
     // Call somatic SNVs using SAGE in tumor-normal mode
     SAGE_SOMATIC(
         ch_input,
@@ -58,10 +57,32 @@ workflow CALL_SOMATIC_SNVS {
         ch_sage_known_hotspots_somatic.collect{it[1]},
         ch_sage_highconf_regions.collect{it[1]},
         ch_ensembl_data_resources.collect{it[1]},
-        true // targeted_mode
+        true // targeted_mode,
+        params.sage_min_tumor_vaf,
+        params.sage_min_tumor_qual,
+        params.sage_min_map_quality,
+        params.sage_hotspot_tumor_qual,
+        params.min_baseq
     )
 
+    sage_vcf = SAGE_SOMATIC.out.vcf
+            .join(SAGE_SOMATIC.out.tbi)
+
+    PASSFILTER_FOR_MUTECT2 (VT_NORMALIZE.out.vcf)
+    PASSFILTER_FOR_SAGE (sage_vcf)
+
+    SOMATIC_VCFMERGE (
+        PASSFILTER_FOR_MUTECT2.out.vcf,
+        PASSFILTER_FOR_SAGE.out.vcf
+    )
+
+    versions = versions.mix(CALL_GATK_MUTECT2.out.versions)
+    versions = versions.mix(VT_DECOMPOSE.out.versions)
+    versions = versions.mix(VT_NORMALIZE.out.versions)
     versions = versions.mix(SAGE_SOMATIC.out.versions)
+    versions = versions.mix(PASSFILTER_FOR_MUTECT2.out.versions)
+    versions = versions.mix(PASSFILTER_FOR_SAGE.out.versions)
+    versions = versions.mix(SOMATIC_VCFMERGE.out.versions)
 
 
     emit:
@@ -72,6 +93,8 @@ workflow CALL_SOMATIC_SNVS {
     pileup_table_normal = CALL_GATK_MUTECT2.out.pileup_table_normal         // channel: [ val(meta), path(table) ]
     pileup_table_tumor  = CALL_GATK_MUTECT2.out.pileup_table_tumor          // channel: [ val(meta), path(table) ]
     sage_vcf            = SAGE_SOMATIC.out.vcf                                 // channel: [ val(meta), path(vcf) ]
-    sage_tbi            = SAGE_SOMATIC.out.tbi                                 // channel: [
+    sage_tbi            = SAGE_SOMATIC.out.tbi
+    somatic_vcf         = SOMATIC_VCFMERGE.out.vcf
+    somatic_tbi         = SOMATIC_VCFMERGE.out.vcf
     versions
 }
