@@ -334,6 +334,22 @@
         },
         "ensembl_data_resources": {
             "type": "string"
+        },
+        "sage_min_tumor_vaf": {
+            "type": "number",
+            "default": 0.0002
+        },
+        "sage_hotspot_tumor_qual": {
+            "type": "integer",
+            "default": 150
+        },
+        "sage_min_tumor_qual": {
+            "type": "integer",
+            "default": 250
+        },
+        "sage_min_map_quality": {
+            "type": "integer",
+            "default": 20
         }
     }
 }

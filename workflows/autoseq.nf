@@ -146,60 +146,60 @@ workflow AUTOSEQ {
 
     // Module: SOMATIC SNV CALLING
 
-    // // Branch samples by tumor/normal
-    // ch_aligned_bam
-    //     .branch { meta, bam, bai ->
-    //         tumor: meta.sample_type == "tumor"
-    //         normal: meta.sample_type == "normal"
-    //     }
-    //     .set { samples }
+    // Branch samples by tumor/normal
+    ch_aligned_bam
+        .branch { meta, bam, bai ->
+            tumor: meta.sample_type == "tumor"
+            normal: meta.sample_type == "normal"
+        }
+        .set { samples }
 
-    // // Prepare tumor channel with case_id as key
-    // tumor_ch = samples.tumor
-    //     .map { meta, bam, bai ->
-    //         [meta.case_id, meta, bam, bai]
-    //     }
+    // Prepare tumor channel with case_id as key
+    tumor_ch = samples.tumor
+        .map { meta, bam, bai ->
+            [meta.case_id, meta, bam, bai]
+        }
 
-    // // Prepare normal channel with case_id as key
-    // normal_ch = samples.normal
-    //     .map { meta, bam, bai ->
-    //         [meta.case_id, meta, bam, bai]
-    //     }
+    // Prepare normal channel with case_id as key
+    normal_ch = samples.normal
+        .map { meta, bam, bai ->
+            [meta.case_id, meta, bam, bai]
+        }
 
-    // // Join tumor and normal by case_id and create somatic calling format
-    // ch_input_paired = tumor_ch
-    //     .join(normal_ch, by: 0)
-    //     .combine(ch_interval_list_slopped20)
-    //     .map { case_id, tumor_meta, tumor_bam, tumor_bai, normal_meta, normal_bam, normal_bai, meta_intervals, intervals_file ->
-    //         // Create comprehensive meta map
-    //         def meta = [
-    //             id: case_id,
-    //             case_id: case_id,
-    //             tumor_id: tumor_meta.id,
-    //             normal_id: normal_meta.id,
-    //             tumor_sample: tumor_meta.sample_name,
-    //             normal_sample: normal_meta.sample_name
-    //         ]
+    // Join tumor and normal by case_id and create somatic calling format
+    ch_input_paired = tumor_ch
+        .join(normal_ch, by: 0)
+        .combine(ch_interval_list_slopped20)
+        .map { case_id, tumor_meta, tumor_bam, tumor_bai, normal_meta, normal_bam, normal_bai, meta_intervals, intervals_file ->
+            // Create comprehensive meta map
+            def meta = [
+                id: case_id,
+                case_id: case_id,
+                tumor_id: tumor_meta.id,
+                normal_id: normal_meta.id,
+                tumor_sample: tumor_meta.sample_name,
+                normal_sample: normal_meta.sample_name
+            ]
 
-    //         // Return in desired format: [meta, [tumor.bam, normal.bam], [tumor.bai, normal.bai], intervals]
-    //         [meta, [tumor_bam, normal_bam], [tumor_bai, normal_bai], intervals_file]
-    //     }
+            // Return in desired format: [meta, [tumor.bam, normal.bam], [tumor.bai, normal.bai], intervals]
+            [meta, [tumor_bam, normal_bam], [tumor_bai, normal_bai], intervals_file]
+        }
 
-    // CALL_SOMATIC_SNVS (
-    //     ch_input_paired,
-    //     ch_genome_fasta,
-    //     ch_genome_fai,
-    //     ch_dict,
-    //     [],
-    //     [],
-    //     [],
-    //     [],
-    //     ch_interval_list_slopped20.collect{it[1]},
-    //     ch_sage_known_hotspots_somatic,
-    //     ch_sage_highconf_regions,
-    //     ch_sage_pon,
-    //     ch_ensembl_data_resources
-    // )
+    CALL_SOMATIC_SNVS (
+        ch_input_paired,
+        ch_genome_fasta,
+        ch_genome_fai,
+        ch_dict,
+        [],
+        [],
+        [],
+        [],
+        ch_interval_list_slopped20.collect{it[1]},
+        ch_sage_known_hotspots_somatic,
+        ch_sage_highconf_regions,
+        ch_sage_pon,
+        ch_ensembl_data_resources
+    )
 
     //
     // Collate and save software versions

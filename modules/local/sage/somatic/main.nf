@@ -51,8 +51,8 @@ process SAGE_SOMATIC {
     def hotspot_args = hotspot_tumor_qual ? "-hotspot_min_tumor_qual ${hotspot_tumor_qual}" : ''
     def taf_args = min_tumor_vaf ? " -hard_min_tumor_vaf ${min_tumor_vaf} -hotspot_min_tumor_vaf ${min_tumor_vaf} -panel_min_tumor_vaf ${min_tumor_vaf}" : ''
     def panel_tumor_qual_args = min_tumor_qual ? " -panel_min_tumor_qual ${min_tumor_qual} " : ''
-    def map_qual_args = min_map_quality ? " -min_map_quality ${min_map_quality} "
-    def base_qual_args = min_avg_base_qual ? " -min_avg_base_qual ${min_avg_base_qual}"
+    def map_qual_args = min_map_quality ? " -min_map_quality ${min_map_quality} " : ''
+    def base_qual_args = min_avg_base_qual ? " -min_avg_base_qual ${min_avg_base_qual}" : ''
 
     """
     mkdir -p somatic/

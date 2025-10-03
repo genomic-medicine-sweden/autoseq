@@ -13,8 +13,8 @@ process SOMATIC_VCFMERGE {
     tuple val(meta), path(sage_vcf)
 
     output:
-    tuple val(meta), path("${prefix}-all.somatic.vcf.gz")    , emit: vcf
-    tuple val(meta), path("${prefix}-all.somatic.vcf.gz.tbi"), emit: tbi
+    tuple val(meta), path("*-all.somatic.vcf.gz")    , emit: vcf
+    tuple val(meta), path("*-all.somatic.vcf.gz.tbi"), emit: tbi, optional:true
     path  "versions.yml"                                 , emit: versions
 
     script:
