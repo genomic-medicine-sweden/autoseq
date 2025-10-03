@@ -44,7 +44,7 @@ workflow CALL_SOMATIC_SNVS {
     VT_DECOMPOSE (CALL_GATK_MUTECT2.out.filtered_vcf)
     VT_NORMALIZE (VT_DECOMPOSE.out.vcf, ch_fasta, ch_fai)
 
-    genome_version  = (params.genome.contains('37')) ? '37' : '38'
+    genome_version  = params.genome.contains('37') ? '37' : '38'
 
     // Call somatic SNVs using SAGE in tumor-normal mode
     SAGE_SOMATIC(
