@@ -350,6 +350,10 @@
         "sage_min_map_quality": {
             "type": "integer",
             "default": 20
+        },
+        "ensemblvep_version": {
+            "type": "integer",
+            "default": 115
         }
     }
 }

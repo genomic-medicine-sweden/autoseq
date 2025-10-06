@@ -1,4 +1,6 @@
 
+include { BAM_TUMOR_NORMAL_SOMATIC_VARIANT_CALLING_GATK as CALL_GATK_MUTECT2 } from '../../../subworkflows/nf-core/bam_tumor_normal_somatic_variant_calling_gatk/main'
+
 include { VT_DECOMPOSE                                  } from '../../../modules/nf-core/vt/decompose/main'
 include { VT_NORMALIZE                                  } from '../../../modules/nf-core/vt/normalize/main'
 include { BCFTOOLS_FILTER as PASSFILTER_FOR_MUTECT2     } from '../../../modules/nf-core/bcftools/filter/main'
@@ -6,8 +8,7 @@ include { BCFTOOLS_FILTER as PASSFILTER_FOR_SAGE        } from '../../../modules
 include { SAGE_SOMATIC                                  } from '../../../modules/local/sage/somatic/main'
 include { SOMATIC_VCFMERGE                              } from '../../../modules/local/vcfmerge/main'
 include { TABIX_TABIX  as INDEX_VCF                     } from '../../../modules/nf-core/tabix/tabix/main'
-
-include { BAM_TUMOR_NORMAL_SOMATIC_VARIANT_CALLING_GATK as CALL_GATK_MUTECT2 } from '../../../subworkflows/nf-core/bam_tumor_normal_somatic_variant_calling_gatk/main'
+include { ENSEMBLVEP_VEP as ANNOTATE_VEP                } from '../../../modules/nf-core/ensemblvep/vep'
 
 
 workflow CALL_SOMATIC_SNVS {
@@ -92,6 +93,19 @@ workflow CALL_SOMATIC_SNVS {
         PASSFILTER_FOR_SAGE.out.vcf
     )
 
+    // VEP Annotation
+
+    ANNOTATE_VEP (
+        SOMATIC_VCFMERGE.out.vcf,
+        params.genome,
+        "homo_sapiens",
+        params.ensemblvep_version,
+        ch_ensembl_data_resources.collect{it[1]},
+        ch_fasta,
+        []
+    )
+
+
     versions = versions.mix(CALL_GATK_MUTECT2.out.versions)
     versions = versions.mix(VT_DECOMPOSE.out.versions)
     versions = versions.mix(VT_NORMALIZE.out.versions)
@@ -112,5 +126,7 @@ workflow CALL_SOMATIC_SNVS {
     sage_tbi            = SAGE_SOMATIC.out.tbi
     somatic_vcf         = SOMATIC_VCFMERGE.out.vcf
     somatic_tbi         = SOMATIC_VCFMERGE.out.vcf
+    vep_vcf             = ANNOTATE_VEP.out.vcf
+    vep_tbi             = ANNOTATE_VEP.out.tbi
     versions
 }

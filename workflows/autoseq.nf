@@ -144,6 +144,8 @@ workflow AUTOSEQ {
         ch_interval_list_slopped20
     )
 
+    ch_versions = ch_versions.mix(BAM_QC.out.versions.first())
+
     // Module: SOMATIC SNV CALLING
 
     // Branch samples by tumor/normal
@@ -201,6 +203,8 @@ workflow AUTOSEQ {
         ch_ensembl_data_resources
     )
 
+    ch_versions = ch_versions.mix(CALL_SOMATIC_SNVS.out.versions.first())
+
     //
     // Collate and save software versions
     //
@@ -221,7 +225,6 @@ workflow AUTOSEQ {
     ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.multiple_metrics.collect{it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.hs_metrics.collect{it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.flagstat.collect{it[1]}.ifEmpty([]))
-
 
 
     ch_multiqc_config        = Channel.fromPath(
