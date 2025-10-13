@@ -1,0 +1,44 @@
+
+process ANNOTATE_CNVS {
+    tag "${meta.id}"
+    label 'process_single'
+
+    conda "${moduleDir}/environment.yml"
+    container
+
+    input:
+    tuple val(meta), path(cns)
+    tuple val(meta2), path(curation_ann)
+
+    output:
+    tuple val(meta), path("*_ann.cns"), emit: cns
+    path  "versions.yml"          , emit: versions
+
+    script:
+    def args = task.ext.args ?: ''
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    annotate_cnvs.py -i ${cns} -c ${curation_ann} -o ${prefix}_ann.cns
+
+    # Capture versions
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        annotate_cnvs.py: \$( annotate_cnvs.py --version 2>&1 | head -n 1 || echo "unknown" )
+        python: \$( python --version | sed -n '1p' )
+    END_VERSIONS
+    """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
+
+    """
+    touch ${prefix}_ann.cns
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        annotate_cnvs.py: "stub"
+        python: \$( python --version | sed -n '1p' )
+    END_VERSIONS
+    """
+}
