@@ -16,6 +16,7 @@ process JUMBLE_RUN {
     tuple val(meta), path("*_dnacopy.seg"), emit: seg
     tuple val(meta), path("*_profile_bedgraph"), emit: profile_bedgraph
     tuple val(meta), path("*_segments_bedgraph"), emit: segments_bedgraph
+    tuple val(meta), path("*.png"), emit: png , optional: true
     tuple val(meta), path("*.RDS"), emit: rds , optional: true
     path  "versions.yml"          , emit: versions
 
@@ -57,6 +58,7 @@ process JUMBLE_RUN {
     touch ${prefix}_profile_bedgraph
     touch ${prefix}_segments_bedgraph
     touch ${prefix}.RDS
+    touch ${prefix}.png
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
