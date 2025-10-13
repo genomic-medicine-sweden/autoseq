@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - pip
+  - pip:
+      - logging==0.4.9.6
+      - pandas==2.3.3

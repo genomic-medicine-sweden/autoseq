@@ -5,6 +5,7 @@ import argparse
 import pandas as pd
 import logging
 
+__version__ = "1.0.0"
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -63,6 +64,7 @@ if __name__ == "__main__":
     parser.add_argument('-c', '--curation-ann', help="Annotation file for curation")
     parser.add_argument('-o', '--output', required=True,
                         help="output segmentation file with curate column in the end")
+    parser.add_argument('-v', '--version', action='version', version=f'%(prog)s {__version__}')
     args = parser.parse_args()
 
     annotate_cnvs(args.input, args.curation_ann, args.output)

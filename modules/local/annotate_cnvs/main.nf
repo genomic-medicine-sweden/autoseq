@@ -4,7 +4,9 @@ process ANNOTATE_CNVS {
     label 'process_single'
 
     conda "${moduleDir}/environment.yml"
-    container
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        '' :
+        'community.wave.seqera.io/library/pip_logging_pandas:2d7d54d059a6ecf2' }"
 
     input:
     tuple val(meta), path(cns)
