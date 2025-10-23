@@ -96,6 +96,7 @@
                 },
                 "bwamem2_index": {
                     "type": "string",
+                    "format": "directory-path",
                     "description": "Path to reference genome bwa-mem2 index.",
                     "fa_icon": "far fa-file-code"
                 }
