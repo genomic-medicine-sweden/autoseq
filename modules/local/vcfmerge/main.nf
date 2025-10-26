@@ -10,7 +10,7 @@ process SOMATIC_VCFMERGE {
 
     input:
     tuple val(meta), path(mutect_vcf)
-    tuple val(meta), path(sage_vcf)
+    tuple val(meta2), path(sage_vcf)
 
     output:
     tuple val(meta), path("*-all.somatic.vcf.gz")    , emit: vcf

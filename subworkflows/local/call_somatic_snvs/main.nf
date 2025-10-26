@@ -61,7 +61,9 @@ workflow CALL_SOMATIC_SNVS {
     ch_mutect2_vcf = VT_NORMALIZE.out.vcf
         .join(INDEX_VCF.out.tbi)
 
-    genome_version  = ("$params.genome" =~ /(?i)\b(37|grch37|hg19|b37)\b/) ? '37' : '38'
+    def sage_genome_version = ("$params.genome" =~ /(?i)\b(37|grch37|hg19|b37)\b/) ? '37' :
+                              ("$params.genome" =~ /(?i)\b(38|grch38|hg38)\b/) ? '38' :
+                              { throw new Exception("Invalid genome version specified: $params.genome. Must be a variant of '37' (e.g., GRCh37, hg19) or '38' (e.g., GRCh38, hg38).") }()
 
     // Call somatic SNVs using SAGE in tumor-normal mode
     SAGE_SOMATIC(
@@ -69,7 +71,7 @@ workflow CALL_SOMATIC_SNVS {
         ch_fasta,
         ch_fai,
         ch_dict,
-        genome_version, // genome version
+        sage_genome_version, // genome version
         ch_panel_of_normals,
         ch_sage_known_hotspots_somatic.collect{it[1]},
         ch_sage_highconf_regions.collect{it[1]},
@@ -93,10 +95,14 @@ workflow CALL_SOMATIC_SNVS {
         PASSFILTER_FOR_SAGE.out.vcf
     )
 
-    // VEP Annotation
+    ch_input_vcf = SOMATIC_VCFMERGE.out.vcf
+        .map { meta, vcf ->
+            return tuple(meta, vcf, []) // empty channel for custom files
+        }
 
+    // VEP Annotation
     ANNOTATE_VEP (
-        SOMATIC_VCFMERGE.out.vcf,
+        ch_input_vcf,
         params.genome,
         "homo_sapiens",
         params.ensemblvep_version,

@@ -352,8 +352,8 @@
             "default": 20
         },
         "ensemblvep_version": {
-            "type": "integer",
-            "default": 115
+            "type": "string",
+            "default": "115"
         }
     }
 }

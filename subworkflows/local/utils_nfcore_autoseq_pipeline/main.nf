@@ -159,6 +159,7 @@ workflow PIPELINE_COMPLETION {
 //
 def validateInputParameters() {
     genomeExistsError()
+    panelExistsError()
 }
 
 //
@@ -212,6 +213,20 @@ def genomeExistsError() {
         error(error_string)
     }
 }
+//
+// Exit pipeline if incorrect --panel key provided
+//
+def panelExistsError() {
+    if (params.panels && params.panel && !params.panels.containsKey(params.panel)) {
+        def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+            "  Panel '${params.panel}' not found in any config files provided to the pipeline.\n" +
+            "  Currently, the available panel keys are:\n" +
+            "  ${params.panels.keySet().join(", ")}\n" +
+            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        error(error_string)
+    }
+}
+
 //
 // Generate methods description for MultiQC
 //
