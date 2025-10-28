@@ -97,7 +97,7 @@ workflow CALL_SOMATIC_SNVS {
 
     ch_input_vcf = SOMATIC_VCFMERGE.out.vcf
         .map { meta, vcf ->
-            return tuple(meta, vcf, []) // empty channel for custom files
+            return tuple(meta, vcf, Channel.empty()) // empty channel for custom files
         }
 
     // VEP Annotation
@@ -108,7 +108,7 @@ workflow CALL_SOMATIC_SNVS {
         params.ensemblvep_version,
         ch_ensembl_data_resources.collect{it[1]},
         ch_fasta,
-        []
+        Channel.empty()
     )
 
 
@@ -119,6 +119,7 @@ workflow CALL_SOMATIC_SNVS {
     versions = versions.mix(PASSFILTER_FOR_MUTECT2.out.versions)
     versions = versions.mix(PASSFILTER_FOR_SAGE.out.versions)
     versions = versions.mix(SOMATIC_VCFMERGE.out.versions)
+    versions = versions.mix(ANNOTATE_VEP.out.versions)
 
 
     emit:
@@ -131,7 +132,7 @@ workflow CALL_SOMATIC_SNVS {
     sage_vcf            = SAGE_SOMATIC.out.vcf                                 // channel: [ val(meta), path(vcf) ]
     sage_tbi            = SAGE_SOMATIC.out.tbi
     somatic_vcf         = SOMATIC_VCFMERGE.out.vcf
-    somatic_tbi         = SOMATIC_VCFMERGE.out.vcf
+    somatic_tbi         = SOMATIC_VCFMERGE.out.tabi
     vep_vcf             = ANNOTATE_VEP.out.vcf
     vep_tbi             = ANNOTATE_VEP.out.tbi
     versions
