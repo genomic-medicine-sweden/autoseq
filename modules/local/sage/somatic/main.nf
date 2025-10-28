@@ -1,5 +1,5 @@
 // This module is adapted from nf-core/oncoanalyser for use in this workflow
-// NOTE(SW): logic that determines BQR outputs assumes '-output_vcf' is a path that includes at least leading one directory
+// NOTE(SW): logic that determines BQR outputs assumes '-output_vcf' is a path that includes at least one non-empty directory (e.g. /path/to/results/filename.vcf)
 
 process SAGE_SOMATIC {
     tag "${meta.id}"
