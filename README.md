@@ -1,16 +1,17 @@
 <h1>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-autoseq_logo_dark.png">
-    <img alt="nf-autoseq" src="docs/images/nf-core-autoseq_logo_light.png">
+      <center><img alt="nf-autoseq"  src="docs/images/nf-autoseq-logo.png"></center>
   </picture>
 </h1>
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new/nf-core/autoseq)
 [![GitHub Actions CI Status](https://github.com/nf-core/autoseq/actions/workflows/nf-test.yml/badge.svg)](https://github.com/nf-core/autoseq/actions/workflows/nf-test.yml)
 [![GitHub Actions Linting Status](https://github.com/nf-core/autoseq/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/autoseq/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/autoseq/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
-[![Nextflow](https://img.shields.io/badge/version-%E2%89%A524.10.5-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
-[![nf-core template version](https://img.shields.io/badge/nf--core_template-3.3.2-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/3.3.2)
+[![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.04.0-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
+[![nf-core template version](https://img.shields.io/badge/nf--core_template-3.4.1-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/3.4.1)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
@@ -22,68 +23,61 @@
 
 **nf-core/autoseq** is a Nextflow pipeline designed for deep targeted sequencing and whole-exome data. It automates essential steps from quality control to variant calling. The pipeline annotates variants using [`VEP`](https://www.ensembl.org/info/docs/tools/vep/index.html)! and applies sophisticated semantic filters to eliminate irrelevant and non-significant calls. The final output is optimized for manual curation in tools like IGV and can be exported as a text, HTML, or PDF report.
 
-<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
-     workflows use the "tube map" design for that. See https://nf-co.re/docs/guidelines/graphic_design/workflow_diagrams#examples for examples.   -->
+![nf-autoseq-workflow](docs/images/nf-autoseq-workflow.png)
 
 1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
 2. Adapter trimming ([`FastP`](https://github.com/OpenGene/fastp))
 3. Alignment to reference genome ([`BWAMEM2`](https://github.com/bwa-mem2/bwa-mem2))
 4. Post-alignment QC ([`Picard - CollectHsMetrics, CollectMultipleMetrics`](https://broadinstitute.github.io/picard/))
-5. Somatic Variant Calling ([`GATK Mutect2`](https://gatk.broadinstitute.org/hc/en-us/articles/30332058799003-Mutect2), [`SAGE`](https://github.com/hartwigmedical/hmftools/tree/master/sage))
-6. Germline Variant Calling ([`GATK HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/30332006386459-HaplotypeCaller), )
-7. Structural Variant Calling ([`GRIDSS`](https://github.com/PapenfussLab/gridss))
-8. Copy Number Variant Calling ([`Jumble`](https://github.com/ClinSeq/jumble))
-9. Annotation of variants ([`VEP`](https://www.ensembl.org/info/docs/tools/vep/index.html))
-10. Summary of QC metrics ([`MultiQC`](http://multiqc.info/))
+5. UMI Processing ([`Fgbio`](https://fulcrumgenomics.github.io/fgbio/))
+6. Somatic Variant Calling ([`GATK Mutect2`](https://gatk.broadinstitute.org/hc/en-us/articles/30332058799003-Mutect2), [`SAGE`](https://github.com/hartwigmedical/hmftools/tree/master/sage))
+7. Germline Variant Calling ([`GATK HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/30332006386459-HaplotypeCaller), )
+8. Structural Variant Calling ([`GRIDSS`](https://github.com/PapenfussLab/gridss))
+9. Copy Number Variant Calling ([`Jumble`](https://github.com/ClinSeq/jumble))
+10. Annotation of variants ([`VEP`](https://www.ensembl.org/info/docs/tools/vep/index.html))
+11. Summary of QC metrics ([`MultiQC`](http://multiqc.info/))
 
 ## Usage
 
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
-     Explain what rows and columns represent. For instance (please edit as appropriate):
-
-First, prepare a samplesheet with your input data that looks as follows:
-
-`samplesheet.csv`:
+Create a samplesheet with your input data that looks as follows: `samplesheet.csv`
 
 ```csv
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+case_id,sample_name,sample_type,lane,fastq_1,fastq_2,bam
+PATIENT_ID,TUMOR_ID,tumor,L2,/path/to/SAMPLE_L2_R1_001.fastq.gz,/path/to/SAMPLE_L2_R2_001.fastq.gz,
+PATIENT_ID,TUMOR_ID,tumor,L3,/path/to/SAMPLE_L3_R1_001.fastq.gz,/path/to/SAMPLE_L3_R2_001.fastq.gz,
+PATIENT_ID,NORMAL_ID,normal,L4,/path/to/SAMPLE_L4_R1_001.fastq.gz,/path/to/SAMPLE_L4_R2_001.fastq.gz,
+PATIENT_ID,NORMAL_ID,normal,L5,/path/to/SAMPLE_L5_R1_001.fastq.gz,/path/to/SAMPLE_L5_R2_001.fastq.gz,
 ```
-
-Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
-
--->
 
 Now, you can run the pipeline using:
 
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
-
 ```bash
-nextflow run nf-core/autoseq \
+nextflow run nf-autoseq/main.nf \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
-   --outdir <OUTDIR>
+   --outdir results/  \
+   --ref_genomes_base /path/to/ref_genomes_base/
 ```
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
-For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/autoseq/usage) and the [parameter documentation](https://nf-co.re/autoseq/parameters).
+For more details and further functionality, please refer to the [usage documentation]() and the [parameter documentation]().
 
 ## Pipeline output
 
-To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/autoseq/results) tab on the nf-core website pipeline page.
+To see the results of an example test run with a full size dataset refer to the [results]() tab on the nf-core website pipeline page.
 For more details about the output files and reports, please refer to the
-[output documentation](https://nf-co.re/autoseq/output).
+[output documentation]().
 
 ## Credits
 
-nf-core/autoseq was originally written by Sarath Murugan.
+`nf-autoseq` was originally written by Sarath Kumar Murugan.
 
-We thank the following people for their extensive assistance in the development of this pipeline:
+<!-- We thank the following people for their extensive assistance in the development of this pipeline: -->
 
 <!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 
