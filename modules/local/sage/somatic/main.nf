@@ -1,5 +1,5 @@
 // This module is adapted from nf-core/oncoanalyser for use in this workflow
-// NOTE(SW): logic that determines BQR outputs assumes '-output_vcf' is a path that includes at least leading one directory
+// NOTE(SW): logic that determines BQR outputs assumes '-output_vcf' is a path that includes at least one non-empty directory (e.g. /path/to/results/filename.vcf)
 
 process SAGE_SOMATIC {
     tag "${meta.id}"
@@ -12,9 +12,9 @@ process SAGE_SOMATIC {
 
     input:
     tuple val(meta), path(input), path(input_index), path(intervals)
-    tuple val(meta3), path(fasta)
-    tuple val(meta4), path(fai)
-    tuple val(meta5), path(dict)
+    tuple val(meta2), path(fasta)
+    tuple val(meta3), path(fai)
+    tuple val(meta4), path(dict)
     val genome_ver
     path sage_pon
     path sage_known_hotspots_somatic
@@ -39,7 +39,7 @@ process SAGE_SOMATIC {
     script:
     def args = task.ext.args ?: ''
     def log_level_arg = task.ext.log_level ? "-log_level ${task.ext.log_level}" : ''
-    def reference_arg = meta.normal_id != null ? "-reference ${normal_id}" : ''
+    def reference_arg = meta.normal_id != null ? "-reference ${meta.normal_id}" : ''
 
     // BAMs
     def tumor_bam = input[0]
@@ -63,9 +63,10 @@ process SAGE_SOMATIC {
         ${reference_arg} \\
         ${reference_bam_arg} \\
         ${high_depth_mode_arg} \\
+        ${panel_bed} \\
         -tumor ${meta.tumor_id} \\
         -tumor_bam ${tumor_bam} \\
-        -ref_genome ${genome_fasta} \\
+        -ref_genome ${fasta} \\
         -ref_genome_version ${genome_ver} \\
         -hotspots ${sage_known_hotspots_somatic} \\
         -high_confidence_bed ${sage_highconf_regions} \\

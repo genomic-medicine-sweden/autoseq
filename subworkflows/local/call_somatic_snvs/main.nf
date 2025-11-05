@@ -61,7 +61,9 @@ workflow CALL_SOMATIC_SNVS {
     ch_mutect2_vcf = VT_NORMALIZE.out.vcf
         .join(INDEX_VCF.out.tbi)
 
-    genome_version  = ("$params.genome" =~ /(?i)\b(37|grch37|hg19|b37)\b/) ? '37' : '38'
+    def sage_genome_version = ("$params.genome" =~ /(?i)\b(37|grch37|hg19|b37)\b/) ? '37' :
+                              ("$params.genome" =~ /(?i)\b(38|grch38|hg38)\b/) ? '38' :
+                              { throw new Exception("Invalid genome version specified: $params.genome. Must be a variant of '37' (e.g., GRCh37, hg19) or '38' (e.g., GRCh38, hg38).") }()
 
     // Call somatic SNVs using SAGE in tumor-normal mode
     SAGE_SOMATIC(
@@ -69,7 +71,7 @@ workflow CALL_SOMATIC_SNVS {
         ch_fasta,
         ch_fai,
         ch_dict,
-        genome_version, // genome version
+        sage_genome_version, // genome version
         ch_panel_of_normals,
         ch_sage_known_hotspots_somatic.collect{it[1]},
         ch_sage_highconf_regions.collect{it[1]},
@@ -93,16 +95,20 @@ workflow CALL_SOMATIC_SNVS {
         PASSFILTER_FOR_SAGE.out.vcf
     )
 
-    // VEP Annotation
+    ch_input_vcf = SOMATIC_VCFMERGE.out.vcf
+        .map { meta, vcf ->
+            return tuple(meta, vcf, Channel.empty()) // empty channel for custom files
+        }
 
+    // VEP Annotation
     ANNOTATE_VEP (
-        SOMATIC_VCFMERGE.out.vcf,
+        ch_input_vcf,
         params.genome,
         "homo_sapiens",
         params.ensemblvep_version,
         ch_ensembl_data_resources.collect{it[1]},
         ch_fasta,
-        []
+        Channel.empty()
     )
 
 
@@ -113,6 +119,7 @@ workflow CALL_SOMATIC_SNVS {
     versions = versions.mix(PASSFILTER_FOR_MUTECT2.out.versions)
     versions = versions.mix(PASSFILTER_FOR_SAGE.out.versions)
     versions = versions.mix(SOMATIC_VCFMERGE.out.versions)
+    versions = versions.mix(ANNOTATE_VEP.out.versions)
 
 
     emit:
@@ -125,7 +132,7 @@ workflow CALL_SOMATIC_SNVS {
     sage_vcf            = SAGE_SOMATIC.out.vcf                                 // channel: [ val(meta), path(vcf) ]
     sage_tbi            = SAGE_SOMATIC.out.tbi
     somatic_vcf         = SOMATIC_VCFMERGE.out.vcf
-    somatic_tbi         = SOMATIC_VCFMERGE.out.vcf
+    somatic_tbi         = SOMATIC_VCFMERGE.out.tabi
     vep_vcf             = ANNOTATE_VEP.out.vcf
     vep_tbi             = ANNOTATE_VEP.out.tbi
     versions

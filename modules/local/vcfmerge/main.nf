@@ -10,7 +10,7 @@ process SOMATIC_VCFMERGE {
 
     input:
     tuple val(meta), path(mutect_vcf)
-    tuple val(meta), path(sage_vcf)
+    tuple val(meta2), path(sage_vcf)
 
     output:
     tuple val(meta), path("*-all.somatic.vcf.gz")    , emit: vcf
@@ -18,8 +18,6 @@ process SOMATIC_VCFMERGE {
     path  "versions.yml"                                 , emit: versions
 
     script:
-    def args = task.ext.args ?: ''
-    def targets_bed = targets ? "-t ${targets} " : ''
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     /*
@@ -44,12 +42,11 @@ process SOMATIC_VCFMERGE {
     """
     # Re-order the sample names in SAGE vcf file
     bcftools query -l ${sage_vcf} | sort > sample_names.txt
-    bcftools view -0z -S sample_names.txt ${sage_vcf} -o ${prefix}_ordered.vcf.gz
+    bcftools view -Oz -S sample_names.txt ${sage_vcf} -o ${prefix}_ordered.vcf.gz
     tabix -p vcf ${prefix}_ordered.vcf.gz
 
     # VCF concatenation
-    bcftools concat -a -D ${mutect_vcf} ${prefix}_ordered.vcf.gz \\
-        | bgzip > ${prefix}-all.somatic.vcf.gz
+    bcftools concat -a -D -Oz -o ${prefix}-all.somatic.vcf.gz ${mutect_vcf} ${prefix}_ordered.vcf.gz
     tabix -p vcf ${prefix}-all.somatic.vcf.gz
 
     cat <<-END_VERSIONS > versions.yml
@@ -64,6 +61,7 @@ process SOMATIC_VCFMERGE {
 
     """
     touch ${prefix}-all.somatic.vcf.gz
+    touch ${prefix}-all.somatic.vcf.gz.tbi
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
