@@ -22,7 +22,6 @@ process JUMBLE_RUN {
 
     script:
     def args = task.ext.args ?: ''
-    def targets_bed = targets ? "-t ${targets} " : ''
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
