@@ -9,7 +9,7 @@ process JUMBLE_RUN {
         'community.wave.seqera.io/library/bioconductor-aroma.light_bioconductor-bamsignals_bioconductor-bsgenome.hsapiens.ucsc.hg19_bioconductor-bsgenome_pruned:f3bfc207eb7292f6' }"
 
     input:
-    tuple val(meta), path(bam)
+    tuple val(meta), path(bam), path(bai)
     tuple val(meta2), path(jumbleref)
 
     output:

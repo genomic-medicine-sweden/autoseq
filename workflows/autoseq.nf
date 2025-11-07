@@ -15,11 +15,11 @@ include { FASTP                                               } from '../modules
 include { CAT_FASTQ                                           } from '../modules/nf-core/cat/fastq/main'
 include { SAMTOOLS_INDEX                                      } from '../modules/nf-core/samtools/index/main'
 
-include { ALIGNMENT                                           } from '../subworkflows/local/fastq_align_bwamem2/main.nf'
+include { READ_ALIGNMENT                                      } from '../subworkflows/local/fastq_align_bwamem2/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
-include { BAM_QC_PICARD_SAMTOOLS  as BAM_QC                   } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
-include { CALL_SOMATIC_SNVS                                   } from '../subworkflows/local/call_somatic_snvs/main.nf'
-include { CALL_CNVS_JUMBLE                                    } from '../subworkflows/local/call_cnvs/main.nf'
+include { BAM_QC_PICARD_SAMTOOLS  as ALIGNMENT_QC             } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
+include { SOMATIC_VARIANT_CALLING                             } from '../subworkflows/local/call_somatic_snvs/main.nf'
+include { CNV_CALLING                                         } from '../subworkflows/local/call_cnvs/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,14 +36,13 @@ workflow AUTOSEQ {
     ch_dict
     ch_bwamem2_index
     ch_targets_bed
-    ch_targets_bed_gz
-    ch_interval_list
     ch_interval_list_slopped20
     ch_jumble_ref
     ch_sage_known_hotspots_somatic
     ch_sage_highconf_regions
     ch_sage_pon
     ch_ensembl_data_resources
+    ch_curation_ann
 
     main:
 
@@ -122,24 +121,24 @@ workflow AUTOSEQ {
 
     } else {
 
-        ALIGNMENT(
+        READ_ALIGNMENT(
             ch_input_reads,
             ch_genome_fasta,
             ch_genome_fai,
             ch_bwamem2_index
         )
 
-        ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.dedup_metrics.collect{it[1]}.ifEmpty([]))
-        ch_versions = ch_versions.mix(ALIGNMENT.out.versions.first())
-        ch_aligned_bam = ALIGNMENT.out.dedup_bam
-            .join(ALIGNMENT.out.dedup_bai)
+        ch_multiqc_files = ch_multiqc_files.mix(READ_ALIGNMENT.out.dedup_metrics.collect{it[1]}.ifEmpty([]))
+        ch_versions = ch_versions.mix(READ_ALIGNMENT.out.versions.first())
+        ch_aligned_bam = READ_ALIGNMENT.out.dedup_bam
+            .join(READ_ALIGNMENT.out.dedup_bai)
     }
 
     //
     // MODULE: QC of aligned BAM files
     //
 
-    BAM_QC(
+    ALIGNMENT_QC(
         ch_aligned_bam,
         ch_genome_fasta,
         ch_genome_fai,
@@ -147,7 +146,7 @@ workflow AUTOSEQ {
         ch_interval_list_slopped20
     )
 
-    ch_versions = ch_versions.mix(BAM_QC.out.versions.first())
+    ch_versions = ch_versions.mix(ALIGNMENT_QC.out.versions.first())
 
     //
     // MODULE: Somatic SNV and INDELs Calling
@@ -192,30 +191,35 @@ workflow AUTOSEQ {
             [meta, [tumor_bam, normal_bam], [tumor_bai, normal_bai], intervals_file]
         }
 
-    CALL_SOMATIC_SNVS (
+    SOMATIC_VARIANT_CALLING (
         ch_input_paired,
         ch_genome_fasta,
         ch_genome_fai,
         ch_dict,
-        Channel.empty(),  // germline_resource
-        Channel.empty(),
-        Channel.empty(),
-        Channel.empty(),
-        ch_interval_list_slopped20.collect{ it -> it[1] },
+        [],  // germline_resource
+        [],
+        [],
+        [],
+        ch_interval_list_slopped20.collect{ it[1] },
         ch_sage_known_hotspots_somatic,
         ch_sage_highconf_regions,
         ch_sage_pon,
         ch_ensembl_data_resources
     )
 
+    ch_versions = ch_versions.mix(SOMATIC_VARIANT_CALLING.out.versions.first())
+
     //
     // MODULE: CNV Calling
     //
 
+    CNV_CALLING(
+        ch_aligned_bam,
+        ch_jumble_ref,
+        ch_curation_ann
+    )
 
-
-
-    ch_versions = ch_versions.mix(CALL_SOMATIC_SNVS.out.versions.first())
+    ch_versions = ch_versions.mix(CNV_CALLING.out.versions.first())
 
     //
     // Collate and save software versions
@@ -234,9 +238,9 @@ workflow AUTOSEQ {
     //
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.multiple_metrics.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.hs_metrics.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.flagstat.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.multiple_metrics.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.hs_metrics.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.flagstat.collect{it[1]}.ifEmpty([]))
 
 
     ch_multiqc_config        = Channel.fromPath(
