@@ -19,6 +19,7 @@ include { ALIGNMENT                                           } from '../subwork
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
 include { BAM_QC_PICARD_SAMTOOLS  as BAM_QC                   } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
 include { CALL_SOMATIC_SNVS                                   } from '../subworkflows/local/call_somatic_snvs/main.nf'
+include { CALL_CNVS_JUMBLE                                    } from '../subworkflows/local/call_cnvs/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -134,7 +135,9 @@ workflow AUTOSEQ {
             .join(ALIGNMENT.out.dedup_bai)
     }
 
-    // Module: QC
+    //
+    // MODULE: QC of aligned BAM files
+    //
 
     BAM_QC(
         ch_aligned_bam,
@@ -146,7 +149,9 @@ workflow AUTOSEQ {
 
     ch_versions = ch_versions.mix(BAM_QC.out.versions.first())
 
-    // Module: SOMATIC SNV CALLING
+    //
+    // MODULE: Somatic SNV and INDELs Calling
+    //
 
     // Branch samples by tumor/normal
     ch_aligned_bam
@@ -196,12 +201,19 @@ workflow AUTOSEQ {
         Channel.empty(),
         Channel.empty(),
         Channel.empty(),
-        ch_interval_list_slopped20.collect{it[1]},
+        ch_interval_list_slopped20.collect{ it -> it[1] },
         ch_sage_known_hotspots_somatic,
         ch_sage_highconf_regions,
         ch_sage_pon,
         ch_ensembl_data_resources
     )
+
+    //
+    // MODULE: CNV Calling
+    //
+
+
+
 
     ch_versions = ch_versions.mix(CALL_SOMATIC_SNVS.out.versions.first())
 

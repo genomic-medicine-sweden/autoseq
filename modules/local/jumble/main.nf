@@ -4,7 +4,9 @@ process JUMBLE_RUN {
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "docker://sarathmurugan01/jumble:v1.0.0"
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/19/19ea92369dd5c2d099cc7ddc13b7a86c901d88b9b55a556505e25f239fccbbde/data':
+        'community.wave.seqera.io/library/bioconductor-aroma.light_bioconductor-bamsignals_bioconductor-bsgenome.hsapiens.ucsc.hg19_bioconductor-bsgenome_pruned:f3bfc207eb7292f6' }"
 
     input:
     tuple val(meta), path(bam)
