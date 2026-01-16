@@ -173,14 +173,6 @@
                     "type": "string",
                     "description": "Path to the BED file containing target regions"
                 },
-                "targets_bed_gz": {
-                    "type": "string",
-                    "description": "Path to the gzipped BED file containing target regions"
-                },
-                "interval_list": {
-                    "type": "string",
-                    "description": "Path to the interval list file"
-                },
                 "interval_list_slopped20": {
                     "type": "string",
                     "description": "Path to the slopped interval list file"
@@ -366,7 +358,10 @@
         },
         "ensemblvep_version": {
             "type": "string",
-            "default": "115"
+            "default": 115
+        },
+        "curation_ann": {
+            "type": "string"
         }
     }
 }
