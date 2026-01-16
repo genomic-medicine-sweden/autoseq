@@ -221,6 +221,8 @@ workflow AUTOSEQ {
 
     ch_versions = ch_versions.mix(CNV_CALLING.out.versions.first())
 
+
+
     //
     // Collate and save software versions
     //
