@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import os
 import argparse
 import pandas as pd
 import logging
@@ -10,7 +9,15 @@ __version__ = "1.0.0"
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-def annotate_cnvs(input_file, curation_ann_file, output_file):
+CANCER_PROJECT_CODE = {
+    "sarcoma" : "SARC",
+    "ovarian" : "COV",
+    "colorectal" : "CCR",
+    "endometrial": "CEC"
+}
+
+
+def annotate_cnvs(input_file, curation_ann_file, cancer_type, sample_type, output_file) -> None:
     """
     Annotate CNVs with cancer gene specific information for curation
 
@@ -28,9 +35,8 @@ def annotate_cnvs(input_file, curation_ann_file, output_file):
     ann_df = pd.read_csv(curation_ann_file)
 
     logging.info(f"Read {len(ann_df)} rows from annotation file")
-    project = os.path.basename(input_file).split('-')[0]
-    sample_type = os.path.basename(input_file).split('-')[3]
-    type = 'somatic' if sample_type in ['T', 'CFDNA'] else 'germline'
+    project = CANCER_PROJECT_CODE[cancer_type] if cancer_type in CANCER_PROJECT_CODE else 'PANCANCER'
+    type = 'somatic' if sample_type in ['tumor', 'cfdna'] else 'germline'
 
     logging.info(f"Project identified as {project}")
     ## filter the annotation file based on the project and type
@@ -39,7 +45,6 @@ def annotate_cnvs(input_file, curation_ann_file, output_file):
 
     # Create a dictionary from the annotation file for quick lookup
     annotation_dict = ann_df.set_index('gene')['comment'].to_dict()
-
 
     # Function to annotate a row
     def annotate_row(row):
@@ -61,10 +66,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=
         'Annotate CNVs with cancer gene specific information for curation')
     parser.add_argument('-i', '--input', required=True, help="Input CNV segmentations file")
-    parser.add_argument('-c', '--curation-ann', help="Annotation file for curation")
+    parser.add_argument('-t', '--sample-type', choices= ['tumor', 'normal', 'cfdna'], required=True,
+                        help="Sample type: tumor, normal, cfdna")
+    parser.add_argument('-c', '--curation-annotation-file', help="Annotation file for curation")
+    parser.add_argument('--cancer-type', help="Cancer type")
     parser.add_argument('-o', '--output', required=True,
                         help="output segmentation file with curate column in the end")
     parser.add_argument('-v', '--version', action='version', version=f'%(prog)s {__version__}')
     args = parser.parse_args()
 
-    annotate_cnvs(args.input, args.curation_ann, args.output)
+    annotate_cnvs(args.input, args.curation_annotation_file, args.cancer_type, args.sample_type, args.output)

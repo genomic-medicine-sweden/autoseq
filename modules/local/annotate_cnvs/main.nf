@@ -21,7 +21,8 @@ process ANNOTATE_CNVS {
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
-    annotate_cnvs.py -i ${cns} -c ${curation_ann} -o ${prefix}_ann.cns ${args}
+    annotate_cnvs.py -i ${cns} -c ${curation_ann} -o ${prefix}_ann.cns \\
+        --sample-type ${meta.sample_type} ${args}
 
     # Capture versions
     cat <<-END_VERSIONS > versions.yml
