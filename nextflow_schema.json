@@ -362,6 +362,10 @@
         },
         "curation_ann": {
             "type": "string"
+        },
+        "cancer_type": {
+            "type": "string",
+            "default": "pancancer"
         }
     }
 }
