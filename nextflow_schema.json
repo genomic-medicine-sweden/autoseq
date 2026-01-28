@@ -365,7 +365,10 @@
         },
         "cancer_type": {
             "type": "string",
-            "default": "pancancer"
+            "description": "Cancer project code for gene-specific annotation.",
+            "help_text": "Specifies the project shorthand used to filter the master curation file. This ensures that CNV segments are annotated with comments relevant to the specific cancer biology being studied.",
+            "default": "PANCANCER",
+            "enum": ["PANCANCER", "CBC", "CCR", "CEC", "COV", "SARC"]
         }
     }
 }
