@@ -1,0 +1,85 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "jumble_run"
+description: Run JUMBLE for copy number variant detection from dna sequencing data
+keywords:
+  - cnv
+  - copy number
+  - wgs
+  - segmentation
+  - dnacopy
+  - genomics
+tools:
+  - jumble:
+      description: |
+        Jumble is a method for copy number analysis of short read sequencing data.
+      homepage: https://github.com/ClinSeq/jumble/
+      documentation: https://github.com/ClinSeq/jumble/
+      licence: ["GPL-3"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1', single_end:false ]`
+  - bam:
+      type: file
+      description: BAM file containing aligned reads
+      pattern: "*.bam"
+  - bai:
+      type: file
+      description: BAM index file
+      pattern: "*.bai"
+  - meta2:
+      type: map
+      description: |
+        Groovy Map containing reference information
+        e.g. `[ id:'jumble_ref' ]`
+  - jumbleref:
+      type: file
+      description: JUMBLE reference file in RDS format containing precomputed statistics
+      pattern: "*.RDS"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1', single_end:false ]`
+  - cns:
+      type: file
+      description: Copy number segments file
+      pattern: "*.cns"
+  - cnr:
+      type: file
+      description: Copy number ratios file (bin-level)
+      pattern: "*.cnr"
+  - seg:
+      type: file
+      description: DNAcopy segmentation output file
+      pattern: "*_dnacopy.seg"
+  - profile_bedgraph:
+      type: file
+      description: BedGraph file of copy number profile for IGV visualization
+      pattern: "*_profile_bedgraph"
+  - segments_bedgraph:
+      type: file
+      description: BedGraph file of copy number segments for IGV visualization
+      pattern: "*_segments_bedgraph"
+  - png:
+      type: file
+      description: Optional PNG plot of copy number profile
+      pattern: "*.png"
+  - rds:
+      type: file
+      description: Optional RDS file containing R objects
+      pattern: "*.RDS"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"

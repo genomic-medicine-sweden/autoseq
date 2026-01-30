@@ -11,7 +11,7 @@ include { TABIX_TABIX  as INDEX_VCF                     } from '../../../modules
 include { ENSEMBLVEP_VEP as ANNOTATE_VEP                } from '../../../modules/nf-core/ensemblvep/vep'
 
 
-workflow SOMATIC_VARIANT_CALLING {
+workflow SOMATIC_SNV_CALLING {
     take:
     ch_input                 // channel: [ val(meta), path(input), path(input_index), val(which_norm) ]
     ch_fasta                 // channel: [ val(meta), path(fasta) ]

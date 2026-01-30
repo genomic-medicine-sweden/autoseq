@@ -18,7 +18,7 @@ include { SAMTOOLS_INDEX                                      } from '../modules
 include { READ_ALIGNMENT                                      } from '../subworkflows/local/fastq_align_bwamem2/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
 include { BAM_QC_PICARD_SAMTOOLS  as ALIGNMENT_QC             } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
-include { SOMATIC_VARIANT_CALLING                             } from '../subworkflows/local/call_somatic_snvs/main.nf'
+include { SOMATIC_SNV_CALLING                                 } from '../subworkflows/local/call_somatic_snvs/main.nf'
 include { CNV_CALLING                                         } from '../subworkflows/local/call_cnvs/main.nf'
 
 /*
@@ -191,7 +191,7 @@ workflow AUTOSEQ {
             [meta, [tumor_bam, normal_bam], [tumor_bai, normal_bai], intervals_file]
         }
 
-    SOMATIC_VARIANT_CALLING (
+    SOMATIC_SNV_CALLING (
         ch_input_paired,
         ch_genome_fasta,
         ch_genome_fai,
@@ -207,7 +207,7 @@ workflow AUTOSEQ {
         ch_ensembl_data_resources
     )
 
-    ch_versions = ch_versions.mix(SOMATIC_VARIANT_CALLING.out.versions.first())
+    ch_versions = ch_versions.mix(SOMATIC_SNV_CALLING.out.versions.first())
 
     //
     // MODULE: CNV Calling
