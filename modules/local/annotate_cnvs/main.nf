@@ -28,7 +28,7 @@ process ANNOTATE_CNVS {
     # Capture versions
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        annotate_cnvs.py: \$( annotate_cnvs.py --version 2>&1 | head -n 1 || echo "unknown" )
+        annotate_cnvs.py: \$( annotate_cnvs.py --version 2>&1 | head -n 1 )
         python: \$( python --version | sed -n '1p' )
     END_VERSIONS
     """
