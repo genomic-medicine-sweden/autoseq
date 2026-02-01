@@ -99,8 +99,10 @@ workflow NXF_AUTOSEQ {
         ch_ensembl_data_resources,
         ch_curation_ann
     )
+
     emit:
-    multiqc_report = AUTOSEQ.out.multiqc_report // channel: /path/to/multiqc_report.html
+    autoseq_output = AUTOSEQ.out.autoseq_output      // channel: [ val(meta + [file: description]), path(file) ]
+    multiqc_report = AUTOSEQ.out.multiqc_report     // channel: /path/to/multiqc_report.html
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -145,6 +147,56 @@ workflow {
         params.hook_url,
         NXF_AUTOSEQ.out.multiqc_report
     )
+
+    publish:
+    autoseq_output  = NXF_AUTOSEQ.out.autoseq_output  // channel: [ val(meta + [file: description]), path(file) ]
+    multiqc_report  = NXF_AUTOSEQ.out.multiqc_report   // channel: /path/to/multiqc_report.html
+}
+
+
+output {
+    multiqc_report {
+        path { "multiqc" }
+    }
+    autoseq_output {
+        path { meta, file ->
+            switch(meta.file) {
+                case 'bam':
+                case 'bai':
+                    return 'alignment'
+                case 'flagstat':
+                    return 'qc/samtools'
+                case 'contamination_table':
+                    return 'qc/contamination'
+                case 'hs_metrics':
+                case 'multiple_metrics':
+                    return 'qc/picard'
+                case 'jumble_cns':
+                case 'cnr':
+                case 'seg':
+                case 'profile_bedgraph':
+                case 'segments_bedgraph':
+                case 'annotated_cns':
+                case 'cnv_plot_png':
+                    return 'cnv'
+                case 'mutect2_stats':
+                case 'mutect2_vcf':
+                case 'mutect2_tbi':
+                    return 'variants/somatic/mutect2'
+                case 'sage_vcf':
+                case 'sage_tbi':
+                    return 'variants/somatic/sage'
+                case 'somatic_vcf':
+                case 'somatic_tbi':
+                    return 'variants/somatic/merged'
+                case 'vep_vcf':
+                case 'vep_tbi':
+                    return 'variants/somatic'
+                default:
+                    return ''
+            }
+        }
+    }
 }
 
 /*

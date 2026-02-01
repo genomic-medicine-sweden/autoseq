@@ -56,7 +56,7 @@ workflow AUTOSEQ {
         ch_samplesheet
     )
 
-    ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+    ch_versions = ch_versions.mix(FASTQC.out.versions)
 
     //
     // MODULE: Run FastP
@@ -69,7 +69,7 @@ workflow AUTOSEQ {
         params.save_merged
     )
 
-    ch_versions = ch_versions.mix(FASTP.out.versions.first())
+    ch_versions = ch_versions.mix(FASTP.out.versions)
     ch_input_reads = FASTP.out.reads
 
     //
@@ -117,7 +117,7 @@ workflow AUTOSEQ {
         ch_aligned_bam = UMI_PROCESSING.out.mappedconsensusbam
             .join(SAMTOOLS_INDEX.out.bai)
 
-        ch_versions = ch_versions.mix(UMI_PROCESSING.out.versions.first())
+        ch_versions = ch_versions.mix(UMI_PROCESSING.out.versions)
 
     } else {
 
@@ -129,7 +129,7 @@ workflow AUTOSEQ {
         )
 
         ch_multiqc_files = ch_multiqc_files.mix(READ_ALIGNMENT.out.dedup_metrics.collect{it[1]}.ifEmpty([]))
-        ch_versions = ch_versions.mix(READ_ALIGNMENT.out.versions.first())
+        ch_versions = ch_versions.mix(READ_ALIGNMENT.out.versions)
         ch_aligned_bam = READ_ALIGNMENT.out.dedup_bam
             .join(READ_ALIGNMENT.out.dedup_bai)
     }
@@ -146,7 +146,7 @@ workflow AUTOSEQ {
         ch_interval_list_slopped20
     )
 
-    ch_versions = ch_versions.mix(ALIGNMENT_QC.out.versions.first())
+    ch_versions = ch_versions.mix(ALIGNMENT_QC.out.versions)
 
     //
     // MODULE: Somatic SNV and INDELs Calling
@@ -207,7 +207,7 @@ workflow AUTOSEQ {
         ch_ensembl_data_resources
     )
 
-    ch_versions = ch_versions.mix(SOMATIC_SNV_CALLING.out.versions.first())
+    ch_versions = ch_versions.mix(SOMATIC_SNV_CALLING.out.versions)
 
     //
     // MODULE: CNV Calling
@@ -219,7 +219,7 @@ workflow AUTOSEQ {
         ch_curation_ann
     )
 
-    ch_versions = ch_versions.mix(CNV_CALLING.out.versions.first())
+    ch_versions = ch_versions.mix(CNV_CALLING.out.versions)
 
 
 
@@ -300,8 +300,40 @@ workflow AUTOSEQ {
         []
     )
 
-    emit:multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
+    // Prepare final output channel
+
+    autoseq_output = Channel
+        .empty()
+        .mix(
+            ch_aligned_bam.map { meta, bam, bai -> [ meta + [file: "bam"], bam] },
+            ch_aligned_bam.map { meta, bam, bai -> [ meta + [file: "bai"], bai] },
+            ALIGNMENT_QC.out.flagstat.map { meta, flagstat -> [ meta + [file: "flagstat"], flagstat] },
+            ALIGNMENT_QC.out.hs_metrics.map { meta, hs_metrics -> [ meta + [file: "hs_metrics"], hs_metrics] },
+            ALIGNMENT_QC.out.multiple_metrics.map { meta, multiple_metrics -> [ meta + [file: "multiple_metrics"], multiple_metrics] },
+            CNV_CALLING.out.jumble_cns.map { meta, cns -> [ meta + [file: "jumble_cns"], cns] },
+            CNV_CALLING.out.cnr.map { meta, cnr -> [ meta + [file: "cnr"], cnr] },
+            CNV_CALLING.out.seg.map { meta, seg -> [ meta + [file: "seg"], seg] },
+            CNV_CALLING.out.profile_bedgraph.map { meta, profile_bedgraph -> [ meta + [file: "profile_bedgraph"], profile_bedgraph] },
+            CNV_CALLING.out.segments_bedgraph.map { meta, segments_bedgraph -> [ meta + [file: "segments_bedgraph"], segments_bedgraph] },
+            CNV_CALLING.out.png.map { meta, png -> [ meta + [file: "cnv_plot_png"], png] },
+            CNV_CALLING.out.cns.map { meta, annotated_cns -> [ meta + [file: "annotated_cns"], annotated_cns] },
+            SOMATIC_SNV_CALLING.out.contamination_table.map { meta, table -> [ meta + [file: "contamination_table"], table] },
+            SOMATIC_SNV_CALLING.out.mutect2_stats.map { meta, stats -> [ meta + [file: "mutect2_stats"], stats] },
+            SOMATIC_SNV_CALLING.out.mutect2_tbi.map { meta, tbi -> [ meta + [file: "mutect2_tbi"], tbi] },
+            SOMATIC_SNV_CALLING.out.mutect2_vcf.map { meta, vcf -> [ meta + [file: "mutect2_vcf"], vcf] },
+            SOMATIC_SNV_CALLING.out.sage_vcf.map { meta, vcf -> [ meta + [file: "sage_vcf"], vcf] },
+            SOMATIC_SNV_CALLING.out.sage_tbi.map { meta, tbi -> [ meta + [file: "sage_tbi"], tbi] },
+            SOMATIC_SNV_CALLING.out.somatic_vcf.map { meta, somatic_vcf -> [ meta + [file: "somatic_vcf"], somatic_vcf] },
+            SOMATIC_SNV_CALLING.out.somatic_tbi.map { meta, somatic_tbi -> [ meta + [file: "somatic_tbi"], somatic_tbi] },
+            SOMATIC_SNV_CALLING.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "vep_vcf"], vep_vcf] },
+            SOMATIC_SNV_CALLING.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "vep_tbi"], vep_tbi] }
+        )
+
+    emit:
+    autoseq_output = autoseq_output               // channel: [ val(meta + [file: description]), path(file) ]
+    multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
+
 
 }
 
