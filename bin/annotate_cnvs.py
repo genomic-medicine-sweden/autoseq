@@ -69,7 +69,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', '--sample-type', choices= ['germline', 'somatic'], required=True,
                         help="Sample type: somatic or germline")
     parser.add_argument('-c', '--curation-annotation-file', help="Annotation file for curation")
-    parser.add_argument('--cancer-type', default='PANCANCER', help="shorthand code for cancer type")
+    parser.add_argument('--cancer-type', default='PANCANCER', help="shorthand code for cancer type; Default: PANCANCER")
     parser.add_argument('-o', '--output', required=True,
                         help="output segmentation file with curate column in the end")
     parser.add_argument('-v', '--version', action='version', version=f'%(prog)s {__version__}')
