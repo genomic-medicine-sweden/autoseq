@@ -15,10 +15,11 @@ include { FASTP                                               } from '../modules
 include { CAT_FASTQ                                           } from '../modules/nf-core/cat/fastq/main'
 include { SAMTOOLS_INDEX                                      } from '../modules/nf-core/samtools/index/main'
 
-include { ALIGNMENT                                           } from '../subworkflows/local/fastq_align_bwamem2/main.nf'
+include { READ_ALIGNMENT                                      } from '../subworkflows/local/fastq_align_bwamem2/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
-include { BAM_QC_PICARD_SAMTOOLS  as BAM_QC                   } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
-include { CALL_SOMATIC_SNVS                                   } from '../subworkflows/local/call_somatic_snvs/main.nf'
+include { BAM_QC_PICARD_SAMTOOLS  as ALIGNMENT_QC             } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
+include { SOMATIC_SNV_CALLING                                 } from '../subworkflows/local/call_somatic_snvs/main.nf'
+include { CNV_CALLING                                         } from '../subworkflows/local/call_cnvs/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -35,14 +36,13 @@ workflow AUTOSEQ {
     ch_dict
     ch_bwamem2_index
     ch_targets_bed
-    ch_targets_bed_gz
-    ch_interval_list
     ch_interval_list_slopped20
     ch_jumble_ref
     ch_sage_known_hotspots_somatic
     ch_sage_highconf_regions
     ch_sage_pon
     ch_ensembl_data_resources
+    ch_curation_ann
 
     main:
 
@@ -56,7 +56,7 @@ workflow AUTOSEQ {
         ch_samplesheet
     )
 
-    ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+    ch_versions = ch_versions.mix(FASTQC.out.versions)
 
     //
     // MODULE: Run FastP
@@ -69,7 +69,7 @@ workflow AUTOSEQ {
         params.save_merged
     )
 
-    ch_versions = ch_versions.mix(FASTP.out.versions.first())
+    ch_versions = ch_versions.mix(FASTP.out.versions)
     ch_input_reads = FASTP.out.reads
 
     //
@@ -117,26 +117,28 @@ workflow AUTOSEQ {
         ch_aligned_bam = UMI_PROCESSING.out.mappedconsensusbam
             .join(SAMTOOLS_INDEX.out.bai)
 
-        ch_versions = ch_versions.mix(UMI_PROCESSING.out.versions.first())
+        ch_versions = ch_versions.mix(UMI_PROCESSING.out.versions)
 
     } else {
 
-        ALIGNMENT(
+        READ_ALIGNMENT(
             ch_input_reads,
             ch_genome_fasta,
             ch_genome_fai,
             ch_bwamem2_index
         )
 
-        ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.dedup_metrics.collect{it[1]}.ifEmpty([]))
-        ch_versions = ch_versions.mix(ALIGNMENT.out.versions.first())
-        ch_aligned_bam = ALIGNMENT.out.dedup_bam
-            .join(ALIGNMENT.out.dedup_bai)
+        ch_multiqc_files = ch_multiqc_files.mix(READ_ALIGNMENT.out.dedup_metrics.collect{it[1]}.ifEmpty([]))
+        ch_versions = ch_versions.mix(READ_ALIGNMENT.out.versions)
+        ch_aligned_bam = READ_ALIGNMENT.out.dedup_bam
+            .join(READ_ALIGNMENT.out.dedup_bai)
     }
 
-    // Module: QC
+    //
+    // MODULE: QC of aligned BAM files
+    //
 
-    BAM_QC(
+    ALIGNMENT_QC(
         ch_aligned_bam,
         ch_genome_fasta,
         ch_genome_fai,
@@ -144,9 +146,11 @@ workflow AUTOSEQ {
         ch_interval_list_slopped20
     )
 
-    ch_versions = ch_versions.mix(BAM_QC.out.versions.first())
+    ch_versions = ch_versions.mix(ALIGNMENT_QC.out.versions)
 
-    // Module: SOMATIC SNV CALLING
+    //
+    // MODULE: Somatic SNV and INDELs Calling
+    //
 
     // Branch samples by tumor/normal
     ch_aligned_bam
@@ -187,28 +191,60 @@ workflow AUTOSEQ {
             [meta, [tumor_bam, normal_bam], [tumor_bai, normal_bai], intervals_file]
         }
 
-    CALL_SOMATIC_SNVS (
+    SOMATIC_SNV_CALLING (
         ch_input_paired,
         ch_genome_fasta,
         ch_genome_fai,
         ch_dict,
-        Channel.empty(),  // germline_resource
-        Channel.empty(),
-        Channel.empty(),
-        Channel.empty(),
-        ch_interval_list_slopped20.collect{it[1]},
+        [],  // germline_resource
+        [],
+        [],
+        [],
+        ch_interval_list_slopped20.collect{ it[1] },
         ch_sage_known_hotspots_somatic,
         ch_sage_highconf_regions,
         ch_sage_pon,
         ch_ensembl_data_resources
     )
 
-    ch_versions = ch_versions.mix(CALL_SOMATIC_SNVS.out.versions.first())
+    ch_versions = ch_versions.mix(SOMATIC_SNV_CALLING.out.versions)
+
+    //
+    // MODULE: CNV Calling
+    //
+
+    CNV_CALLING(
+        ch_aligned_bam,
+        ch_jumble_ref,
+        ch_curation_ann
+    )
+
+    ch_versions = ch_versions.mix(CNV_CALLING.out.versions)
+
+
 
     //
     // Collate and save software versions
     //
-    softwareVersionsToYAML(ch_versions)
+    def topic_versions = Channel.topic("versions")
+        .distinct()
+        .branch { entry ->
+            versions_file: entry instanceof Path
+            versions_tuple: true
+        }
+
+    def topic_versions_string = topic_versions.versions_tuple
+        .map { process, tool, version ->
+            [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
+        }
+        .groupTuple(by:0)
+        .map { process, tool_versions ->
+            tool_versions.unique().sort()
+            "${process}:\n${tool_versions.join('\n')}"
+        }
+
+    softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
+        .mix(topic_versions_string)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
             name: 'nf_core_'  +  'autoseq_software_'  + 'mqc_'  + 'versions.yml',
@@ -222,29 +258,29 @@ workflow AUTOSEQ {
     //
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.multiple_metrics.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.hs_metrics.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(BAM_QC.out.flagstat.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.multiple_metrics.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.hs_metrics.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.flagstat.collect{it[1]}.ifEmpty([]))
 
 
     ch_multiqc_config        = Channel.fromPath(
         "$projectDir/assets/multiqc_config.yml", checkIfExists: true)
     ch_multiqc_custom_config = params.multiqc_config ?
-        Channel.fromPath(params.multiqc_config, checkIfExists: true) :
-        Channel.empty()
+        channel.fromPath(params.multiqc_config, checkIfExists: true) :
+        channel.empty()
     ch_multiqc_logo          = params.multiqc_logo ?
-        Channel.fromPath(params.multiqc_logo, checkIfExists: true) :
-        Channel.empty()
+        channel.fromPath(params.multiqc_logo, checkIfExists: true) :
+        channel.empty()
 
     summary_params      = paramsSummaryMap(
         workflow, parameters_schema: "nextflow_schema.json")
-    ch_workflow_summary = Channel.value(paramsSummaryMultiqc(summary_params))
+    ch_workflow_summary = channel.value(paramsSummaryMultiqc(summary_params))
     ch_multiqc_files = ch_multiqc_files.mix(
         ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
     ch_multiqc_custom_methods_description = params.multiqc_methods_description ?
         file(params.multiqc_methods_description, checkIfExists: true) :
         file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
-    ch_methods_description                = Channel.value(
+    ch_methods_description                = channel.value(
         methodsDescriptionText(ch_multiqc_custom_methods_description))
 
     ch_multiqc_files = ch_multiqc_files.mix(ch_collated_versions)
@@ -264,8 +300,40 @@ workflow AUTOSEQ {
         []
     )
 
-    emit:multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
+    // Prepare final output channel
+
+    autoseq_output = Channel
+        .empty()
+        .mix(
+            ch_aligned_bam.map { meta, bam, bai -> [ meta + [file: "bam"], bam] },
+            ch_aligned_bam.map { meta, bam, bai -> [ meta + [file: "bai"], bai] },
+            ALIGNMENT_QC.out.flagstat.map { meta, flagstat -> [ meta + [file: "flagstat"], flagstat] },
+            ALIGNMENT_QC.out.hs_metrics.map { meta, hs_metrics -> [ meta + [file: "hs_metrics"], hs_metrics] },
+            ALIGNMENT_QC.out.multiple_metrics.map { meta, multiple_metrics -> [ meta + [file: "multiple_metrics"], multiple_metrics] },
+            CNV_CALLING.out.jumble_cns.map { meta, cns -> [ meta + [file: "jumble_cns"], cns] },
+            CNV_CALLING.out.cnr.map { meta, cnr -> [ meta + [file: "cnr"], cnr] },
+            CNV_CALLING.out.seg.map { meta, seg -> [ meta + [file: "seg"], seg] },
+            CNV_CALLING.out.profile_bedgraph.map { meta, profile_bedgraph -> [ meta + [file: "profile_bedgraph"], profile_bedgraph] },
+            CNV_CALLING.out.segments_bedgraph.map { meta, segments_bedgraph -> [ meta + [file: "segments_bedgraph"], segments_bedgraph] },
+            CNV_CALLING.out.png.map { meta, png -> [ meta + [file: "cnv_plot_png"], png] },
+            CNV_CALLING.out.cns.map { meta, annotated_cns -> [ meta + [file: "annotated_cns"], annotated_cns] },
+            SOMATIC_SNV_CALLING.out.contamination_table.map { meta, table -> [ meta + [file: "contamination_table"], table] },
+            SOMATIC_SNV_CALLING.out.mutect2_stats.map { meta, stats -> [ meta + [file: "mutect2_stats"], stats] },
+            SOMATIC_SNV_CALLING.out.mutect2_tbi.map { meta, tbi -> [ meta + [file: "mutect2_tbi"], tbi] },
+            SOMATIC_SNV_CALLING.out.mutect2_vcf.map { meta, vcf -> [ meta + [file: "mutect2_vcf"], vcf] },
+            SOMATIC_SNV_CALLING.out.sage_vcf.map { meta, vcf -> [ meta + [file: "sage_vcf"], vcf] },
+            SOMATIC_SNV_CALLING.out.sage_tbi.map { meta, tbi -> [ meta + [file: "sage_tbi"], tbi] },
+            SOMATIC_SNV_CALLING.out.somatic_vcf.map { meta, somatic_vcf -> [ meta + [file: "somatic_vcf"], somatic_vcf] },
+            SOMATIC_SNV_CALLING.out.somatic_tbi.map { meta, somatic_tbi -> [ meta + [file: "somatic_tbi"], somatic_tbi] },
+            SOMATIC_SNV_CALLING.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "vep_vcf"], vep_vcf] },
+            SOMATIC_SNV_CALLING.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "vep_tbi"], vep_tbi] }
+        )
+
+    emit:
+    autoseq_output = autoseq_output               // channel: [ val(meta + [file: description]), path(file) ]
+    multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
+
 
 }
 

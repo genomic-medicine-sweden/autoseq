@@ -96,6 +96,7 @@
                 },
                 "bwamem2_index": {
                     "type": "string",
+                    "format": "directory-path",
                     "description": "Path to reference genome bwa-mem2 index.",
                     "fa_icon": "far fa-file-code"
                 }
@@ -171,14 +172,6 @@
                 "targets_bed": {
                     "type": "string",
                     "description": "Path to the BED file containing target regions"
-                },
-                "targets_bed_gz": {
-                    "type": "string",
-                    "description": "Path to the gzipped BED file containing target regions"
-                },
-                "interval_list": {
-                    "type": "string",
-                    "description": "Path to the interval list file"
                 },
                 "interval_list_slopped20": {
                     "type": "string",
@@ -365,7 +358,17 @@
         },
         "ensemblvep_version": {
             "type": "string",
-            "default": "115"
+            "default": 115
+        },
+        "curation_ann": {
+            "type": "string"
+        },
+        "cancer_type": {
+            "type": "string",
+            "description": "Cancer project code for gene-specific annotation.",
+            "help_text": "Specifies the project shorthand used to filter the master curation file. This ensures that CNV segments are annotated with comments relevant to the specific cancer biology being studied.",
+            "default": "PANCANCER",
+            "enum": ["PANCANCER", "CBC", "CCR", "CEC", "COV", "SARC"]
         }
     }
 }

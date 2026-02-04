@@ -1,0 +1,29 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+channel_priority: strict
+
+dependencies:
+  # R base (≥ 4.2). Pin to 4.3 for broad Bioconductor compatibility.
+  - r-base=4.3.*
+
+  # CRAN packages
+  - r-data.table
+  - r-doparallel # doParallel
+  - r-ggplot2
+  - r-mass
+  - r-patchwork
+  - r-optparse
+  - r-pscbs
+  - r-stringr
+  - r-biocmanager
+
+  # Bioconductor packages
+  - bioconductor-bamsignals
+  - bioconductor-bsgenome
+  - bioconductor-bsgenome.hsapiens.ucsc.hg19
+  - bioconductor-genomicranges
+  - bioconductor-repitools
+  - bioconductor-rsamtools
+  - bioconductor-variantannotation

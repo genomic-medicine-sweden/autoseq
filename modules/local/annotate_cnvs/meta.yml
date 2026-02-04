@@ -1,0 +1,51 @@
+name: "annotate_cnvs"
+description: Annotates Copy Number Variant (CNV) segmentation data with gene-specific comments to facilitate clinical or research curation.
+keywords:
+  - cnv
+  - copy number
+  - annotation
+  - curation
+  - genomics
+tools:
+  - annotate_cnvs:
+      description: Standalone python script to annotate CNV segments with curation information
+      licence: ["MIT License"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1', single_end:false, sample_type:'tumor' ]`
+  - cns:
+      type: file
+      description: CNV segment file (typically .cns format)
+      pattern: "*.cns"
+  - meta2:
+      type: map
+      description: |
+        Groovy Map containing sample information for curation annotation file
+        e.g. `[ id:'curation_ann' ]`
+  - curation_ann:
+      type: file
+      description: Curation annotation file for CNV annotation
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1', single_end:false, sample_type:'tumor' ]`
+  - cns:
+      type: file
+      description: Annotated CNV segment file
+      pattern: "*_ann.cns"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"

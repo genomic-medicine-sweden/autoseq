@@ -11,7 +11,7 @@ include { TABIX_TABIX  as INDEX_VCF                     } from '../../../modules
 include { ENSEMBLVEP_VEP as ANNOTATE_VEP                } from '../../../modules/nf-core/ensemblvep/vep'
 
 
-workflow CALL_SOMATIC_SNVS {
+workflow SOMATIC_SNV_CALLING {
     take:
     ch_input                 // channel: [ val(meta), path(input), path(input_index), val(which_norm) ]
     ch_fasta                 // channel: [ val(meta), path(fasta) ]
@@ -72,7 +72,7 @@ workflow CALL_SOMATIC_SNVS {
         ch_fai,
         ch_dict,
         sage_genome_version, // genome version
-        ch_panel_of_normals,
+        ch_sage_pon.collect{it[1]},
         ch_sage_known_hotspots_somatic.collect{it[1]},
         ch_sage_highconf_regions.collect{it[1]},
         ch_ensembl_data_resources.collect{it[1]},
@@ -97,7 +97,7 @@ workflow CALL_SOMATIC_SNVS {
 
     ch_input_vcf = SOMATIC_VCFMERGE.out.vcf
         .map { meta, vcf ->
-            return tuple(meta, vcf, Channel.empty()) // empty channel for custom files
+            return tuple(meta, vcf, []) // empty channel for custom files
         }
 
     // VEP Annotation
@@ -108,7 +108,7 @@ workflow CALL_SOMATIC_SNVS {
         params.ensemblvep_version,
         ch_ensembl_data_resources.collect{it[1]},
         ch_fasta,
-        Channel.empty()
+        []
     )
 
 
@@ -132,7 +132,7 @@ workflow CALL_SOMATIC_SNVS {
     sage_vcf            = SAGE_SOMATIC.out.vcf                                 // channel: [ val(meta), path(vcf) ]
     sage_tbi            = SAGE_SOMATIC.out.tbi
     somatic_vcf         = SOMATIC_VCFMERGE.out.vcf
-    somatic_tbi         = SOMATIC_VCFMERGE.out.tabi
+    somatic_tbi         = SOMATIC_VCFMERGE.out.tbi
     vep_vcf             = ANNOTATE_VEP.out.vcf
     vep_tbi             = ANNOTATE_VEP.out.tbi
     versions

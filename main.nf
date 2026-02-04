@@ -38,11 +38,10 @@ params.sage_known_hotspots_somatic = getGenomeAttribute('sage_known_hotspots_som
 params.sage_highconf_regions       = getGenomeAttribute('sage_highconf_regions')
 params.sage_pon                    = getGenomeAttribute('sage_pon')
 params.ensembl_data_resources      = getGenomeAttribute('ensembl_data_resources')
+params.curation_ann                = getGenomeAttribute('curation_annotations')
 
 
 params.targets_bed             = getPanelsAttribute('targets_bed_slopped20')
-params.targets_bed_gz          = getPanelsAttribute('targets_bed_slopped20_gz')
-params.interval_list           = getPanelsAttribute('targets_interval_list')
 params.interval_list_slopped20 = getPanelsAttribute('targets_interval_list_slopped20')
 params.jumble_ref              = getPanelsAttribute('jumble_ref')
 
@@ -73,8 +72,6 @@ workflow NXF_AUTOSEQ {
 
     //
     ch_targets_bed             = params.targets_bed ? Channel.fromPath(params.targets_bed).map{ it -> [[id:'targets_bed'], it]}.collect() : Channel.empty()
-    ch_targets_bed_gz          = params.targets_bed_gz ? Channel.fromPath(params.targets_bed_gz).map{ it -> [[id:'targets_bed_gz'], it]}.collect() : Channel.empty()
-    ch_interval_list           = params.interval_list ? Channel.fromPath(params.interval_list).map{ it -> [[id:'interval_list'], it]}.collect() : Channel.empty()
     ch_interval_list_slopped20 = params.interval_list_slopped20 ? Channel.fromPath(params.interval_list_slopped20).map{ it -> [[id:'interval_list_slopped20'], it]}.collect() : Channel.empty()
     ch_jumble_ref              = params.jumble_ref ? Channel.fromPath(params.jumble_ref).map{ it -> [[id:'jumble_ref'], it]}.collect() : Channel.empty()
 
@@ -83,7 +80,7 @@ workflow NXF_AUTOSEQ {
     ch_sage_highconf_regions       = params.sage_highconf_regions ? Channel.fromPath(params.sage_highconf_regions).map{ it -> [[id:'sage_highconf_regions'], it]}.collect() : Channel.empty()
     ch_sage_pon                    = params.sage_pon ? Channel.fromPath(params.sage_pon).map{ it -> [[id:'sage_pon'], it]}.collect() : Channel.empty()
     ch_ensembl_data_resources      = params.ensembl_data_resources ? Channel.fromPath(params.ensembl_data_resources).map{ it -> [[id:'ensembl_data_resources'], it]}.collect() : Channel.empty()
-
+    ch_curation_ann                = params.curation_ann ? Channel.fromPath(params.curation_ann).map{ it -> [[id:'curation_ann'], it]}.collect() : Channel.empty()
     //
     // WORKFLOW: Run pipeline
     //
@@ -94,17 +91,18 @@ workflow NXF_AUTOSEQ {
         ch_dict,
         ch_bwamem2_index,
         ch_targets_bed,
-        ch_targets_bed_gz,
-        ch_interval_list,
         ch_interval_list_slopped20,
         ch_jumble_ref,
         ch_sage_known_hotspots_somatic,
         ch_sage_highconf_regions,
         ch_sage_pon,
-        ch_ensembl_data_resources
+        ch_ensembl_data_resources,
+        ch_curation_ann
     )
+
     emit:
-    multiqc_report = AUTOSEQ.out.multiqc_report // channel: /path/to/multiqc_report.html
+    autoseq_output = AUTOSEQ.out.autoseq_output      // channel: [ val(meta + [file: description]), path(file) ]
+    multiqc_report = AUTOSEQ.out.multiqc_report     // channel: /path/to/multiqc_report.html
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -149,6 +147,44 @@ workflow {
         params.hook_url,
         NXF_AUTOSEQ.out.multiqc_report
     )
+
+    publish:
+    autoseq_output  = NXF_AUTOSEQ.out.autoseq_output  // channel: [ val(meta + [file: description]), path(file) ]
+    multiqc_report  = NXF_AUTOSEQ.out.multiqc_report   // channel: /path/to/multiqc_report.html
+}
+
+
+output {
+    multiqc_report {
+        path { "multiqc" }
+    }
+    autoseq_output {
+        path { meta, _file ->
+            if (meta.file == 'bam' || meta.file == 'bai') {
+                return 'alignment'
+            } else if (meta.file == 'flagstat') {
+                return 'qc/samtools'
+            } else if (meta.file == 'contamination_table') {
+                return 'qc/contamination'
+            } else if (meta.file == 'hs_metrics' || meta.file == 'multiple_metrics') {
+                return 'qc/picard'
+            } else if (meta.file == 'jumble_cns' || meta.file == 'cnr' || meta.file == 'seg' ||
+                    meta.file == 'profile_bedgraph' || meta.file == 'segments_bedgraph' ||
+                    meta.file == 'annotated_cns' || meta.file == 'cnv_plot_png') {
+                return 'cnv'
+            } else if (meta.file == 'mutect2_stats' || meta.file == 'mutect2_vcf' || meta.file == 'mutect2_tbi') {
+                return 'variants/somatic/mutect2'
+            } else if (meta.file == 'sage_vcf' || meta.file == 'sage_tbi') {
+                return 'variants/somatic/sage'
+            } else if (meta.file == 'somatic_vcf' || meta.file == 'somatic_tbi') {
+                return 'variants/somatic/merged'
+            } else if (meta.file == 'vep_vcf' || meta.file == 'vep_tbi') {
+                return 'variants/somatic'
+            } else {
+                return ''
+            }
+        }
+    }
 }
 
 /*
