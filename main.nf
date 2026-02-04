@@ -159,41 +159,29 @@ output {
         path { "multiqc" }
     }
     autoseq_output {
-        path { meta, file ->
-            switch(meta.file) {
-                case 'bam':
-                case 'bai':
-                    return 'alignment'
-                case 'flagstat':
-                    return 'qc/samtools'
-                case 'contamination_table':
-                    return 'qc/contamination'
-                case 'hs_metrics':
-                case 'multiple_metrics':
-                    return 'qc/picard'
-                case 'jumble_cns':
-                case 'cnr':
-                case 'seg':
-                case 'profile_bedgraph':
-                case 'segments_bedgraph':
-                case 'annotated_cns':
-                case 'cnv_plot_png':
-                    return 'cnv'
-                case 'mutect2_stats':
-                case 'mutect2_vcf':
-                case 'mutect2_tbi':
-                    return 'variants/somatic/mutect2'
-                case 'sage_vcf':
-                case 'sage_tbi':
-                    return 'variants/somatic/sage'
-                case 'somatic_vcf':
-                case 'somatic_tbi':
-                    return 'variants/somatic/merged'
-                case 'vep_vcf':
-                case 'vep_tbi':
-                    return 'variants/somatic'
-                default:
-                    return ''
+        path { meta, _file ->
+            if (meta.file == 'bam' || meta.file == 'bai') {
+                return 'alignment'
+            } else if (meta.file == 'flagstat') {
+                return 'qc/samtools'
+            } else if (meta.file == 'contamination_table') {
+                return 'qc/contamination'
+            } else if (meta.file == 'hs_metrics' || meta.file == 'multiple_metrics') {
+                return 'qc/picard'
+            } else if (meta.file == 'jumble_cns' || meta.file == 'cnr' || meta.file == 'seg' ||
+                    meta.file == 'profile_bedgraph' || meta.file == 'segments_bedgraph' ||
+                    meta.file == 'annotated_cns' || meta.file == 'cnv_plot_png') {
+                return 'cnv'
+            } else if (meta.file == 'mutect2_stats' || meta.file == 'mutect2_vcf' || meta.file == 'mutect2_tbi') {
+                return 'variants/somatic/mutect2'
+            } else if (meta.file == 'sage_vcf' || meta.file == 'sage_tbi') {
+                return 'variants/somatic/sage'
+            } else if (meta.file == 'somatic_vcf' || meta.file == 'somatic_tbi') {
+                return 'variants/somatic/merged'
+            } else if (meta.file == 'vep_vcf' || meta.file == 'vep_tbi') {
+                return 'variants/somatic'
+            } else {
+                return ''
             }
         }
     }
