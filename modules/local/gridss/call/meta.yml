@@ -1,0 +1,105 @@
+name: "gridss_call"
+description: Call structural variants using GRIDSS from assembled breakend contigs
+keywords:
+  - bam
+  - variant calling
+  - structural variants
+  - gridss
+  - breakend
+  - vcf
+tools:
+  - gridss:
+      description: GRIDSS is a module software suite containing tools useful for the detection of genomic rearrangements
+      homepage: https://github.com/PapenfussLab/gridss
+      documentation: https://github.com/PapenfussLab/gridss
+      tool_dev_url: https://github.com/PapenfussLab/gridss
+      doi: "10.1101/gr.222109.117"
+      licence: ["GPL v3"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1', single_end:false ]`
+  - bams:
+      type: file
+      description: Input BAM file(s)
+      pattern: "*.bam"
+  - bais:
+      type: file
+      description: BAM index file(s)
+      pattern: "*.bam.bai"
+  - assemble_dir:
+      type: directory
+      description: GRIDSS assembly directory from GRIDSS_ASSEMBLE step containing breakend assemblies
+      pattern: "gridss_assemble/"
+  - meta2:
+      type: map
+      description: |
+        Groovy Map containing genome fasta metadata
+        e.g. `[ id:'genome' ]`
+  - genome_fasta:
+      type: file
+      description: Reference genome FASTA file
+      pattern: "*.{fasta,fa,fna}"
+  - meta3:
+      type: map
+      description: |
+        Groovy Map containing GRIDSS index metadata
+        e.g. `[ id:'genome_gridss_index' ]`
+  - genome_gridss_index:
+      type: directory
+      description: Directory containing GRIDSS/BWA index files for the reference genome
+      pattern: "*"
+  - meta4:
+      type: map
+      description: |
+        Groovy Map containing genome FAI metadata
+        e.g. `[ id:'genome_fai' ]`
+  - genome_fai:
+      type: file
+      description: Reference genome FASTA index file
+      pattern: "*.fai"
+  - meta5:
+      type: map
+      description: |
+        Groovy Map containing genome dictionary metadata
+        e.g. `[ id:'genome_dict' ]`
+  - genome_dict:
+      type: file
+      description: Reference genome sequence dictionary
+      pattern: "*.dict"
+  - meta6:
+      type: map
+      description: |
+        Groovy Map containing blacklist metadata
+        e.g. `[ id:'blacklist' ]`
+  - blacklist:
+      type: file
+      description: BED file containing blacklisted regions to exclude from analysis
+      pattern: "*.bed"
+  - gridss_config:
+      type: file
+      description: Optional GRIDSS configuration file
+      pattern: "*.{properties,config}"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1', single_end:false ]`
+  - vcf_file:
+      type: file
+      description: Compressed VCF file containing called structural variants
+      pattern: "*.sv.gridss.vcf.gz"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
