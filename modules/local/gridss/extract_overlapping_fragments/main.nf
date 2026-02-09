@@ -14,9 +14,8 @@ process GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS {
     tuple val(meta2), path(target_bed)
 
     output:
-    tuple val(meta), path("*.gridss.targeted.bam"),  emit: gridss_targeted_bam
-    tuple val(meta), path("*.gridss.targeted.bam.bai"),  emit: gridss_targeted_bai
-    path  "versions.yml"                          ,  emit: versions
+    tuple val(meta), path("*.gridss.targeted.bam"), path("*.gridss.targeted.bam.bai"), emit: gridss_targeted_bam
+    path  "versions.yml"                                                             ,  emit: versions
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
@@ -43,6 +42,7 @@ process GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS {
 
     """
     touch ${prefix}.gridss.targeted.bam
+    touch ${prefix}.gridss.targeted.bam.bai
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

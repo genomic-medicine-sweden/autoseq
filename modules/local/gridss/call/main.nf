@@ -19,7 +19,7 @@ process GRIDSS_CALL {
     path gridss_config
 
     output:
-    tuple val(meta), path("gridss_call/*.sv.gridss.vcf.gz"),  emit: vcf_file
+    tuple val(meta), path("gridss_call/*.sv.gridss.vcf.gz"),  emit: vcf
     path  "versions.yml"                                 ,  emit: versions
 
     script:
