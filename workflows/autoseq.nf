@@ -20,7 +20,7 @@ include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subwork
 include { BAM_QC_PICARD_SAMTOOLS  as ALIGNMENT_QC             } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
 include { SOMATIC_SNV_CALLING                                 } from '../subworkflows/local/call_somatic_snvs/main.nf'
 include { CNV_CALLING                                         } from '../subworkflows/local/call_cnvs/main.nf'
-
+include { SVS_CALLING                                         } from '../subworkflows/local/call_svs/main.nf'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -43,6 +43,13 @@ workflow AUTOSEQ {
     ch_sage_pon
     ch_ensembl_data_resources
     ch_curation_ann
+    ch_genome_gridss_index
+    ch_blacklist    // channel: blacklist BED for SV calling
+    ch_pon_breakends    // channel: panel of normals breakends for SV calling
+    ch_pon_breakpoints  // channel: panel of normals breakpoints for SV calling
+    ch_known_fusions    // channel: known fusions for SV filtering
+    ch_repeatmasker_annotations // channel: repeatmasker annotations for SV filtering
+    ch_gridss_config   // path: optional GRIDSS config file
 
     main:
 
@@ -221,7 +228,24 @@ workflow AUTOSEQ {
 
     ch_versions = ch_versions.mix(CNV_CALLING.out.versions)
 
-    ch_aligned_bam.view()
+    //
+    // MODULE: SV Calling
+    //
+
+    SVS_CALLING(
+        ch_aligned_bam,
+        ch_genome_fasta,
+        ch_genome_fai,
+        ch_genome_gridss_index,
+        ch_dict,
+        ch_blacklist,
+        ch_pon_breakends,
+        ch_pon_breakpoints,
+        ch_known_fusions,
+        ch_repeatmasker_annotations,
+        ch_targets_bed,
+        ch_gridss_config
+    )
 
     //
     // Collate and save software versions
@@ -305,8 +329,8 @@ workflow AUTOSEQ {
     autoseq_output = Channel
         .empty()
         .mix(
-            ch_aligned_bam.map { meta, bam, bai -> [ meta + [file: "bam"], bam] },
-            ch_aligned_bam.map { meta, bam, bai -> [ meta + [file: "bai"], bai] },
+            ch_aligned_bam.map { meta, bam, _bai -> [ meta + [file: "bam"], bam] },
+            ch_aligned_bam.map { meta, _bam, bai -> [ meta + [file: "bai"], bai] },
             ALIGNMENT_QC.out.flagstat.map { meta, flagstat -> [ meta + [file: "flagstat"], flagstat] },
             ALIGNMENT_QC.out.hs_metrics.map { meta, hs_metrics -> [ meta + [file: "hs_metrics"], hs_metrics] },
             ALIGNMENT_QC.out.multiple_metrics.map { meta, multiple_metrics -> [ meta + [file: "multiple_metrics"], multiple_metrics] },
@@ -326,7 +350,11 @@ workflow AUTOSEQ {
             SOMATIC_SNV_CALLING.out.somatic_vcf.map { meta, somatic_vcf -> [ meta + [file: "somatic_vcf"], somatic_vcf] },
             SOMATIC_SNV_CALLING.out.somatic_tbi.map { meta, somatic_tbi -> [ meta + [file: "somatic_tbi"], somatic_tbi] },
             SOMATIC_SNV_CALLING.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "vep_vcf"], vep_vcf] },
-            SOMATIC_SNV_CALLING.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "vep_tbi"], vep_tbi] }
+            SOMATIC_SNV_CALLING.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "vep_tbi"], vep_tbi] },
+            SVS_CALLING.out.gripss_somatic_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_filtered_vcf"], [vcf, tbi]] },
+            SVS_CALLING.out.gripss_somatic_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_unfiltered_vcf"], [vcf, tbi]] },
+            SVS_CALLING.out.gripss_germline_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_filtered_vcf"], [vcf, tbi]] },
+            SVS_CALLING.out.gripss_germline_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_unfiltered_vcf"], [vcf, tbi]] }
         )
 
     emit:

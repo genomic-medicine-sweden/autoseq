@@ -16,11 +16,11 @@ process GRIDSS_CALL {
     tuple val(meta4), path(genome_fai)
     tuple val(meta5), path(genome_dict)
     tuple val(meta6), path(blacklist)
-    path gridss_config
+    tuple val(meta7), path(gridss_config)
 
     output:
     tuple val(meta), path("gridss_call/*.sv.gridss.vcf.gz"),  emit: vcf
-    path  "versions.yml"                                 ,  emit: versions
+    path  "versions.yml"                                   ,  emit: versions
 
     script:
     def args = task.ext.args ?: ''
@@ -39,7 +39,7 @@ process GRIDSS_CALL {
         --reference ${genome_fasta} \\
         --blacklist ${blacklist} \\
         --workingdir ${outdir}/work/ \\
-        --assembly ${outdir}/sv.assemblies.bam \\
+        --assembly ${outdir}/${prefix}.sv.assemblies.bam \\
         --output ${outdir}/${prefix}.sv.gridss.vcf.gz \\
         --threads ${task.cpus} ${arg_config} ${bams_list.join(' ')}
 
@@ -56,7 +56,7 @@ process GRIDSS_CALL {
 
     """
     mkdir -p gridss_call/work/
-    touch gridss_call/sv.assemblies.bam
+    touch gridss_call/${prefix}.sv.assemblies.bam
     touch gridss_call/${prefix}.sv.gridss.vcf.gz
 
     cat <<-END_VERSIONS > versions.yml

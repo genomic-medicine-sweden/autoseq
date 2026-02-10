@@ -16,7 +16,7 @@ process GRIDSS_ASSEMBLE {
     tuple val(meta4), path(genome_fai)
     tuple val(meta5), path(genome_dict)
     tuple val(meta6), path(blacklist)
-    path gridss_config
+    tuple val(meta7), path(gridss_config)
 
     output:
     tuple val(meta), path("gridss_assemble/"),  emit: assemble_dir
@@ -39,7 +39,7 @@ process GRIDSS_ASSEMBLE {
         --reference ${genome_fasta} \\
         --blacklist ${blacklist} \\
         --workingdir ${outdir}/work/ \\
-        --assembly ${outdir}/sv.assembly.bam \\
+        --assembly ${outdir}/${prefix}.sv.assembly.bam \\
         --threads ${task.cpus} ${arg_config} ${bams_list.join(' ')}
 
 
@@ -55,7 +55,7 @@ process GRIDSS_ASSEMBLE {
 
     """
     mkdir -p gridss_assemble/work/
-    touch gridss_assemble/sv.assembly.bam
+    touch gridss_assemble/${prefix}.sv.assembly.bam
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

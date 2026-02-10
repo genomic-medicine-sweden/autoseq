@@ -27,18 +27,24 @@ include { getPanelsAttribute      } from './subworkflows/local/utils_nfcore_auto
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-// TODO nf-core: Remove this line if you don't need a FASTA file
 //   This is an example of how to use getGenomeAttribute() to fetch parameters
 //   from igenomes.config using `--genome`
-params.ref_genome_fasta            = getGenomeAttribute('fasta')
-params.ref_genome_fai              = getGenomeAttribute('fai')
-params.ref_genome_dict             = getGenomeAttribute('dict')
-params.bwamem2_index               = getGenomeAttribute('bwamem2_index')
-params.sage_known_hotspots_somatic = getGenomeAttribute('sage_known_hotspots_somatic')
-params.sage_highconf_regions       = getGenomeAttribute('sage_highconf_regions')
-params.sage_pon                    = getGenomeAttribute('sage_pon')
-params.ensembl_data_resources      = getGenomeAttribute('ensembl_data_resources')
-params.curation_ann                = getGenomeAttribute('curation_annotations')
+params.ref_genome_fasta                 = getGenomeAttribute('fasta')
+params.ref_genome_fai                   = getGenomeAttribute('fai')
+params.ref_genome_dict                  = getGenomeAttribute('dict')
+params.bwamem2_index                    = getGenomeAttribute('bwamem2_index')
+params.sage_known_hotspots_somatic      = getGenomeAttribute('sage_known_hotspots_somatic')
+params.sage_highconf_regions            = getGenomeAttribute('sage_highconf_regions')
+params.sage_pon                         = getGenomeAttribute('sage_pon')
+params.ensembl_data_resources           = getGenomeAttribute('ensembl_data_resources')
+params.curation_ann                     = getGenomeAttribute('curation_annotations')
+params.genome_gridss_index              = getGenomeAttribute('gridss_index')
+params.gridss_config                    = getGenomeAttribute('gridss_config')
+params.gridss_blacklist                 = getGenomeAttribute('gridss_blacklist')
+params.gridss_pon_breakends             = getGenomeAttribute('gridss_pon_breakends')
+params.gridss_pon_breakpoints           = getGenomeAttribute('gridss_pon_breakpoints')
+params.gridss_known_fusions             = getGenomeAttribute('gridss_known_fusions')
+params.gridss_repeatmasker_annotations  = getGenomeAttribute('gridss_repeatmasker_annotations')
 
 
 params.targets_bed             = getPanelsAttribute('targets_bed_slopped20')
@@ -81,6 +87,16 @@ workflow NXF_AUTOSEQ {
     ch_sage_pon                    = params.sage_pon ? Channel.fromPath(params.sage_pon).map{ it -> [[id:'sage_pon'], it]}.collect() : Channel.empty()
     ch_ensembl_data_resources      = params.ensembl_data_resources ? Channel.fromPath(params.ensembl_data_resources).map{ it -> [[id:'ensembl_data_resources'], it]}.collect() : Channel.empty()
     ch_curation_ann                = params.curation_ann ? Channel.fromPath(params.curation_ann).map{ it -> [[id:'curation_ann'], it]}.collect() : Channel.empty()
+
+    // GRIDSS-specific channels for SV calling
+    ch_genome_gridss_index = params.genome_gridss_index ? Channel.fromPath(params.genome_gridss_index).map{ it -> [[id:'genome_gridss_index'], it]}.collect() : Channel.empty()
+    ch_blacklist           = params.gridss_blacklist ? Channel.fromPath(params.gridss_blacklist).map{ it -> [[id:'blacklist'], it]}.collect() : Channel.empty()
+    ch_pon_breakends       = params.gridss_pon_breakends ? Channel.fromPath(params.gridss_pon_breakends).map{ it -> [[id:'pon_breakends'], it]}.collect() : Channel.empty()
+    ch_pon_breakpoints     = params.gridss_pon_breakpoints ? Channel.fromPath(params.gridss_pon_breakpoints).map{ it -> [[id:'pon_breakpoints'], it]}.collect() : Channel.empty()
+    ch_known_fusions       = params.gridss_known_fusions ? Channel.fromPath(params.gridss_known_fusions).map{ it -> [[id:'known_fusions'], it]}.collect() : Channel.empty()
+    ch_repeatmasker_annotations = params.gridss_repeatmasker_annotations ? Channel.fromPath(params.gridss_repeatmasker_annotations).map{ it -> [[id:'repeatmasker_annotations'], it]}.collect() : Channel.empty()
+    ch_gridss_config         = params.gridss_config ? Channel.fromPath(params.gridss_config).map{ it -> [[id: 'gridss_config'], it]}.collect() : Channel.empty()
+
     //
     // WORKFLOW: Run pipeline
     //
@@ -97,7 +113,14 @@ workflow NXF_AUTOSEQ {
         ch_sage_highconf_regions,
         ch_sage_pon,
         ch_ensembl_data_resources,
-        ch_curation_ann
+        ch_curation_ann,
+        ch_genome_gridss_index,
+        ch_blacklist,
+        ch_pon_breakends,
+        ch_pon_breakpoints,
+        ch_known_fusions,
+        ch_repeatmasker_annotations,
+        ch_gridss_config
     )
 
     emit:
@@ -180,6 +203,10 @@ output {
                 return 'variants/somatic/merged'
             } else if (meta.file == 'vep_vcf' || meta.file == 'vep_tbi') {
                 return 'variants/somatic'
+            } else if (meta.file == 'gripss_somatic_filtered_vcf' || meta.file == 'gripss_somatic_unfiltered_vcf') {
+                return 'svs/somatic/'
+            } else if (meta.file == 'gripss_germline_filtered_vcf' || meta.file == 'gripss_germline_unfiltered_vcf') {
+                return 'svs/germline/'
             } else {
                 return ''
             }

@@ -15,14 +15,15 @@ process GRIDSS_PREPROCESS {
     tuple val(meta3), path(genome_gridss_index)
     tuple val(meta4), path(genome_fai)
     tuple val(meta5), path(genome_dict)
-    path gridss_config
+    tuple val(meta6), path(gridss_config)
 
     output:
-    tuple val(meta), path("gridss_preprocess/*.gridss.targeted.bam.gridss.working/"),  emit: preprocess_dir
-    path  "versions.yml"                                                            ,  emit: versions
+    tuple val(meta), path("gridss_preprocess/*.gridss.targeted.bam.gridss.working"),  emit: preprocess_dir
+    path  "versions.yml"                                                           ,  emit: versions
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
+    def args = task.ext.args ?: ""
     def arg_config = gridss_config ? "-c ${gridss_config}" : ""
 
     """
