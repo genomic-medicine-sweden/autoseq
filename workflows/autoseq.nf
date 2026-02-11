@@ -198,6 +198,11 @@ workflow AUTOSEQ {
             [meta, [tumor_bam, normal_bam], [tumor_bai, normal_bai], intervals_file]
         }
 
+    // genome version sage and gripss
+    def genome_version = ("$params.genome" =~ /(?i)\b(37|grch37|hg19|b37)\b/) ? '37' :
+                         ("$params.genome" =~ /(?i)\b(38|grch38|hg38)\b/) ? '38' :
+                         { throw new Exception("Invalid genome version specified: $params.genome. Must be a variant of '37' (e.g., GRCh37, hg19) or '38' (e.g., GRCh38, hg38).") }()
+
     SOMATIC_SNV_CALLING (
         ch_input_paired,
         ch_genome_fasta,
@@ -211,7 +216,8 @@ workflow AUTOSEQ {
         ch_sage_known_hotspots_somatic,
         ch_sage_highconf_regions,
         ch_sage_pon,
-        ch_ensembl_data_resources
+        ch_ensembl_data_resources,
+        genome_version
     )
 
     ch_versions = ch_versions.mix(SOMATIC_SNV_CALLING.out.versions)
@@ -244,7 +250,8 @@ workflow AUTOSEQ {
         ch_known_fusions,
         ch_repeatmasker_annotations,
         ch_targets_bed,
-        ch_gridss_config
+        ch_gridss_config,
+        genome_version
     )
 
     //

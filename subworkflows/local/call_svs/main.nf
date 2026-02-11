@@ -23,6 +23,7 @@ workflow SVS_CALLING {
     ch_repeatmasker_annotations
     ch_target_region_bed
     ch_gridss_config
+    genome_version
 
     main:
 
@@ -107,9 +108,6 @@ workflow SVS_CALLING {
         ch_gridss_config
     )
 
-    def genome_version = ("$params.genome" =~ /(?i)\b(37|grch37|hg19|b37)\b/) ? '37' :
-                         ("$params.genome" =~ /(?i)\b(38|grch38|hg38)\b/) ? '38' :
-                         { throw new Exception("Invalid genome version specified: $params.genome. Must be a variant of '37' (e.g., GRCh37, hg19) or '38' (e.g., GRCh38, hg38).") }()
     //
     // GRIPSS: Somatic variant filtering
     //
