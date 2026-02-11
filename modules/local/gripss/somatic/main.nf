@@ -23,7 +23,7 @@ process GRIPSS_SOMATIC {
     output:
     tuple val(meta), path("*.gripss.filtered.somatic.vcf.gz"), path("*.gripss.filtered.somatic.vcf.gz.tbi") ,  emit: filtered_vcf
     tuple val(meta), path("*.gripss.somatic.vcf.gz"), path("*.gripss.somatic.vcf.gz.tbi")                   ,  emit: unfiltered_vcf
-    path  "versions.yml"                                                                                    ,  emit: versions
+    tuple val("${task.process}"), val('gripss'), eval("gripss -version | sed 's/^.* //'" )  ,topic: versions, emit: versions_gripss
 
     script:
     def args = task.ext.args ?: ''
@@ -48,11 +48,6 @@ process GRIPSS_SOMATIC {
         -output_id somatic \\
         -output_dir ./
 
-    # Capture versions
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gripss: \$(gripss -version | sed 's/^.* //')
-    END_VERSIONS
     """
 
     stub:
@@ -64,9 +59,5 @@ process GRIPSS_SOMATIC {
     touch ${prefix}.gripss.somatic.vcf.gz
     touch ${prefix}.gripss.somatic.vcf.gz.tbi
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gripss: "stub"
-    END_VERSIONS
     """
 }

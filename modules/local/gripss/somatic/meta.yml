@@ -89,10 +89,18 @@ output:
       type: file
       description: Unfiltered somatic structural variants VCF and index
       pattern: "*.gripss.somatic.vcf.gz{,.tbi}"
-  - versions:
-      type: file
-      description: File containing software versions
-      pattern: "versions.yml"
+  - versions_gripss:
+      type: map
+      description: Map containing the version of GRIPSS used in this process, keyed by process name
+  - ${task.process}:
+      type: string
+      description: The process the versions were collected from
+  - gripss:
+      type: string
+      description: The tool name
+  - gripss -version | sed 's/^.* //':
+      type: eval
+      description: The expression to obtain the version of the tool
 authors:
   - "@imsarath"
 maintainers:

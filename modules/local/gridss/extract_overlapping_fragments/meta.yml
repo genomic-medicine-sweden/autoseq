@@ -53,10 +53,18 @@ output:
       type: file
       description: Index for the targeted BAM file
       pattern: "*.gridss.targeted.bam.bai"
-  - versions:
-      type: file
-      description: File containing software versions
-      pattern: "versions.yml"
+  - versions_gridss:
+      type: map
+      description: Map containing the version of GRIDSS used in this process, keyed by process name
+  - ${task.process}:
+      type: string
+      description: The process the versions were collected from
+  - gridss:
+      type: string
+      description: The tool name
+  - CallVariants --version 2>&1 | sed 's/-gridss\$//':
+      type: eval
+      description: The expression to obtain the version of the tool
 
 authors:
   - "@imsarath"

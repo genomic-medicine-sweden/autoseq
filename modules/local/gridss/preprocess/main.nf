@@ -19,10 +19,9 @@ process GRIDSS_PREPROCESS {
 
     output:
     tuple val(meta), path("gridss_preprocess/*.gridss.targeted.bam.gridss.working"),  emit: preprocess_dir
-    path  "versions.yml"                                                           ,  emit: versions
+    tuple val("${task.process}"), val('gridss'), eval("CallVariants --version 2>&1 | sed 's/-gridss\$//'")  , topic: versions, emit: versions_gridss
 
     script:
-    def prefix = task.ext.prefix ?: "${meta.id}"
     def args = task.ext.args ?: ""
     def arg_config = gridss_config ? "-c ${gridss_config}" : ""
 
@@ -37,11 +36,6 @@ process GRIDSS_PREPROCESS {
         --threads ${task.cpus} ${arg_config} ${bam}
 
 
-    # Capture versions
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gridss: \$(CallVariants --version 2>&1 | sed 's/-gridss\$//')
-    END_VERSIONS
     """
 
     stub:
@@ -50,10 +44,5 @@ process GRIDSS_PREPROCESS {
     """
     mkdir -p gridss_preprocess/${prefix}.gridss.targeted.bam.gridss.working/
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gridss: "stub"
-        R: \$( R --version | sed -n '1p' )
-    END_VERSIONS
     """
 }

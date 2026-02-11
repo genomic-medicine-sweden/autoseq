@@ -23,7 +23,7 @@ process GRIPSS_GERMLINE {
     output:
     tuple val(meta), path("*.gripss.filtered.germline.vcf.gz"), path("*.gripss.filtered.germline.vcf.gz.tbi") ,  emit: filtered_vcf
     tuple val(meta), path("*.gripss.germline.vcf.gz"), path("*.gripss.germline.vcf.gz.tbi")                   ,  emit: unfiltered_vcf
-    path  "versions.yml"                                                                                      ,  emit: versions
+    tuple val("${task.process}"), val('gripss'), eval("gripss -version | sed 's/^.* //'" )  ,  topic: versions,  emit: versions_gripss
 
     script:
     def args = task.ext.args ?: ''
@@ -48,11 +48,7 @@ process GRIPSS_GERMLINE {
         -output_id germline \\
         -output_dir ./
 
-    # Capture versions
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gripss: \$(gripss -version | sed 's/^.* //')
-    END_VERSIONS
+
     """
 
     stub:
@@ -62,9 +58,5 @@ process GRIPSS_GERMLINE {
     touch ${meta.normal_id}.gripss.germline.vcf.gz
     touch ${meta.normal_id}.gripss.germline.vcf.gz.tbi
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gripss: "stub"
-    END_VERSIONS
     """
 }

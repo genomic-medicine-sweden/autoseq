@@ -25,7 +25,6 @@ workflow SVS_CALLING {
     ch_gridss_config
 
     main:
-    ch_versions = channel.empty()
 
     //
     // GRIDSS: Extract overlapping fragments from tumor BAM
@@ -34,7 +33,6 @@ workflow SVS_CALLING {
         ch_aligned_bam,
         ch_target_region_bed
     )
-    ch_versions = ch_versions.mix(GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS.out.versions)
 
     //
     // GRIDSS: Preprocess step
@@ -47,10 +45,6 @@ workflow SVS_CALLING {
         ch_genome_dict,
         ch_gridss_config  // Convert to value channel
     )
-    ch_versions = ch_versions.mix(GRIDSS_PREPROCESS.out.versions)
-
-    GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS.out.gridss_targeted_bam.view()
-    GRIDSS_PREPROCESS.out.preprocess_dir.view()
 
     ch_assemble_input = GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS.out.gridss_targeted_bam
         .join(GRIDSS_PREPROCESS.out.preprocess_dir)
@@ -92,7 +86,6 @@ workflow SVS_CALLING {
         ch_blacklist,
         ch_gridss_config
     )
-    ch_versions = ch_versions.mix(GRIDSS_ASSEMBLE.out.versions)
 
 
     ch_call_input = ch_assemble_input
@@ -113,7 +106,6 @@ workflow SVS_CALLING {
         ch_blacklist,
         ch_gridss_config
     )
-    ch_versions = ch_versions.mix(GRIDSS_CALL.out.versions)
 
     def genome_version = ("$params.genome" =~ /(?i)\b(37|grch37|hg19|b37)\b/) ? '37' :
                          ("$params.genome" =~ /(?i)\b(38|grch38|hg38)\b/) ? '38' :
@@ -132,7 +124,6 @@ workflow SVS_CALLING {
         ch_target_region_bed,
         genome_version
     )
-    ch_versions = ch_versions.mix(GRIPSS_SOMATIC.out.versions)
 
     //
     // GRIPSS: Germline variant filtering
@@ -148,7 +139,6 @@ workflow SVS_CALLING {
         ch_target_region_bed,
         genome_version
     )
-    ch_versions = ch_versions.mix(GRIPSS_GERMLINE.out.versions)
 
     emit:
     gridss_vcf                      = GRIDSS_CALL.out.vcf
@@ -156,5 +146,4 @@ workflow SVS_CALLING {
     gripss_somatic_unfiltered_vcf   = GRIPSS_SOMATIC.out.unfiltered_vcf
     gripss_germline_filtered_vcf    = GRIPSS_GERMLINE.out.filtered_vcf
     gripss_germline_unfiltered_vcf  = GRIPSS_GERMLINE.out.unfiltered_vcf
-    versions                        = ch_versions
 }

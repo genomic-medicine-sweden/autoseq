@@ -14,8 +14,8 @@ process GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS {
     tuple val(meta2), path(target_bed)
 
     output:
-    tuple val(meta), path("*.gridss.targeted.bam"), path("*.gridss.targeted.bam.bai"), emit: gridss_targeted_bam
-    path  "versions.yml"                                                             ,  emit: versions
+    tuple val(meta), path("*.gridss.targeted.bam"), path("*.gridss.targeted.bam.bai"),                                         emit: gridss_targeted_bam
+    tuple val("${task.process}"), val('gridss'), eval("CallVariants --version 2>&1 | sed 's/-gridss\$//'")  , topic: versions, emit: versions_gridss
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
@@ -30,11 +30,6 @@ process GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS {
 
     samtools index ${prefix}.gridss.targeted.bam
 
-    # Capture versions
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gridss: \$(CallVariants --version 2>&1 | sed 's/-gridss\$//')
-    END_VERSIONS
     """
 
     stub:
@@ -44,10 +39,5 @@ process GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS {
     touch ${prefix}.gridss.targeted.bam
     touch ${prefix}.gridss.targeted.bam.bai
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gridss_extract_overlapping_fragments: "stub"
-        R: \$( R --version | sed -n '1p' )
-    END_VERSIONS
     """
 }

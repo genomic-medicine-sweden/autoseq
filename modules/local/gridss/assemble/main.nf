@@ -20,7 +20,7 @@ process GRIDSS_ASSEMBLE {
 
     output:
     tuple val(meta), path("gridss_assemble/"),  emit: assemble_dir
-    path  "versions.yml"                     ,  emit: versions
+    tuple val("${task.process}"), val('gridss'), eval("CallVariants --version 2>&1 | sed 's/-gridss\$//'")  , topic: versions, emit: versions_gridss
 
     script:
     def args = task.ext.args ?: ''

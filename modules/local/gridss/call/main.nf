@@ -20,7 +20,7 @@ process GRIDSS_CALL {
 
     output:
     tuple val(meta), path("gridss_call/*.sv.gridss.vcf.gz"),  emit: vcf
-    path  "versions.yml"                                   ,  emit: versions
+    tuple val("${task.process}"), val('gridss'), eval("CallVariants --version 2>&1 | sed 's/-gridss\$//'")  , topic: versions, emit: versions_gridss
 
     script:
     def args = task.ext.args ?: ''
@@ -44,11 +44,6 @@ process GRIDSS_CALL {
         --threads ${task.cpus} ${arg_config} ${bams_list.join(' ')}
 
 
-    # Capture versions
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gridss: \$(CallVariants --version 2>&1 | sed 's/-gridss\$//')
-    END_VERSIONS
     """
 
     stub:
@@ -59,10 +54,5 @@ process GRIDSS_CALL {
     touch gridss_call/${prefix}.sv.assemblies.bam
     touch gridss_call/${prefix}.sv.gridss.vcf.gz
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gridss: "stub"
-        R: \$( R --version | sed -n '1p' )
-    END_VERSIONS
     """
 }
