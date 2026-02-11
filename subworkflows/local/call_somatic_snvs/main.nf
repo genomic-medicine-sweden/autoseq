@@ -106,7 +106,8 @@ workflow SOMATIC_SNV_CALLING {
         "homo_sapiens",
         params.ensemblvep_version,
         ch_ensembl_vep_cache.collect{it -> it[1]},
-        ch_fasta
+        ch_fasta,
+        []
     )
 
 
