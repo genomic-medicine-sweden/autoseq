@@ -36,6 +36,7 @@ params.bwamem2_index                    = getGenomeAttribute('bwamem2_index')
 params.sage_known_hotspots_somatic      = getGenomeAttribute('sage_known_hotspots_somatic')
 params.sage_highconf_regions            = getGenomeAttribute('sage_highconf_regions')
 params.sage_pon                         = getGenomeAttribute('sage_pon')
+params.ensembl_vep_cache                = getGenomeAttribute('ensembl_vep_cache')
 params.ensembl_data_resources           = getGenomeAttribute('ensembl_data_resources')
 params.curation_ann                     = getGenomeAttribute('curation_annotations')
 params.genome_gridss_index              = getGenomeAttribute('gridss_index')
@@ -80,6 +81,7 @@ workflow NXF_AUTOSEQ {
     ch_targets_bed             = params.targets_bed ? Channel.fromPath(params.targets_bed).map{ it -> [[id:'targets_bed'], it]}.collect() : Channel.empty()
     ch_interval_list_slopped20 = params.interval_list_slopped20 ? Channel.fromPath(params.interval_list_slopped20).map{ it -> [[id:'interval_list_slopped20'], it]}.collect() : Channel.empty()
     ch_jumble_ref              = params.jumble_ref ? Channel.fromPath(params.jumble_ref).map{ it -> [[id:'jumble_ref'], it]}.collect() : Channel.empty()
+    ch_ensembl_vep_cache       = params.ensembl_vep_cache ? Channel.fromPath(params.ensembl_vep_cache).map{ it -> [[id:'ensembl_vep_cache'], it]}.collect() : Channel.empty()
 
     //
     ch_sage_known_hotspots_somatic = params.sage_known_hotspots_somatic ? Channel.fromPath(params.sage_known_hotspots_somatic).map{ it -> [[id:'sage_known_hotspots_somatic'], it]}.collect() : Channel.empty()
@@ -112,6 +114,7 @@ workflow NXF_AUTOSEQ {
         ch_sage_known_hotspots_somatic,
         ch_sage_highconf_regions,
         ch_sage_pon,
+        ch_ensembl_vep_cache,
         ch_ensembl_data_resources,
         ch_curation_ann,
         ch_genome_gridss_index,

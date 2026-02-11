@@ -26,6 +26,7 @@ workflow SOMATIC_SNV_CALLING {
     ch_sage_highconf_regions
     ch_sage_pon
     ch_ensembl_data_resources
+    ch_ensembl_vep_cache
     genome_version
 
     main:
@@ -104,9 +105,8 @@ workflow SOMATIC_SNV_CALLING {
         params.genome,
         "homo_sapiens",
         params.ensemblvep_version,
-        ch_ensembl_data_resources.collect{it[1]},
-        ch_fasta,
-        []
+        ch_ensembl_vep_cache.collect{it -> it[1]},
+        ch_fasta
     )
 
 

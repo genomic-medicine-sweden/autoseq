@@ -41,6 +41,7 @@ workflow AUTOSEQ {
     ch_sage_known_hotspots_somatic
     ch_sage_highconf_regions
     ch_sage_pon
+    ch_ensembl_vep_cache
     ch_ensembl_data_resources
     ch_curation_ann
     ch_genome_gridss_index
@@ -217,6 +218,7 @@ workflow AUTOSEQ {
         ch_sage_highconf_regions,
         ch_sage_pon,
         ch_ensembl_data_resources,
+        ch_ensembl_vep_cache,
         genome_version
     )
 
