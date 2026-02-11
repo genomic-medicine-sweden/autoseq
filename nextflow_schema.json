@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/nf-core/autoseq//nextflow_schema.json",
+    "$id": "https://raw.githubusercontent.com/nf-core/autoseq/main/nextflow_schema.json",
     "title": "nf-core/autoseq pipeline parameters",
     "description": "This Pipeline analyses the targeted panel sequencing data from liquid biopsy samples with more accuracy",
     "type": "object",
@@ -369,6 +369,27 @@
             "help_text": "Specifies the project shorthand used to filter the master curation file. This ensures that CNV segments are annotated with comments relevant to the specific cancer biology being studied.",
             "default": "PANCANCER",
             "enum": ["PANCANCER", "CBC", "CCR", "CEC", "COV", "SARC"]
+        },
+        "genome_gridss_index": {
+            "type": "string"
+        },
+        "gridss_config": {
+            "type": "string"
+        },
+        "gridss_blacklist": {
+            "type": "string"
+        },
+        "gridss_pon_breakends": {
+            "type": "string"
+        },
+        "gridss_pon_breakpoints": {
+            "type": "string"
+        },
+        "gridss_known_fusions": {
+            "type": "string"
+        },
+        "gridss_repeatmasker_annotations": {
+            "type": "string"
         }
     }
 }
