@@ -36,7 +36,7 @@ process GRIDSS_ASSEMBLE {
         --jvmheap ${Math.round(task.memory.bytes * 0.95)} \\
         --steps assemble \\
         --reference ${genome_fasta} \\
-        --workingdir ${outdir}/work/ \\
+        --workingdir "." \\
         --assembly ${outdir}/${prefix}.sv.assembly.bam \\
         --threads ${task.cpus} ${arg_config} ${bams_list.join(' ')}
 
