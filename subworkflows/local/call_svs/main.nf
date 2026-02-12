@@ -16,7 +16,6 @@ workflow SVS_CALLING {
     ch_genome_fai
     ch_genome_gridss_index
     ch_genome_dict
-    ch_blacklist
     ch_pon_breakends
     ch_pon_breakpoints
     ch_known_fusions
@@ -84,7 +83,6 @@ workflow SVS_CALLING {
         ch_genome_gridss_index,
         ch_genome_fai,
         ch_genome_dict,
-        ch_blacklist,
         ch_gridss_config
     )
 
@@ -104,7 +102,6 @@ workflow SVS_CALLING {
         ch_genome_gridss_index,
         ch_genome_fai,
         ch_genome_dict,
-        ch_blacklist,
         ch_gridss_config
     )
 

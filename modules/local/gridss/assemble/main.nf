@@ -15,7 +15,6 @@ process GRIDSS_ASSEMBLE {
     tuple val(meta3), path(genome_gridss_index)
     tuple val(meta4), path(genome_fai)
     tuple val(meta5), path(genome_dict)
-    tuple val(meta6), path(blacklist)
     tuple val(meta7), path(gridss_config)
 
     output:
@@ -37,7 +36,6 @@ process GRIDSS_ASSEMBLE {
         --jvmheap ${Math.round(task.memory.bytes * 0.95)} \\
         --steps assemble \\
         --reference ${genome_fasta} \\
-        --blacklist ${blacklist} \\
         --workingdir ${outdir}/work/ \\
         --assembly ${outdir}/${prefix}.sv.assembly.bam \\
         --threads ${task.cpus} ${arg_config} ${bams_list.join(' ')}

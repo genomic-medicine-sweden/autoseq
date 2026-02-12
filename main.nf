@@ -43,7 +43,6 @@ params.ensembl_data_resources           = getGenomeAttribute('ensembl_data_resou
 params.curation_ann                     = getGenomeAttribute('curation_annotations')
 params.genome_gridss_index              = getGenomeAttribute('gridss_index')
 params.gridss_config                    = getGenomeAttribute('gridss_config')
-params.gridss_blacklist                 = getGenomeAttribute('gridss_blacklist')
 params.gridss_pon_breakends             = getGenomeAttribute('gridss_pon_breakends')
 params.gridss_pon_breakpoints           = getGenomeAttribute('gridss_pon_breakpoints')
 params.gridss_known_fusions             = getGenomeAttribute('gridss_known_fusions')
@@ -96,7 +95,6 @@ workflow NXF_AUTOSEQ {
 
     // GRIDSS-specific channels for SV calling
     ch_genome_gridss_index = params.genome_gridss_index ? Channel.fromPath(params.genome_gridss_index).map{ it -> [[id:'genome_gridss_index'], it]}.collect() : Channel.empty()
-    ch_blacklist           = params.gridss_blacklist ? Channel.fromPath(params.gridss_blacklist).map{ it -> [[id:'blacklist'], it]}.collect() : Channel.empty()
     ch_pon_breakends       = params.gridss_pon_breakends ? Channel.fromPath(params.gridss_pon_breakends).map{ it -> [[id:'pon_breakends'], it]}.collect() : Channel.empty()
     ch_pon_breakpoints     = params.gridss_pon_breakpoints ? Channel.fromPath(params.gridss_pon_breakpoints).map{ it -> [[id:'pon_breakpoints'], it]}.collect() : Channel.empty()
     ch_known_fusions       = params.gridss_known_fusions ? Channel.fromPath(params.gridss_known_fusions).map{ it -> [[id:'known_fusions'], it]}.collect() : Channel.empty()
@@ -124,7 +122,6 @@ workflow NXF_AUTOSEQ {
         ch_germline_resource,
         ch_germline_resource_tbi,
         ch_genome_gridss_index,
-        ch_blacklist,
         ch_pon_breakends,
         ch_pon_breakpoints,
         ch_known_fusions,

@@ -47,7 +47,6 @@ workflow AUTOSEQ {
     ch_germline_resource
     ch_germline_resource_tbi
     ch_genome_gridss_index
-    ch_blacklist    // channel: blacklist BED for SV calling
     ch_pon_breakends    // channel: panel of normals breakends for SV calling
     ch_pon_breakpoints  // channel: panel of normals breakpoints for SV calling
     ch_known_fusions    // channel: known fusions for SV filtering
@@ -246,7 +245,6 @@ workflow AUTOSEQ {
         ch_genome_fai,
         ch_genome_gridss_index,
         ch_dict,
-        ch_blacklist,
         ch_pon_breakends,
         ch_pon_breakpoints,
         ch_known_fusions,
