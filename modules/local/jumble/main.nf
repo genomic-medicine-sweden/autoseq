@@ -5,8 +5,8 @@ process JUMBLE_RUN {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/19/19ea92369dd5c2d099cc7ddc13b7a86c901d88b9b55a556505e25f239fccbbde/data':
-        'community.wave.seqera.io/library/bioconductor-aroma.light_bioconductor-bamsignals_bioconductor-bsgenome.hsapiens.ucsc.hg19_bioconductor-bsgenome_pruned:f3bfc207eb7292f6' }"
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/e6/e69d214fba6867a67796351f143d77406d37af48a16b41bc7083618462bd0359/data':
+        'community.wave.seqera.io/library/bioconductor-aroma.light_bioconductor-bamsignals_bioconductor-bsgenome.hsapiens.ucsc.hg19_bioconductor-bsgenome_pruned:c58b1261dd6946a5' }"
 
     input:
     tuple val(meta), path(bam), path(bai)
