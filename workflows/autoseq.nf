@@ -44,6 +44,8 @@ workflow AUTOSEQ {
     ch_ensembl_vep_cache
     ch_ensembl_data_resources
     ch_curation_ann
+    ch_germline_resource
+    ch_germline_resource_tbi
     ch_genome_gridss_index
     ch_blacklist    // channel: blacklist BED for SV calling
     ch_pon_breakends    // channel: panel of normals breakends for SV calling
@@ -209,11 +211,11 @@ workflow AUTOSEQ {
         ch_genome_fasta,
         ch_genome_fai,
         ch_dict,
-        [],  // germline_resource
+        ch_germline_resource.collect{it -> it[1]},  // germline_resource
+        ch_germline_resource_tbi.collect{it -> it[1]},  // germline_resource_tbi
         [],
         [],
-        [],
-        ch_interval_list_slopped20.collect{ it[1] },
+        ch_interval_list_slopped20.collect{ it -> it[1] },
         ch_sage_known_hotspots_somatic,
         ch_sage_highconf_regions,
         ch_sage_pon,

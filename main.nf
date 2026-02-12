@@ -33,6 +33,8 @@ params.ref_genome_fasta                 = getGenomeAttribute('fasta')
 params.ref_genome_fai                   = getGenomeAttribute('fai')
 params.ref_genome_dict                  = getGenomeAttribute('dict')
 params.bwamem2_index                    = getGenomeAttribute('bwamem2_index')
+params.germline_resource                = getGenomeAttribute('germline_resource')
+params.germline_resource_tbi            = getGenomeAttribute('germline_resource_tbi')
 params.sage_known_hotspots_somatic      = getGenomeAttribute('sage_known_hotspots_somatic')
 params.sage_highconf_regions            = getGenomeAttribute('sage_highconf_regions')
 params.sage_pon                         = getGenomeAttribute('sage_pon')
@@ -89,6 +91,8 @@ workflow NXF_AUTOSEQ {
     ch_sage_pon                    = params.sage_pon ? Channel.fromPath(params.sage_pon).map{ it -> [[id:'sage_pon'], it]}.collect() : Channel.empty()
     ch_ensembl_data_resources      = params.ensembl_data_resources ? Channel.fromPath(params.ensembl_data_resources).map{ it -> [[id:'ensembl_data_resources'], it]}.collect() : Channel.empty()
     ch_curation_ann                = params.curation_ann ? Channel.fromPath(params.curation_ann).map{ it -> [[id:'curation_ann'], it]}.collect() : Channel.empty()
+    ch_germline_resource           = params.germline_resource ? Channel.fromPath(params.germline_resource).map{ it -> [[id:'germline_resource'], it]}.collect() : Channel.empty()
+    ch_germline_resource_tbi       = params.germline_resource_tbi ? Channel.fromPath(params.germline_resource_tbi).map{ it -> [[id:'germline_resource_tbi'], it]}.collect() : Channel.empty()
 
     // GRIDSS-specific channels for SV calling
     ch_genome_gridss_index = params.genome_gridss_index ? Channel.fromPath(params.genome_gridss_index).map{ it -> [[id:'genome_gridss_index'], it]}.collect() : Channel.empty()
@@ -117,6 +121,8 @@ workflow NXF_AUTOSEQ {
         ch_ensembl_vep_cache,
         ch_ensembl_data_resources,
         ch_curation_ann,
+        ch_germline_resource,
+        ch_germline_resource_tbi,
         ch_genome_gridss_index,
         ch_blacklist,
         ch_pon_breakends,
