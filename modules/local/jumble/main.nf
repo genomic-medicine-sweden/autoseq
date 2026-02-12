@@ -16,11 +16,11 @@ process JUMBLE_RUN {
     tuple val(meta), path("*.cns"), emit: cns
     tuple val(meta), path("*.cnr"), emit: cnr
     tuple val(meta), path("*_dnacopy.seg"), emit: seg
-    tuple val(meta), path("*_profile_bedgraph"), emit: profile_bedgraph
-    tuple val(meta), path("*_segments_bedgraph"), emit: segments_bedgraph
+    tuple val(meta), path("*_profile.bedgraph"), emit: profile_bedgraph
+    tuple val(meta), path("*_segments.bedgraph"), emit: segments_bedgraph
     tuple val(meta), path("*.png"), emit: png , optional: true
     tuple val(meta), path("*.RDS"), emit: rds , optional: true
-    path  "versions.yml"          , emit: versions
+    tuple val("${task.process}"), val('Jumble'), eval("jumble-run.R --version 2>&1 | head -n 1 " ),  topic: versions,  emit: versions_jumble
 
     script:
     def args = task.ext.args ?: ''
@@ -33,20 +33,16 @@ process JUMBLE_RUN {
         $args \\
         -r ${jumbleref} \\
         -b ${bam} \\
+        -p ${prefix} \\
         -o "./"
 
     ## Convert to bedgraph for IGV visualization
     awk -F'\\t' -v OFS='\\t' '\$1 != "chromosome" {print \$1"\\t"\$2"\\t"\$3"\\t"\$6}' \\
-         ${prefix}.cnr > ${prefix}_profile_bedgraph
+         ${prefix}.cnr > ${prefix}_profile.bedgraph
 
     awk -F'\\t' -v OFS='\\t' '\$1 != "chromosome" {print \$1"\\t"\$2"\\t"\$3"\\t"\$5}' \\
-         ${prefix}.cns > ${prefix}_segments_bedgraph
+         ${prefix}.cns > ${prefix}_segments.bedgraph
 
-    # Capture versions
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        jumble-run.R: \$( jumble-run.R --version 2>&1 | head -n 1 || echo "unknown" )
-    END_VERSIONS
     """
 
     stub:
@@ -56,15 +52,10 @@ process JUMBLE_RUN {
     touch ${prefix}.cns
     touch ${prefix}.cnr
     touch ${prefix}_dnacopy.seg
-    touch ${prefix}_profile_bedgraph
-    touch ${prefix}_segments_bedgraph
+    touch ${prefix}_profile.bedgraph
+    touch ${prefix}_segments.bedgraph
     touch ${prefix}.RDS
     touch ${prefix}.png
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        jumble-run.R: "stub"
-        R: \$( R --version | sed -n '1p' )
-    END_VERSIONS
     """
 }

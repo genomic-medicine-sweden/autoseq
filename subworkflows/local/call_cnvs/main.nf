@@ -12,8 +12,6 @@ workflow CNV_CALLING {
 
     main:
 
-    ch_versions = Channel.empty()
-
     //
     // MODULE: JUMBLE_RUN to call CNVs
     //
@@ -22,8 +20,6 @@ workflow CNV_CALLING {
         ch_input_bam,
         ch_jumble_ref
     )
-
-    ch_versions = ch_versions.mix(JUMBLE_RUN.out.versions.first())
 
     //
     // MODULE: Annotate CNVs with cancer relevant genes
@@ -34,8 +30,6 @@ workflow CNV_CALLING {
         ch_curation_ann
     )
 
-    ch_versions = ch_versions.mix(JUMBLE_RUN.out.versions.first())
-
     emit:
     jumble_cns          = JUMBLE_RUN.out.cns
     cnr                 = JUMBLE_RUN.out.cnr
@@ -44,6 +38,5 @@ workflow CNV_CALLING {
     segments_bedgraph   = JUMBLE_RUN.out.segments_bedgraph
     png                 = JUMBLE_RUN.out.png
     cns                 = ANNOTATE_CNVS.out.cns
-    versions            = ch_versions
 
 }

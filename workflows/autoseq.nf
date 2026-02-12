@@ -234,8 +234,6 @@ workflow AUTOSEQ {
         ch_curation_ann
     )
 
-    ch_versions = ch_versions.mix(CNV_CALLING.out.versions)
-
     //
     // MODULE: SV Calling
     //

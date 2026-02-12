@@ -80,6 +80,8 @@ option_list <- list(
                 help = "optional vcf file with SNPs, including any matched normal"),
     make_option(c("-o", "--output_dir"), action = "store", type = "character",default = '.',
                 help = "directory for output"),
+    make_option(c("-p", "--prefix"), action = "store", type = "character",default = NULL,
+                help = "optional prefix for output files"),
     make_option(c("--version"), action = "store_true", default = FALSE,
                 help = "print version number and exit")
 )
@@ -402,8 +404,13 @@ if (str_detect(input,'.RDS$')) {
 
 targets <- target_template
 
-name <- str_remove(opt$input_bam,'.*/')
-name <- str_remove(name,'\\.counts.RDS')
+if (is.null(opt$prefix)) {
+    name <- str_remove(opt$input_bam,'.*/')
+    name <- str_remove(name,'\\.counts.RDS')
+} else {
+    name <- opt$prefix
+}
+
 
 clinbarcode <- name #str_remove(name, "[_-]nodups.bam")
 #clinbarcode <- str_remove(name, "[_-]clipoverlap.bam")
