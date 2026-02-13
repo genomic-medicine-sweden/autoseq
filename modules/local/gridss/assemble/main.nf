@@ -18,14 +18,13 @@ process GRIDSS_ASSEMBLE {
     tuple val(meta7), path(gridss_config)
 
     output:
-    tuple val(meta), path("gridss_assemble/"),  emit: assemble_dir
+    tuple val(meta), path("*.sv.assembly.bam.gridss.working"), path("*.sv.assembly.bam"),  emit: assemble_dir
     tuple val("${task.process}"), val('gridss'), eval("CallVariants --version 2>&1 | sed 's/-gridss\$//'")  , topic: versions, emit: versions_gridss
 
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     def arg_config = gridss_config ? "-c ${gridss_config}" : ""
-    def outdir = "gridss_assemble"
 
     def bams_list = bams instanceof List ? bams : [bams]
 
@@ -37,28 +36,17 @@ process GRIDSS_ASSEMBLE {
         --steps assemble \\
         --reference ${genome_fasta} \\
         --workingdir "." \\
-        --assembly ${outdir}/${prefix}.sv.assembly.bam \\
+        --assembly ${prefix}.sv.assembly.bam \\
         --threads ${task.cpus} ${arg_config} ${bams_list.join(' ')}
 
-
-    # Capture versions
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gridss: \$(CallVariants --version 2>&1 | sed 's/-gridss\$//')
-    END_VERSIONS
     """
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
-    mkdir -p gridss_assemble/work/
-    touch gridss_assemble/${prefix}.sv.assembly.bam
+    mkdir -p ${prefix}.sv.assembly.bam.gridss.working
+    touch ${prefix}.sv.assembly.bam
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        gridss: "stub"
-        R: \$( R --version | sed -n '1p' )
-    END_VERSIONS
     """
 }

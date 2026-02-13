@@ -10,7 +10,7 @@ process GRIDSS_CALL {
 
 
     input:
-    tuple val(meta), path(bams), path(bais), path(preprocess_dir), path(assemble_dir)
+    tuple val(meta), path(bams), path(bais), path(preprocess_dir), path(assemble_dir), path(assemble_bam)
     tuple val(meta2), path(genome_fasta)
     tuple val(meta3), path(genome_gridss_index)
     tuple val(meta4), path(genome_fai)
@@ -37,7 +37,7 @@ process GRIDSS_CALL {
         --steps call \\
         --reference ${genome_fasta} \\
         --workingdir  "." \\
-        --assembly gridss_assemble/${prefix}.sv.assembly.bam \\
+        --assembly ${assemble_bam} \\
         --output ${outdir}/${prefix}.sv.gridss.vcf.gz \\
         --threads ${task.cpus} ${arg_config} ${bams_list.join(' ')}
 
@@ -48,8 +48,7 @@ process GRIDSS_CALL {
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
-    mkdir -p gridss_call/work/
-    touch gridss_call/${prefix}.sv.assemblies.bam
+    mkdir -p gridss_call/
     touch gridss_call/${prefix}.sv.gridss.vcf.gz
 
     """
