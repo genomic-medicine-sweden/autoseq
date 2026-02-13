@@ -72,6 +72,7 @@ process SAGE_SOMATIC {
         -high_confidence_bed ${sage_highconf_regions} \\
         -ensembl_data_dir ${ensembl_data_resources} \\
         -bqr_write_plot \\
+        -skip_msi_jitter \\
         -threads ${task.cpus} \\
         ${hotspot_args} \\
         ${taf_args}     \\

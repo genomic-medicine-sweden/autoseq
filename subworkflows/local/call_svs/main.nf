@@ -89,9 +89,6 @@ workflow SVS_CALLING {
 
     ch_call_input = ch_assemble_input
         .join(GRIDSS_ASSEMBLE.out.assemble_dir)
-        .map { meta, bams, bais, _process_dirs, assemble_dir ->
-            [meta, bams, bais, assemble_dir]
-        }
 
     //
     // GRIDSS: Call step to generate SV VCF
