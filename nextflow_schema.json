@@ -376,9 +376,6 @@
         "gridss_config": {
             "type": "string"
         },
-        "gridss_blacklist": {
-            "type": "string"
-        },
         "gridss_pon_breakends": {
             "type": "string"
         },
@@ -389,6 +386,15 @@
             "type": "string"
         },
         "gridss_repeatmasker_annotations": {
+            "type": "string"
+        },
+        "germline_resource": {
+            "type": "string"
+        },
+        "germline_resource_tbi": {
+            "type": "string"
+        },
+        "ensembl_vep_cache": {
             "type": "string"
         }
     }
