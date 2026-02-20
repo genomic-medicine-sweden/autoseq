@@ -25,7 +25,7 @@ workflow READ_ALIGNMENT {
         .map { meta, reads ->
             meta  = meta + [
                 id         : "${meta.sample_name}.${meta.lane}".toString(),
-                read_group : "\"@RG\\tID:${meta.case_id}\\tSM:${meta.sample_name}_${meta.lane}\\tLB:${meta.sample_name}\\tPL:ILLUMINA\"".toString(),
+                read_group : "\"@RG\\tID:${meta.sample_name}_${meta.lane}\\tSM:${meta.sample_name}\\tLB:${meta.sample_name}\\tPL:ILLUMINA\"".toString(),
                 split      : null
             ]
 
