@@ -23,14 +23,26 @@ workflow READ_ALIGNMENT {
 
     ch_input_fastqs = ch_input_reads
         .map { meta, reads ->
-            meta  = meta + [
-                id         : "${meta.sample_name}.${meta.lane}".toString(),
-                read_group : "\"@RG\\tID:${meta.sample_name}_${meta.lane}\\tSM:${meta.sample_name}\\tLB:${meta.sample_name}\\tPL:ILLUMINA\"".toString(),
-                split      : null
-            ]
-
-            tuple(meta, reads)
+            tuple(meta.sample_name, meta, reads)
         }
+        .groupTuple()
+        .flatMap { _sample_name, meta_list, reads_list ->
+            def processed_reads = []
+            meta_list.eachWithIndex { meta, index ->
+
+                def seq_index = index + 1
+                def new_meta = meta + [
+                    id         : "${meta.sample_name}.${seq_index}".toString(),
+                    read_group : "\"@RG\\tID:${meta.sample_name}_${seq_index}\\tSM:${meta.sample_name}\\tLB:${meta.sample_name}\\tPL:ILLUMINA\"".toString(),
+                    split      : null
+                ]
+
+                processed_reads.add( tuple(new_meta, reads_list[index]) )
+            }
+
+            return processed_reads
+        }
+
 
     sort_bam = true
     BWAMEM2_MEM(

@@ -16,6 +16,7 @@ process GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS {
     output:
     tuple val(meta), path("*.gridss.targeted.bam"), path("*.gridss.targeted.bam.bai"),                                         emit: gridss_targeted_bam
     tuple val("${task.process}"), val('gridss'), eval("CallVariants --version 2>&1 | sed 's/-gridss\$//'")  , topic: versions, emit: versions_gridss
+    tuple val("${task.process}"), val('samtools'), eval("samtools --version 2>&1 | head -n1 | sed 's/samtools //'"), topic: versions, emit: versions_samtools
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
