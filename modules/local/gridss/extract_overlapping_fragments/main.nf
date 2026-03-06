@@ -22,11 +22,10 @@ process GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS {
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
-    GRIDSS_JAR=\$(find /opt/conda/share/gridss-* -name "gridss*.jar" | head -n 1 )
 
     # Extract overlapping fragments using GRIDSS utility
     gridss_extract_overlapping_fragments -w '.' \\
-        --targetbed  $target_bed -j \$GRIDSS_JAR \\
+        --targetbed  $target_bed                \\
         -o ${prefix}.gridss.targeted.bam $bam
 
     samtools index ${prefix}.gridss.targeted.bam
