@@ -1,0 +1,72 @@
+name: "gridss_extract_overlapping_fragments"
+description: Extract fragments overlapping target regions from BAM files using GRIDSS utility
+keywords:
+  - bam
+  - targeted sequencing
+  - structural variants
+  - gridss
+  - fragment extraction
+tools:
+  - gridss:
+      description: GRIDSS is a module software suite containing tools useful for the detection of genomic rearrangements
+      homepage: https://github.com/PapenfussLab/gridss
+      documentation: https://github.com/PapenfussLab/gridss
+      tool_dev_url: https://github.com/PapenfussLab/gridss
+      doi: "10.1101/gr.222109.117"
+      licence: ["GPL v3"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1', single_end:false ]`
+  - bam:
+      type: file
+      description: Input BAM file
+      pattern: "*.bam"
+  - bai:
+      type: file
+      description: BAM index file
+      pattern: "*.bam.bai"
+  - meta2:
+      type: map
+      description: |
+        Groovy Map containing target bed metadata
+        e.g. `[ id:'target_regions' ]`
+  - target_bed:
+      type: file
+      description: BED file containing target regions to extract overlapping fragments
+      pattern: "*.bed"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1', single_end:false ]`
+  - gridss_targeted_bam:
+      type: file
+      description: BAM file containing fragments overlapping target regions
+      pattern: "*.gridss.targeted.bam"
+  - gridss_targeted_bai:
+      type: file
+      description: Index for the targeted BAM file
+      pattern: "*.gridss.targeted.bam.bai"
+  - versions_gridss:
+      type: map
+      description: Map containing the version of GRIDSS used in this process, keyed by process name
+  - ${task.process}:
+      type: string
+      description: The process the versions were collected from
+  - gridss:
+      type: string
+      description: The tool name
+  - CallVariants --version 2>&1 | sed 's/-gridss\$//':
+      type: eval
+      description: The expression to obtain the version of the tool
+
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"

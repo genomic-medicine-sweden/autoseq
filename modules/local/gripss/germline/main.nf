@@ -1,0 +1,62 @@
+
+process GRIPSS_GERMLINE {
+    tag "$meta.id"
+    label 'process_low'
+
+    conda "${moduleDir}/environment.yml"
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/60/60c44edaccb69b42b3c92103dbfedadd474f5496b2b0f2f1e2b47bfa499044a5/data':
+        'community.wave.seqera.io/library/hmftools-gripss:2.4--2d77b9970bcdd750' }"
+
+
+    input:
+    tuple val(meta), path(gridss_vcf)
+    tuple val(meta2), path(genome_fasta)
+    tuple val(meta3), path(genome_fai)
+    tuple val(meta4), path(pon_breakends)
+    tuple val(meta5), path(pon_breakpoints)
+    tuple val(meta6), path(known_fusions)
+    tuple val(meta7), path(repeatmasker_annotations)
+    tuple val(meta8), path(target_region_bed)
+    val genome_version
+
+    output:
+    tuple val(meta), path("*.gripss.filtered.germline.vcf.gz"), path("*.gripss.filtered.germline.vcf.gz.tbi") ,  emit: filtered_vcf
+    tuple val(meta), path("*.gripss.germline.vcf.gz"), path("*.gripss.germline.vcf.gz.tbi")                   ,  emit: unfiltered_vcf
+    tuple val("${task.process}"), val('gripss'), eval("gripss -version | sed 's/^.* //'" )  ,  topic: versions,  emit: versions_gripss
+
+    script:
+    def args = task.ext.args ?: ''
+    def target_regions_bed_arg = target_region_bed ? "-target_regions_bed ${target_region_bed}" : ''
+
+
+    """
+    gripss \\
+        -Xmx${Math.round(task.memory.bytes * 0.95)} \\
+        ${args} \\
+        -sample ${meta.normal_id} \\
+        -reference ${meta.tumor_id} \\
+        -vcf ${gridss_vcf} \\
+        -germline \\
+        -ref_genome ${genome_fasta} \\
+        -ref_genome_version ${genome_version} \\
+        -pon_sgl_file ${pon_breakends} \\
+        -pon_sv_file ${pon_breakpoints} \\
+        -known_hotspot_file ${known_fusions} \\
+        -repeat_mask_file ${repeatmasker_annotations} \\
+        ${target_regions_bed_arg} \\
+        -output_id germline \\
+        -output_dir ./
+
+
+    """
+
+    stub:
+    """
+    touch ${meta.normal_id}.gripss.filtered.germline.vcf.gz
+    touch ${meta.normal_id}.gripss.filtered.germline.vcf.gz.tbi
+    touch ${meta.normal_id}.gripss.germline.vcf.gz
+    touch ${meta.normal_id}.gripss.germline.vcf.gz.tbi
+
+    """
+}

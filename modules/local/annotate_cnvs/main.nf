@@ -14,7 +14,7 @@ process ANNOTATE_CNVS {
 
     output:
     tuple val(meta), path("*_ann.cns"), emit: cns
-    path  "versions.yml"          , emit: versions
+    tuple val("${task.process}"), val('annotate_cnvs'), eval("annotate_cnvs.py --version 2>&1 | head -n 1 " ),  topic: versions,  emit: ver_anncnvs
 
     script:
     def args = task.ext.args ?: ''
@@ -25,12 +25,6 @@ process ANNOTATE_CNVS {
     annotate_cnvs.py -i ${cns} -c ${curation_ann} -o ${prefix}_ann.cns \\
         --sample-type ${sample_type} ${args}
 
-    # Capture versions
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        annotate_cnvs.py: \$( annotate_cnvs.py --version 2>&1 | head -n 1 )
-        python: \$( python --version | sed -n '1p' )
-    END_VERSIONS
     """
 
     stub:
@@ -39,10 +33,5 @@ process ANNOTATE_CNVS {
     """
     touch ${prefix}_ann.cns
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        annotate_cnvs.py: "stub"
-        python: \$( python --version | sed -n '1p' )
-    END_VERSIONS
     """
 }

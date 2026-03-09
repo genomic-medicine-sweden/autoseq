@@ -26,6 +26,8 @@ workflow SOMATIC_SNV_CALLING {
     ch_sage_highconf_regions
     ch_sage_pon
     ch_ensembl_data_resources
+    ch_ensembl_vep_cache
+    genome_version
 
     main:
     versions = Channel.empty()
@@ -61,9 +63,6 @@ workflow SOMATIC_SNV_CALLING {
     ch_mutect2_vcf = VT_NORMALIZE.out.vcf
         .join(INDEX_VCF.out.tbi)
 
-    def sage_genome_version = ("$params.genome" =~ /(?i)\b(37|grch37|hg19|b37)\b/) ? '37' :
-                              ("$params.genome" =~ /(?i)\b(38|grch38|hg38)\b/) ? '38' :
-                              { throw new Exception("Invalid genome version specified: $params.genome. Must be a variant of '37' (e.g., GRCh37, hg19) or '38' (e.g., GRCh38, hg38).") }()
 
     // Call somatic SNVs using SAGE in tumor-normal mode
     SAGE_SOMATIC(
@@ -71,7 +70,7 @@ workflow SOMATIC_SNV_CALLING {
         ch_fasta,
         ch_fai,
         ch_dict,
-        sage_genome_version, // genome version
+        genome_version, // genome version
         ch_sage_pon.collect{it[1]},
         ch_sage_known_hotspots_somatic.collect{it[1]},
         ch_sage_highconf_regions.collect{it[1]},
@@ -106,7 +105,7 @@ workflow SOMATIC_SNV_CALLING {
         params.genome,
         "homo_sapiens",
         params.ensemblvep_version,
-        ch_ensembl_data_resources.collect{it[1]},
+        ch_ensembl_vep_cache.collect{it -> it[1]},
         ch_fasta,
         []
     )

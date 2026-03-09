@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/nf-core/autoseq//nextflow_schema.json",
+    "$id": "https://raw.githubusercontent.com/nf-core/autoseq/main/nextflow_schema.json",
     "title": "nf-core/autoseq pipeline parameters",
     "description": "This Pipeline analyses the targeted panel sequencing data from liquid biopsy samples with more accuracy",
     "type": "object",
@@ -55,7 +55,8 @@
                     "description": "Name of iGenomes reference.",
                     "fa_icon": "fas fa-book",
                     "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details.",
-                    "default": "GRCh37"
+                    "default": "GRCh37",
+                    "enum": ["GRCh37", "GRCh38"]
                 },
                 "igenomes_ignore": {
                     "type": "boolean",
@@ -180,6 +181,90 @@
                 "jumble_ref": {
                     "type": "string",
                     "description": "Path to the reference RDS (R data object) for Jumble"
+                },
+                "sage_known_hotspots_somatic": {
+                    "type": "string",
+                    "description": "Path to known somatic hotspots file for SAGE"
+                },
+                "sage_highconf_regions": {
+                    "type": "string",
+                    "description": "Path to high confidence regions file for SAGE"
+                },
+                "sage_pon": {
+                    "type": "string",
+                    "description": "Path to Panel of Normals file for SAGE"
+                },
+                "ensembl_data_resources": {
+                    "type": "string",
+                    "description": "Path to Ensembl data resources directory"
+                },
+                "sage_min_tumor_vaf": {
+                    "type": "number",
+                    "default": 0.0002
+                },
+                "sage_hotspot_tumor_qual": {
+                    "type": "integer",
+                    "default": 150
+                },
+                "sage_min_tumor_qual": {
+                    "type": "integer",
+                    "default": 250
+                },
+                "sage_min_map_quality": {
+                    "type": "integer",
+                    "default": 20
+                },
+                "ensemblvep_version": {
+                    "type": "string",
+                    "description": "Version of Ensembl VEP to use",
+                    "default": "115"
+                },
+                "curation_ann": {
+                    "type": "string",
+                    "description": "Path to curation annotation file"
+                },
+                "cancer_type": {
+                    "type": "string",
+                    "description": "Cancer project code for gene-specific annotation.",
+                    "help_text": "Specifies the project shorthand used to filter the master curation file. This ensures that CNV segments are annotated with comments relevant to the specific cancer biology being studied.",
+                    "default": "PANCANCER",
+                    "enum": ["PANCANCER", "CBC", "CCR", "CEC", "COV", "SARC"]
+                },
+                "genome_gridss_index": {
+                    "type": "string",
+                    "description": "Path to GRIDSS genome index"
+                },
+                "gridss_config": {
+                    "type": "string",
+                    "description": "Path to GRIDSS configuration file"
+                },
+                "gridss_pon_breakends": {
+                    "type": "string",
+                    "description": "Path to GRIDSS Panel of Normals breakends file"
+                },
+                "gridss_pon_breakpoints": {
+                    "type": "string",
+                    "description": "Path to GRIDSS Panel of Normals breakpoints file"
+                },
+                "gridss_known_fusions": {
+                    "type": "string",
+                    "description": "Path to known fusions file for GRIDSS"
+                },
+                "gridss_repeatmasker_annotations": {
+                    "type": "string",
+                    "description": "Path to RepeatMasker annotations for GRIDSS"
+                },
+                "germline_resource": {
+                    "type": "string",
+                    "description": "Path to germline resource file"
+                },
+                "germline_resource_tbi": {
+                    "type": "string",
+                    "description": "Path to germline resource tabix index file"
+                },
+                "ensembl_vep_cache": {
+                    "type": "string",
+                    "description": "Path to Ensembl VEP cache directory"
                 }
             }
         },
@@ -327,48 +412,6 @@
         },
         "config_profile_url": {
             "type": "string"
-        },
-        "sage_known_hotspots_somatic": {
-            "type": "string"
-        },
-        "sage_highconf_regions": {
-            "type": "string"
-        },
-        "sage_pon": {
-            "type": "string"
-        },
-        "ensembl_data_resources": {
-            "type": "string"
-        },
-        "sage_min_tumor_vaf": {
-            "type": "number",
-            "default": 0.0002
-        },
-        "sage_hotspot_tumor_qual": {
-            "type": "integer",
-            "default": 150
-        },
-        "sage_min_tumor_qual": {
-            "type": "integer",
-            "default": 250
-        },
-        "sage_min_map_quality": {
-            "type": "integer",
-            "default": 20
-        },
-        "ensemblvep_version": {
-            "type": "string",
-            "default": 115
-        },
-        "curation_ann": {
-            "type": "string"
-        },
-        "cancer_type": {
-            "type": "string",
-            "description": "Cancer project code for gene-specific annotation.",
-            "help_text": "Specifies the project shorthand used to filter the master curation file. This ensures that CNV segments are annotated with comments relevant to the specific cancer biology being studied.",
-            "default": "PANCANCER",
-            "enum": ["PANCANCER", "CBC", "CCR", "CEC", "COV", "SARC"]
         }
     }
 }

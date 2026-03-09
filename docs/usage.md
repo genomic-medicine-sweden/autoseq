@@ -6,58 +6,37 @@
 
 ## Introduction
 
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
+**nf-autoseq** is an automated Nextflow-based bioinformatics pipeline developed for the comprehensive analysis of cancer genomics data, specifically optimized for deep targeted sequencing and whole-exome sequencing (WES). The pipeline facilitates a reproducible, end-to-end workflow—transitioning from raw sequence reads to refined, annotated variant calls suitable for clinical and research interpretation.
 
-## Samplesheet input
+**Note**: Currently, it is in active development and not yet ready for production use.
 
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
+## Prerequisites
 
-```bash
---input '[path to samplesheet file]'
-```
+To ensure portability and ease of deployment, nf-autoseq requires the following software to be installed on your host system:
 
-### Multiple runs of the same sample
-
-The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
-
-```csv title="samplesheet.csv"
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
-```
-
-### Full samplesheet
-
-The pipeline will auto-detect whether a sample is single- or paired-end using the information provided in the samplesheet. The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 3 columns to match those defined in the table below.
-
-A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `TREATMENT_REP3` has been sequenced twice.
-
-```csv title="samplesheet.csv"
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
-CONTROL_REP3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
-TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,
-TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
-```
-
-| Column    | Description                                                                                                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`  | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `fastq_1` | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `fastq_2` | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-
-An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+- Nextflow
+- Container/Package Manager: The pipeline supports multiple environments to manage software dependencies:
+  `Docker`, `Singularity`, `Apptainer`, `Conda`, etc. (see [profiles](#profile) for more details).
 
 ## Running the pipeline
+
+To run the nf-autoseq pipeline, you just need to get two things ready:
+
+- Samplesheet
+- Reference Datasets
+
+It is important to format these files correctly so the pipeline can run automatically without any errors. Please follow the instructions below to download your references and set up your samplesheet.
 
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/autoseq --input ./samplesheet.csv --outdir ./results --genome GRCh37 -profile docker
+nextflow run nf-autoseq/main.nf \
+        --input ./samplesheet.csv \
+        --outdir ./results \
+        --genome GRCh37  \
+        -profile docker \
+        --ref_genomes_base references \
+        --panel probio_comprehensive4
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -71,6 +50,100 @@ work                # Directory containing the nextflow working files
 # Other nextflow hidden files, eg. history of pipeline runs and old logs.
 ```
 
+### Samplesheet input
+
+You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
+
+```bash
+--input '[path to samplesheet file]'
+```
+
+#### Multiple runs of the same sample
+
+The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
+
+````csv title="samplesheet.csv"
+```csv
+case_id,sample_name,sample_type,lane,fastq_1,fastq_2,bam
+PATIENT_ID,TUMOR_ID,tumor,L2,/path/to/SAMPLE_L2_R1_001.fastq.gz,/path/to/SAMPLE_L2_R2_001.fastq.gz,
+PATIENT_ID,TUMOR_ID,tumor,L3,/path/to/SAMPLE_L3_R1_001.fastq.gz,/path/to/SAMPLE_L3_R2_001.fastq.gz,
+PATIENT_ID,TUMOR_ID,tumor,L4,/path/to/SAMPLE_L4_R1_001.fastq.gz,/path/to/SAMPLE_L4_R2_001.fastq.gz,
+PATIENT_ID,TUMOR_ID,tumor,L5,/path/to/SAMPLE_L5_R1_001.fastq.gz,/path/to/SAMPLE_L5_R2_001.fastq.gz,
+````
+
+> [!IMPORTANT]
+> Note: current version of the pipeline does not support BAM files as input, so the `bam` column should be left empty. Support for BAM input is planned for a future release.
+
+#### Full samplesheet
+
+The samplesheet can also contain multiple samples, for example:
+
+```csv title="samplesheet.csv"
+case_id,sample_name,sample_type,lane,fastq_1,fastq_2,bam
+PATIENT_ID,TUMOR_ID,tumor,L2,/path/to/SAMPLE_L2_R1_001.fastq.gz,/path/to/SAMPLE_L2_R2_001.fastq.gz,
+PATIENT_ID,TUMOR_ID,tumor,L3,/path/to/SAMPLE_L3_R1_001.fastq.gz,/path/to/SAMPLE_L3_R2_001.fastq.gz,
+PATIENT_ID,TUMOR_ID,tumor,L4,/path/to/SAMPLE_L4_R1_001.fastq.gz,/path/to/SAMPLE_L4_R2_001.fastq.gz,
+PATIENT_ID,TUMOR_ID,tumor,L5,/path/to/SAMPLE_L5_R1_001.fastq.gz,/path/to/SAMPLE_L5_R2_001.fastq.gz,
+PATIENT_ID,NORMAL_ID,normal,L4,/path/to/SAMPLE_L4_R1_001.fastq.gz,/path/to/SAMPLE_L4_R2_001.fastq.gz,
+PATIENT_ID,NORMAL_ID,normal,L5,/path/to/SAMPLE_L5_R1_001.fastq.gz,/path/to/SAMPLE_L5_R2_001.fastq.gz,
+PATIENT_ID,NORMAL_ID,normal,L6,/path/to/SAMPLE_L6_R1_001.fastq.gz,/path/to/SAMPLE_L6_R2_001.fastq.gz,
+```
+
+| Column        | Description                                                                                                                                                                            |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `case_id`     | Unique identifier for the patient or case.                                                                                                                                             |
+| `sample_name` | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
+| `sample_type` | Type of sample (e.g., tumor, normal).                                                                                                                                                  |
+| `lane`        | Lane number of the sequencing run.                                                                                                                                                     |
+| `fastq_1`     | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
+| `fastq_2`     | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
+| `bam`         | Full path to BAM file. This column is optional and should be left empty if not used.                                                                                                   |
+
+An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
+
+### Reference Files and Panels
+
+The `nf-autoseq` pipeline relies on reference genomes and gene panels to perform its analyses. By default, the pipeline will download these files from public repositories (eg. Ensembl) as needed during the run. However, you can also specify a local directory containing these files if you have them available.
+
+#### Reference Directory Structure
+
+```
+references/
+└── GRCh37/
+    ├── genome/             # FASTA, FAI, and DICT files
+    ├── bwamem2_index/      # BWA-mem2 alignment indices
+    ├── annotations/        # Germline resources and curation CSVs
+    ├── hmfdata/            # SAGE blocklists, hotspots, and driver panels
+    ├── vep/                # Ensembl VEP cache
+    ├── gridss_index        # GRIDSS cache and bwa-index
+    └── gridss/             # GRIDSS configuration, PONs, and fusions
+└── GRCh38/
+    ├── genome/             # FASTA, FAI, and DICT files
+    ...
+```
+
+> [!IMPORTANT]
+> Automation Note: Automated downloading and generation of these reference files is not yet implemented. Users must ensure the reference path is correctly populated before running the pipeline. Full automation of reference setup is planned for a future release.
+
+### Panel Support
+
+The pipeline uses the `--panel` parameter to load specific genomic coordinates and bait information required for targeted sequencing analysis.
+
+#### Currently Supported Panels
+
+The following panels are pre-configured in the pipeline:
+
+| Panel ID              | Description             | Components Included                                     |
+| --------------------- | ----------------------- | ------------------------------------------------------- |
+| probio_comprehensive3 | ProBio Comprehensive v3 | BED (slopped), Interval lists, and Jumble RDS reference |
+| gmck_v3               | GMCK v3                 | BED (slopped), Interval lists, and Jumble RDS reference |
+
+#### Custom Panels
+
+If you have a custom panel that is not included in the above list, you can specify it using the `--panel_bed` parameter. The pipeline expects a BED file with the genomic coordinates of the panel targets. Pipeline will automatically generate the necessary interval lists. This option is not implemented in the current version of the pipeline.
+
+#### Parameter Usage
+
 If you wish to repeatedly use the same parameters for multiple runs, rather than specifying each flag in the command, you can specify these in a params file.
 
 Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <file>`.
@@ -81,7 +154,7 @@ Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <
 The above pipeline run specified with a params file in yaml format:
 
 ```bash
-nextflow run nf-core/autoseq -profile docker -params-file params.yaml
+nextflow run nf-autoseq/main.nf -profile docker -params-file params.yaml
 ```
 
 with:
@@ -94,14 +167,6 @@ genome: 'GRCh37'
 ```
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
-
-### Updating the pipeline
-
-When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
-
-```bash
-nextflow pull nf-core/autoseq
-```
 
 ### Reproducibility
 

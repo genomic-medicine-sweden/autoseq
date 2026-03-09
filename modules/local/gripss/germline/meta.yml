@@ -1,0 +1,107 @@
+name: gripss_germline
+description: Filters germline structural variants from GRIDSS VCF using GRIPSS
+keywords:
+  - structural variants
+  - filtering
+  - germline
+  - vcf
+  - gridss
+  - gripss
+tools:
+  - gripss:
+      description: GRIDSS Iterative Paired-end Short-read SV filter
+      homepage: https://github.com/hartwigmedical/hmftools/tree/gripss-v2.4/gripss
+      documentation: https://github.com/hartwigmedical/hmftools/tree/gripss-v2.4/gripss
+      licence: ["GPL v3"]
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [id: 'sample_id', normal_id: 'normal_sample_id', tumor_id: 'tumor_sample_id']
+  - gridss_vcf:
+      type: file
+      description: GRIDSS VCF file containing structural variants
+      pattern: "*.vcf.gz"
+  - meta2:
+      type: map
+      description: Groovy Map containing reference genome metadata
+  - genome_fasta:
+      type: file
+      description: Reference genome FASTA file
+      pattern: "*.{fa,fasta}"
+  - meta3:
+      type: map
+      description: Groovy Map containing genome index metadata
+  - genome_fai:
+      type: file
+      description: Reference genome FASTA index file
+      pattern: "*.fai"
+  - meta4:
+      type: map
+      description: Groovy Map containing PON breakends metadata
+  - pon_breakends:
+      type: file
+      description: Panel of normals (PON) file for breakends
+      pattern: "*.bed.gz"
+  - meta5:
+      type: map
+      description: Groovy Map containing PON breakpoints metadata
+  - pon_breakpoints:
+      type: file
+      description: Panel of normals (PON) file for breakpoints
+      pattern: "*.bedpe.gz"
+  - meta6:
+      type: map
+      description: Groovy Map containing known fusions metadata
+  - known_fusions:
+      type: file
+      description: Known fusion hotspots file
+      pattern: "*.csv"
+  - meta7:
+      type: map
+      description: Groovy Map containing repeatmasker annotations metadata
+  - repeatmasker_annotations:
+      type: file
+      description: RepeatMasker annotations file
+      pattern: "*.fa.out.gz"
+  - meta8:
+      type: map
+      description: Groovy Map containing target region BED metadata
+  - target_region_bed:
+      type: file
+      description: Optional target regions BED file
+      pattern: "*.bed"
+  - genome_version:
+      type: string
+      description: Reference genome version (e.g., 'hg19', 'hg38')
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [id: 'sample_id', normal_id: 'normal_sample_id', tumor_id: 'tumor_sample_id']
+  - filtered_vcf:
+      type: file
+      description: Filtered germline structural variants VCF and index
+      pattern: "*.gripss.filtered.germline.vcf.gz{,.tbi}"
+  - unfiltered_vcf:
+      type: file
+      description: Unfiltered germline structural variants VCF and index
+      pattern: "*.gripss.germline.vcf.gz{,.tbi}"
+  - versions_gripss:
+      type: map
+      description: Map containing the version of GRIPSS used in this process, keyed by process name
+  - ${task.process}:
+      type: string
+      description: The process the versions were collected from
+  - gripss:
+      type: string
+      description: The tool name
+  - gripss -version | sed 's/^.* //':
+      type: eval
+      description: The expression to obtain the version of the tool
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
