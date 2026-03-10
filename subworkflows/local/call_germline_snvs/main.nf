@@ -41,7 +41,6 @@ workflow GERMLINE_SNV_CALLING {
     emit:
     vcf     = GATK4_HAPLOTYPECALLER.out.vcf
     tbi     = GATK4_HAPLOTYPECALLER.out.tbi
-    bam     = GATK4_HAPLOTYPECALLER.out.bam
     vep_vcf = ENSEMBLVEP_VEP.out.vcf
     vep_tbi = ENSEMBLVEP_VEP.out.tbi
 

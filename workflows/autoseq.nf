@@ -382,7 +382,6 @@ workflow AUTOSEQ {
             SOMATIC_SNV_CALLING.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "vep_tbi"], vep_tbi] },
             GERMLINE_SNV_CALLING.out.vcf.map { meta, vcf -> [ meta + [file: "germline_vcf"], vcf] },
             GERMLINE_SNV_CALLING.out.tbi.map { meta, tbi -> [ meta + [file: "germline_tbi"], tbi] },
-            GERMLINE_SNV_CALLING.out.bam.map { meta, bam -> [ meta + [file: "germline_hc_bam"], bam] },
             GERMLINE_SNV_CALLING.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "germline_vep_vcf"], vep_vcf] },
             GERMLINE_SNV_CALLING.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "germline_vep_tbi"], vep_tbi] },
             SVS_CALLING.out.gripss_somatic_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_filtered_vcf"], [vcf, tbi]] },

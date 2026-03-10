@@ -215,7 +215,7 @@ output {
                 return 'variants/somatic/merged'
             } else if (meta.file == 'vep_vcf' || meta.file == 'vep_tbi') {
                 return 'variants/somatic'
-            } else if (meta.file == 'germline_vcf' || meta.file == 'germline_tbi' || meta.file == 'germline_hc_bam') {
+            } else if (meta.file == 'germline_vcf' || meta.file == 'germline_tbi') {
                 return 'variants/germline/haplotypecaller'
             } else if (meta.file == 'germline_vep_vcf' || meta.file == 'germline_vep_tbi') {
                 return 'variants/germline/'
