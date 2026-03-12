@@ -34,7 +34,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
       - [GRIPSS](#gripss)
     - [Copy Number Variant Calling](#copy-number-variant-calling)
       - [Jumble](#jumble)
-    - [Variant Annotations](#variant-annotations)
+    - [SNVs and small InDels Annotations](#snvs-and-small-indels-annotations)
       - [VEP](#vep)
     - [Tumor Purity/Ploidy Estimation](#tumor-purityploidy-estimation)
       - [PureCN](#purecn)
@@ -210,7 +210,7 @@ Jumble is a tool for detecting copy number variants (CNVs) in sequencing data. I
 
 </details>
 
-### Variant Annotations
+### SNVs and small InDels Annotations
 
 #### VEP
 
