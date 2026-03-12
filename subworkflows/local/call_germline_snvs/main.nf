@@ -4,7 +4,7 @@ include { ENSEMBLVEP_VEP            } from '../../../modules/nf-core/ensemblvep/
 
 workflow GERMLINE_SNV_CALLING {
     take:
-        ch_input                  // [meta, bam, bai, intervals, dragstr_model]
+        ch_input                // [meta, bam, bai, intervals, dragstr_model]
         ch_genome_fasta         // [meta_ref, fasta]
         ch_genome_fai           // [meta_ref, fai]
         ch_dict                 // [meta_ref, dict]

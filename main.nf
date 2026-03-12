@@ -33,8 +33,8 @@ params.ref_genome_fasta                 = getGenomeAttribute('fasta')
 params.ref_genome_fai                   = getGenomeAttribute('fai')
 params.ref_genome_dict                  = getGenomeAttribute('dict')
 params.bwamem2_index                    = getGenomeAttribute('bwamem2_index')
-params.dbsnp_vcf                       = getGenomeAttribute('dbsnp_vcf')
-params.dbsnp_vcf_tbi                   = getGenomeAttribute('dbsnp_vcf_tbi')
+params.dbsnp_vcf                        = getGenomeAttribute('dbsnp_vcf')
+params.dbsnp_vcf_tbi                    = getGenomeAttribute('dbsnp_vcf_tbi')
 params.germline_resource                = getGenomeAttribute('germline_resource')
 params.germline_resource_tbi            = getGenomeAttribute('germline_resource_tbi')
 params.sage_known_hotspots_somatic      = getGenomeAttribute('sage_known_hotspots_somatic')
@@ -79,8 +79,8 @@ workflow NXF_AUTOSEQ {
     ch_genome_fai    = params.ref_genome_fai    ? channel.fromPath(params.ref_genome_fai).map{ it -> [[id:'genome_fai'], it]}.collect() : channel.empty()
     ch_dict          = params.ref_genome_dict   ? channel.fromPath(params.ref_genome_dict).map{ it -> [[id:'genome_dict'], it]}.collect() : channel.empty()
     ch_bwamem2_index = params.bwamem2_index     ? channel.fromPath(params.bwamem2_index).map{ it -> [[id:'bwamem2_index'], it]}.collect() : channel.empty()
-    ch_dbsnp_vcf      = params.dbsnp_vcf        ? channel.fromPath(params.dbsnp_vcf).map{ it -> [[id:'dbsnp_vcf'], it]}.collect() : channel.empty()
-    ch_dbsnp_vcf_tbi  = params.dbsnp_vcf_tbi  ? channel.fromPath(params.dbsnp_vcf_tbi).map{ it -> [[id:'dbsnp_vcf_tbi'], it]}.collect() : channel.empty()
+    ch_dbsnp_vcf     = params.dbsnp_vcf        ? channel.fromPath(params.dbsnp_vcf).map{ it -> [[id:'dbsnp_vcf'], it]}.collect() : channel.empty()
+    ch_dbsnp_vcf_tbi = params.dbsnp_vcf_tbi  ? channel.fromPath(params.dbsnp_vcf_tbi).map{ it -> [[id:'dbsnp_vcf_tbi'], it]}.collect() : channel.empty()
 
     //
     ch_targets_bed             = params.targets_bed ? channel.fromPath(params.targets_bed).map{ it -> [[id:'targets_bed'], it]}.collect() : channel.empty()
@@ -98,12 +98,12 @@ workflow NXF_AUTOSEQ {
     ch_germline_resource_tbi       = params.germline_resource_tbi ? channel.fromPath(params.germline_resource_tbi).map{ it -> [[id:'germline_resource_tbi'], it]}.collect() : channel.empty()
 
     // GRIDSS-specific channels for SV calling
-    ch_genome_gridss_index = params.genome_gridss_index ? channel.fromPath(params.genome_gridss_index).map{ it -> [[id:'genome_gridss_index'], it]}.collect() : channel.empty()
-    ch_pon_breakends       = params.gridss_pon_breakends ? channel.fromPath(params.gridss_pon_breakends).map{ it -> [[id:'pon_breakends'], it]}.collect() : channel.empty()
-    ch_pon_breakpoints     = params.gridss_pon_breakpoints ? channel.fromPath(params.gridss_pon_breakpoints).map{ it -> [[id:'pon_breakpoints'], it]}.collect() : channel.empty()
-    ch_known_fusions       = params.gridss_known_fusions ? channel.fromPath(params.gridss_known_fusions).map{ it -> [[id:'known_fusions'], it]}.collect() : channel.empty()
+    ch_genome_gridss_index      = params.genome_gridss_index ? channel.fromPath(params.genome_gridss_index).map{ it -> [[id:'genome_gridss_index'], it]}.collect() : channel.empty()
+    ch_pon_breakends            = params.gridss_pon_breakends ? channel.fromPath(params.gridss_pon_breakends).map{ it -> [[id:'pon_breakends'], it]}.collect() : channel.empty()
+    ch_pon_breakpoints          = params.gridss_pon_breakpoints ? channel.fromPath(params.gridss_pon_breakpoints).map{ it -> [[id:'pon_breakpoints'], it]}.collect() : channel.empty()
+    ch_known_fusions            = params.gridss_known_fusions ? channel.fromPath(params.gridss_known_fusions).map{ it -> [[id:'known_fusions'], it]}.collect() : channel.empty()
     ch_repeatmasker_annotations = params.gridss_repeatmasker_annotations ? channel.fromPath(params.gridss_repeatmasker_annotations).map{ it -> [[id:'repeatmasker_annotations'], it]}.collect() : channel.empty()
-    ch_gridss_config         = params.gridss_config ? channel.fromPath(params.gridss_config).map{ it -> [[id: 'gridss_config'], it]}.collect() : channel.empty()
+    ch_gridss_config            = params.gridss_config ? channel.fromPath(params.gridss_config).map{ it -> [[id: 'gridss_config'], it]}.collect() : channel.empty()
 
     //
     // WORKFLOW: Run pipeline

@@ -85,7 +85,7 @@ workflow AUTOSEQ {
     ch_input_reads = FASTP.out.reads
 
     //
-    // MODULE: ALIGNMENT
+    // SUBWORKFLOW: ALIGNMENT
     //
 
     if (params.umi_structure) {
@@ -147,7 +147,7 @@ workflow AUTOSEQ {
     }
 
     //
-    // MODULE: QC of aligned BAM files
+    // SUBWORKFLOW: QC of aligned BAM files
     //
 
     ALIGNMENT_QC(
@@ -161,7 +161,7 @@ workflow AUTOSEQ {
     ch_versions = ch_versions.mix(ALIGNMENT_QC.out.versions)
 
     //
-    // MODULE: Somatic SNV and INDELs Calling
+    // SUBWORKFLOW: Somatic SNV and INDELs Calling
     //
 
     // Branch samples by tumor/normal
@@ -227,7 +227,7 @@ workflow AUTOSEQ {
     ch_versions = ch_versions.mix(SOMATIC_SNV_CALLING.out.versions)
 
     //
-    // MODULE: GERMLINE Variant Calling
+    // SUBWORKFLOW: GERMLINE Variant Calling
     //
 
     ch_germline_input = normal_ch
@@ -248,7 +248,7 @@ workflow AUTOSEQ {
     )
 
     //
-    // MODULE: CNV Calling
+    // SUBWORKFLOW: CNV Calling
     //
 
     CNV_CALLING(
@@ -258,7 +258,7 @@ workflow AUTOSEQ {
     )
 
     //
-    // MODULE: SV Calling
+    // SUBWORKFLOW: SV Calling
     //
 
     SVS_CALLING(
