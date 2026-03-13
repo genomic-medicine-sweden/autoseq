@@ -6,7 +6,7 @@
 
 ## Introduction
 
-**nf-autoseq** is an automated Nextflow-based bioinformatics pipeline developed for the comprehensive analysis of cancer genomics data, specifically optimized for deep targeted sequencing and whole-exome sequencing (WES). The pipeline facilitates a reproducible, end-to-end workflow—transitioning from raw sequence reads to refined, annotated variant calls suitable for clinical and research interpretation.
+**nf-autoseq** is an automated Nextflow-based bioinformatics pipeline developed for the comprehensive analysis of cancer genomics data, specifically optimized for deep targeted sequencing and whole-exome sequencing (WES). The pipeline facilitates a reproducible, end-to-end workflow, transitioning from raw sequence reads to refined, annotated variant calls suitable for clinical and research interpretation.
 
 **Note**: Currently, it is in active development and not yet ready for production use.
 

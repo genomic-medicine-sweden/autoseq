@@ -19,6 +19,7 @@ include { READ_ALIGNMENT                                      } from '../subwork
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
 include { BAM_QC_PICARD_SAMTOOLS  as ALIGNMENT_QC             } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
 include { SOMATIC_SNV_CALLING                                 } from '../subworkflows/local/call_somatic_snvs/main.nf'
+include { GERMLINE_SNV_CALLING                                } from '../subworkflows/local/call_germline_snvs/main.nf'
 include { CNV_CALLING                                         } from '../subworkflows/local/call_cnvs/main.nf'
 include { SVS_CALLING                                         } from '../subworkflows/local/call_svs/main.nf'
 /*
@@ -52,11 +53,13 @@ workflow AUTOSEQ {
     ch_known_fusions    // channel: known fusions for SV filtering
     ch_repeatmasker_annotations // channel: repeatmasker annotations for SV filtering
     ch_gridss_config   // path: optional GRIDSS config file
+    ch_dbsnp_vcf      // channel: optional dbSNP VCF for SNV annotation
+    ch_dbsnp_vcf_tbi  // channel: optional dbSNP VCF
 
     main:
 
-    ch_versions = Channel.empty()
-    ch_multiqc_files = Channel.empty()
+    ch_versions = channel.empty()
+    ch_multiqc_files = channel.empty()
 
     //
     // MODULE: Run FastQC
@@ -82,7 +85,7 @@ workflow AUTOSEQ {
     ch_input_reads = FASTP.out.reads
 
     //
-    // MODULE: ALIGNMENT
+    // SUBWORKFLOW: ALIGNMENT
     //
 
     if (params.umi_structure) {
@@ -94,9 +97,9 @@ workflow AUTOSEQ {
                 return [meta.sample_name, [meta , reads]]
             }
             .groupTuple()
-            .map { sample_name, grouped_reads ->
-                def metas = grouped_reads.collect{it[0]}
-                def files = grouped_reads.collect{it[1]}.flatten()
+            .map { _sample_name, grouped_reads ->
+                def metas = grouped_reads.collect{it -> it[0]}
+                def files = grouped_reads.collect{it -> it[1]}.flatten()
                 return [metas[0], files]
             }
             .set { ch_input_reads }
@@ -137,14 +140,14 @@ workflow AUTOSEQ {
             ch_bwamem2_index
         )
 
-        ch_multiqc_files = ch_multiqc_files.mix(READ_ALIGNMENT.out.dedup_metrics.collect{it[1]}.ifEmpty([]))
+        ch_multiqc_files = ch_multiqc_files.mix(READ_ALIGNMENT.out.dedup_metrics.collect{it -> it[1]}.ifEmpty([]))
         ch_versions = ch_versions.mix(READ_ALIGNMENT.out.versions)
         ch_aligned_bam = READ_ALIGNMENT.out.dedup_bam
             .join(READ_ALIGNMENT.out.dedup_bai)
     }
 
     //
-    // MODULE: QC of aligned BAM files
+    // SUBWORKFLOW: QC of aligned BAM files
     //
 
     ALIGNMENT_QC(
@@ -158,12 +161,12 @@ workflow AUTOSEQ {
     ch_versions = ch_versions.mix(ALIGNMENT_QC.out.versions)
 
     //
-    // MODULE: Somatic SNV and INDELs Calling
+    // SUBWORKFLOW: Somatic SNV and INDELs Calling
     //
 
     // Branch samples by tumor/normal
     ch_aligned_bam
-        .branch { meta, bam, bai ->
+        .branch { meta, _bam, _bai ->
             tumor: meta.sample_type == "tumor"
             normal: meta.sample_type == "normal"
         }
@@ -185,7 +188,7 @@ workflow AUTOSEQ {
     ch_input_paired = tumor_ch
         .join(normal_ch, by: 0)
         .combine(ch_interval_list_slopped20)
-        .map { case_id, tumor_meta, tumor_bam, tumor_bai, normal_meta, normal_bam, normal_bai, meta_intervals, intervals_file ->
+        .map { case_id, tumor_meta, tumor_bam, tumor_bai, normal_meta, normal_bam, normal_bai, _meta_intervals, intervals_file ->
             // Create comprehensive meta map
             def meta = [
                 id: case_id,
@@ -224,7 +227,28 @@ workflow AUTOSEQ {
     ch_versions = ch_versions.mix(SOMATIC_SNV_CALLING.out.versions)
 
     //
-    // MODULE: CNV Calling
+    // SUBWORKFLOW: GERMLINE Variant Calling
+    //
+
+    ch_germline_input = normal_ch
+        .combine(ch_interval_list_slopped20)
+        .map { _case_id, meta, bam, bai, _meta_intervals, intervals ->
+            [meta, bam, bai, intervals, []]
+        }
+
+
+    GERMLINE_SNV_CALLING(
+        ch_germline_input,  // normal samples only
+        ch_genome_fasta,
+        ch_genome_fai,
+        ch_dict,
+        ch_ensembl_vep_cache,
+        ch_dbsnp_vcf,
+        ch_dbsnp_vcf_tbi
+    )
+
+    //
+    // SUBWORKFLOW: CNV Calling
     //
 
     CNV_CALLING(
@@ -234,7 +258,7 @@ workflow AUTOSEQ {
     )
 
     //
-    // MODULE: SV Calling
+    // SUBWORKFLOW: SV Calling
     //
 
     SVS_CALLING(
@@ -255,7 +279,7 @@ workflow AUTOSEQ {
     //
     // Collate and save software versions
     //
-    def topic_versions = Channel.topic("versions")
+    def topic_versions = channel.topic("versions")
         .distinct()
         .branch { entry ->
             versions_file: entry instanceof Path
@@ -285,14 +309,14 @@ workflow AUTOSEQ {
     //
     // MODULE: MultiQC
     //
-    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.multiple_metrics.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.hs_metrics.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.flagstat.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it -> it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it -> it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.multiple_metrics.collect{it -> it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.hs_metrics.collect{it -> it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.flagstat.collect{it -> it[1]}.ifEmpty([]))
 
 
-    ch_multiqc_config        = Channel.fromPath(
+    ch_multiqc_config        = channel.fromPath(
         "$projectDir/assets/multiqc_config.yml", checkIfExists: true)
     ch_multiqc_custom_config = params.multiqc_config ?
         channel.fromPath(params.multiqc_config, checkIfExists: true) :
@@ -331,7 +355,7 @@ workflow AUTOSEQ {
 
     // Prepare final output channel
 
-    autoseq_output = Channel
+    autoseq_output = channel
         .empty()
         .mix(
             ch_aligned_bam.map { meta, bam, _bai -> [ meta + [file: "bam"], bam] },
@@ -356,6 +380,10 @@ workflow AUTOSEQ {
             SOMATIC_SNV_CALLING.out.somatic_tbi.map { meta, somatic_tbi -> [ meta + [file: "somatic_tbi"], somatic_tbi] },
             SOMATIC_SNV_CALLING.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "vep_vcf"], vep_vcf] },
             SOMATIC_SNV_CALLING.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "vep_tbi"], vep_tbi] },
+            GERMLINE_SNV_CALLING.out.vcf.map { meta, vcf -> [ meta + [file: "germline_vcf"], vcf] },
+            GERMLINE_SNV_CALLING.out.tbi.map { meta, tbi -> [ meta + [file: "germline_tbi"], tbi] },
+            GERMLINE_SNV_CALLING.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "germline_vep_vcf"], vep_vcf] },
+            GERMLINE_SNV_CALLING.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "germline_vep_tbi"], vep_tbi] },
             SVS_CALLING.out.gripss_somatic_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_filtered_vcf"], [vcf, tbi]] },
             SVS_CALLING.out.gripss_somatic_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_unfiltered_vcf"], [vcf, tbi]] },
             SVS_CALLING.out.gripss_germline_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_filtered_vcf"], [vcf, tbi]] },

@@ -215,9 +215,9 @@
                     "default": 20
                 },
                 "ensemblvep_version": {
-                    "type": "string",
+                    "type": "integer",
                     "description": "Version of Ensembl VEP to use",
-                    "default": "115"
+                    "default": 115
                 },
                 "curation_ann": {
                     "type": "string",
@@ -265,6 +265,19 @@
                 "ensembl_vep_cache": {
                     "type": "string",
                     "description": "Path to Ensembl VEP cache directory"
+                },
+                "vep_species": {
+                    "type": "string",
+                    "default": "homo_sapiens",
+                    "description": "Species name for Ensembl VEP annotation"
+                },
+                "dbsnp_vcf": {
+                    "type": "string",
+                    "description": "Path to dbSNP VCF file for variant annotation"
+                },
+                "dbsnp_vcf_tbi": {
+                    "type": "string",
+                    "description": "Path to dbSNP VCF tabix index file"
                 }
             }
         },

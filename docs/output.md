@@ -34,7 +34,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
       - [GRIPSS](#gripss)
     - [Copy Number Variant Calling](#copy-number-variant-calling)
       - [Jumble](#jumble)
-    - [Variant Annotations](#variant-annotations)
+    - [SNVs and small InDels Annotations](#snvs-and-small-indels-annotations)
       - [VEP](#vep)
     - [Tumor Purity/Ploidy Estimation](#tumor-purityploidy-estimation)
       - [PureCN](#purecn)
@@ -51,6 +51,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 ## Output directory structure
 
 ```
+
 results/
 ├── alignment
 ├── cnv
@@ -64,6 +65,8 @@ results/
 │   ├── germline
 │   └── somatic
 └── variants
+    └── germline
+    │   ├── haplotypecaller
     └── somatic
         ├── merged
         ├── mutect2
@@ -152,8 +155,14 @@ SAGE is a somatic SNV (Single Nucleotide Variant) caller tailored for cancer res
 
 GATK HaplotypeCaller is a robust germline variant caller that identifies SNPs and indels. It reconstructs haplotypes to ensure accurate variant calling, even in challenging genomic regions.
 
-> [NOTE]
-> Yet to be implemented
+<details markdown="1">
+<summary>Output files for GATK4 HaplotypeCaller:</summary>
+
+- `{outdir}/variants/germline/haplotypecaller`
+  - `*_haplotypecaller.vcf.gz`: germline variants in compressed vcf file format
+  - `*_haplotypecaller.vcf.tbi`: index file for germline vcf.
+
+</details>
 
 ### Structural Variant Calling
 
@@ -201,7 +210,7 @@ Jumble is a tool for detecting copy number variants (CNVs) in sequencing data. I
 
 </details>
 
-### Variant Annotations
+### SNVs and small InDels Annotations
 
 #### VEP
 
@@ -211,8 +220,11 @@ VEP (Variant Effect Predictor) annotates genetic variants with their predicted e
 <summary>Output files for VEP Annotation: </summary>
 
 - `{outdir}/variants/somatic/`
-  - `*.all.somatic.vep.vcf.gz`: VEP annotated variants in compressed VCF format.
-  - `*.all.somatic.vep.vcf.gz.tbi`: Index file for VEP annotated VCF.
+  - `*-all.somatic.vep.vcf.gz`: VEP annotated variants in compressed VCF format.
+  - `*-all.somatic.vep.vcf.gz.tbi`: Index file for VEP annotated VCF.
+- `{outdir}/variants/germline/`
+  - `*-all.germline.vep.vcf.gz`: VEP annotated variants in compressed VCF format.
+  - `*-all.germline.vep.vcf.gz.tbi`: Index file for VEP annotated VCF.
 
 </details>
 
