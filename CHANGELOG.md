@@ -9,6 +9,12 @@ Initial release of nf-core/autoseq, created with the [nf-core](https://nf-co.re/
 
 ### `Added`
 
+- [ #1 ](https://github.com/imsarath/nf-autoseq/pull/1) Added subworkflow for BAM QC, Reference genome configuration and nf-test integration
+- [ #3 ](https://github.com/imsarath/nf-autoseq/pull/3) Added subworkflow for somatic variant callers - GATK4 MuTect2, Hmftools - SAGE somatic
+- [ #7 ](https://github.com/imsarath/nf-autoseq/pull/7) Added subworkflow for cnv calling (Jumble) and cancer-specific information annotations.
+- [ #13 ](https://github.com/imsarath/nf-autoseq/pull/13) Added subworkflow for structural variant calling - GRIDSS
+- [ #16 ](https://github.com/imsarath/nf-autoseq/pull/16) Added subworkflow for germline variant calling - GATK4 haplotypecaller and minor bug fixes
+
 ### `Fixed`
 
 ### `Dependencies`
