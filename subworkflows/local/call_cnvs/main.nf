@@ -4,7 +4,7 @@ include { JUMBLE_RUN         } from '../../../modules/local/jumble/main'
 include { ANNOTATE_CNVS      } from '../../../modules/local/annotate_cnvs/main'
 
 
-workflow CNV_CALLING {
+workflow CALL_CNVS {
     take:
     ch_input_bam            // channel: input BAM files from alignment workflow
     ch_jumble_ref           // channel: Jumble reference files

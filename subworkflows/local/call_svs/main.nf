@@ -9,7 +9,7 @@ include { GRIDSS_CALL                           } from '../../../modules/local/g
 include { GRIPSS_SOMATIC                        } from '../../../modules/local/gripss/somatic/main'
 include { GRIPSS_GERMLINE                       } from '../../../modules/local/gripss/germline/main'
 
-workflow SVS_CALLING {
+workflow CALL_SVS {
     take:
     ch_aligned_bam
     ch_genome_fasta

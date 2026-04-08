@@ -2,11 +2,11 @@
 //
 //
 
-include { BWAMEM2_MEM } from '../../../modules/nf-core/bwamem2/mem/main'
+include { BWAMEM2_MEM                            } from '../../../modules/nf-core/bwamem2/mem/main'
 include { GATK4_MARKDUPLICATES as MARKDUPLICATES } from '../../../modules/nf-core/gatk4/markduplicates/main'
 
 
-workflow READ_ALIGNMENT {
+workflow ALIGNMENT {
     take:
     ch_input_reads // channel: input reads from samplesheet
     ch_genome_fasta

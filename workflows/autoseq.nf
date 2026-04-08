@@ -15,13 +15,13 @@ include { FASTP                                               } from '../modules
 include { CAT_FASTQ                                           } from '../modules/nf-core/cat/fastq/main'
 include { SAMTOOLS_INDEX                                      } from '../modules/nf-core/samtools/index/main'
 
-include { READ_ALIGNMENT                                      } from '../subworkflows/local/fastq_align_bwamem2/main.nf'
+include { ALIGNMENT                                           } from '../subworkflows/local/alignment/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
-include { BAM_QC_PICARD_SAMTOOLS  as ALIGNMENT_QC             } from '../subworkflows/local/bam_qc_picard_samtools/main.nf'
-include { SOMATIC_SNV_CALLING                                 } from '../subworkflows/local/call_somatic_snvs/main.nf'
-include { GERMLINE_SNV_CALLING                                } from '../subworkflows/local/call_germline_snvs/main.nf'
-include { CNV_CALLING                                         } from '../subworkflows/local/call_cnvs/main.nf'
-include { SVS_CALLING                                         } from '../subworkflows/local/call_svs/main.nf'
+include { QC_ALIGNMENT                                        } from '../subworkflows/local/qc_alignment/main.nf'
+include { CALL_SOMATIC_SNVS                                   } from '../subworkflows/local/call_somatic_snvs/main.nf'
+include { CALL_GERMLINE_SNVS                                  } from '../subworkflows/local/call_germline_snvs/main.nf'
+include { CALL_CNVS                                           } from '../subworkflows/local/call_cnvs/main.nf'
+include { CALL_SVS                                            } from '../subworkflows/local/call_svs/main.nf'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -133,24 +133,24 @@ workflow AUTOSEQ {
 
     } else {
 
-        READ_ALIGNMENT(
+        ALIGNMENT(
             ch_input_reads,
             ch_genome_fasta,
             ch_genome_fai,
             ch_bwamem2_index
         )
 
-        ch_multiqc_files = ch_multiqc_files.mix(READ_ALIGNMENT.out.dedup_metrics.collect{it -> it[1]}.ifEmpty([]))
-        ch_versions = ch_versions.mix(READ_ALIGNMENT.out.versions)
-        ch_aligned_bam = READ_ALIGNMENT.out.dedup_bam
-            .join(READ_ALIGNMENT.out.dedup_bai)
+        ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.dedup_metrics.collect{it -> it[1]}.ifEmpty([]))
+        ch_versions = ch_versions.mix(ALIGNMENT.out.versions)
+        ch_aligned_bam = ALIGNMENT.out.dedup_bam
+            .join(ALIGNMENT.out.dedup_bai)
     }
 
     //
     // SUBWORKFLOW: QC of aligned BAM files
     //
 
-    ALIGNMENT_QC(
+    QC_ALIGNMENT(
         ch_aligned_bam,
         ch_genome_fasta,
         ch_genome_fai,
@@ -158,7 +158,7 @@ workflow AUTOSEQ {
         ch_interval_list_slopped20
     )
 
-    ch_versions = ch_versions.mix(ALIGNMENT_QC.out.versions)
+    ch_versions = ch_versions.mix(QC_ALIGNMENT.out.versions)
 
     //
     // SUBWORKFLOW: Somatic SNV and INDELs Calling
@@ -206,7 +206,7 @@ workflow AUTOSEQ {
     // genome version for sage and gripss
     def genome_version = params.genome.equals("GRCh37") ? '37' : '38'
 
-    SOMATIC_SNV_CALLING (
+    CALL_SOMATIC_SNVS (
         ch_input_paired,
         ch_genome_fasta,
         ch_genome_fai,
@@ -224,7 +224,7 @@ workflow AUTOSEQ {
         genome_version
     )
 
-    ch_versions = ch_versions.mix(SOMATIC_SNV_CALLING.out.versions)
+    ch_versions = ch_versions.mix(CALL_SOMATIC_SNVS.out.versions)
 
     //
     // SUBWORKFLOW: GERMLINE Variant Calling
@@ -237,7 +237,7 @@ workflow AUTOSEQ {
         }
 
 
-    GERMLINE_SNV_CALLING(
+    CALL_GERMLINE_SNVS(
         ch_germline_input,  // normal samples only
         ch_genome_fasta,
         ch_genome_fai,
@@ -251,7 +251,7 @@ workflow AUTOSEQ {
     // SUBWORKFLOW: CNV Calling
     //
 
-    CNV_CALLING(
+    CALL_CNVS(
         ch_aligned_bam,
         ch_jumble_ref,
         ch_curation_ann
@@ -261,7 +261,7 @@ workflow AUTOSEQ {
     // SUBWORKFLOW: SV Calling
     //
 
-    SVS_CALLING(
+    CALL_SVS(
         ch_aligned_bam,
         ch_genome_fasta,
         ch_genome_fai,
@@ -311,9 +311,9 @@ workflow AUTOSEQ {
     //
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it -> it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it -> it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.multiple_metrics.collect{it -> it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.hs_metrics.collect{it -> it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT_QC.out.flagstat.collect{it -> it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNMENT.out.multiple_metrics.collect{it -> it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNMENT.out.hs_metrics.collect{it -> it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNMENT.out.flagstat.collect{it -> it[1]}.ifEmpty([]))
 
 
     ch_multiqc_config        = channel.fromPath(
@@ -360,34 +360,34 @@ workflow AUTOSEQ {
         .mix(
             ch_aligned_bam.map { meta, bam, _bai -> [ meta + [file: "bam"], bam] },
             ch_aligned_bam.map { meta, _bam, bai -> [ meta + [file: "bai"], bai] },
-            ALIGNMENT_QC.out.flagstat.map { meta, flagstat -> [ meta + [file: "flagstat"], flagstat] },
-            ALIGNMENT_QC.out.hs_metrics.map { meta, hs_metrics -> [ meta + [file: "hs_metrics"], hs_metrics] },
-            ALIGNMENT_QC.out.multiple_metrics.map { meta, multiple_metrics -> [ meta + [file: "multiple_metrics"], multiple_metrics] },
-            CNV_CALLING.out.jumble_cns.map { meta, cns -> [ meta + [file: "jumble_cns"], cns] },
-            CNV_CALLING.out.cnr.map { meta, cnr -> [ meta + [file: "cnr"], cnr] },
-            CNV_CALLING.out.seg.map { meta, seg -> [ meta + [file: "seg"], seg] },
-            CNV_CALLING.out.profile_bedgraph.map { meta, profile_bedgraph -> [ meta + [file: "profile_bedgraph"], profile_bedgraph] },
-            CNV_CALLING.out.segments_bedgraph.map { meta, segments_bedgraph -> [ meta + [file: "segments_bedgraph"], segments_bedgraph] },
-            CNV_CALLING.out.png.map { meta, png -> [ meta + [file: "cnv_plot_png"], png] },
-            CNV_CALLING.out.cns.map { meta, annotated_cns -> [ meta + [file: "annotated_cns"], annotated_cns] },
-            SOMATIC_SNV_CALLING.out.contamination_table.map { meta, table -> [ meta + [file: "contamination_table"], table] },
-            SOMATIC_SNV_CALLING.out.mutect2_stats.map { meta, stats -> [ meta + [file: "mutect2_stats"], stats] },
-            SOMATIC_SNV_CALLING.out.mutect2_tbi.map { meta, tbi -> [ meta + [file: "mutect2_tbi"], tbi] },
-            SOMATIC_SNV_CALLING.out.mutect2_vcf.map { meta, vcf -> [ meta + [file: "mutect2_vcf"], vcf] },
-            SOMATIC_SNV_CALLING.out.sage_vcf.map { meta, vcf -> [ meta + [file: "sage_vcf"], vcf] },
-            SOMATIC_SNV_CALLING.out.sage_tbi.map { meta, tbi -> [ meta + [file: "sage_tbi"], tbi] },
-            SOMATIC_SNV_CALLING.out.somatic_vcf.map { meta, somatic_vcf -> [ meta + [file: "somatic_vcf"], somatic_vcf] },
-            SOMATIC_SNV_CALLING.out.somatic_tbi.map { meta, somatic_tbi -> [ meta + [file: "somatic_tbi"], somatic_tbi] },
-            SOMATIC_SNV_CALLING.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "vep_vcf"], vep_vcf] },
-            SOMATIC_SNV_CALLING.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "vep_tbi"], vep_tbi] },
-            GERMLINE_SNV_CALLING.out.vcf.map { meta, vcf -> [ meta + [file: "germline_vcf"], vcf] },
-            GERMLINE_SNV_CALLING.out.tbi.map { meta, tbi -> [ meta + [file: "germline_tbi"], tbi] },
-            GERMLINE_SNV_CALLING.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "germline_vep_vcf"], vep_vcf] },
-            GERMLINE_SNV_CALLING.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "germline_vep_tbi"], vep_tbi] },
-            SVS_CALLING.out.gripss_somatic_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_filtered_vcf"], [vcf, tbi]] },
-            SVS_CALLING.out.gripss_somatic_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_unfiltered_vcf"], [vcf, tbi]] },
-            SVS_CALLING.out.gripss_germline_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_filtered_vcf"], [vcf, tbi]] },
-            SVS_CALLING.out.gripss_germline_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_unfiltered_vcf"], [vcf, tbi]] }
+            QC_ALIGNMENT.out.flagstat.map { meta, flagstat -> [ meta + [file: "flagstat"], flagstat] },
+            QC_ALIGNMENT.out.hs_metrics.map { meta, hs_metrics -> [ meta + [file: "hs_metrics"], hs_metrics] },
+            QC_ALIGNMENT.out.multiple_metrics.map { meta, multiple_metrics -> [ meta + [file: "multiple_metrics"], multiple_metrics] },
+            CALL_CNVS.out.jumble_cns.map { meta, cns -> [ meta + [file: "jumble_cns"], cns] },
+            CALL_CNVS.out.cnr.map { meta, cnr -> [ meta + [file: "cnr"], cnr] },
+            CALL_CNVS.out.seg.map { meta, seg -> [ meta + [file: "seg"], seg] },
+            CALL_CNVS.out.profile_bedgraph.map { meta, profile_bedgraph -> [ meta + [file: "profile_bedgraph"], profile_bedgraph] },
+            CALL_CNVS.out.segments_bedgraph.map { meta, segments_bedgraph -> [ meta + [file: "segments_bedgraph"], segments_bedgraph] },
+            CALL_CNVS.out.png.map { meta, png -> [ meta + [file: "cnv_plot_png"], png] },
+            CALL_CNVS.out.cns.map { meta, annotated_cns -> [ meta + [file: "annotated_cns"], annotated_cns] },
+            CALL_SOMATIC_SNVS.out.contamination_table.map { meta, table -> [ meta + [file: "contamination_table"], table] },
+            CALL_SOMATIC_SNVS.out.mutect2_stats.map { meta, stats -> [ meta + [file: "mutect2_stats"], stats] },
+            CALL_SOMATIC_SNVS.out.mutect2_tbi.map { meta, tbi -> [ meta + [file: "mutect2_tbi"], tbi] },
+            CALL_SOMATIC_SNVS.out.mutect2_vcf.map { meta, vcf -> [ meta + [file: "mutect2_vcf"], vcf] },
+            CALL_SOMATIC_SNVS.out.sage_vcf.map { meta, vcf -> [ meta + [file: "sage_vcf"], vcf] },
+            CALL_SOMATIC_SNVS.out.sage_tbi.map { meta, tbi -> [ meta + [file: "sage_tbi"], tbi] },
+            CALL_SOMATIC_SNVS.out.somatic_vcf.map { meta, somatic_vcf -> [ meta + [file: "somatic_vcf"], somatic_vcf] },
+            CALL_SOMATIC_SNVS.out.somatic_tbi.map { meta, somatic_tbi -> [ meta + [file: "somatic_tbi"], somatic_tbi] },
+            CALL_SOMATIC_SNVS.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "vep_vcf"], vep_vcf] },
+            CALL_SOMATIC_SNVS.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "vep_tbi"], vep_tbi] },
+            CALL_GERMLINE_SNVS.out.vcf.map { meta, vcf -> [ meta + [file: "germline_vcf"], vcf] },
+            CALL_GERMLINE_SNVS.out.tbi.map { meta, tbi -> [ meta + [file: "germline_tbi"], tbi] },
+            CALL_GERMLINE_SNVS.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "germline_vep_vcf"], vep_vcf] },
+            CALL_GERMLINE_SNVS.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "germline_vep_tbi"], vep_tbi] },
+            CALL_SVS.out.gripss_somatic_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_filtered_vcf"], [vcf, tbi]] },
+            CALL_SVS.out.gripss_somatic_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_unfiltered_vcf"], [vcf, tbi]] },
+            CALL_SVS.out.gripss_germline_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_filtered_vcf"], [vcf, tbi]] },
+            CALL_SVS.out.gripss_germline_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_unfiltered_vcf"], [vcf, tbi]] }
         )
 
     emit:

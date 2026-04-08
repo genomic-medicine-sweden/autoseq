@@ -4,7 +4,7 @@ include { PICARD_COLLECTMULTIPLEMETRICS  } from '../../../modules/nf-core/picard
 include { PICARD_COLLECTHSMETRICS        } from '../../../modules/nf-core/picard/collecthsmetrics/main'
 include { SAMTOOLS_FLAGSTAT              } from '../../../modules/nf-core/samtools/flagstat/main'
 
-workflow BAM_QC_PICARD_SAMTOOLS {
+workflow QC_ALIGNMENT {
     take:
     ch_input_bam // channel: input BAM files from alignment workflow
     ch_genome_fasta

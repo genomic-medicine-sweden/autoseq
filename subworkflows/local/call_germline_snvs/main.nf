@@ -2,7 +2,7 @@
 include { GATK4_HAPLOTYPECALLER     } from '../../../modules/nf-core/gatk4/haplotypecaller/main'
 include { ENSEMBLVEP_VEP            } from '../../../modules/nf-core/ensemblvep/vep/main'
 
-workflow GERMLINE_SNV_CALLING {
+workflow CALL_GERMLINE_SNVS {
     take:
         ch_input                // [meta, bam, bai, intervals, dragstr_model]
         ch_genome_fasta         // [meta_ref, fasta]
