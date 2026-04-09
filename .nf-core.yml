@@ -1,4 +1,6 @@
-lint: {}
+lint:
+  files_unchanged:
+    - .github/workflows/linting.yml
 nf_core_version: 3.5.2
 repository_type: pipeline
 template:
