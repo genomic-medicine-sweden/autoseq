@@ -14,6 +14,7 @@ Initial release of nf-core/autoseq, created with the [nf-core](https://nf-co.re/
 - [ #7 ](https://github.com/imsarath/nf-autoseq/pull/7) Added subworkflow for cnv calling (Jumble) and cancer-specific information annotations.
 - [ #13 ](https://github.com/imsarath/nf-autoseq/pull/13) Added subworkflow for structural variant calling - GRIDSS
 - [ #16 ](https://github.com/imsarath/nf-autoseq/pull/16) Added subworkflow for germline variant calling - GATK4 haplotypecaller and minor bug fixes
+- [ #19 ](https://github.com/imsarath/nf-autoseq/pull/19) Repo setup for Genome Medicine Sweden Org
 
 ### `Fixed`
 
