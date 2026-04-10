@@ -122,17 +122,19 @@ workflow CALL_SOMATIC_SNVS {
 
 
     emit:
-    contamination_table = CALL_GATK_MUTECT2.out.contamination_table    // channel: [ val(meta), path(table) ]
-    mutect2_stats       = CALL_GATK_MUTECT2.out.filtered_stats                 // channel: [ val(meta), path(stats) ]
-    mutect2_tbi         = CALL_GATK_MUTECT2.out.filtered_tbi                   // channel: [ val(meta), path(tbi) ]
-    mutect2_vcf         = CALL_GATK_MUTECT2.out.filtered_vcf                   // channel: [ val(meta), path(vcf) ]
-    pileup_table_normal = CALL_GATK_MUTECT2.out.pileup_table_normal         // channel: [ val(meta), path(table) ]
-    pileup_table_tumor  = CALL_GATK_MUTECT2.out.pileup_table_tumor          // channel: [ val(meta), path(table) ]
-    sage_vcf            = SAGE_SOMATIC.out.vcf                                 // channel: [ val(meta), path(vcf) ]
-    sage_tbi            = SAGE_SOMATIC.out.tbi
-    somatic_vcf         = SOMATIC_VCFMERGE.out.vcf
-    somatic_tbi         = SOMATIC_VCFMERGE.out.tbi
-    vep_vcf             = ANNOTATE_VEP.out.vcf
-    vep_tbi             = ANNOTATE_VEP.out.tbi
+    contamination_table    = CALL_GATK_MUTECT2.out.contamination_table    // channel: [ val(meta), path(table) ]
+    mutect2_stats          = CALL_GATK_MUTECT2.out.filtered_stats         // channel: [ val(meta), path(stats) ]
+    mutect2_tbi            = CALL_GATK_MUTECT2.out.filtered_tbi           // channel: [ val(meta), path(tbi) ]
+    mutect2_vcf            = CALL_GATK_MUTECT2.out.filtered_vcf           // channel: [ val(meta), path(vcf) ]
+    pileup_table_normal    = CALL_GATK_MUTECT2.out.pileup_table_normal    // channel: [ val(meta), path(table) ]
+    pileup_table_tumor     = CALL_GATK_MUTECT2.out.pileup_table_tumor     // channel: [ val(meta), path(table) ]
+    mutect2_unfiltered_vcf = CALL_GATK_MUTECT2.out.mutect2_vcf
+    mutect2_unfiltered_tbi = CALL_GATK_MUTECT2.out.mutect2_tbi
+    sage_vcf               = SAGE_SOMATIC.out.vcf                         // channel: [ val(meta), path(vcf) ]
+    sage_tbi               = SAGE_SOMATIC.out.tbi
+    somatic_vcf            = SOMATIC_VCFMERGE.out.vcf
+    somatic_tbi            = SOMATIC_VCFMERGE.out.tbi
+    vep_vcf                = ANNOTATE_VEP.out.vcf
+    vep_tbi                = ANNOTATE_VEP.out.tbi
     versions
 }

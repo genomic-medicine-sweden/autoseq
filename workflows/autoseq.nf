@@ -22,6 +22,8 @@ include { CALL_SOMATIC_SNVS                                   } from '../subwork
 include { CALL_GERMLINE_SNVS                                  } from '../subworkflows/local/call_germline_snvs/main.nf'
 include { CALL_CNVS                                           } from '../subworkflows/local/call_cnvs/main.nf'
 include { CALL_SVS                                            } from '../subworkflows/local/call_svs/main.nf'
+include { PROFILE_TUMOR_BIOMARKERS                            } from '../subworkflows/local/profile_tumor_biomarkers/main.nf'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -274,6 +276,22 @@ workflow AUTOSEQ {
         ch_targets_bed,
         ch_gridss_config,
         genome_version
+    )
+
+    //
+    // SUBWORKFLOW: Tumor Biomarker Profiling (e.g. purity/ploidy, MSI, TMB, etc.)
+    //
+
+    ch_tumor_cnr = CALL_CNVS.out.cnr
+        .filter { meta, _cnr -> meta.sample_type == "tumor" }
+
+    ch_tumor_seg = CALL_CNVS.out.seg
+        .filter { meta, _seg -> meta.sample_type == "tumor" }
+
+    PROFILE_TUMOR_BIOMARKERS(
+        ch_tumor_cnr,
+        ch_tumor_seg,
+        CALL_SOMATIC_SNVS.out.mutect2_unfiltered_vcf
     )
 
     //
