@@ -407,6 +407,8 @@ workflow AUTOSEQ {
             CALL_SVS.out.gripss_somatic_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_unfiltered_vcf"], [vcf, tbi]] },
             CALL_SVS.out.gripss_germline_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_filtered_vcf"], [vcf, tbi]] },
             CALL_SVS.out.gripss_germline_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_unfiltered_vcf"], [vcf, tbi]] },
+            PROFILE_TUMOR_BIOMARKERS.out.purecn_csv.map { meta, csv -> [ meta + [file: "purecn_csv"], csv ] },
+            PROFILE_TUMOR_BIOMARKERS.out.purecn_pdf.map { meta, pdf -> [ meta + [file: "purecn_pdf"], pdf ] },
             PROFILE_TUMOR_BIOMARKERS.out.dpyd_csv.map  { meta, csv  -> [ meta + [file: "dpyd_csv"],  csv  ] },
             PROFILE_TUMOR_BIOMARKERS.out.dpyd_json.map { meta, json -> [ meta + [file: "dpyd_json"], json ] }
         )

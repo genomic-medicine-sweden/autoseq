@@ -38,6 +38,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
       - [VEP](#vep)
     - [Tumor Purity/Ploidy Estimation](#tumor-purityploidy-estimation)
       - [PureCN](#purecn)
+    - [Pharmacogenomics](#pharmacogenomics)
+      - [typeDPYD](#typedpyd)
     - [Microsatellite Instability](#microsatellite-instability)
       - [MSIsensor2](#msisensor2)
     - [Quality Control and Reporting](#quality-control-and-reporting)
@@ -55,8 +57,10 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 results/
 ├── alignment
 ├── cnv
+├── dpyd
 ├── multiqc
 ├── pipeline_info
+├── purecn
 ├── qc
 │   ├── contamination
 │   ├── picard
@@ -232,10 +236,41 @@ VEP (Variant Effect Predictor) annotates genetic variants with their predicted e
 
 #### PureCN
 
-PureCN estimates tumor purity and ploidy, providing critical information for interpreting cancer genomic data. It helps distinguish between somatic and germline variants in mixed samples.
+PureCN estimates tumor purity and ploidy, providing critical information for interpreting cancer genomic data. It helps distinguish between somatic and germline variants in mixed samples. This local module accepts a pre-computed segmentation file from Jumble (rather than performing internal segmentation), and uses germline SNV calls from GATK Mutect2 for allele frequency estimation.
 
-> [NOTE]
-> Yet to be implemented
+<details markdown="1">
+<summary>Output files for PureCN:</summary>
+
+- `{outdir}/purecn/`
+  - `*.csv`: Tab-delimited summary file containing estimated tumor purity, ploidy, and quality flags for the sample.
+  - `*.pdf`: Copy number profile plots showing coverage, segments, and allele frequencies across the genome.
+  - `*_local_optima.pdf`: Plots of the purity/ploidy solution space, showing local optima considered during fitting.
+  - `*_chromosomes.pdf`: Per-chromosome copy number plots. (optional)
+  - `*_segmentation.pdf`: Segmentation diagnostic plots. (optional)
+  - `*_genes.csv`: Gene-level copy number calls. (optional)
+  - `*_amplification_pvalues.csv`: Amplification p-values per gene. (optional)
+  - `*_variants.csv`: Variant-level output with allele-specific copy number assignments. (optional)
+  - `*_loh.csv`: Loss-of-heterozygosity (LOH) calls per segment. (optional)
+  - `*_dnacopy.seg`: Segmentation results in DNAcopy format. (optional)
+  - `*.vcf.gz`: SNV calls with updated copy number and allele-specific information. (optional)
+  - `*.log`: PureCN run log. (optional)
+
+</details>
+
+### Pharmacogenomics
+
+#### typeDPYD
+
+typeDPYD genotypes clinically relevant DPYD pharmacogenomic variants directly from a BAM file using pileup. It reports the DPYD diplotype and provides fluoropyrimidine dosing recommendations based on DPYD activity scores. Four SNPs are assessed: rs3918290 (*2A), rs55886062 (*13), rs67376798 (c.2846A>T), and rs56038477 (HapB3). Both hg19/GRCh37 and hg38/GRCh38 reference genome builds are supported and auto-detected from the BAM header.
+
+<details markdown="1">
+<summary>Output files for typeDPYD:</summary>
+
+- `{outdir}/dpyd/`
+  - `*.DPYD.csv`: Detailed evidence table with per-SNP pileup counts, allele fractions, copy calls, genotype assignment, and coverage summary for each sample.
+  - `*.DPYD.json`: Structured JSON report containing the final DPYD genotype, clinical dosing recommendation text, and coverage summary, suitable for downstream reporting.
+
+</details>
 
 ### Microsatellite Instability
 
