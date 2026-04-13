@@ -53,7 +53,7 @@ process PURECN_RUN {
     Rscript "\$library_path"/PureCN/extdata/PureCN.R \\
         --out ./ \\
         --tumor ${coverage} \\
-        --seg ${seg} --funsegmentation none \\
+        --seg-file ${seg} --fun-segmentation none \\
         --sampleid ${prefix} \\
         --genome ${genome} \\
         --parallel \\
