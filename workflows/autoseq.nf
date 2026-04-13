@@ -291,7 +291,8 @@ workflow AUTOSEQ {
     PROFILE_TUMOR_BIOMARKERS(
         ch_tumor_cnr,
         ch_tumor_seg,
-        CALL_SOMATIC_SNVS.out.mutect2_unfiltered_vcf
+        CALL_SOMATIC_SNVS.out.mutect2_unfiltered_vcf,
+        ch_aligned_bam
     )
 
     //
@@ -405,7 +406,9 @@ workflow AUTOSEQ {
             CALL_SVS.out.gripss_somatic_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_filtered_vcf"], [vcf, tbi]] },
             CALL_SVS.out.gripss_somatic_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_unfiltered_vcf"], [vcf, tbi]] },
             CALL_SVS.out.gripss_germline_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_filtered_vcf"], [vcf, tbi]] },
-            CALL_SVS.out.gripss_germline_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_unfiltered_vcf"], [vcf, tbi]] }
+            CALL_SVS.out.gripss_germline_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_unfiltered_vcf"], [vcf, tbi]] },
+            PROFILE_TUMOR_BIOMARKERS.out.dpyd_csv.map  { meta, csv  -> [ meta + [file: "dpyd_csv"],  csv  ] },
+            PROFILE_TUMOR_BIOMARKERS.out.dpyd_json.map { meta, json -> [ meta + [file: "dpyd_json"], json ] }
         )
 
     emit:

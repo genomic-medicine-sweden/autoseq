@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "typedpyd"
+description: |
+  Genotype DPYD pharmacogenomic variants (*2A, *13, c.2846A>T, HapB3) directly
+  from a BAM file using pileup. Supports both hg19 and hg38 reference genomes,
+  which are auto-detected from the BAM header. Outputs a detailed evidence table
+  (CSV) and a structured genotype report (JSON) with clinical dosing guidance.
+keywords:
+  - pharmacogenomics
+  - DPYD
+  - genotyping
+  - fluoropyrimidine
+  - dosing
+  - pileup
+  - germline
+tools:
+  - type_DPYD:
+      description: |
+        R script that calls DPYD pharmacogenomic variants from a BAM file.
+        Determines genotype for four clinically relevant SNPs (rs3918290/*2A,
+        rs55886062/*13, rs67376798/c.2846A>T, rs56038477/HapB3) and provides
+        fluoropyrimidine dosing recommendations based on DPYD activity scores.
+      homepage: https://github.com/ClinSeq/typeDPYD
+      documentation: https://github.com/ClinSeq/typeDPYD
+      licence: ["GPL-3"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1' ]`
+  - bam:
+      type: file
+      description: |
+        BAM file aligned to hg19/GRCh37 or hg38/GRCh38. Reference genome build
+        is auto-detected from the BAM header.
+      pattern: "*.bam"
+  - bai:
+      type: file
+      description: BAM index file corresponding to the input BAM
+      pattern: "*.bai"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'sample1' ]`
+  - csv:
+      type: file
+      description: |
+        Detailed evidence table containing per-SNP pileup counts, allele
+        fractions, copy calls, genotype assignment and coverage summary.
+      pattern: "*.DPYD.csv"
+  - json:
+      type: file
+      description: |
+        Structured JSON report with the final DPYD genotype, clinical dosing
+        text and coverage summary, suitable for downstream reporting.
+      pattern: "*.DPYD.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"

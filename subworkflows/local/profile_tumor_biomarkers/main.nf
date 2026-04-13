@@ -1,6 +1,6 @@
 
-
-include { PURECN_RUN        } from '../../../modules/local/purecn/run/main'
+include { PURECN_RUN } from '../../../modules/local/purecn/run/main'
+include { TYPEDPYD   } from '../../../modules/local/typeDPYD/main'
 
 
 workflow PROFILE_TUMOR_BIOMARKERS {
@@ -8,6 +8,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     ch_cnr
     ch_seg
     ch_mutect2_vcf
+    ch_bam
 
     main:
 
@@ -33,11 +34,10 @@ workflow PROFILE_TUMOR_BIOMARKERS {
         purecn_genome
     )
 
-    // TODO: Add more modules for other biomarkers (e.g. DPYD, MSI, TMB, etc.)
-
     //
     // MODULE: DPYD status
     //
+    TYPEDPYD(ch_bam)
 
     //
     // MODULE: MSI status
@@ -53,5 +53,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     purecn_variants_csv = PURECN_RUN.out.variants_csv
     purecn_loh_csv      = PURECN_RUN.out.loh_csv
     purecn_pdf          = PURECN_RUN.out.pdf
+    dpyd_csv            = TYPEDPYD.out.csv
+    dpyd_json           = TYPEDPYD.out.json
 
 }

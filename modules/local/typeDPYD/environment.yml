@@ -1,0 +1,10 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - bioconda::bioconductor-genomicranges=1.62.1
+  - bioconda::bioconductor-rsamtools=2.26.0
+  - conda-forge::r-data.table=1.17.8
+  - conda-forge::r-optparse=1.7.5
+  - conda-forge::r-rjsonio=2.0.0
+  - conda-forge::r-stringr=1.6.0
