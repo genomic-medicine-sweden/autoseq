@@ -7,6 +7,9 @@ on:
 jobs:
   add_pr_checklist_comment:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
       # Checkout the default branch
       - uses: actions/checkout@v6

@@ -20,7 +20,7 @@ process JUMBLE_RUN {
     tuple val(meta), path("*_segments.bedgraph"), emit: segments_bedgraph
     tuple val(meta), path("*.png"), emit: png , optional: true
     tuple val(meta), path("*.RDS"), emit: rds , optional: true
-    tuple val("${task.process}"), val('Jumble'), eval("jumble-run.R --version 2>&1 | head -n 1 " ),  topic: versions,  emit: versions_jumble
+    tuple val("${task.process}"), val('Jumble'), eval("jumble-run.R --version 2>&1 | sed -n 's/Jumble version //p' " ),  topic: versions,  emit: versions_jumble
 
     script:
     def args = task.ext.args ?: ''
