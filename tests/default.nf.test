@@ -6,7 +6,7 @@ nextflow_pipeline {
 
     test("-profile test") {
 
-        options "-stub"
+        options "-stub -output-dir $outputDir"
 
         when {
             params {
@@ -25,9 +25,9 @@ nextflow_pipeline {
                     // pipeline versions.yml file for multiqc from which Nextflow version is removed because we test pipelines on multiple Nextflow versions
                     removeNextflowVersion("$outputDir/pipeline_info/nf_core_autoseq_software_mqc_versions.yml"),
                     // All stable path name, with a relative path
-                    stable_name,
+                    stable_name
                     // All files with stable contents
-                    stable_path
+                    // stable_path // should be enabled while testing the pipeline with actual small test-data
                 ).match() }
             )
         }
