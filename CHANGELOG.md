@@ -19,6 +19,8 @@ Initial release of nf-core/autoseq, created with the [nf-core](https://nf-co.re/
 
 ### `Fixed`
 
+- [ #22 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/22) Added PR `write` permissions for `add_pr_checklist_comment` action.
+
 ### `Dependencies`
 
 ### `Deprecated`
