@@ -5,10 +5,10 @@ include { TYPEDPYD   } from '../../../modules/local/typeDPYD/main'
 
 workflow PROFILE_TUMOR_BIOMARKERS {
     take:
-    ch_cnr
-    ch_seg
-    ch_mutect2_vcf
-    ch_bam
+    ch_cnr                  // channel: [ val(meta), path(cnr) ] jumble cnr
+    ch_seg                  // channel: [ val(meta), path(seg) ] jumble seg
+    ch_mutect2_vcf          // channel: [ val(meta), path(vcf) ] unfiltered mutect2 vcf
+    ch_bam_bai              // channel: [ val(meta), path(bam), path(bai) ]
 
     main:
 
@@ -48,12 +48,12 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     //
 
     emit:
-    purecn_csv          = PURECN_RUN.out.csv
-    purecn_genes_csv    = PURECN_RUN.out.genes_csv
-    purecn_variants_csv = PURECN_RUN.out.variants_csv
-    purecn_loh_csv      = PURECN_RUN.out.loh_csv
-    purecn_pdf          = PURECN_RUN.out.pdf
-    dpyd_csv            = TYPEDPYD.out.csv
-    dpyd_json           = TYPEDPYD.out.json
+    purecn_csv          = PURECN_RUN.out.csv            // channel: [ val(meta), path(purecn_csv) ]
+    purecn_genes_csv    = PURECN_RUN.out.genes_csv      // channel: [ val(meta), path(purecn_genes_csv) ]
+    purecn_variants_csv = PURECN_RUN.out.variants_csv   // channel: [ val(meta), path(purecn_variants_csv) ]
+    purecn_loh_csv      = PURECN_RUN.out.loh_csv        // channel: [ val(meta), path(purecn_loh_csv) ]
+    purecn_pdf          = PURECN_RUN.out.pdf            // channel: [ val(meta), path(purecn_pdf) ]
+    dpyd_csv            = TYPEDPYD.out.csv              // channel: [ val(meta), path(dpyd_csv) ]
+    dpyd_json           = TYPEDPYD.out.json             // channel: [ val(meta), path(dpyd_json) ]
 
 }
