@@ -37,7 +37,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     //
     // MODULE: DPYD status
     //
-    TYPEDPYD(ch_bam)
+    TYPEDPYD(ch_bam_bai)
 
     //
     // MODULE: MSI status
