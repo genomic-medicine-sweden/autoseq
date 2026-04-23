@@ -150,7 +150,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-04-23T13:32:35.100303981",
+        "timestamp": "2026-04-23T14:03:24.883170796",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "25.10.4"
@@ -158,194 +158,42 @@
     },
     "purecn_run with presegmentation - without VCF": {
         "content": [
-            {
-                "0": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        [
-                            "test_tumor_purecn.pdf:md5,d727cdedc5dad240286403c42b898401",
-                            "test_tumor_purecn_local_optima.pdf:md5,4bb365c51a2ab145990c68cdd5a75b82",
-                            "test_tumor_purecn_segmentation.pdf:md5,5b319afbae1140f4ab1829b2108b0c05"
-                        ]
-                    ]
-                ],
-                "1": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn_local_optima.pdf:md5,4bb365c51a2ab145990c68cdd5a75b82"
-                    ]
-                ],
-                "10": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn_segmentation.pdf:md5,5b319afbae1140f4ab1829b2108b0c05"
-                    ]
-                ],
-                "11": [
-                    
-                ],
-                "12": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn.log:md5,f3b407ad3ebdf2f83a1ac5130366604b"
-                    ]
-                ],
-                "13": [
-                    [
-                        "PURECN_RUN",
-                        "PureCN",
-                        "2.12.0"
-                    ]
-                ],
-                "2": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
-                    ]
-                ],
-                "3": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn_dnacopy.seg:md5,66f07319606b91dbff767dba416e9cf1"
-                    ]
-                ],
-                "4": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn_genes.csv:md5,1275096e64e3304019ddfdca21442df3"
-                    ]
-                ],
-                "5": [
-                    
-                ],
-                "6": [
-                    
-                ],
-                "7": [
-                    
-                ],
-                "8": [
-                    
-                ],
-                "9": [
-                    
-                ],
-                "amplification_pvalues_csv": [
-                    
-                ],
-                "chr_pdf": [
-                    
-                ],
-                "csv": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
-                    ]
-                ],
-                "genes_csv": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn_genes.csv:md5,1275096e64e3304019ddfdca21442df3"
-                    ]
-                ],
-                "local_optima_pdf": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn_local_optima.pdf:md5,4bb365c51a2ab145990c68cdd5a75b82"
-                    ]
-                ],
-                "log": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn.log:md5,f3b407ad3ebdf2f83a1ac5130366604b"
-                    ]
-                ],
-                "loh_csv": [
-                    
-                ],
-                "multisample_seg": [
-                    
-                ],
-                "pdf": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        [
-                            "test_tumor_purecn.pdf:md5,d727cdedc5dad240286403c42b898401",
-                            "test_tumor_purecn_local_optima.pdf:md5,4bb365c51a2ab145990c68cdd5a75b82",
-                            "test_tumor_purecn_segmentation.pdf:md5,5b319afbae1140f4ab1829b2108b0c05"
-                        ]
-                    ]
-                ],
-                "seg": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn_dnacopy.seg:md5,66f07319606b91dbff767dba416e9cf1"
-                    ]
-                ],
-                "segmentation_pdf": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn_segmentation.pdf:md5,5b319afbae1140f4ab1829b2108b0c05"
-                    ]
-                ],
-                "variants_csv": [
-                    
-                ],
-                "vcf_gz": [
-                    
-                ],
-                "versions_purecn": [
-                    [
-                        "PURECN_RUN",
-                        "PureCN",
-                        "2.12.0"
-                    ]
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "tumor_id": "test_tumor"
+                    },
+                    "test_tumor_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
                 ]
-            }
+            ],
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "tumor_id": "test_tumor"
+                    },
+                    "test_tumor_purecn_dnacopy.seg:md5,66f07319606b91dbff767dba416e9cf1"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "tumor_id": "test_tumor"
+                    },
+                    "test_tumor_purecn_genes.csv:md5,1275096e64e3304019ddfdca21442df3"
+                ]
+            ],
+            [
+                [
+                    "PURECN_RUN",
+                    "PureCN",
+                    "2.12.0"
+                ]
+            ]
         ],
-        "timestamp": "2026-04-23T13:32:27.67525017",
+        "timestamp": "2026-04-23T14:07:41.478034011",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "25.10.4"
