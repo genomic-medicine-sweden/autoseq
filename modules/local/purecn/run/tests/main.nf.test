@@ -1,0 +1,60 @@
+nextflow_process {
+
+    name "Test Process PURECN_RUN"
+    script "../main.nf"
+    process "PURECN_RUN"
+    tag "modules"
+    tag "modules_local"
+    tag "purecn"
+    tag "purecn/run"
+
+    test("purecn_run with presegmentation - without VCF") {
+
+        when {
+            process {
+                """
+                input[0] = Channel.of([
+                    [ id:'test_sample', tumor_id: 'test_tumor'],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true),
+                    []
+                ])
+                input[1] = 'hg19'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("purecn_run with presegmentation - with VCF") {
+
+        options "-stub "
+
+        when {
+            process {
+                """
+                input[0] = Channel.of([
+                    [ id:'test_sample', tumor_id: 'test_tumor'],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.mutect2_calls.vcf.gz', checkIfExists: true)
+                ])
+                input[1] = 'hg19'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+}
