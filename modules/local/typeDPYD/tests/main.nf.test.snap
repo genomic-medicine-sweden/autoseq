@@ -1,0 +1,59 @@
+{
+    "typeDPYD ": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test_sample"
+                        },
+                        "test_sample.DPYD.csv:md5,4e966b6e924ce8660de4b9a0ed971f07"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test_sample"
+                        },
+                        "test_sample.DPYD.json:md5,4c63101c786af43f474ddfcf561f7ca4"
+                    ]
+                ],
+                "2": [
+                    [
+                        "TYPEDPYD",
+                        "typeDPYD",
+                        "0.1.0 "
+                    ]
+                ],
+                "csv": [
+                    [
+                        {
+                            "id": "test_sample"
+                        },
+                        "test_sample.DPYD.csv:md5,4e966b6e924ce8660de4b9a0ed971f07"
+                    ]
+                ],
+                "json": [
+                    [
+                        {
+                            "id": "test_sample"
+                        },
+                        "test_sample.DPYD.json:md5,4c63101c786af43f474ddfcf561f7ca4"
+                    ]
+                ],
+                "versions": [
+                    [
+                        "TYPEDPYD",
+                        "typeDPYD",
+                        "0.1.0 "
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-04-23T12:18:38.277851216",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    }
+}
