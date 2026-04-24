@@ -6,6 +6,8 @@ nextflow_pipeline {
 
     test("-profile test") {
 
+        // output {} block ignores params.outdir set in nf-test and always creates results/ in the test work directory
+        // github issue link - https://github.com/nextflow-io/nextflow/issues/7069
         options "-stub -output-dir $outputDir"
 
         when {
