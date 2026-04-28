@@ -5,10 +5,10 @@ include { TYPEDPYD   } from '../../../modules/local/typeDPYD/main'
 
 workflow PROFILE_TUMOR_BIOMARKERS {
     take:
-    ch_cnr                  // channel: [ val(meta), path(cnr) ] jumble cnr
-    ch_seg                  // channel: [ val(meta), path(seg) ] jumble seg
-    ch_mutect2_vcf          // channel: [ val(meta), path(vcf) ] unfiltered mutect2 vcf
-    ch_bam_bai              // channel: [ val(meta), path(bam), path(bai) ]
+    ch_cnr                  // channel: [mandatory] [ val(meta), path(cnr) ] jumble cnr
+    ch_seg                  // channel: [mandatory] [ val(meta), path(seg) ] jumble seg
+    ch_mutect2_vcf          // channel: [optional]  [ val(meta), path(vcf) ] unfiltered mutect2 vcf
+    ch_bam_bai              // channel: [mandatory] [ val(meta), path(bam), path(bai) ]
 
     main:
 
