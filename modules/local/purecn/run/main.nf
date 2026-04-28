@@ -4,9 +4,9 @@
 // and performs internal segmentation via PureCN's built-in methods.
 //
 // This local version removes those inputs and instead accepts a pre-computed
-// segmentation file (--seg) from a third-party CNV caller — here, Jumble.
-// PureCN internal segmentation is disabled with --funsegmentation none so that
-// Jumble's segmentation is used directly for purity/ploidy estimation.
+// segmentation file (--seg) from a third-party CNV caller.
+// PureCN internal segmentation is disabled with `--funsegmentation none` so that
+// the provided segmentation file is used directly for purity/ploidy estimation.
 //
 // Upstream source: https://github.com/nf-core/modules/tree/master/modules/nf-core/purecn/run
 process PURECN_RUN {

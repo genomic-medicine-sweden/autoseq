@@ -10,6 +10,49 @@ nextflow_workflow {
     tag "purecn"
     tag "typedpyd"
 
+
+    test("profile_tumor_biomarkers - with VCF - stub") {
+
+        options "-stub"
+
+        // PureCN requires specific germline/somatic tags that are difficult to mock manually.
+        // I've implemented the stub as a temporary measure so we can move forward;
+        // we'll transition to a real VCF once the end-to-end test data is available.
+
+        when {
+
+            workflow {
+                """
+                input[0] = Channel.of([
+                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true)
+                ])
+                input[1] = Channel.of([
+                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
+                ])
+                input[2] = Channel.of([
+                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.mutect2_calls.vcf.gz', checkIfExists: true)
+                ])
+                input[3] = Channel.of([
+                    [ id:'test_sample' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(workflow.out).match() }
+            )
+        }
+    }
+
+
     test("profile_tumor_biomarkers - without VCF") {
 
         when {
@@ -52,40 +95,4 @@ nextflow_workflow {
         }
     }
 
-    test("profile_tumor_biomarkers - with VCF - stub") {
-
-        options "-stub"
-
-        when {
-
-            workflow {
-                """
-                input[0] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true)
-                ])
-                input[1] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
-                ])
-                input[2] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.mutect2_calls.vcf.gz', checkIfExists: true)
-                ])
-                input[3] = Channel.of([
-                    [ id:'test_sample' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
-                ])
-                """
-            }
-        }
-
-        then {
-            assertAll(
-                { assert workflow.success },
-                { assert snapshot(workflow.out).match() }
-            )
-        }
-    }
 }
