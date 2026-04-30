@@ -12,7 +12,7 @@ nextflow_process {
 
         options "-stub "
 
-        // PureCN requires specific germline/somatic tags that are difficult to mock manually.
+        // TODO: PureCN requires specific germline/somatic tags that are difficult to mock manually.
         // I've implemented the stub as a temporary measure so we can move forward;
         // we'll transition to a real VCF once the end-to-end test data is available.
 
@@ -57,10 +57,13 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                // PDFs are non-deterministic (R embeds timestamps), so assert existence only
+                // NOTE: PDFs are non-deterministic (R embeds timestamps), so assert existence only
                 { assert process.out.pdf[0][1].every { f -> file(f).exists() } },
                 { assert file(process.out.local_optima_pdf[0][1]).exists() },
                 { assert file(process.out.segmentation_pdf[0][1]).exists() },
+                // NOTE:
+                // The remaining outputs (like _loh.csv and _variants.csv) are conditional;
+                // PureCN only generates them if the input data contains specific biological events.
                 { assert snapshot(
                     process.out.csv,
                     process.out.seg,

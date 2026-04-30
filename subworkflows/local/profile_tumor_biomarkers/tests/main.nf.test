@@ -68,7 +68,7 @@ nextflow_workflow {
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
                 ])
                 input[2] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                    [ : ],
                     []
                 ])
                 input[3] = Channel.of([
