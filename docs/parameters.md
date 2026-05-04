@@ -70,6 +70,10 @@ Other options specific to this pipeline.
 | `vep_species` | Species name for Ensembl VEP annotation | `string` | homo_sapiens |  |  |
 | `dbsnp_vcf` | Path to dbSNP VCF file for variant annotation | `string` |  |  |  |
 | `dbsnp_vcf_tbi` | Path to dbSNP VCF tabix index file | `string` |  |  |  |
+| `maxnonclonal` | Maximum fraction of subclonal variants allowed; used by PureCN to filter solutions with high subclonality | `number` | 0.2 |  |  |
+| `minpurity` | Minimum tumour purity estimate accepted by PureCN; solutions below this threshold are discarded | `number` | 0.05 |  |  |
+| `purecn_error` | Expected sequencing error rate passed to PureCN for modelling variant allele frequencies | `number` | 0.0005 |  |  |
+| `minaf` | Minimum variant allele frequency for a SNV to be considered by PureCN | `number` | 0.01 |  |  |
 
 ## Generic options
 

@@ -1,0 +1,32 @@
+nextflow_process {
+
+    name "Test Process TYPE_DPYD"
+    script "../main.nf"
+    process "TYPEDPYD"
+    tag "modules"
+    tag "modules_local"
+    tag "type_dpyd"
+
+    test("typeDPYD ") {
+
+        when {
+            process {
+                """
+                input[0] = Channel.of([
+                    [ id:'test_sample' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+}

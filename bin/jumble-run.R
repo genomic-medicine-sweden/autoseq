@@ -48,26 +48,7 @@ mylibrary <- function(package_names, cran_mirror = "https://cloud.r-project.org"
 }
 
 
-
-mylibrary(c(
-    'optparse',
-    'data.table',
-    'stringr',
-    'bamsignals',
-    'Rsamtools',
-    'GenomicRanges',
-    'MASS',
-    'fastICA',
-    'VariantAnnotation',
-    'PSCBS',
-    'ggplot2',
-    'patchwork',
-    'BSgenome.Hsapiens.UCSC.hg19',
-    'BSgenome',
-    'Repitools'
-)); theme_set(theme_bw())
-
-
+mylibrary(c('optparse'))
 
 
 # Options ------------------------------------------------------------
@@ -92,6 +73,24 @@ if (opt$version) {
     cat(sprintf("Jumble version %s\n", jumble_version))
     quit(save = "no", status = 0)
 }
+
+
+mylibrary(c(
+    'data.table',
+    'stringr',
+    'bamsignals',
+    'Rsamtools',
+    'GenomicRanges',
+    'MASS',
+    'fastICA',
+    'VariantAnnotation',
+    'PSCBS',
+    'ggplot2',
+    'patchwork',
+    'BSgenome.Hsapiens.UCSC.hg19',
+    'BSgenome',
+    'Repitools'
+)); theme_set(theme_bw())
 
 
 #save.image('ws.Rdata')

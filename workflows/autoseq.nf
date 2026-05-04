@@ -22,6 +22,8 @@ include { CALL_SOMATIC_SNVS                                   } from '../subwork
 include { CALL_GERMLINE_SNVS                                  } from '../subworkflows/local/call_germline_snvs/main.nf'
 include { CALL_CNVS                                           } from '../subworkflows/local/call_cnvs/main.nf'
 include { CALL_SVS                                            } from '../subworkflows/local/call_svs/main.nf'
+include { PROFILE_TUMOR_BIOMARKERS                            } from '../subworkflows/local/profile_tumor_biomarkers/main.nf'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -277,6 +279,23 @@ workflow AUTOSEQ {
     )
 
     //
+    // SUBWORKFLOW: Tumor Biomarker Profiling (e.g. purity/ploidy, MSI, TMB, etc.)
+    //
+
+    ch_tumor_cnr = CALL_CNVS.out.cnr
+        .filter { meta, _cnr -> meta.sample_type == "tumor" }
+
+    ch_tumor_seg = CALL_CNVS.out.seg
+        .filter { meta, _seg -> meta.sample_type == "tumor" }
+
+    PROFILE_TUMOR_BIOMARKERS(
+        ch_tumor_cnr,
+        ch_tumor_seg,
+        CALL_SOMATIC_SNVS.out.mutect2_unfiltered_vcf,
+        ch_aligned_bam
+    )
+
+    //
     // Collate and save software versions
     //
     def topic_versions = channel.topic("versions")
@@ -387,7 +406,11 @@ workflow AUTOSEQ {
             CALL_SVS.out.gripss_somatic_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_filtered_vcf"], [vcf, tbi]] },
             CALL_SVS.out.gripss_somatic_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_unfiltered_vcf"], [vcf, tbi]] },
             CALL_SVS.out.gripss_germline_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_filtered_vcf"], [vcf, tbi]] },
-            CALL_SVS.out.gripss_germline_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_unfiltered_vcf"], [vcf, tbi]] }
+            CALL_SVS.out.gripss_germline_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_unfiltered_vcf"], [vcf, tbi]] },
+            PROFILE_TUMOR_BIOMARKERS.out.purecn_csv.map { meta, csv -> [ meta + [file: "purecn_csv"], csv ] },
+            PROFILE_TUMOR_BIOMARKERS.out.purecn_pdf.map { meta, pdf -> [ meta + [file: "purecn_pdf"], pdf ] },
+            PROFILE_TUMOR_BIOMARKERS.out.dpyd_csv.map  { meta, csv  -> [ meta + [file: "dpyd_csv"],  csv  ] },
+            PROFILE_TUMOR_BIOMARKERS.out.dpyd_json.map { meta, json -> [ meta + [file: "dpyd_json"], json ] }
         )
 
     emit:

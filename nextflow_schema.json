@@ -278,6 +278,26 @@
                 "dbsnp_vcf_tbi": {
                     "type": "string",
                     "description": "Path to dbSNP VCF tabix index file"
+                },
+                "maxnonclonal": {
+                    "type": "number",
+                    "default": 0.2,
+                    "description": "Maximum fraction of subclonal variants allowed; used by PureCN to filter solutions with high subclonality"
+                },
+                "minpurity": {
+                    "type": "number",
+                    "default": 0.05,
+                    "description": "Minimum tumour purity estimate accepted by PureCN; solutions below this threshold are discarded"
+                },
+                "purecn_error": {
+                    "type": "number",
+                    "default": 0.0005,
+                    "description": "Expected sequencing error rate passed to PureCN for modelling variant allele frequencies"
+                },
+                "minaf": {
+                    "type": "number",
+                    "default": 0.01,
+                    "description": "Minimum variant allele frequency for a SNV to be considered by PureCN"
                 }
             }
         },

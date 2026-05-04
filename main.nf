@@ -223,6 +223,10 @@ output {
                 return 'svs/somatic/'
             } else if (meta.file == 'gripss_germline_filtered_vcf' || meta.file == 'gripss_germline_unfiltered_vcf') {
                 return 'svs/germline/'
+            } else if (meta.file == "dpyd_csv" || meta.file == "dpyd_json") {
+                return 'dpyd'
+            } else if (meta.file == "purecn_csv" || meta.file == "purecn_pdf") {
+                return 'purecn'
             } else {
                 return ''
             }

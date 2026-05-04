@@ -1,0 +1,77 @@
+nextflow_process {
+
+    name "Test Process PURECN_RUN"
+    script "../main.nf"
+    process "PURECN_RUN"
+    tag "modules"
+    tag "modules_local"
+    tag "purecn"
+    tag "purecn/run"
+
+    test("purecn_run with presegmentation - with VCF") {
+
+        options "-stub "
+
+        // TODO: PureCN requires specific germline/somatic tags that are difficult to mock manually.
+        // I've implemented the stub as a temporary measure so we can move forward;
+        // we'll transition to a real VCF once the end-to-end test data is available.
+
+        when {
+            process {
+                """
+                input[0] = Channel.of([
+                    [ id:'test_sample', tumor_id: 'test_tumor'],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.mutect2_calls.vcf.gz', checkIfExists: true)
+                ])
+                input[1] = 'hg19'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("purecn_run with presegmentation - without VCF") {
+
+        when {
+            process {
+                """
+                input[0] = Channel.of([
+                    [ id:'test_sample', tumor_id: 'test_tumor'],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true),
+                    []
+                ])
+                input[1] = 'hg19'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                // NOTE: PDFs are non-deterministic (R embeds timestamps), so assert existence only
+                { assert process.out.pdf[0][1].every { f -> file(f).exists() } },
+                { assert file(process.out.local_optima_pdf[0][1]).exists() },
+                { assert file(process.out.segmentation_pdf[0][1]).exists() },
+                // NOTE:
+                // The remaining outputs (like _loh.csv and _variants.csv) are conditional;
+                // PureCN only generates them if the input data contains specific biological events.
+                { assert snapshot(
+                    process.out.csv,
+                    process.out.seg,
+                    process.out.genes_csv,
+                    process.out.versions_purecn
+                ).match() }
+            )
+        }
+    }
+
+}

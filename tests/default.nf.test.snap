@@ -1,8 +1,14 @@
 {
     "-profile test": {
         "content": [
-            15,
             {
+                "ANNOTATE_CNVS": {
+                    "annotate_cnvs": "annotate_cnvs.py 1.0.0"
+                },
+                "ANNOTATE_VEP": {
+                    "ensemblvep": 115.2,
+                    "tabix": 1.21
+                },
                 "BWAMEM2_MEM": {
                     "bwamem2": "2.2.1",
                     "samtools": 1.21
@@ -13,135 +19,176 @@
                 "FASTQC": {
                     "fastqc": "0.12.1"
                 },
+                "GATK4_CALCULATECONTAMINATION": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_FILTERMUTECTCALLS": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_GETPILEUPSUMMARIES_NORMAL": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_GETPILEUPSUMMARIES_TUMOR": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_LEARNREADORIENTATIONMODEL": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_MUTECT2": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GRIDSS_ASSEMBLE": {
+                    "gridss": "2.13.2"
+                },
+                "GRIDSS_CALL": {
+                    "gridss": "2.13.2"
+                },
+                "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS": {
+                    "gridss": "2.13.2",
+                    "samtools": 1.21
+                },
+                "GRIDSS_PREPROCESS": {
+                    "gridss": "2.13.2"
+                },
+                "GRIPSS_GERMLINE": {
+                    "gripss": 2.4
+                },
+                "GRIPSS_SOMATIC": {
+                    "gripss": 2.4
+                },
+                "JUMBLE_RUN": {
+                    "Jumble": 0.6
+                },
+                "MARKDUPLICATES": {
+                    "gatk4": "4.6.1.0",
+                    "samtools": 1.21
+                },
+                "PASSFILTER_FOR_MUTECT2": {
+                    "bcftools": 1.22
+                },
+                "PASSFILTER_FOR_SAGE": {
+                    "bcftools": 1.22
+                },
+                "PICARD_COLLECTHSMETRICS": {
+                    "picard": "3.3.0"
+                },
+                "PICARD_COLLECTMULTIPLEMETRICS": {
+                    "picard": "3.3.0"
+                },
+                "PURECN_RUN": {
+                    "PureCN": "2.12.0"
+                },
+                "SAGE_SOMATIC": {
+                    "stub": "noversions"
+                },
+                "SOMATIC_VCFMERGE": {
+                    "bcftools": "bcftools 1.22",
+                    "tabix": "tabix (htslib) 1.22.1"
+                },
+                "TYPEDPYD": {
+                    "typeDPYD": "0.1.0"
+                },
+                "VT_DECOMPOSE": {
+                    "vt": "2015.11.10"
+                },
+                "VT_NORMALIZE": {
+                    "vt": "2015.11.10"
+                },
                 "Workflow": {
                     "nf-core/autoseq": "v1.0.0dev"
                 }
             },
             [
-                "bwamem2",
-                "bwamem2/1234N.L3.bam",
-                "bwamem2/1234N.L3.csi",
-                "bwamem2/1234T.L2.bam",
-                "bwamem2/1234T.L2.csi",
-                "fastp",
-                "fastp/1234_1234N_L3.fastp.html",
-                "fastp/1234_1234N_L3.fastp.json",
-                "fastp/1234_1234N_L3.fastp.log",
-                "fastp/1234_1234N_L3_1.fastp.fastq.gz",
-                "fastp/1234_1234N_L3_2.fastp.fastq.gz",
-                "fastp/1234_1234T_L2.fastp.html",
-                "fastp/1234_1234T_L2.fastp.json",
-                "fastp/1234_1234T_L2.fastp.log",
-                "fastp/1234_1234T_L2_1.fastp.fastq.gz",
-                "fastp/1234_1234T_L2_2.fastp.fastq.gz",
-                "fastqc",
-                "fastqc/1234_1234N_L3.html",
-                "fastqc/1234_1234N_L3.zip",
-                "fastqc/1234_1234T_L2.html",
-                "fastqc/1234_1234T_L2.zip",
-                "markduplicates",
-                "markduplicates/1234_1234N.bai",
-                "markduplicates/1234_1234N.bam",
-                "markduplicates/1234_1234N.bam.metrics",
-                "markduplicates/1234_1234N.cram",
-                "markduplicates/1234_1234N.cram.crai",
-                "markduplicates/1234_1234T.bai",
-                "markduplicates/1234_1234T.bam",
-                "markduplicates/1234_1234T.bam.metrics",
-                "markduplicates/1234_1234T.cram",
-                "markduplicates/1234_1234T.cram.crai",
+                "alignment",
+                "alignment/1234N_dedup.bai",
+                "alignment/1234N_dedup.bam",
+                "alignment/1234T_dedup.bai",
+                "alignment/1234T_dedup.bam",
+                "cnv",
+                "cnv/1234N.cnr",
+                "cnv/1234N.cns",
+                "cnv/1234N.png",
+                "cnv/1234N_ann.cns",
+                "cnv/1234N_dnacopy.seg",
+                "cnv/1234N_profile.bedgraph",
+                "cnv/1234N_segments.bedgraph",
+                "cnv/1234T.cnr",
+                "cnv/1234T.cns",
+                "cnv/1234T.png",
+                "cnv/1234T_ann.cns",
+                "cnv/1234T_dnacopy.seg",
+                "cnv/1234T_profile.bedgraph",
+                "cnv/1234T_segments.bedgraph",
+                "dpyd",
+                "dpyd/1234N.DPYD.csv",
+                "dpyd/1234N.DPYD.json",
+                "dpyd/1234T.DPYD.csv",
+                "dpyd/1234T.DPYD.json",
                 "multiqc",
-                "multiqc/multiqc_data",
-                "multiqc/multiqc_plots",
                 "multiqc/multiqc_report.html",
-                "picard",
-                "picard/1234_1234N.CollectHsMetrics.coverage_metrics",
-                "picard/1234_1234N.CollectMultipleMetrics.alignment_summary_metrics",
-                "picard/1234_1234N.CollectMultipleMetrics.base_distribution_by_cycle.pdf",
-                "picard/1234_1234N.CollectMultipleMetrics.base_distribution_by_cycle_metrics",
-                "picard/1234_1234N.CollectMultipleMetrics.insert_size_histogram.pdf",
-                "picard/1234_1234N.CollectMultipleMetrics.insert_size_metrics",
-                "picard/1234_1234N.CollectMultipleMetrics.quality_by_cycle.pdf",
-                "picard/1234_1234N.CollectMultipleMetrics.quality_by_cycle_metrics",
-                "picard/1234_1234N.CollectMultipleMetrics.quality_distribution.pdf",
-                "picard/1234_1234N.CollectMultipleMetrics.quality_distribution_metrics",
-                "picard/1234_1234N.CollectMultipleMetrics.read_length_histogram.pdf",
-                "picard/1234_1234T.CollectHsMetrics.coverage_metrics",
-                "picard/1234_1234T.CollectMultipleMetrics.alignment_summary_metrics",
-                "picard/1234_1234T.CollectMultipleMetrics.base_distribution_by_cycle.pdf",
-                "picard/1234_1234T.CollectMultipleMetrics.base_distribution_by_cycle_metrics",
-                "picard/1234_1234T.CollectMultipleMetrics.insert_size_histogram.pdf",
-                "picard/1234_1234T.CollectMultipleMetrics.insert_size_metrics",
-                "picard/1234_1234T.CollectMultipleMetrics.quality_by_cycle.pdf",
-                "picard/1234_1234T.CollectMultipleMetrics.quality_by_cycle_metrics",
-                "picard/1234_1234T.CollectMultipleMetrics.quality_distribution.pdf",
-                "picard/1234_1234T.CollectMultipleMetrics.quality_distribution_metrics",
-                "picard/1234_1234T.CollectMultipleMetrics.read_length_histogram.pdf",
                 "pipeline_info",
                 "pipeline_info/nf_core_autoseq_software_mqc_versions.yml",
-                "samtools",
-                "samtools/1234_1234N.flagstat",
-                "samtools/1234_1234T.flagstat"
-            ],
-            [
-                "1234N.L3.bam:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234N.L3.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234T.L2.bam:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234T.L2.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N_L3.fastp.html:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N_L3.fastp.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N_L3.fastp.log:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N_L3_1.fastp.fastq.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "1234_1234N_L3_2.fastp.fastq.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "1234_1234T_L2.fastp.html:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T_L2.fastp.json:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T_L2.fastp.log:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T_L2_1.fastp.fastq.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "1234_1234T_L2_2.fastp.fastq.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "1234_1234N_L3.html:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N_L3.zip:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T_L2.html:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T_L2.zip:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.bai:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.bam:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.bam.metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.cram:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.cram.crai:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.bai:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.bam:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.bam.metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.cram:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.cram.crai:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectHsMetrics.coverage_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectMultipleMetrics.alignment_summary_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectMultipleMetrics.base_distribution_by_cycle.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectMultipleMetrics.base_distribution_by_cycle_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectMultipleMetrics.insert_size_histogram.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectMultipleMetrics.insert_size_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectMultipleMetrics.quality_by_cycle.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectMultipleMetrics.quality_by_cycle_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectMultipleMetrics.quality_distribution.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectMultipleMetrics.quality_distribution_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.CollectMultipleMetrics.read_length_histogram.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectHsMetrics.coverage_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectMultipleMetrics.alignment_summary_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectMultipleMetrics.base_distribution_by_cycle.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectMultipleMetrics.base_distribution_by_cycle_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectMultipleMetrics.insert_size_histogram.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectMultipleMetrics.insert_size_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectMultipleMetrics.quality_by_cycle.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectMultipleMetrics.quality_by_cycle_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectMultipleMetrics.quality_distribution.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectMultipleMetrics.quality_distribution_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.CollectMultipleMetrics.read_length_histogram.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234N.flagstat:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "1234_1234T.flagstat:md5,d41d8cd98f00b204e9800998ecf8427e"
+                "purecn",
+                "purecn/null_purecn.csv",
+                "purecn/null_purecn.pdf",
+                "purecn/null_purecn_local_optima.pdf",
+                "qc",
+                "qc/contamination",
+                "qc/contamination/1234T_1234N.contamination.table",
+                "qc/picard",
+                "qc/picard/1234N.CollectHsMetrics.coverage_metrics",
+                "qc/picard/1234N.CollectMultipleMetrics.alignment_summary_metrics",
+                "qc/picard/1234N.CollectMultipleMetrics.base_distribution_by_cycle_metrics",
+                "qc/picard/1234N.CollectMultipleMetrics.insert_size_metrics",
+                "qc/picard/1234N.CollectMultipleMetrics.quality_by_cycle_metrics",
+                "qc/picard/1234N.CollectMultipleMetrics.quality_distribution_metrics",
+                "qc/picard/1234T.CollectHsMetrics.coverage_metrics",
+                "qc/picard/1234T.CollectMultipleMetrics.alignment_summary_metrics",
+                "qc/picard/1234T.CollectMultipleMetrics.base_distribution_by_cycle_metrics",
+                "qc/picard/1234T.CollectMultipleMetrics.insert_size_metrics",
+                "qc/picard/1234T.CollectMultipleMetrics.quality_by_cycle_metrics",
+                "qc/picard/1234T.CollectMultipleMetrics.quality_distribution_metrics",
+                "qc/samtools",
+                "qc/samtools/1234N.flagstat",
+                "qc/samtools/1234T.flagstat",
+                "svs",
+                "svs/germline",
+                "svs/germline/1234N.gripss.filtered.germline.vcf.gz",
+                "svs/germline/1234N.gripss.filtered.germline.vcf.gz.tbi",
+                "svs/germline/1234N.gripss.germline.vcf.gz",
+                "svs/germline/1234N.gripss.germline.vcf.gz.tbi",
+                "svs/somatic",
+                "svs/somatic/1234T.gripss.filtered.somatic.vcf.gz",
+                "svs/somatic/1234T.gripss.filtered.somatic.vcf.gz.tbi",
+                "svs/somatic/1234T.gripss.somatic.vcf.gz",
+                "svs/somatic/1234T.gripss.somatic.vcf.gz.tbi",
+                "variants",
+                "variants/germline",
+                "variants/germline/1234N-all.germline.vep.vcf.gz",
+                "variants/germline/1234N-all.germline.vep.vcf.gz.tbi",
+                "variants/germline/haplotypecaller",
+                "variants/germline/haplotypecaller/1234N_haplotypecaller.vcf.gz",
+                "variants/germline/haplotypecaller/1234N_haplotypecaller.vcf.gz.tbi",
+                "variants/somatic",
+                "variants/somatic/1234T_1234N-all.somatic.vep.vcf.gz",
+                "variants/somatic/1234T_1234N-all.somatic.vep.vcf.gz.tbi",
+                "variants/somatic/merged",
+                "variants/somatic/merged/1234T_1234N-all.somatic.vcf.gz",
+                "variants/somatic/merged/1234T_1234N-all.somatic.vcf.gz.tbi",
+                "variants/somatic/mutect2",
+                "variants/somatic/mutect2/1234T_1234N_mutect2_filtered.vcf.gz",
+                "variants/somatic/mutect2/1234T_1234N_mutect2_filtered.vcf.gz.filteringStats.tsv",
+                "variants/somatic/mutect2/1234T_1234N_mutect2_filtered.vcf.gz.tbi",
+                "variants/somatic/sage",
+                "variants/somatic/sage/somatic",
+                "variants/somatic/sage/somatic/1234T.sage.somatic.vcf.gz",
+                "variants/somatic/sage/somatic/1234T.sage.somatic.vcf.gz.tbi"
             ]
         ],
+        "timestamp": "2026-04-15T21:52:43.42234511",
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.6"
-        },
-        "timestamp": "2025-09-05T13:26:29.222934081"
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
     }
 }
