@@ -13,8 +13,8 @@ template:
   description: This Pipeline analyses the targeted panel sequencing data from liquid
     biopsy samples with more accuracy
   force: false
-  is_nfcore: true
+  is_nfcore: false
   name: autoseq
-  org: nf-core
+  org: genomic-medicine-sweden
   outdir: .
   version: 1.0.0dev

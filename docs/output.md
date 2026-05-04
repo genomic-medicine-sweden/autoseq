@@ -1,4 +1,4 @@
-# nf-core/autoseq: Output
+# genomic-medicine-sweden/autoseq: Output
 
 ## Introduction
 
@@ -10,7 +10,7 @@ The directories listed below will be created in the results directory after the 
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
-- [nf-core/autoseq: Output](#nf-coreautoseq-output)
+- [genomic-medicine-sweden/autoseq: Output](#nf-coreautoseq-output)
   - [Introduction](#introduction)
   - [Pipeline overview](#pipeline-overview)
   - [Output directory structure](#output-directory-structure)
