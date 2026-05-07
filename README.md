@@ -1,7 +1,9 @@
+# genomic-medicine-sweden/autoseq
+
 <h1>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-autoseq_logo_dark.png">
-      <center><img alt="nf-autoseq"  src="docs/images/nf-autoseq-logo.png"></center>
+      <img alt="autoseq"  src="docs/images/nf-core-autoseq_logo_light.png">
   </picture>
 </h1>
 
@@ -25,7 +27,7 @@
 
 ## Pipeline overview
 
-![nf-autoseq-workflow](docs/images/nf-autoseq-workflow.png)
+![autoseq-workflow](docs/images/nf-autoseq-workflow.png)
 
 1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
 2. Adapter trimming ([`FastP`](https://github.com/OpenGene/fastp))
@@ -59,7 +61,7 @@ PATIENT_ID,NORMAL_ID,normal,L5,/path/to/SAMPLE_L5_R1_001.fastq.gz,/path/to/SAMPL
 Now, you can run the pipeline using:
 
 ```bash
-nextflow run nf-autoseq/main.nf \
+nextflow run genomic-medicine-sweden/autoseq \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
    --outdir results/  \
@@ -79,17 +81,22 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-`nf-autoseq` was originally written by Sarath Kumar Murugan.
+`genomic-medicine-sweden/autoseq` was originally written by [Sarath Kumar Murugan](https://github.com/imsarath)
 
-<!-- We thank the following people for their extensive assistance in the development of this pipeline: -->
+We thank the following people for their extensive assistance in the development of this pipeline:
 
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
+- [Johan Lindberg]()
+- [Rebecka Bergström](https://github.com/rebber)
+- [Markus Mayrhofer](https://github.com/mayrhofer)
+- [Venkatesh Chellappa](https://github.com/drvenki)
+- [Beatriz Sá Vinhas](https://github.com/beatrizsavinhas)
+- [Eva Caceres](https://github.com/fevac)
+- [Kristine Bilgrav Sæther](https://github.com/kristinebilgrav)
+- [Mathias Johansson](https://github.com/mathiasbio)
 
 ## Contributions and Support
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
-
-For further information or help, don't hesitate to get in touch on the [Slack `#autoseq` channel](https://nfcore.slack.com/channels/autoseq) (you can join with [this invite](https://nf-co.re/join/slack)).
 
 ## Citations
 

@@ -1,8 +1,14 @@
 lint:
+  actions_awsfulltest: false
+  actions_awstest: false
   files_unchanged:
+    - .github/ISSUE_TEMPLATE/bug_report.yml
+    - .github/ISSUE_TEMPLATE/feature_request.yml
     - .github/workflows/linting.yml
     - .github/PULL_REQUEST_TEMPLATE.md
-    - .github/ISSUE_TEMPLATE/feature_request.yml
+    - .prettierignore
+    - assets/email_template.txt
+    - assets/sendmail_template.txt #
     - assets/nf-core-autoseq_logo_light.png
     - docs/images/nf-core-autoseq_logo_light.png
     - docs/images/nf-core-autoseq_logo_dark.png
