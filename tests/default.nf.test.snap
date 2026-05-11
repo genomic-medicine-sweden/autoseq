@@ -95,7 +95,7 @@
                     "vt": "2015.11.10"
                 },
                 "Workflow": {
-                    "nf-core/autoseq": "v1.0.0dev"
+                    "genomic-medicine-sweden/autoseq": "v1.0.0dev"
                 }
             },
             [

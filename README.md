@@ -1,13 +1,15 @@
+# genomic-medicine-sweden/autoseq
+
 <h1>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-autoseq_logo_dark.png">
-      <center><img alt="nf-autoseq"  src="docs/images/nf-autoseq-logo.png"></center>
+      <img alt="autoseq"  src="docs/images/nf-core-autoseq_logo_light.png">
   </picture>
 </h1>
 
-[![Open in GitHub Codespaces](https://img.shields.io/badge/Open_In_GitHub_Codespaces-black?labelColor=grey&logo=github)](https://github.com/codespaces/new/nf-core/autoseq)
-[![GitHub Actions CI Status](https://github.com/nf-core/autoseq/actions/workflows/nf-test.yml/badge.svg)](https://github.com/nf-core/autoseq/actions/workflows/nf-test.yml)
-[![GitHub Actions Linting Status](https://github.com/nf-core/autoseq/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/autoseq/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/autoseq/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![Open in GitHub Codespaces](https://img.shields.io/badge/Open_In_GitHub_Codespaces-black?labelColor=grey&logo=github)](https://github.com/codespaces/new/genomic-medicine-sweden/autoseq)
+[![GitHub Actions CI Status](https://github.com/genomic-medicine-sweden/autoseq/actions/workflows/nf-test.yml/badge.svg)](https://github.com/genomic-medicine-sweden/autoseq/actions/workflows/nf-test.yml)
+[![GitHub Actions Linting Status](https://github.com/genomic-medicine-sweden/autoseq/actions/workflows/linting.yml/badge.svg)](https://github.com/genomic-medicine-sweden/autoseq/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/autoseq/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.10.0-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
@@ -21,11 +23,11 @@
 
 ## Introduction
 
-**nf-core/autoseq** is a Nextflow pipeline designed for deep targeted sequencing and whole-exome data. It automates essential steps from quality control to variant calling. The pipeline annotates variants using [`VEP`](https://www.ensembl.org/info/docs/tools/vep/index.html)! and applies sophisticated semantic filters to eliminate irrelevant and non-significant calls. The final output is optimized for manual curation in tools like IGV and can be exported as a text, HTML, or PDF report.
+**genomic-medicine-sweden/autoseq** is a Nextflow pipeline designed for deep targeted sequencing and whole-exome data. It automates essential steps from quality control to variant calling. The pipeline annotates variants using [`VEP`](https://www.ensembl.org/info/docs/tools/vep/index.html)! and applies sophisticated semantic filters to eliminate irrelevant and non-significant calls. The final output is optimized for manual curation in tools like IGV and can be exported as a text, HTML, or PDF report.
 
 ## Pipeline overview
 
-![nf-autoseq-workflow](docs/images/nf-autoseq-workflow.png)
+![autoseq-workflow](docs/images/nf-autoseq-workflow.png)
 
 1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
 2. Adapter trimming ([`FastP`](https://github.com/OpenGene/fastp))
@@ -59,7 +61,7 @@ PATIENT_ID,NORMAL_ID,normal,L5,/path/to/SAMPLE_L5_R1_001.fastq.gz,/path/to/SAMPL
 Now, you can run the pipeline using:
 
 ```bash
-nextflow run nf-autoseq/main.nf \
+nextflow run genomic-medicine-sweden/autoseq \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
    --outdir results/  \
@@ -79,22 +81,27 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-`nf-autoseq` was originally written by Sarath Kumar Murugan.
+`genomic-medicine-sweden/autoseq` was originally written by [Sarath Kumar Murugan](https://github.com/imsarath)
 
-<!-- We thank the following people for their extensive assistance in the development of this pipeline: -->
+We thank the following people for their extensive assistance in the development of this pipeline:
 
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
+- [Johan Lindberg]()
+- [Rebecka Bergström](https://github.com/rebber)
+- [Markus Mayrhofer](https://github.com/mayrhofer)
+- [Venkatesh Chellappa](https://github.com/drvenki)
+- [Beatriz Sá Vinhas](https://github.com/beatrizsavinhas)
+- [Eva Caceres](https://github.com/fevac)
+- [Kristine Bilgrav Sæther](https://github.com/kristinebilgrav)
+- [Mathias Johansson](https://github.com/mathiasbio)
 
 ## Contributions and Support
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
 
-For further information or help, don't hesitate to get in touch on the [Slack `#autoseq` channel](https://nfcore.slack.com/channels/autoseq) (you can join with [this invite](https://nf-co.re/join/slack)).
-
 ## Citations
 
 <!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-<!-- If you use nf-core/autoseq for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
+<!-- If you use genomic-medicine-sweden/autoseq for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
 
 <!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
 

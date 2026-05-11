@@ -1,4 +1,4 @@
-# nf-core/autoseq pipeline parameters
+# genomic-medicine-sweden/autoseq pipeline parameters
 
 This Pipeline analyses the targeted panel sequencing data from liquid biopsy samples with more accuracy
 

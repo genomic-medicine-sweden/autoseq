@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    nf-core/autoseq
+    genomic-medicine-sweden/autoseq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/nf-core/autoseq
+    Github : https://github.com/genomic-medicine-sweden/autoseq
     Website: https://nf-co.re/autoseq
     Slack  : https://nfcore.slack.com/channels/autoseq
 ----------------------------------------------------------------------------------------

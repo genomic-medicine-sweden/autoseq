@@ -1,11 +1,11 @@
-# nf-core/autoseq: Changelog
+# genomic-medicine-sweden/autoseq: Changelog
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## v1.0.0dev - [date]
 
-Initial release of nf-core/autoseq, created with the [nf-core](https://nf-co.re/) template.
+Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](https://nf-co.re/) template.
 
 ### `Added`
 
@@ -17,8 +17,16 @@ Initial release of nf-core/autoseq, created with the [nf-core](https://nf-co.re/
 - [ #19 ](https://github.com/imsarath/nf-autoseq/pull/19) Repo setup for Genome Medicine Sweden Org
 - [ #21 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/21) Added sub-workflow for tumor biomarker profiling - purecn-run and typeDPYD
 
+### `Changed`
+
+- [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Refactor repository name from `nf-core/autoseq` to `genomic-medicine-sweden/autoseq`.
+- [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Expanded `CONTRIBUTING.md` with detailed PR title conventions, review guidelines, and GMS-specific contribution workflow.
+- [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Updated bug report and issue templates to remove nf-core Slack references and align with GMS organisation.
+- [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Updated `README.md` contributors section.
+
 ### `Fixed`
 
+- [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Rebuilt `nextflow_schema.json` to pass `nf-core schema build` validation after the organisation rename.
 - [ #22 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/22) Added PR `write` permissions for `add_pr_checklist_comment` action.
 - [ #21 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/21) Enabled synchronize in nf-test.yml so that GitHub CI/CD stays active for subsequent updates following a review request.
 - [ #21 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/21) Modified jumble-run.R to optimize the execution speed of version printing.

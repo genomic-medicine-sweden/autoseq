@@ -1,6 +1,6 @@
 {
-    "name": "nf-core/autoseq",
-    "homePage": "https://github.com/nf-core/autoseq",
+    "name": "genomic-medicine-sweden/autoseq",
+    "homePage": "https://github.com/genomic-medicine-sweden/autoseq",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {

@@ -1,11 +1,19 @@
 lint:
+  actions_awsfulltest: false
+  actions_awstest: false
   files_unchanged:
+    - .github/ISSUE_TEMPLATE/bug_report.yml
+    - .github/ISSUE_TEMPLATE/feature_request.yml
     - .github/workflows/linting.yml
     - .github/PULL_REQUEST_TEMPLATE.md
-    - .github/ISSUE_TEMPLATE/feature_request.yml
+    - .github/CONTRIBUTING.md
+    - .prettierignore
+    - assets/email_template.txt
+    - assets/sendmail_template.txt #
     - assets/nf-core-autoseq_logo_light.png
     - docs/images/nf-core-autoseq_logo_light.png
     - docs/images/nf-core-autoseq_logo_dark.png
+    - docs/README.md
 nf_core_version: 3.5.2
 repository_type: pipeline
 template:
@@ -13,8 +21,8 @@ template:
   description: This Pipeline analyses the targeted panel sequencing data from liquid
     biopsy samples with more accuracy
   force: false
-  is_nfcore: true
+  is_nfcore: false
   name: autoseq
-  org: nf-core
+  org: genomic-medicine-sweden
   outdir: .
   version: 1.0.0dev
