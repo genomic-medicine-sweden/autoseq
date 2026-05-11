@@ -19,7 +19,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 
 ### `Changed`
 
-- [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Updated all repository references from `nf-core/autoseq` to `genomic-medicine-sweden/autoseq` across configs, docs, assets, workflows, and pipeline files.
+- [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Refactor repository name from `nf-core/autoseq` to `genomic-medicine-sweden/autoseq`.
 - [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Expanded `CONTRIBUTING.md` with detailed PR title conventions, review guidelines, and GMS-specific contribution workflow.
 - [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Updated bug report and issue templates to remove nf-core Slack references and align with GMS organisation.
 - [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Updated `README.md` contributors section.
