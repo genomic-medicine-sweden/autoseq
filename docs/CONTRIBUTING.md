@@ -3,18 +3,15 @@ title: Contributing
 markdownPlugin: checklist
 ---
 
-# `nf-core/autoseq`: Contributing guidelines
+# `genomic-medicine-sweden/autoseq`: Contributing guidelines
 
 Hi there!
-Thanks for taking an interest in improving nf-core/autoseq.
+Thanks for taking an interest in improving genomic-medicine-sweden/autoseq.
 
-This page describes the recommended nf-core way to contribute to both nf-core/autoseq and nf-core pipelines in general, including:
+This page describes the recommended nf-core way to contribute to both genomic-medicine-sweden/autoseq and nf-core pipelines in general, including:
 
 - [General contribution guidelines](#general-contribution-guidelines): common procedures or guides across all nf-core pipelines.
-- [Pipeline-specific contribution guidelines](#pipeline-specific-contribution-guidelines): procedures or guides specific to the development conventions of nf-core/autoseq.
-
-> [!NOTE]
-> If you need help using or modifying nf-core/autoseq, ask on the nf-core Slack [#autoseq](https://nfcore.slack.com/channels/autoseq) channel ([join our Slack here](https://nf-co.re/join/slack)).
+- [Pipeline-specific contribution guidelines](#pipeline-specific-contribution-guidelines): procedures or guides specific to the development conventions of genomic-medicine-sweden/autoseq.
 
 ## General contribution guidelines
 
@@ -23,8 +20,8 @@ This page describes the recommended nf-core way to contribute to both nf-core/au
 To contribute code to any nf-core pipeline:
 
 - [ ] Ensure you have Nextflow, nf-core tools, and nf-test installed. See the [nf-core/tools repository](https://github.com/nf-core/tools) for instructions.
-- [ ] Check whether a GitHub [issue](https://github.com/nf-core/autoseq/issues) about your idea already exists. If an issue does not exist, create one so that others are aware you are working on it.
-- [ ] [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) the [nf-core/autoseq repository](https://github.com/nf-core/autoseq) to your GitHub account.
+- [ ] Check whether a GitHub [issue](https://github.com/genomic-medicine-sweden/autoseq/issues) about your idea already exists. If an issue does not exist, create one so that others are aware you are working on it.
+- [ ] [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) the [genomic-medicine-sweden/autoseq repository](https://github.com/genomic-medicine-sweden/autoseq) to your GitHub account.
 - [ ] Create a branch on your forked repository and make your changes following [pipeline conventions](#pipeline-contribution-conventions) (if applicable).
 - [ ] To fix major bugs, name your branch `patch` and follow the [patch release](#patch-release) process.
 - [ ] Update relevant documentation within the `docs/` folder, use nf-core/tools to update `nextflow_schema.json`, and update `CITATIONS.md`.
@@ -34,32 +31,15 @@ To contribute code to any nf-core pipeline:
 
 If you are not used to this workflow with Git, see the [GitHub documentation](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests) or [Git resources](https://try.github.io/) for more information.
 
-## Use of AI and LLMs
-
-The nf-core stance on the use of AI and LLMs is that humans are still ultimately responsible for their submitted code, regardless of the tools they use.
-
-If you’re using AI tools, try to stick by these guidelines:
-
-- Keep PRs as small and focussed as possible
-- Avoid any unnecessary changes, such as moving or refactoring code (unless that is the explicit intention of the PR)
-- Review all generated code yourself before opening a PR, and ensure that you understand it
-- Engage with the community review process and expect to make revisions
-
-For more detail, see the the [blog post](https://nf-co.re/blog/2026/statement-on-ai) for a statement from the nf-core/core team.
-
-### Getting help
-
-For further information and help, see the [nf-core/autoseq documentation](https://nf-co.re/autoseq/usage) or ask on the nf-core [#autoseq](https://nfcore.slack.com/channels/autoseq) Slack channel ([join our Slack here](https://nf-co.re/join/slack)).
-
 ### GitHub Codespaces
 
-You can contribute to nf-core/autoseq without installing a local development environment on your machine by using [GitHub Codespaces](https://github.com/codespaces).
+You can contribute to genomic-medicine-sweden/autoseq without installing a local development environment on your machine by using [GitHub Codespaces](https://github.com/codespaces).
 
 [GitHub Codespaces](https://github.com/codespaces) is an online developer environment that runs in your browser, complete with VS Code and a terminal.
 Most nf-core repositories include a devcontainer configuration, which creates a GitHub Codespaces environment specifically for Nextflow development.
 The environment includes pre-installed nf-core tools, Nextflow, and a few other helpful utilities via a Docker container.
 
-To get started, open the repository in [Codespaces](https://github.com/nf-core/autoseq/codespaces).
+To get started, open the repository in [Codespaces](https://github.com/genomic-medicine-sweden/autoseq/codespaces).
 
 ### Testing
 
@@ -112,7 +92,7 @@ These tests are run with the latest available version of Nextflow and the minimu
 
 ### Pipeline contribution conventions
 
-nf-core semi-standardises how you write code and other contributions to make the nf-core/autoseq code and processing logic more understandable for new contributors and to ensure quality.
+nf-core semi-standardises how you write code and other contributions to make the genomic-medicine-sweden/autoseq code and processing logic more understandable for new contributors and to ensure quality.
 
 #### Add a new pipeline step
 

@@ -1,4 +1,4 @@
-# nf-core/autoseq: Output
+# genomic-medicine-sweden/autoseq: Output
 
 ## Introduction
 

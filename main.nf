@@ -1,11 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    nf-core/autoseq
+    genomic-medicine-sweden/autoseq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/nf-core/autoseq
-    Website: https://nf-co.re/autoseq
-    Slack  : https://nfcore.slack.com/channels/autoseq
+    Github : https://github.com/genomic-medicine-sweden/autoseq
 ----------------------------------------------------------------------------------------
 */
 
@@ -40,7 +38,7 @@ params.fasta = getGenomeAttribute('fasta')
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow NFCORE_AUTOSEQ {
+workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -87,7 +85,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    NFCORE_AUTOSEQ (
+    GENOMICMEDICINESWEDEN_AUTOSEQ (
         PIPELINE_INITIALISATION.out.samplesheet
     )
     //
@@ -99,7 +97,7 @@ workflow {
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
-        NFCORE_AUTOSEQ.out.multiqc_report
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.multiqc_report
     )
 }
 

@@ -59,7 +59,7 @@ workflow AUTOSEQ {
         .mix(topic_versions_string)
         .collectFile(
             storeDir: "${outdir}/pipeline_info",
-            name: 'nf_core_'  +  'autoseq_software_'  + 'mqc_'  + 'versions.yml',
+            name:  'autoseq_software_'  + 'mqc_'  + 'versions.yml',
             sort: true,
             newLine: true
         )
