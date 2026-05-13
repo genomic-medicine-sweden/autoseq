@@ -13,7 +13,6 @@ lint:
     - .prettierignore
     - assets/email_template.txt
     - assets/sendmail_template.txt
-    - assets/multiqc_config.yml
     - docs/images/nf-core-autoseq_logo_light.png
     - docs/images/nf-core-autoseq_logo_dark.png
     - docs/README.md
