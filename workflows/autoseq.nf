@@ -74,8 +74,6 @@ workflow AUTOSEQ {
         ch_samplesheet
     )
 
-    ch_versions = ch_versions.mix(FASTQC.out.versions)
-
     //
     // MODULE: Run FastP
     //

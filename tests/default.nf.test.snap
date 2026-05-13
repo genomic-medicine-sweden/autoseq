@@ -127,7 +127,7 @@
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
-                "pipeline_info/nf_core_autoseq_software_mqc_versions.yml",
+                "pipeline_info/autoseq_software_mqc_versions.yml",
                 "purecn",
                 "purecn/null_purecn.csv",
                 "purecn/null_purecn.pdf",
@@ -185,7 +185,7 @@
                 "variants/somatic/sage/somatic/1234T.sage.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-04-15T21:52:43.42234511",
+        "timestamp": "2026-05-13T14:53:47.919298057",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "25.10.4"
