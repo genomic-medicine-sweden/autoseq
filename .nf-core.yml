@@ -9,12 +9,12 @@ lint:
     - .github/CONTRIBUTING.md
     - .prettierignore
     - assets/email_template.txt
-    - assets/sendmail_template.txt #
+    - assets/sendmail_template.txt
     - assets/nf-core-autoseq_logo_light.png
     - docs/images/nf-core-autoseq_logo_light.png
     - docs/images/nf-core-autoseq_logo_dark.png
     - docs/README.md
-nf_core_version: 3.5.2
+nf_core_version: 4.0.2
 repository_type: pipeline
 template:
   author: Sarath Murugan

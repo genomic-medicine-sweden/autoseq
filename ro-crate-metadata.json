@@ -38,9 +38,6 @@
                     "@id": "docs/"
                 },
                 {
-                    "@id": "docs/images/"
-                },
-                {
                     "@id": "modules/"
                 },
                 {
@@ -66,9 +63,6 @@
                 },
                 {
                     "@id": "LICENSE"
-                },
-                {
-                    "@id": "CODE_OF_CONDUCT.md"
                 },
                 {
                     "@id": "CITATIONS.md"
@@ -99,7 +93,7 @@
             },
             "mentions": [
                 {
-                    "@id": "#894333cc-79e5-48bb-a1ce-dc7426d9c4e4"
+                    "@id": "#f6219764-b8f0-4c89-8924-737ab18cc8da"
                 }
             ],
             "name": "genomic-medicine-sweden/autoseq"
@@ -126,6 +120,11 @@
                 "SoftwareSourceCode",
                 "ComputationalWorkflow"
             ],
+            "contributor": [
+                {
+                    "@id": "#422d6439-b505-4c2c-8686-fcd1df97ade6"
+                }
+            ],
             "dateCreated": "",
             "dateModified": "2026-02-01T21:50:53Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
@@ -147,7 +146,7 @@
             },
             "url": [
                 "https://github.com/genomic-medicine-sweden/autoseq",
-                "https://nf-co.re/autoseq/dev/"
+                "https://nf-co.re/genomic-medicine-sweden/autoseq/dev/"
             ],
             "version": [
                 "1.0.0dev"
@@ -163,14 +162,14 @@
             "url": {
                 "@id": "https://www.nextflow.io/"
             },
-            "version": "!>=25.04.0"
+            "version": "!>=25.10.0"
         },
         {
-            "@id": "#894333cc-79e5-48bb-a1ce-dc7426d9c4e4",
+            "@id": "#f6219764-b8f0-4c89-8924-737ab18cc8da",
             "@type": "TestSuite",
             "instance": [
                 {
-                    "@id": "#a16d24f5-d660-4e1b-b875-5c7a8d6790dc"
+                    "@id": "#f4772fca-b371-457d-978f-9b3a77ce3fa3"
                 }
             ],
             "mainEntity": {
@@ -179,7 +178,7 @@
             "name": "Test suite for genomic-medicine-sweden/autoseq"
         },
         {
-            "@id": "#a16d24f5-d660-4e1b-b875-5c7a8d6790dc",
+            "@id": "#f4772fca-b371-457d-978f-9b3a77ce3fa3",
             "@type": "TestInstance",
             "name": "GitHub Actions workflow for testing genomic-medicine-sweden/autoseq",
             "resource": "repos/genomic-medicine-sweden/autoseq/actions/workflows/nf-test.yml",
@@ -210,11 +209,6 @@
             "@id": "docs/",
             "@type": "Dataset",
             "description": "Markdown files for documenting the pipeline"
-        },
-        {
-            "@id": "docs/images/",
-            "@type": "Dataset",
-            "description": "Images for the documentation files"
         },
         {
             "@id": "modules/",
@@ -262,11 +256,6 @@
             "description": "The license - should be MIT"
         },
         {
-            "@id": "CODE_OF_CONDUCT.md",
-            "@type": "File",
-            "description": "The nf-core code of conduct"
-        },
-        {
             "@id": "CITATIONS.md",
             "@type": "File",
             "description": "Citations needed when using the pipeline"
@@ -306,6 +295,11 @@
             "@type": "Organization",
             "name": "nf-core",
             "url": "https://nf-co.re/"
+        },
+        {
+            "@id": "#422d6439-b505-4c2c-8686-fcd1df97ade6",
+            "@type": "Person",
+            "name": "Sarath Murugan"
         }
     ]
 }

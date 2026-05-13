@@ -4,8 +4,6 @@
     genomic-medicine-sweden/autoseq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Github : https://github.com/genomic-medicine-sweden/autoseq
-    Website: https://nf-co.re/autoseq
-    Slack  : https://nfcore.slack.com/channels/autoseq
 ----------------------------------------------------------------------------------------
 */
 
@@ -132,7 +130,11 @@ workflow NXF_AUTOSEQ {
         ch_repeatmasker_annotations,
         ch_gridss_config,
         ch_dbsnp_vcf,
-        ch_dbsnp_vcf_tbi
+        ch_dbsnp_vcf_tbi,
+        params.multiqc_config,
+        params.multiqc_logo,
+        params.multiqc_methods_description,
+        params.outdir,
     )
 
     emit:
@@ -179,7 +181,6 @@ workflow {
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
-        params.hook_url,
         NXF_AUTOSEQ.out.multiqc_report
     )
 
