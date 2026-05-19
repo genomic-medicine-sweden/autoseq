@@ -23,7 +23,9 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Expanded `CONTRIBUTING.md` with detailed PR title conventions, review guidelines, and GMS-specific contribution workflow.
 - [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Updated bug report and issue templates to remove nf-core Slack references and align with GMS organisation.
 - [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Updated `README.md` contributors section.
-- [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Template update for nf-core/tools v4.0.2
+- [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Template update for nf-core/tools v4.0.2.
+- [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated multiqc module from 1.32 to 1.34 and fastqc module (included in the template update).
+- [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated the minimum required nextflow version to 25.10.4 (included in new template).
 
 ### `Fixed`
 

@@ -57,10 +57,10 @@ workflow AUTOSEQ {
     ch_gridss_config   // path: optional GRIDSS config file
     ch_dbsnp_vcf      // channel: optional dbSNP VCF for SNV annotation
     ch_dbsnp_vcf_tbi  // channel: optional dbSNP VCF
-    multiqc_config
-    multiqc_logo
-    multiqc_methods_description
-    outdir
+    val_multiqc_config                  // val: /path/to/multiqc_config.yaml
+    val_multiqc_logo                    // val: /path/to/multiqc_logo.png
+    val_multiqc_methods_description     // val: /path/to/multiqc_methods_description.md
+    val_outdir                          // val: /path/to/output/directory
 
     main:
 
@@ -320,7 +320,7 @@ workflow AUTOSEQ {
     def ch_collated_versions = softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
         .mix(topic_versions_string)
         .collectFile(
-            storeDir: "${outdir}/pipeline_info",
+            storeDir: "${val_outdir}/pipeline_info",
             name:  'autoseq_software_'  + 'mqc_'  + 'versions.yml',
             sort: true,
             newLine: true
@@ -340,8 +340,8 @@ workflow AUTOSEQ {
     def ch_summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
     def ch_workflow_summary = channel.value(paramsSummaryMultiqc(ch_summary_params))
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
-    def ch_multiqc_custom_methods_description = multiqc_methods_description
-        ? file(multiqc_methods_description, checkIfExists: true)
+    def ch_multiqc_custom_methods_description = val_multiqc_methods_description
+        ? file(val_multiqc_methods_description, checkIfExists: true)
         : file("${projectDir}/assets/methods_description_template.yml", checkIfExists: true)
     def ch_methods_description = channel.value(methodsDescriptionText(ch_multiqc_custom_methods_description))
     ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml', sort: true))
@@ -351,10 +351,10 @@ workflow AUTOSEQ {
             [
                 [id: 'autoseq'],
                 files,
-                multiqc_config
-                    ? file(multiqc_config, checkIfExists: true)
+                val_multiqc_config
+                    ? file(val_multiqc_config, checkIfExists: true)
                     : file("${projectDir}/assets/multiqc_config.yml", checkIfExists: true),
-                multiqc_logo ? file(multiqc_logo, checkIfExists: true) : [],
+                val_multiqc_logo ? file(val_multiqc_logo, checkIfExists: true) : [],
                 [],
                 [],
             ]
