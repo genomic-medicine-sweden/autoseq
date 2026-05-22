@@ -19,11 +19,10 @@ process ANNOTATE_CNVS {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def sample_type = meta.sample_type == "tumor" ? 'somatic' : 'germline'
 
     """
     annotate_cnvs.py -i ${cns} -c ${curation_ann} -o ${prefix}_ann.cns \\
-        --sample-type ${sample_type} ${args}
+        ${args}
 
     """
 

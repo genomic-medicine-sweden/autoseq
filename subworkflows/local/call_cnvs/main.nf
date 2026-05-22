@@ -1,7 +1,8 @@
 
 
-include { JUMBLE_RUN         } from '../../../modules/local/jumble/main'
-include { ANNOTATE_CNVS      } from '../../../modules/local/annotate_cnvs/main'
+include { JUMBLE_RUN                                  } from '../../../modules/local/jumble/main'
+include { ANNOTATE_CNVS as ANNOTATE_CNVS_SOMATIC      } from '../../../modules/local/annotate_cnvs/main'
+include { ANNOTATE_CNVS as ANNOTATE_CNVS_GERMLINE     } from '../../../modules/local/annotate_cnvs/main'
 
 
 workflow CALL_CNVS {
@@ -22,13 +23,31 @@ workflow CALL_CNVS {
     )
 
     //
+    // Split CNS by sample type so each aliased ANNOTATE_CNVS run applies
+    // the appropriate somatic/germline curation profile via ext.args.
+    //
+
+    def ch_jumble_cns_branched = JUMBLE_RUN.out.cns
+        .branch { meta, _cns ->
+            somatic:  meta.sample_type == "tumor"
+            germline: true
+        }
+
+    //
     // MODULE: Annotate CNVs with cancer relevant genes
     //
 
-    ANNOTATE_CNVS(
-        JUMBLE_RUN.out.cns,
+    ANNOTATE_CNVS_SOMATIC(
+        ch_jumble_cns_branched.somatic,
         ch_curation_ann
     )
+
+    ANNOTATE_CNVS_GERMLINE(
+        ch_jumble_cns_branched.germline,
+        ch_curation_ann
+    )
+
+    ch_annotated_cns = ANNOTATE_CNVS_SOMATIC.out.cns.mix(ANNOTATE_CNVS_GERMLINE.out.cns)
 
     emit:
     jumble_cns          = JUMBLE_RUN.out.cns
@@ -37,6 +56,6 @@ workflow CALL_CNVS {
     profile_bedgraph    = JUMBLE_RUN.out.profile_bedgraph
     segments_bedgraph   = JUMBLE_RUN.out.segments_bedgraph
     png                 = JUMBLE_RUN.out.png
-    cns                 = ANNOTATE_CNVS.out.cns
+    cns                 = ch_annotated_cns
 
 }
