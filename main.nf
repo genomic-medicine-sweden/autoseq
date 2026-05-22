@@ -4,8 +4,6 @@
     genomic-medicine-sweden/autoseq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Github : https://github.com/genomic-medicine-sweden/autoseq
-    Website: https://nf-co.re/autoseq
-    Slack  : https://nfcore.slack.com/channels/autoseq
 ----------------------------------------------------------------------------------------
 */
 
@@ -68,7 +66,11 @@ params.jumble_ref              = getPanelsAttribute('jumble_ref')
 workflow NXF_AUTOSEQ {
 
     take:
-    samplesheet // channel: samplesheet read in from --input
+    samplesheet                         // channel: samplesheet read in from --input
+    val_multiqc_config                  // val: /path/to/multiqc_config.yaml
+    val_multiqc_logo                    // val: /path/to/multiqc_logo.png
+    val_multiqc_methods_description     // val: /path/to/multiqc_methods_description.md
+    val_outdir                          // val: /path/to/output/directory
 
     main:
 
@@ -132,7 +134,11 @@ workflow NXF_AUTOSEQ {
         ch_repeatmasker_annotations,
         ch_gridss_config,
         ch_dbsnp_vcf,
-        ch_dbsnp_vcf_tbi
+        ch_dbsnp_vcf_tbi,
+        val_multiqc_config,
+        val_multiqc_logo,
+        val_multiqc_methods_description,
+        val_outdir,
     )
 
     emit:
@@ -168,7 +174,11 @@ workflow {
     // WORKFLOW: Run main workflow
     //
     NXF_AUTOSEQ (
-        PIPELINE_INITIALISATION.out.samplesheet
+        PIPELINE_INITIALISATION.out.samplesheet,
+        params.multiqc_config,
+        params.multiqc_logo,
+        params.multiqc_methods_description,
+        params.outdir
     )
     //
     // SUBWORKFLOW: Run completion tasks
@@ -179,7 +189,6 @@ workflow {
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
-        params.hook_url,
         NXF_AUTOSEQ.out.multiqc_report
     )
 

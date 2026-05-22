@@ -8,5 +8,3 @@ The genomic-medicine-sweden/autoseq documentation is split into the following pa
   - An overview of the different results produced by the pipeline and how to interpret them.
 - [Parameters](parameters.md)
   - An overview of all available parameters for the pipeline.
-
-You can find a lot more documentation about installing, configuring and running nf-core pipelines on the website: [https://nf-co.re](https://nf-co.re)
