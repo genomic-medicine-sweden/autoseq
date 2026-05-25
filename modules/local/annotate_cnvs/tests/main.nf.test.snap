@@ -1,128 +1,74 @@
 {
-    "annotate_cnvs - somatic (tumor sample)": {
+    "somatic (tumor sample)": {
         "content": [
-            {
-                "0": [
-                    [
-                        {
-                            "id": "test_tumor",
-                            "sample_type": "tumor"
-                        },
-                        "test_tumor_ann.cns:md5,7a228353c86ca7f92b4ce5e24ebf1bf7"
-                    ]
-                ],
-                "1": [
-                    [
-                        "ANNOTATE_CNVS",
-                        "annotate_cnvs",
-                        "annotate_cnvs.py 1.0.0"
-                    ]
-                ],
-                "cns": [
-                    [
-                        {
-                            "id": "test_tumor",
-                            "sample_type": "tumor"
-                        },
-                        "test_tumor_ann.cns:md5,7a228353c86ca7f92b4ce5e24ebf1bf7"
-                    ]
-                ],
-                "ver_anncnvs": [
-                    [
-                        "ANNOTATE_CNVS",
-                        "annotate_cnvs",
-                        "annotate_cnvs.py 1.0.0"
-                    ]
+            [
+                [
+                    {
+                        "id": "test_tumor",
+                        "sample_type": "tumor"
+                    },
+                    "test_tumor_ann.cns:md5,7a228353c86ca7f92b4ce5e24ebf1bf7"
                 ]
-            }
+            ],
+            [
+                [
+                    "ANNOTATE_CNVS",
+                    "annotate_cnvs",
+                    "annotate_cnvs.py 1.0.0"
+                ]
+            ]
         ],
-        "timestamp": "2026-05-22T14:19:37.076777085",
+        "timestamp": "2026-05-25T15:32:49.621039761",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "25.10.4"
         }
     },
-    "annotate_cnvs - stub": {
+    "stub": {
         "content": [
-            {
-                "0": [
-                    [
-                        {
-                            "id": "test_tumor",
-                            "sample_type": "tumor"
-                        },
-                        "test_tumor_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "1": [
-                    [
-                        "ANNOTATE_CNVS",
-                        "annotate_cnvs",
-                        "annotate_cnvs.py 1.0.0"
-                    ]
-                ],
-                "cns": [
-                    [
-                        {
-                            "id": "test_tumor",
-                            "sample_type": "tumor"
-                        },
-                        "test_tumor_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "ver_anncnvs": [
-                    [
-                        "ANNOTATE_CNVS",
-                        "annotate_cnvs",
-                        "annotate_cnvs.py 1.0.0"
-                    ]
+            [
+                [
+                    {
+                        "id": "test_tumor",
+                        "sample_type": "tumor"
+                    },
+                    "test_tumor_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
-            }
+            ],
+            [
+                [
+                    "ANNOTATE_CNVS",
+                    "annotate_cnvs",
+                    "annotate_cnvs.py 1.0.0"
+                ]
+            ]
         ],
-        "timestamp": "2026-05-22T14:19:53.188661135",
+        "timestamp": "2026-05-25T15:33:06.112624095",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "25.10.4"
         }
     },
-    "annotate_cnvs - germline (normal sample)": {
+    "germline (normal sample)": {
         "content": [
-            {
-                "0": [
-                    [
-                        {
-                            "id": "test_normal",
-                            "sample_type": "normal"
-                        },
-                        "test_normal_ann.cns:md5,cc4c562b615ce05cfda9152edb2d72fb"
-                    ]
-                ],
-                "1": [
-                    [
-                        "ANNOTATE_CNVS",
-                        "annotate_cnvs",
-                        "annotate_cnvs.py 1.0.0"
-                    ]
-                ],
-                "cns": [
-                    [
-                        {
-                            "id": "test_normal",
-                            "sample_type": "normal"
-                        },
-                        "test_normal_ann.cns:md5,cc4c562b615ce05cfda9152edb2d72fb"
-                    ]
-                ],
-                "ver_anncnvs": [
-                    [
-                        "ANNOTATE_CNVS",
-                        "annotate_cnvs",
-                        "annotate_cnvs.py 1.0.0"
-                    ]
+            [
+                [
+                    {
+                        "id": "test_normal",
+                        "sample_type": "normal"
+                    },
+                    "test_normal_ann.cns:md5,cc4c562b615ce05cfda9152edb2d72fb"
                 ]
-            }
+            ],
+            [
+                [
+                    "ANNOTATE_CNVS",
+                    "annotate_cnvs",
+                    "annotate_cnvs.py 1.0.0"
+                ]
+            ]
         ],
-        "timestamp": "2026-05-22T14:19:46.004833792",
+        "timestamp": "2026-05-25T15:32:58.794987846",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "25.10.4"
