@@ -44,7 +44,7 @@ nextflow_process {
 
         when {
             params {
-                annotate_cnvs_args = " --cancer-type 'PANCANCER' "
+                annotate_cnvs_args = " --cancer-type PANCANCER "
             }
 
             process {
@@ -78,7 +78,7 @@ nextflow_process {
 
         when {
             params {
-                annotate_cnvs_args = " --cancer-type 'PANCANCER' "
+                annotate_cnvs_args = " --cancer-type PANCANCER "
             }
 
             process {
