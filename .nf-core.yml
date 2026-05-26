@@ -1,6 +1,7 @@
 lint:
   actions_awsfulltest: false
   actions_awstest: false
+  multiqc_config: false
   files_exist:
     - CODE_OF_CONDUCT.md
   files_unchanged:

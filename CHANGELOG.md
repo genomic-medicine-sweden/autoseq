@@ -36,6 +36,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #21 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/21) Updated GATK Mutect2 parameters to include germline variants in the unfiltered VCF, enabling compatibility with PureCN downstream analysis.
 - [ #21 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/21) Updated the minimum Nextflow version to fix nf-test failures in the GitHub Actions workflow.
 - [ #21 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/21) Added the modified nf_core_autoseq logo images to .nf-core.yml to ignore them and resolve nf-core linting failures.
+- [ #37 ](https://github.com/genomic-medicine-sweden/autoseq/pull/38) Updated documentation reference in `multiqc_config.yml` and disabled the nf-core linting check for multiqc config.
 
 ### `Dependencies`
 
