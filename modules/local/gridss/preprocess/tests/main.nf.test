@@ -1,0 +1,63 @@
+nextflow_process {
+
+    name "Test Process GRIDSS_PREPROCESS"
+    script "../main.nf"
+    process "GRIDSS_PREPROCESS"
+
+    tag "modules"
+    tag "modules_local"
+    tag "gridss"
+    tag "gridss/preprocess"
+
+    test("targeted_bam - stub") {
+
+        options "-stub"
+
+        // GRIDSS preprocess requires a BAM aligned against the matching reference plus the full
+        // GRIDSS/BWA index (.amb/.ann/.bwt/.gridsscache/.img/.pac/.sa). Real execution is gated on
+        // end-to-end reference bundles that we don't ship in test-data, so we exercise wiring via stub.
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'test_sample', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.of([
+                    [ id:'genome_gridss_index' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index/human_g1k_v37_decoy.fasta.amb', checkIfExists: true)
+                ])
+                input[3] = channel.of([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[4] = channel.of([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                input[5] = channel.of([
+                    [ id:'gridss_config' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.preprocess_dir,
+                    process.out.findAll { key, val -> key.startsWith("versions") }
+                ).match() }
+            )
+        }
+    }
+
+}

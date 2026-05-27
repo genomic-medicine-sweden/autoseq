@@ -1,0 +1,31 @@
+{
+    "targeted_bam - stub": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "sample_type": "tumor"
+                    },
+                    [
+                        
+                    ]
+                ]
+            ],
+            {
+                "versions_gridss": [
+                    [
+                        "GRIDSS_PREPROCESS",
+                        "gridss",
+                        "2.13.2"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-05-26T12:10:50.325494693",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    }
+}
