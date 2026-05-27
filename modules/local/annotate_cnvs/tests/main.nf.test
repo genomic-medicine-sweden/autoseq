@@ -1,0 +1,109 @@
+nextflow_process {
+
+    name "Test Process ANNOTATE_CNVS"
+    script "../main.nf"
+    process "ANNOTATE_CNVS"
+    config "./nextflow.config"
+    tag "modules"
+    tag "modules_local"
+    tag "annotate_cnvs"
+
+
+    test("somatic (tumor sample)") {
+        when {
+            params {
+                annotate_cnvs_args = " --cancer-type PANCANCER "
+            }
+
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'test_tumor', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'curation_ann' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/cancer_gene_annotations_test.csv', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.cns,
+                    process.out.ver_anncnvs
+                ).match() }
+            )
+        }
+    }
+
+    test("germline (normal sample)") {
+
+        when {
+            params {
+                annotate_cnvs_args = " --cancer-type PANCANCER "
+            }
+
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'test_normal', sample_type:'normal' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'curation_ann' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/cancer_gene_annotations_test.csv', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.cns,
+                    process.out.ver_anncnvs
+                ).match() }
+            )
+        }
+    }
+
+    test("stub") {
+
+        options "-stub"
+
+        when {
+            params {
+                annotate_cnvs_args = " --cancer-type PANCANCER "
+            }
+
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'test_tumor', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'curation_ann' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/cancer_gene_annotations_test.csv', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.cns,
+                    process.out.ver_anncnvs
+                ).match() }
+            )
+        }
+    }
+
+}
