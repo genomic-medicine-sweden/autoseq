@@ -66,7 +66,7 @@ nextflow_process {
             assertAll(
                 { assert process.success },
                 { assert snapshot(
-                    process.out.preprocess_dir.collect { meta, dir -> [meta, file(dir).list().sort()] },
+                    process.out.preprocess_dir.collect { meta, dir -> [meta, file(dir).list().findAll { it.startsWith(prefix) }.sort()] },
                     path("${workdir}/${prefix}.computesamtags.changes.tsv"),
                     path("${workdir}/${prefix}.coverage.blacklist.bed"),
                     path("${workdir}/${prefix}.sv.bam.csi"),

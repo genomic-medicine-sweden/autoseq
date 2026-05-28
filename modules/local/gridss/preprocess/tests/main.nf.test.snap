@@ -17,8 +17,7 @@
                         "test.paired_end.markduplicates.gridss.targeted.bam.mapq_metrics",
                         "test.paired_end.markduplicates.gridss.targeted.bam.sv.bam",
                         "test.paired_end.markduplicates.gridss.targeted.bam.sv.bam.csi",
-                        "test.paired_end.markduplicates.gridss.targeted.bam.tag_metrics",
-                        "ubuntu"
+                        "test.paired_end.markduplicates.gridss.targeted.bam.tag_metrics"
                     ]
                 ]
             ],
