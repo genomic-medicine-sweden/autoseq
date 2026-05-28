@@ -57,10 +57,24 @@ nextflow_process {
         }
 
         then {
+            def workdir = process.out.preprocess_dir[0][1]
+            def prefix  = "test.paired_end.markduplicates.gridss.targeted.bam"
+            // Picard `# Started on:` and R's PDF `/CreationDate` add per-run timestamps,
+            // and `sv.bam` BGZF blocks are non-reproducible — snapshot only stable parts.
+            def stripPicardHeader = { f -> path(f).readLines().findAll { !it.startsWith("#") } }
+
             assertAll(
                 { assert process.success },
                 { assert snapshot(
-                    process.out.preprocess_dir,
+                    process.out.preprocess_dir.collect { meta, dir -> [meta, file(dir).list().sort()] },
+                    path("${workdir}/${prefix}.computesamtags.changes.tsv"),
+                    path("${workdir}/${prefix}.coverage.blacklist.bed"),
+                    path("${workdir}/${prefix}.sv.bam.csi"),
+                    stripPicardHeader("${workdir}/${prefix}.cigar_metrics"),
+                    stripPicardHeader("${workdir}/${prefix}.idsv_metrics"),
+                    stripPicardHeader("${workdir}/${prefix}.insert_size_metrics"),
+                    stripPicardHeader("${workdir}/${prefix}.mapq_metrics"),
+                    stripPicardHeader("${workdir}/${prefix}.tag_metrics"),
                     process.out.findAll { key, val -> key.startsWith("versions") }
                 ).match() }
             )
