@@ -1,4 +1,91 @@
 {
+    "preprocess - targeted_bam": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "sample_type": "tumor"
+                    },
+                    [
+                        "test.paired_end.markduplicates.gridss.targeted.bam.cigar_metrics:md5,023e4f20a94610ef11dcc0679416b442",
+                        "test.paired_end.markduplicates.gridss.targeted.bam.computesamtags.changes.tsv:md5,3d5175661ab1ed8abbd848deb0619302",
+                        "test.paired_end.markduplicates.gridss.targeted.bam.coverage.blacklist.bed:md5,dc64856a63a979e782b4a06473d56750",
+                        "test.paired_end.markduplicates.gridss.targeted.bam.idsv_metrics:md5,f72991b383a2d0be7299465ea516e4fc",
+                        "test.paired_end.markduplicates.gridss.targeted.bam.insert_size_histogram.pdf:md5,9da026295ea0a973fa7097215dcb0f4d",
+                        "test.paired_end.markduplicates.gridss.targeted.bam.insert_size_metrics:md5,6915a5f02e44be77a9e33a84d1524d28",
+                        "test.paired_end.markduplicates.gridss.targeted.bam.mapq_metrics:md5,19c2fc97253b7f9d794769e0c34efde6",
+                        "test.paired_end.markduplicates.gridss.targeted.bam.sv.bam:md5,bc9d6dec99321b833c3c62946021de80",
+                        "test.paired_end.markduplicates.gridss.targeted.bam.sv.bam.csi:md5,8cb7c2339cd83ae09279f6b50e090cdb",
+                        "test.paired_end.markduplicates.gridss.targeted.bam.tag_metrics:md5,e112ed1393674cdfd75a3cf6bc32419f",
+                        [
+                            
+                        ]
+                    ]
+                ]
+            ],
+            {
+                "versions_gridss": [
+                    [
+                        "GRIDSS_PREPROCESS",
+                        "gridss",
+                        "2.13.2"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-05-28T10:51:19.744702443",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    },
+    "gridss_preprocess": {
+        "content": [
+            [
+                
+            ],
+            {
+                "versions_gridss": [
+                    
+                ]
+            }
+        ],
+        "timestamp": "2026-05-27T12:44:51.408455001",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    },
+    "preprocess - targeted_bam - stub": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "sample_type": "tumor"
+                    },
+                    [
+                        
+                    ]
+                ]
+            ],
+            {
+                "versions_gridss": [
+                    [
+                        "GRIDSS_PREPROCESS",
+                        "gridss",
+                        "2.13.2"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-05-27T16:13:40.650124088",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    },
     "targeted_bam - stub": {
         "content": [
             [
