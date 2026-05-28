@@ -30,9 +30,6 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                // BAM contents are sorted/compressed and md5-stable for the same input, so snapshotting is safe.
-                // Use findAll to collect every emit:* topic version channel — keeps the assertion stable when
-                // new tools are added to the module's output block.
                 { assert snapshot(
                     process.out.gridss_targeted_bam,
                     process.out.findAll { key, val -> key.startsWith("versions") }
