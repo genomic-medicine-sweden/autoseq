@@ -1,0 +1,70 @@
+{
+    "targeted_bam - stub": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample"
+                    },
+                    "test_sample.gridss.targeted.bam:md5,d41d8cd98f00b204e9800998ecf8427e",
+                    "test_sample.gridss.targeted.bam.bai:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            {
+                "versions_gridss": [
+                    [
+                        "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS",
+                        "gridss",
+                        "2.13.2"
+                    ]
+                ],
+                "versions_samtools": [
+                    [
+                        "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS",
+                        "samtools",
+                        "1.21"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-05-26T11:19:48.18588574",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    },
+    "targeted_bam": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample"
+                    },
+                    "test_sample.gridss.targeted.bam:md5,517d42eca0bba96012a0c7ed7e57db9f",
+                    "test_sample.gridss.targeted.bam.bai:md5,0666f7057799d742a155b72db3c692a0"
+                ]
+            ],
+            {
+                "versions_gridss": [
+                    [
+                        "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS",
+                        "gridss",
+                        "2.13.2"
+                    ]
+                ],
+                "versions_samtools": [
+                    [
+                        "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS",
+                        "samtools",
+                        "1.21"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-05-26T11:19:40.438741961",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    }
+}
