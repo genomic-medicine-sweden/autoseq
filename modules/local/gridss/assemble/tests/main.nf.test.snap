@@ -1,0 +1,73 @@
+{
+    "targeted_bam - stub": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "sample_type": "tumor"
+                    },
+                    [
+                        
+                    ],
+                    "test_sample.sv.assembly.bam:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            {
+                "versions_gridss": [
+                    [
+                        "GRIDSS_ASSEMBLE",
+                        "gridss",
+                        "2.13.2"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-06-01T14:36:37.834434874",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    },
+    "targeted_bam": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "sample_type": "tumor"
+                    },
+                    [
+                        "test_sample.sv.assembly.bam.cigar_metrics",
+                        "test_sample.sv.assembly.bam.coverage.blacklist.bed",
+                        "test_sample.sv.assembly.bam.downsampled_0.bed",
+                        "test_sample.sv.assembly.bam.excluded_0.bed",
+                        "test_sample.sv.assembly.bam.idsv_metrics",
+                        "test_sample.sv.assembly.bam.mapq_metrics",
+                        "test_sample.sv.assembly.bam.quality_distribution.pdf",
+                        "test_sample.sv.assembly.bam.quality_distribution_metrics",
+                        "test_sample.sv.assembly.bam.subsetCalled_0.bed",
+                        "test_sample.sv.assembly.bam.sv.bam",
+                        "test_sample.sv.assembly.bam.sv.bam.bai",
+                        "test_sample.sv.assembly.bam.tag_metrics"
+                    ],
+                    "test_sample.sv.assembly.bam"
+                ]
+            ],
+            {
+                "versions_gridss": [
+                    [
+                        "GRIDSS_ASSEMBLE",
+                        "gridss",
+                        "2.13.2"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-06-01T14:36:03.675400314",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    }
+}
