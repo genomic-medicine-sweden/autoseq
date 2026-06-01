@@ -17,6 +17,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #19 ](https://github.com/imsarath/nf-autoseq/pull/19) Repo setup for Genome Medicine Sweden Org
 - [ #21 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/21) Added sub-workflow for tumor biomarker profiling - purecn-run and typeDPYD
 - [ #40 ](https://github.com/genomic-medicine-sweden/autoseq/pull/40) Added nf-test for the `ANNOTATE_CNVS` local module covering somatic, germline, and stub cases.
+- [ #42 ](https://github.com/genomic-medicine-sweden/autoseq/pull/42) Added nf-test for `gridss/extract_overlapping_fragments` module.
 
 ### `Changed`
 
