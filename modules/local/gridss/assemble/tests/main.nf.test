@@ -36,7 +36,7 @@ nextflow_process {
         }
     }
 
-    test("targeted_bam") {
+    test("assemble - targeted_bam") {
 
         when {
             process {
@@ -71,23 +71,34 @@ nextflow_process {
 
         then {
             def workdir = process.out.assemble_dir[0][1]
-            def prefix  = "test_sample"
-            // `sv.assembly.bam` is BGZF-compressed and non-reproducible across runs;
-            // Picard metrics inside the working dir embed `# Started on:` timestamps —
-            // snapshot only the stable file listing plus the versions channel.
+            def prefix  = "test_sample.sv.assembly.bam"
+            // `sv.assembly.bam`, `sv.bam`, and `sv.bam.bai` are BGZF-compressed and non-reproducible across runs;
+            // `quality_distribution.pdf` embeds an R `/CreationDate`; Picard metrics carry `# Started on:` timestamps —
+            // strip those headers and snapshot the stable BEDs and stripped metric bodies.
+            def stripPicardHeader = { f -> path(f).readLines().findAll { !it.startsWith("#") } }
+
             assertAll(
                 { assert process.success },
                 { assert snapshot(
                     process.out.assemble_dir.collect { meta, working, assembly ->
                         [meta, file(working).list().sort(), file(assembly).name]
                     },
+                    path("${workdir}/${prefix}.coverage.blacklist.bed"),
+                    path("${workdir}/${prefix}.downsampled_0.bed"),
+                    path("${workdir}/${prefix}.excluded_0.bed"),
+                    path("${workdir}/${prefix}.subsetCalled_0.bed"),
+                    stripPicardHeader("${workdir}/${prefix}.cigar_metrics"),
+                    stripPicardHeader("${workdir}/${prefix}.idsv_metrics"),
+                    stripPicardHeader("${workdir}/${prefix}.mapq_metrics"),
+                    stripPicardHeader("${workdir}/${prefix}.quality_distribution_metrics"),
+                    stripPicardHeader("${workdir}/${prefix}.tag_metrics"),
                     process.out.findAll { key, val -> key.startsWith("versions") }
                 ).match() }
             )
         }
     }
 
-    test("targeted_bam - stub") {
+    test("assemble - targeted_bam - stub") {
 
         options "-stub"
 
