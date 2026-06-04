@@ -1,0 +1,72 @@
+nextflow_process {
+
+    name "Test Process GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS"
+    script "../main.nf"
+    process "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS"
+
+    tag "modules"
+    tag "modules_local"
+    tag "gridss"
+    tag "gridss/extract_overlapping_fragments"
+
+    test("targeted_bam") {
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'test_sample' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'target_regions' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/gridss/test_target.bed', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.gridss_targeted_bam,
+                    process.out.findAll { key, val -> key.startsWith("versions") }
+                ).match() }
+            )
+        }
+    }
+
+    test("targeted_bam - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'test_sample' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'target_regions' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/gridss/test_target.bed', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.gridss_targeted_bam,
+                    process.out.findAll { key, val -> key.startsWith("versions") }
+                ).match() }
+            )
+        }
+    }
+
+}
