@@ -1,0 +1,56 @@
+{
+    "call - targeted_bam - stub": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "sample_type": "tumor"
+                    },
+                    "test_sample.sv.gridss.vcf.gz"
+                ]
+            ],
+            {
+                "versions_gridss": [
+                    [
+                        "GRIDSS_CALL",
+                        "gridss",
+                        "2.13.2"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-06-04T12:44:00.847212788",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    },
+    "call -targeted_bam": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "sample_type": "tumor"
+                    },
+                    "test_sample.sv.gridss.vcf.gz"
+                ]
+            ],
+            {
+                "versions_gridss": [
+                    [
+                        "GRIDSS_CALL",
+                        "gridss",
+                        "2.13.2"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-06-04T12:43:35.641496338",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    }
+}

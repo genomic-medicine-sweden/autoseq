@@ -1,0 +1,166 @@
+nextflow_process {
+
+    name "Test Process GRIDSS_CALL"
+    script "../main.nf"
+    config "./nextflow.config"
+    process "GRIDSS_CALL"
+
+    tag "modules"
+    tag "modules_local"
+    tag "gridss"
+    tag "gridss/call"
+
+    setup {
+        run("UNTAR", alias: "UNTAR_PREPROCESS") {
+            script "../../../../nf-core/untar/main.nf"
+            process {
+                """
+                input[0] = channel.of([
+                    [ id: 'gridss_preprocess_dir' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/gridss/gridss_preprocess_dir.tar.gz', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        run("UNTAR", alias: "UNTAR_ASSEMBLE") {
+            script "../../../../nf-core/untar/main.nf"
+            process {
+                """
+                input[0] = channel.of([
+                    [ id: 'gridss_assemble_dir' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/gridss/gridss_assemble_dir.tar.gz', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        run("BWA_INDEX") {
+            script "../../../../nf-core/bwa/index/main.nf"
+            process {
+                """
+                input[0] = [
+                    [ id: 'test' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.fasta', checkIfExists: true)
+                ]
+                """
+            }
+        }
+    }
+
+    test("call -targeted_bam") {
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id: 'test_sample', sample_type: 'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/test.paired_end.markduplicates.gridss.targeted.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/test.paired_end.markduplicates.gridss.targeted.bam.bai', checkIfExists: true)
+                ])
+                .combine(UNTAR_PREPROCESS.out.untar)
+                .combine(UNTAR_ASSEMBLE.out.untar)
+                .map { meta, bam, bai, p_meta, preprocess_dir, a_meta, assemble_dir ->
+                    [
+                        meta,
+                        bam,
+                        bai,
+                        preprocess_dir,
+                        assemble_dir,
+                        file(params.pipelines_testdata_base_path + 'testdata/gridss/test_sample.sv.assembly.bam', checkIfExists: true)
+                    ]
+                }
+                input[1] = channel.of([
+                    [ id: 'genome' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.fasta', checkIfExists: true)
+                ])
+                input[2] = BWA_INDEX.out.index
+                input[3] = channel.of([
+                    [ id: 'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.fasta.fai', checkIfExists: true)
+                ])
+                input[4] = channel.of([
+                    [ id: 'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.dict', checkIfExists: true)
+                ])
+                input[5] = channel.of([
+                    [ id: 'gridss_config' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                // GRIDSS VCF headers include `##fileDate=` and a per-run `##source=GRIDSS`
+                // build line plus randomized BREAKEND IDs — assert existence only.
+                { assert file(process.out.vcf[0][1]).exists() },
+                { assert snapshot(
+                    process.out.vcf.collect { meta, vcf -> [meta, file(vcf).name] },
+                    process.out.findAll { key, val -> key.startsWith("versions") }
+                ).match() }
+            )
+        }
+    }
+
+    test("call - targeted_bam - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id: 'test_sample', sample_type: 'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/test.paired_end.markduplicates.gridss.targeted.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/test.paired_end.markduplicates.gridss.targeted.bam.bai', checkIfExists: true)
+                ])
+                .combine(UNTAR_PREPROCESS.out.untar)
+                .combine(UNTAR_ASSEMBLE.out.untar)
+                .map { meta, bam, bai, p_meta, preprocess_dir, a_meta, assemble_dir ->
+                    [
+                        meta,
+                        bam,
+                        bai,
+                        preprocess_dir,
+                        assemble_dir,
+                        file(params.pipelines_testdata_base_path + 'testdata/gridss/test_sample.sv.assembly.bam', checkIfExists: true)
+                    ]
+                }
+                input[1] = channel.of([
+                    [ id: 'genome' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.fasta', checkIfExists: true)
+                ])
+                input[2] = BWA_INDEX.out.index
+                input[3] = channel.of([
+                    [ id: 'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.fasta.fai', checkIfExists: true)
+                ])
+                input[4] = channel.of([
+                    [ id: 'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.dict', checkIfExists: true)
+                ])
+                input[5] = channel.of([
+                    [ id: 'gridss_config' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                // The stub `touch`es an empty `.vcf.gz`; nf-test's auto-md5 path tries to
+                // gunzip it and throws EOF. Snapshot the basename instead.
+                { assert snapshot(
+                    process.out.vcf.collect { meta, vcf -> [meta, file(vcf).name] },
+                    process.out.findAll { key, val -> key.startsWith("versions") }
+                ).match() }
+            )
+        }
+    }
+
+}
