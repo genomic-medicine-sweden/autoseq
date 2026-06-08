@@ -61,7 +61,7 @@ nextflow_process {
             def prefix  = "test.paired_end.markduplicates.gridss.targeted.bam"
             // Picard `# Started on:` and R's PDF `/CreationDate` add per-run timestamps,
             // and `sv.bam` BGZF blocks are non-reproducible — snapshot only stable parts.
-            def stripPicardHeaderMd5 = { f -> listToMD5(path(f).readLines().findAll { !it.startsWith("#") }) }
+            def stripPicardHeaderMd5 = { f -> "${file(f).name}:md5,${listToMD5(path(f).readLines().findAll { !it.startsWith("#") })}" }
 
             assertAll(
                 { assert process.success },

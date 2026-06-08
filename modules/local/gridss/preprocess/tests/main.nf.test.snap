@@ -24,11 +24,11 @@
             "test.paired_end.markduplicates.gridss.targeted.bam.computesamtags.changes.tsv:md5,3d5175661ab1ed8abbd848deb0619302",
             "test.paired_end.markduplicates.gridss.targeted.bam.coverage.blacklist.bed:md5,dc64856a63a979e782b4a06473d56750",
             "test.paired_end.markduplicates.gridss.targeted.bam.sv.bam.csi:md5,8cb7c2339cd83ae09279f6b50e090cdb",
-            "31876281c0b216b8255d09e3b9da8af4",
-            "6ec5d3749e722b25d1df7bf484d83024",
-            "0b114ee6c894fdf6236ad8c79ea34e7b",
-            "61aef126d13a1c0b5baf0cfe37e655bc",
-            "c3697ec9ef70f0a84801d93ba84861d9",
+            "test.paired_end.markduplicates.gridss.targeted.bam.cigar_metrics:md5,31876281c0b216b8255d09e3b9da8af4",
+            "test.paired_end.markduplicates.gridss.targeted.bam.idsv_metrics:md5,6ec5d3749e722b25d1df7bf484d83024",
+            "test.paired_end.markduplicates.gridss.targeted.bam.insert_size_metrics:md5,0b114ee6c894fdf6236ad8c79ea34e7b",
+            "test.paired_end.markduplicates.gridss.targeted.bam.mapq_metrics:md5,61aef126d13a1c0b5baf0cfe37e655bc",
+            "test.paired_end.markduplicates.gridss.targeted.bam.tag_metrics:md5,c3697ec9ef70f0a84801d93ba84861d9",
             {
                 "versions_gridss": [
                     [
@@ -39,7 +39,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-06-08T11:53:26.826942867",
+        "timestamp": "2026-06-08T12:15:58.612267622",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "25.10.4"
