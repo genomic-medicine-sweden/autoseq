@@ -12,14 +12,15 @@ nextflow_process {
     test("somatic (tumor sample)") {
         when {
             params {
-                annotate_cnvs_args = " --cancer-type PANCANCER  --sample-type somatic "
+                annotate_cnvs_args = " --cancer-type PANCANCER "
             }
 
             process {
                 """
                 input[0] = channel.of([
                     [ id:'test_tumor', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true)
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true),
+                    'somatic'
                 ])
                 input[1] = channel.of([
                     [ id:'curation_ann' ],
@@ -44,14 +45,15 @@ nextflow_process {
 
         when {
             params {
-                annotate_cnvs_args = " --cancer-type PANCANCER  --sample-type germline "
+                annotate_cnvs_args = " --cancer-type PANCANCER "
             }
 
             process {
                 """
                 input[0] = channel.of([
                     [ id:'test_normal', sample_type:'normal' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true)
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true),
+                    'germline'
                 ])
                 input[1] = channel.of([
                     [ id:'curation_ann' ],
@@ -85,7 +87,8 @@ nextflow_process {
                 """
                 input[0] = channel.of([
                     [ id:'test_tumor', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true)
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true),
+                    'somatic'
                 ])
                 input[1] = channel.of([
                     [ id:'curation_ann' ],

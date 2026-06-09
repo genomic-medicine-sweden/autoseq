@@ -9,7 +9,7 @@ process ANNOTATE_CNVS {
         'community.wave.seqera.io/library/pip_logging_pandas:2d7d54d059a6ecf2' }"
 
     input:
-    tuple val(meta), path(cns)
+    tuple val(meta), path(cns), val(sample_type)
     tuple val(meta2), path(curation_ann)
 
     output:
@@ -22,7 +22,7 @@ process ANNOTATE_CNVS {
 
     """
     annotate_cnvs.py -i ${cns} -c ${curation_ann} -o ${prefix}_ann.cns \\
-        ${args}
+        --sample-type ${sample_type} ${args}
 
     """
 

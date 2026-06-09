@@ -2,10 +2,7 @@
     "-profile test": {
         "content": [
             {
-                "ANNOTATE_CNVS_GERMLINE": {
-                    "annotate_cnvs": "annotate_cnvs.py 1.0.0"
-                },
-                "ANNOTATE_CNVS_SOMATIC": {
+                "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
                 },
                 "ANNOTATE_VEP": {
@@ -188,7 +185,7 @@
                 "variants/somatic/sage/somatic/1234T.sage.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-05-27T11:22:59.727501489",
+        "timestamp": "2026-06-09T10:44:50.354212217",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "25.10.4"
