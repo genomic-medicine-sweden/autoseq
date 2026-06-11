@@ -39,7 +39,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #21 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/21) Updated the minimum Nextflow version to fix nf-test failures in the GitHub Actions workflow.
 - [ #21 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/21) Added the modified nf_core_autoseq logo images to .nf-core.yml to ignore them and resolve nf-core linting failures.
 - [ #37 ](https://github.com/genomic-medicine-sweden/autoseq/pull/38) Updated documentation reference in `multiqc_config.yml` and disabled the nf-core linting check for multiqc config.
-- [ #41 ](https://github.com/genomic-medicine-sweden/autoseq/pull/41) Refactor - annotate_cnvs local module to use aliased invocations
+- [ #41 ](https://github.com/genomic-medicine-sweden/autoseq/pull/41) Refactored `annotate_cnvs` local module to accept `sample_type` as part of the input tuple instead of deriving it from `meta.sample_type` inside the module.
 
 ### `Dependencies`
 
