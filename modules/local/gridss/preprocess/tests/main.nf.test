@@ -1,0 +1,129 @@
+nextflow_process {
+
+    name "Test Process GRIDSS_PREPROCESS"
+    script "../main.nf"
+    config "./nextflow.config"
+    process "GRIDSS_PREPROCESS"
+
+    tag "modules"
+    tag "modules_local"
+    tag "gridss"
+    tag "gridss/preprocess"
+
+    setup {
+        run("BWA_INDEX") {
+            script "../../../../nf-core/bwa/index/main.nf"
+            process {
+                """
+                input[0] = [
+                    [id: 'test'],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.fasta', checkIfExists: true)
+                ]
+                """
+            }
+        }
+    }
+
+    test("preprocess - targeted_bam") {
+
+        when {
+
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'test_sample', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/test.paired_end.markduplicates.gridss.targeted.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/test.paired_end.markduplicates.gridss.targeted.bam.bai', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.fasta', checkIfExists: true)
+                ])
+                input[2] = BWA_INDEX.out.index
+                input[3] = channel.of([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.fasta.fai', checkIfExists: true)
+                ])
+                input[4] = channel.of([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.dict', checkIfExists: true)
+                ])
+                input[5] = channel.of([
+                    [ id:'gridss_config' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            def workdir = process.out.preprocess_dir[0][1]
+            def prefix  = "test.paired_end.markduplicates.gridss.targeted.bam"
+            // Picard `# Started on:` and R's PDF `/CreationDate` add per-run timestamps,
+            // and `sv.bam` BGZF blocks are non-reproducible — snapshot only stable parts.
+            def stripPicardHeaderMd5 = { f -> "${file(f).name}:md5,${listToMD5(path(f).readLines().findAll { !it.startsWith("#") })}" }
+
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.preprocess_dir.collect { meta, dir -> [meta, file(dir).list().findAll { it.startsWith(prefix) }.sort()] },
+                    path("${workdir}/${prefix}.computesamtags.changes.tsv"),
+                    path("${workdir}/${prefix}.coverage.blacklist.bed"),
+                    path("${workdir}/${prefix}.sv.bam.csi"),
+                    stripPicardHeaderMd5("${workdir}/${prefix}.cigar_metrics"),
+                    stripPicardHeaderMd5("${workdir}/${prefix}.idsv_metrics"),
+                    stripPicardHeaderMd5("${workdir}/${prefix}.insert_size_metrics"),
+                    stripPicardHeaderMd5("${workdir}/${prefix}.mapq_metrics"),
+                    stripPicardHeaderMd5("${workdir}/${prefix}.tag_metrics"),
+                    process.out.findAll { key, val -> key.startsWith("versions") }
+                ).match() }
+            )
+        }
+    }
+
+    test("preprocess - targeted_bam - stub") {
+
+        options "-stub"
+
+         when {
+
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'test_sample', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/test.paired_end.markduplicates.gridss.targeted.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/test.paired_end.markduplicates.gridss.targeted.bam.bai', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.fasta', checkIfExists: true)
+                ])
+                input[2] = BWA_INDEX.out.index
+                input[3] = channel.of([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.fasta.fai', checkIfExists: true)
+                ])
+                input[4] = channel.of([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/genome/genome.dict', checkIfExists: true)
+                ])
+                input[5] = channel.of([
+                    [ id:'gridss_config' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.preprocess_dir,
+                    process.out.findAll { key, val -> key.startsWith("versions") }
+                ).match() }
+            )
+        }
+    }
+
+}
