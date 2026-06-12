@@ -1,7 +1,7 @@
 
 
-include { JUMBLE_RUN         } from '../../../modules/local/jumble/main'
-include { ANNOTATE_CNVS      } from '../../../modules/local/annotate_cnvs/main'
+include { JUMBLE_RUN     } from '../../../modules/local/jumble/main'
+include { ANNOTATE_CNVS  } from '../../../modules/local/annotate_cnvs/main'
 
 
 workflow CALL_CNVS {
@@ -25,8 +25,14 @@ workflow CALL_CNVS {
     // MODULE: Annotate CNVs with cancer relevant genes
     //
 
+    def ch_annotate_cnvs_in = JUMBLE_RUN.out.cns
+        .map { meta, cns ->
+            def sample_type = meta.sample_type == "tumor" ? 'somatic' : 'germline'
+            [meta, cns, sample_type]
+        }
+
     ANNOTATE_CNVS(
-        JUMBLE_RUN.out.cns,
+        ch_annotate_cnvs_in,
         ch_curation_ann
     )
 
