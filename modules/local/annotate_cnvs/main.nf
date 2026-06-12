@@ -9,7 +9,7 @@ process ANNOTATE_CNVS {
         'community.wave.seqera.io/library/pip_logging_pandas:2d7d54d059a6ecf2' }"
 
     input:
-    tuple val(meta), path(cns)
+    tuple val(meta), path(cns), val(sample_type)
     tuple val(meta2), path(curation_ann)
 
     output:
@@ -19,7 +19,6 @@ process ANNOTATE_CNVS {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def sample_type = meta.sample_type == "tumor" ? 'somatic' : 'germline'
 
     """
     annotate_cnvs.py -i ${cns} -c ${curation_ann} -o ${prefix}_ann.cns \\

@@ -19,7 +19,8 @@ nextflow_process {
                 """
                 input[0] = channel.of([
                     [ id:'test_tumor', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true)
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true),
+                    'somatic'
                 ])
                 input[1] = channel.of([
                     [ id:'curation_ann' ],
@@ -51,7 +52,8 @@ nextflow_process {
                 """
                 input[0] = channel.of([
                     [ id:'test_normal', sample_type:'normal' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true)
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true),
+                    'germline'
                 ])
                 input[1] = channel.of([
                     [ id:'curation_ann' ],
@@ -85,7 +87,8 @@ nextflow_process {
                 """
                 input[0] = channel.of([
                     [ id:'test_tumor', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true)
+                    file(params.pipelines_testdata_base_path + 'testdata/annotate_cnvs/test.cns', checkIfExists: true),
+                    'somatic'
                 ])
                 input[1] = channel.of([
                     [ id:'curation_ann' ],
