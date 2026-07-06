@@ -16,43 +16,6 @@
 include { AUTOSEQ                 } from './workflows/autoseq'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
-include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
-include { getPanelsAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    GENOME PARAMETER VALUES
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-//   This is an example of how to use getGenomeAttribute() to fetch parameters
-//   from igenomes.config using `--genome`
-params.ref_genome_fasta                 = getGenomeAttribute('fasta')
-params.ref_genome_fai                   = getGenomeAttribute('fai')
-params.ref_genome_dict                  = getGenomeAttribute('dict')
-params.bwamem2_index                    = getGenomeAttribute('bwamem2_index')
-params.dbsnp_vcf                        = getGenomeAttribute('dbsnp_vcf')
-params.dbsnp_vcf_tbi                    = getGenomeAttribute('dbsnp_vcf_tbi')
-params.germline_resource                = getGenomeAttribute('germline_resource')
-params.germline_resource_tbi            = getGenomeAttribute('germline_resource_tbi')
-params.sage_known_hotspots_somatic      = getGenomeAttribute('sage_known_hotspots_somatic')
-params.sage_highconf_regions            = getGenomeAttribute('sage_highconf_regions')
-params.sage_pon                         = getGenomeAttribute('sage_pon')
-params.ensembl_vep_cache                = getGenomeAttribute('ensembl_vep_cache')
-params.ensembl_data_resources           = getGenomeAttribute('ensembl_data_resources')
-params.curation_ann                     = getGenomeAttribute('curation_annotations')
-params.genome_gridss_index              = getGenomeAttribute('gridss_index')
-params.gridss_config                    = getGenomeAttribute('gridss_config')
-params.gridss_pon_breakends             = getGenomeAttribute('gridss_pon_breakends')
-params.gridss_pon_breakpoints           = getGenomeAttribute('gridss_pon_breakpoints')
-params.gridss_known_fusions             = getGenomeAttribute('gridss_known_fusions')
-params.gridss_repeatmasker_annotations  = getGenomeAttribute('gridss_repeatmasker_annotations')
-
-
-params.targets_bed             = getPanelsAttribute('targets_bed_slopped20')
-params.interval_list_slopped20 = getPanelsAttribute('targets_interval_list_slopped20')
-params.jumble_ref              = getPanelsAttribute('jumble_ref')
-
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

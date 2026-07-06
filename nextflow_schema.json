@@ -73,12 +73,6 @@
                     "hidden": true,
                     "default": "s3://ngi-igenomes/igenomes/"
                 },
-                "ref_genomes_base": {
-                    "type": "string",
-                    "format": "directory-path",
-                    "description": "The base path to the HMF genome reference files",
-                    "fa_icon": "fas fa-ban"
-                },
                 "ref_genome_fasta": {
                     "type": "string",
                     "description": "Path to reference genome FASTA.",
@@ -96,8 +90,102 @@
                 },
                 "bwamem2_index": {
                     "type": "string",
-                    "format": "directory-path",
                     "description": "Path to reference genome bwa-mem2 index.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "dbsnp_vcf": {
+                    "type": "string",
+                    "description": "Path to dbSNP VCF file for variant annotation.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "dbsnp_vcf_tbi": {
+                    "type": "string",
+                    "description": "Path to dbSNP VCF tabix index file.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "germline_resource": {
+                    "type": "string",
+                    "description": "Path to germline resource file.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "germline_resource_tbi": {
+                    "type": "string",
+                    "description": "Path to germline resource tabix index file.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "sage_known_hotspots_somatic": {
+                    "type": "string",
+                    "description": "Path to known somatic hotspots file for SAGE.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "sage_highconf_regions": {
+                    "type": "string",
+                    "description": "Path to high confidence regions file for SAGE.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "sage_pon": {
+                    "type": "string",
+                    "description": "Path to Panel of Normals file for SAGE.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "ensembl_vep_cache": {
+                    "type": "string",
+                    "description": "Path to Ensembl VEP cache directory.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "ensembl_data_resources": {
+                    "type": "string",
+                    "description": "Path to Ensembl data resources directory.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "curation_ann": {
+                    "type": "string",
+                    "description": "Path to curation annotation file.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "genome_gridss_index": {
+                    "type": "string",
+                    "description": "Path to GRIDSS genome index.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "gridss_config": {
+                    "type": "string",
+                    "description": "Path to GRIDSS configuration file.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "gridss_pon_breakends": {
+                    "type": "string",
+                    "description": "Path to GRIDSS Panel of Normals breakends file.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "gridss_pon_breakpoints": {
+                    "type": "string",
+                    "description": "Path to GRIDSS Panel of Normals breakpoints file.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "gridss_known_fusions": {
+                    "type": "string",
+                    "description": "Path to known fusions file for GRIDSS.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "gridss_repeatmasker_annotations": {
+                    "type": "string",
+                    "description": "Path to RepeatMasker annotations for GRIDSS.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "targets_bed": {
+                    "type": "string",
+                    "description": "Path to the BED file containing target regions.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "interval_list_slopped20": {
+                    "type": "string",
+                    "description": "Path to the slopped interval list file.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "jumble_ref": {
+                    "type": "string",
+                    "description": "Path to the reference RDS (R data object) for Jumble.",
                     "fa_icon": "far fa-file-code"
                 }
             }
@@ -164,39 +252,6 @@
                     "minimum": 0,
                     "maximum": 1
                 },
-                "panel": {
-                    "type": "string",
-                    "description": "Target panel for the sequencing run",
-                    "default": "probio_comprehensive3"
-                },
-                "targets_bed": {
-                    "type": "string",
-                    "description": "Path to the BED file containing target regions"
-                },
-                "interval_list_slopped20": {
-                    "type": "string",
-                    "description": "Path to the slopped interval list file"
-                },
-                "jumble_ref": {
-                    "type": "string",
-                    "description": "Path to the reference RDS (R data object) for Jumble"
-                },
-                "sage_known_hotspots_somatic": {
-                    "type": "string",
-                    "description": "Path to known somatic hotspots file for SAGE"
-                },
-                "sage_highconf_regions": {
-                    "type": "string",
-                    "description": "Path to high confidence regions file for SAGE"
-                },
-                "sage_pon": {
-                    "type": "string",
-                    "description": "Path to Panel of Normals file for SAGE"
-                },
-                "ensembl_data_resources": {
-                    "type": "string",
-                    "description": "Path to Ensembl data resources directory"
-                },
                 "sage_min_tumor_vaf": {
                     "type": "number",
                     "default": 0.0002
@@ -218,10 +273,6 @@
                     "description": "Version of Ensembl VEP to use",
                     "default": 115
                 },
-                "curation_ann": {
-                    "type": "string",
-                    "description": "Path to curation annotation file"
-                },
                 "cancer_type": {
                     "type": "string",
                     "description": "Cancer project code for gene-specific annotation.",
@@ -229,54 +280,10 @@
                     "default": "PANCANCER",
                     "enum": ["PANCANCER", "CBC", "CCR", "CEC", "COV", "SARC"]
                 },
-                "genome_gridss_index": {
-                    "type": "string",
-                    "description": "Path to GRIDSS genome index"
-                },
-                "gridss_config": {
-                    "type": "string",
-                    "description": "Path to GRIDSS configuration file"
-                },
-                "gridss_pon_breakends": {
-                    "type": "string",
-                    "description": "Path to GRIDSS Panel of Normals breakends file"
-                },
-                "gridss_pon_breakpoints": {
-                    "type": "string",
-                    "description": "Path to GRIDSS Panel of Normals breakpoints file"
-                },
-                "gridss_known_fusions": {
-                    "type": "string",
-                    "description": "Path to known fusions file for GRIDSS"
-                },
-                "gridss_repeatmasker_annotations": {
-                    "type": "string",
-                    "description": "Path to RepeatMasker annotations for GRIDSS"
-                },
-                "germline_resource": {
-                    "type": "string",
-                    "description": "Path to germline resource file"
-                },
-                "germline_resource_tbi": {
-                    "type": "string",
-                    "description": "Path to germline resource tabix index file"
-                },
-                "ensembl_vep_cache": {
-                    "type": "string",
-                    "description": "Path to Ensembl VEP cache directory"
-                },
                 "vep_species": {
                     "type": "string",
                     "default": "homo_sapiens",
                     "description": "Species name for Ensembl VEP annotation"
-                },
-                "dbsnp_vcf": {
-                    "type": "string",
-                    "description": "Path to dbSNP VCF file for variant annotation"
-                },
-                "dbsnp_vcf_tbi": {
-                    "type": "string",
-                    "description": "Path to dbSNP VCF tabix index file"
                 },
                 "maxnonclonal": {
                     "type": "number",
