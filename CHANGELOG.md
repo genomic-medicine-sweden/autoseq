@@ -29,6 +29,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Template update for nf-core/tools v4.0.2.
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated multiqc module from 1.32 to 1.34 and fastqc module (included in the template update).
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated the minimum required nextflow version to 25.10.4 (included in new template).
+- [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Flattened reference genome and panel parameters into flat reference-file params passed as explicit workflow inputs.
 
 ### `Fixed`
 
