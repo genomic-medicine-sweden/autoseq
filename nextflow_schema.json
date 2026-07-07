@@ -73,17 +73,17 @@
                     "hidden": true,
                     "default": "s3://ngi-igenomes/igenomes/"
                 },
-                "ref_genome_fasta": {
+                "genome_fasta": {
                     "type": "string",
                     "description": "Path to reference genome FASTA.",
                     "fa_icon": "far fa-file-code"
                 },
-                "ref_genome_fai": {
+                "genome_fai": {
                     "type": "string",
                     "description": "Path to reference genome FAI.",
                     "fa_icon": "far fa-file-code"
                 },
-                "ref_genome_dict": {
+                "genome_dict": {
                     "type": "string",
                     "description": "Path to reference genome dict.",
                     "fa_icon": "far fa-file-code"
@@ -133,9 +133,9 @@
                     "description": "Path to Ensembl VEP cache directory.",
                     "fa_icon": "far fa-file-code"
                 },
-                "ensembl_data_resources": {
+                "hmf_ensembl_data": {
                     "type": "string",
-                    "description": "Path to Ensembl data resources directory.",
+                    "description": "Path to HMF Ensembl data resources directory.",
                     "fa_icon": "far fa-file-code"
                 },
                 "curation_ann": {
@@ -143,7 +143,7 @@
                     "description": "Path to curation annotation file.",
                     "fa_icon": "far fa-file-code"
                 },
-                "genome_gridss_index": {
+                "gridss_index": {
                     "type": "string",
                     "description": "Path to GRIDSS genome index.",
                     "fa_icon": "far fa-file-code"
@@ -178,7 +178,7 @@
                     "description": "Path to the BED file containing target regions.",
                     "fa_icon": "far fa-file-code"
                 },
-                "interval_list_slopped20": {
+                "interval_list": {
                     "type": "string",
                     "description": "Path to the slopped interval list file.",
                     "fa_icon": "far fa-file-code"
