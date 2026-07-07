@@ -106,9 +106,9 @@ The `nf-autoseq` pipeline relies on reference genome files and target panel file
 
 | Parameter                         | Description                            |
 | --------------------------------- | -------------------------------------- |
-| `ref_genome_fasta`                | Reference genome FASTA                 |
-| `ref_genome_fai`                  | FASTA index (`.fai`)                   |
-| `ref_genome_dict`                 | Sequence dictionary (`.dict`)          |
+| `genome_fasta`                    | Reference genome FASTA                 |
+| `genome_fai`                      | FASTA index (`.fai`)                   |
+| `genome_dict`                     | Sequence dictionary (`.dict`)          |
 | `bwamem2_index`                   | BWA-mem2 index directory               |
 | `dbsnp_vcf` / `dbsnp_vcf_tbi`     | dbSNP VCF and index                    |
 | `germline_resource` / `_tbi`      | gnomAD germline resource VCF and index |
@@ -116,29 +116,29 @@ The `nf-autoseq` pipeline relies on reference genome files and target panel file
 | `sage_highconf_regions`           | SAGE high-confidence regions           |
 | `sage_pon`                        | SAGE panel of normals                  |
 | `ensembl_vep_cache`               | Ensembl VEP cache directory            |
-| `ensembl_data_resources`          | Ensembl data resources directory       |
+| `hmf_ensembl_data`                | Ensembl data resources directory       |
 | `curation_ann`                    | CNV curation annotation CSV            |
-| `genome_gridss_index`             | GRIDSS genome index directory          |
+| `gridss_index`                    | GRIDSS genome index directory          |
 | `gridss_config`                   | GRIDSS configuration file              |
 | `gridss_pon_breakends`            | GRIDSS PON breakends                   |
 | `gridss_pon_breakpoints`          | GRIDSS PON breakpoints                 |
 | `gridss_known_fusions`            | GRIDSS known fusions                   |
 | `gridss_repeatmasker_annotations` | GRIDSS RepeatMasker annotations        |
-| `targets_bed`                     | Target regions BED (slopped)           |
-| `interval_list_slopped20`         | Target regions interval list (slopped) |
+| `targets_bed`                     | Target regions BED                     |
+| `interval_list`                   | Target regions interval list           |
 | `jumble_ref`                      | Jumble reference RDS                   |
 
 Because there are many reference parameters, the recommended approach is to collect them in a `-params-file`:
 
 ```yaml title="references.yaml"
 genome: GRCh37
-ref_genome_fasta: /path/to/GRCh37/genome/human_g1k_v37_decoy.fasta
-ref_genome_fai: /path/to/GRCh37/genome/human_g1k_v37_decoy.fasta.fai
-ref_genome_dict: /path/to/GRCh37/genome/human_g1k_v37_decoy.dict
+genome_fasta: /path/to/GRCh37/genome/human_g1k_v37_decoy.fasta
+genome_fai: /path/to/GRCh37/genome/human_g1k_v37_decoy.fasta.fai
+genome_dict: /path/to/GRCh37/genome/human_g1k_v37_decoy.dict
 bwamem2_index: /path/to/GRCh37/bwamem2_index
 # ... remaining reference parameters
 targets_bed: /path/to/GRCh37/targets/probio_comprehensive3.slopped20.bed
-interval_list_slopped20: /path/to/GRCh37/targets/probio_comprehensive3.slopped20.interval_list
+interval_list: /path/to/GRCh37/targets/probio_comprehensive3.slopped20.interval_list
 jumble_ref: /path/to/GRCh37/targets/comprehensive3_baits_twist.bed.reference.RDS
 ```
 
@@ -147,7 +147,7 @@ jumble_ref: /path/to/GRCh37/targets/comprehensive3_baits_twist.bed.reference.RDS
 
 ### Panel Support
 
-Target panels are configured through the `targets_bed`, `interval_list_slopped20`, and `jumble_ref` parameters. To run a different panel, point these parameters at the corresponding files for that panel (e.g. in a dedicated `-params-file` per panel). The pipeline no longer resolves panels through a preset `--panel` name.
+Target panels are configured through the `targets_bed`, `interval_list`, and `jumble_ref` parameters. To run a different panel, point these parameters at the corresponding files for that panel (e.g. in a dedicated `-params-file` per panel). The pipeline no longer resolves panels through a preset `--panel` name.
 
 #### Parameter Usage
 
