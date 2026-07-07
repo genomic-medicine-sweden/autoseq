@@ -1,0 +1,95 @@
+nextflow_workflow {
+
+    name "Test Subworkflow PREPARE_REFERENCES"
+    script "../main.nf"
+    workflow "PREPARE_REFERENCES"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "prepare_references"
+    tag "bwamem2"
+    tag "bwamem2/index"
+    tag "untar"
+
+    test("build bwamem2 index and untar directories") {
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of([
+                    [ id:'genome_fasta' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'vep_cache' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz', checkIfExists: true)
+                ])
+                input[2] = channel.of([
+                    [ id:'gridss_index' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz', checkIfExists: true)
+                ])
+                input[3] = channel.of([
+                    [ id:'ensembl_data' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // BWA-MEM2 index binaries are not guaranteed reproducible across versions,
+                    // so snapshot only the sorted file listing of the index directory.
+                    workflow.out.bwamem2_index.collect { meta, dir -> [meta, file(dir).list().sort()] },
+                    workflow.out.vep_cache,
+                    workflow.out.gridss_index,
+                    workflow.out.hmf_ensembl_data,
+                    workflow.out.versions
+                ).match() }
+            )
+        }
+    }
+
+    test("build bwamem2 index and untar directories - stub") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of([
+                    [ id:'genome_fasta' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'vep_cache' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz', checkIfExists: true)
+                ])
+                input[2] = channel.of([
+                    [ id:'gridss_index' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz', checkIfExists: true)
+                ])
+                input[3] = channel.of([
+                    [ id:'ensembl_data' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    workflow.out.bwamem2_index.collect { meta, dir -> [meta, file(dir).list().sort()] },
+                    workflow.out.vep_cache,
+                    workflow.out.gridss_index,
+                    workflow.out.hmf_ensembl_data,
+                    workflow.out.versions
+                ).match() }
+            )
+        }
+    }
+}

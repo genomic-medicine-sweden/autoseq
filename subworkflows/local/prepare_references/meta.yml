@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "prepare_references"
+description: Prepare directory-type reference genome resources by building the BWA-MEM2 index on the fly and untarring the VEP cache, GRIDSS index and HMF ensembl_data directories
+keywords:
+  - reference
+  - index
+  - bwamem2
+  - untar
+  - vep
+components:
+  - bwamem2/index
+  - untar
+input:
+  - ch_genome_fasta:
+      type: file
+      description: |
+        Genome FASTA used to build the BWA-MEM2 index on the fly
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
+  - ch_vep_cache_tar:
+      type: file
+      description: |
+        VEP cache directory packaged as a tar archive
+        Structure: [ val(meta), path(archive) ]
+      pattern: "*.{tar,tar.gz}"
+  - ch_gridss_index_tar:
+      type: file
+      description: |
+        GRIDSS index directory packaged as a tar archive
+        Structure: [ val(meta), path(archive) ]
+      pattern: "*.{tar,tar.gz}"
+  - ch_hmf_ensembl_data_tar:
+      type: file
+      description: |
+        HMF ensembl_data directory packaged as a tar archive
+        Structure: [ val(meta), path(archive) ]
+      pattern: "*.{tar,tar.gz}"
+output:
+  - bwamem2_index:
+      type: directory
+      description: |
+        BWA-MEM2 index built from the genome FASTA
+        Structure: [ val(meta), path(index) ]
+  - vep_cache:
+      type: directory
+      description: |
+        Untarred VEP cache directory
+        Structure: [ val(meta), path(dir) ]
+  - gridss_index:
+      type: directory
+      description: |
+        Untarred GRIDSS index directory
+        Structure: [ val(meta), path(dir) ]
+  - hmf_ensembl_data:
+      type: directory
+      description: |
+        Untarred HMF ensembl_data directory
+        Structure: [ val(meta), path(dir) ]
+  - versions:
+      type: file
+      description: |
+        File containing software versions
+        Structure: [ path(versions.yml) ]
+      pattern: "versions.yml"
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"

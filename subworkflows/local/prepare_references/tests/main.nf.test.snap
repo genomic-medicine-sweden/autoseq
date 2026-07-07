@@ -1,0 +1,142 @@
+{
+    "build bwamem2 index and untar directories - stub": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "genome_fasta"
+                    },
+                    [
+                        "human_g1k_v37_decoy.fasta.0123",
+                        "human_g1k_v37_decoy.fasta.amb",
+                        "human_g1k_v37_decoy.fasta.ann",
+                        "human_g1k_v37_decoy.fasta.bwt.2bit.64",
+                        "human_g1k_v37_decoy.fasta.pac"
+                    ]
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "vep_cache"
+                    },
+                    [
+                        
+                    ]
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "gridss_index"
+                    },
+                    [
+                        "human_g1k_v37_decoy.fasta:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "human_g1k_v37_decoy.fasta.amb:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "human_g1k_v37_decoy.fasta.ann:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "human_g1k_v37_decoy.fasta.bwt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "human_g1k_v37_decoy.fasta.fai:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "human_g1k_v37_decoy.fasta.gridsscache:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "human_g1k_v37_decoy.fasta.img:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "human_g1k_v37_decoy.fasta.pac:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "human_g1k_v37_decoy.fasta.sa:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "ensembl_data"
+                    },
+                    [
+                        "ensembl_gene_data.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "ensembl_protein_features.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "ensembl_trans_amino_acids.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "ensembl_trans_exon_data.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "ensembl_trans_splice_data.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ]
+            ],
+            [
+                "versions.yml:md5,db07d261e269c4220700d88fc906a833"
+            ]
+        ],
+        "timestamp": "2026-07-07T15:54:42.399903876",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.3"
+        }
+    },
+    "build bwamem2 index and untar directories": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "genome_fasta"
+                    },
+                    [
+                        "human_g1k_v37_decoy.fasta.0123",
+                        "human_g1k_v37_decoy.fasta.amb",
+                        "human_g1k_v37_decoy.fasta.ann",
+                        "human_g1k_v37_decoy.fasta.bwt.2bit.64",
+                        "human_g1k_v37_decoy.fasta.pac"
+                    ]
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "vep_cache"
+                    },
+                    [
+                        [
+                            [
+                                "info.txt:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "gridss_index"
+                    },
+                    [
+                        "human_g1k_v37_decoy.fasta:md5,ca2d0bc7c83afd32621e3dfed73943de",
+                        "human_g1k_v37_decoy.fasta.amb:md5,3a91cbbc3499c6a863a05a7fc0e32706",
+                        "human_g1k_v37_decoy.fasta.ann:md5,fce467dcdf286be017241e1410a54af1",
+                        "human_g1k_v37_decoy.fasta.bwt:md5,a89e9dd9ecd2071f7927047c31d07df3",
+                        "human_g1k_v37_decoy.fasta.fai:md5,b185081fee633132bd2f6f12d715179b",
+                        "human_g1k_v37_decoy.fasta.gridsscache:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "human_g1k_v37_decoy.fasta.img:md5,d41d8cd98f00b204e9800998ecf8427e",
+                        "human_g1k_v37_decoy.fasta.pac:md5,2f66557292b6f30d6a17d115fad85acb",
+                        "human_g1k_v37_decoy.fasta.sa:md5,61f23d7daf4e80946cdc61581dc9c1c1"
+                    ]
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "ensembl_data"
+                    },
+                    [
+                        "ensembl_gene_data.csv:md5,b4847bcf74efdef14b413852ba354584",
+                        "ensembl_protein_features.csv:md5,c6b9143310ff5d66b99866fe49b1046b",
+                        "ensembl_trans_amino_acids.csv:md5,d8bf851c14436f4b6f166fec41596726",
+                        "ensembl_trans_exon_data.csv:md5,8992e3039c32d7dfcbb1d831f66c7b7f",
+                        "ensembl_trans_splice_data.csv:md5,7c93a4b2b30c9d3b5cf907b31e8bda93"
+                    ]
+                ]
+            ],
+            [
+                "versions.yml:md5,db07d261e269c4220700d88fc906a833"
+            ]
+        ],
+        "timestamp": "2026-07-07T15:54:13.425585788",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.3"
+        }
+    }
+}
