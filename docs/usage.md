@@ -102,31 +102,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 
 The `nf-autoseq` pipeline relies on reference genome files and target panel files to perform its analyses. Each file is supplied as its own parameter, so you have full control over which files are used and can mix references from different locations. `--genome` (`GRCh37` or `GRCh38`) is still required — it only selects the numeric genome version (`37`/`38`) used by SAGE and GRIPSS.
 
-#### Reference parameters
-
-| Parameter                         | Description                            |
-| --------------------------------- | -------------------------------------- |
-| `genome_fasta`                    | Reference genome FASTA                 |
-| `genome_fai`                      | FASTA index (`.fai`)                   |
-| `genome_dict`                     | Sequence dictionary (`.dict`)          |
-| `bwamem2_index`                   | BWA-mem2 index directory               |
-| `dbsnp_vcf` / `dbsnp_vcf_tbi`     | dbSNP VCF and index                    |
-| `germline_resource` / `_tbi`      | gnomAD germline resource VCF and index |
-| `sage_known_hotspots_somatic`     | SAGE somatic hotspots                  |
-| `sage_highconf_regions`           | SAGE high-confidence regions           |
-| `sage_pon`                        | SAGE panel of normals                  |
-| `ensembl_vep_cache`               | Ensembl VEP cache directory            |
-| `hmf_ensembl_data`                | Ensembl data resources directory       |
-| `curation_ann`                    | CNV curation annotation CSV            |
-| `gridss_index`                    | GRIDSS genome index directory          |
-| `gridss_config`                   | GRIDSS configuration file              |
-| `gridss_pon_breakends`            | GRIDSS PON breakends                   |
-| `gridss_pon_breakpoints`          | GRIDSS PON breakpoints                 |
-| `gridss_known_fusions`            | GRIDSS known fusions                   |
-| `gridss_repeatmasker_annotations` | GRIDSS RepeatMasker annotations        |
-| `targets_bed`                     | Target regions BED                     |
-| `interval_list`                   | Target regions interval list           |
-| `jumble_ref`                      | Jumble reference RDS                   |
+The full list of reference parameters and their descriptions is documented in [`parameters.md`](parameters.md#reference-genome-options), which is auto-generated from the pipeline schema.
 
 Because there are many reference parameters, the recommended approach is to collect them in a `-params-file`:
 

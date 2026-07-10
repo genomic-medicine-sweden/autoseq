@@ -97,11 +97,6 @@ workflow PIPELINE_INITIALISATION {
     )
 
     //
-    // Custom validation for pipeline parameters
-    //
-    validateInputParameters()
-
-    //
     // Create channel from input file provided through params.input
     //
 
@@ -185,13 +180,6 @@ workflow PIPELINE_COMPLETION {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 //
-// Check and validate pipeline parameters
-//
-def validateInputParameters() {
-    genomeExistsError()
-}
-
-//
 // Validate channels from input samplesheet
 //
 def validateInputSamplesheet(input) {
@@ -204,20 +192,6 @@ def validateInputSamplesheet(input) {
     }
 
     return [ metas[0], fastqs ]
-}
-
-//
-// Exit pipeline if incorrect --genome key provided
-//
-def genomeExistsError() {
-    if (params.genomes && params.genome && !params.genomes.containsKey(params.genome)) {
-        def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-            "  Genome '${params.genome}' not found in any config files provided to the pipeline.\n" +
-            "  Currently, the available genome keys are:\n" +
-            "  ${params.genomes.keySet().join(", ")}\n" +
-            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        error(error_string)
-    }
 }
 
 //

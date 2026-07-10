@@ -30,34 +30,34 @@ include { channelFromPathWithMeta } from './subworkflows/local/utils_nfcore_auto
 workflow NXF_AUTOSEQ {
 
     take:
-    samplesheet                         // channel: samplesheet read in from --input
-    val_genome_fasta                    // val: /path/to/genome.fasta
-    val_genome_fai                      // val: /path/to/genome.fasta.fai
-    val_genome_dict                     // val: /path/to/genome.dict
-    val_bwamem2_index                   // val: /path/to/bwamem2_index
-    val_dbsnp_vcf                       // val: /path/to/dbsnp.vcf
-    val_dbsnp_vcf_tbi                   // val: /path/to/dbsnp.vcf.tbi
-    val_targets_bed                     // val: /path/to/targets.bed
-    val_interval_list                   // val: /path/to/interval_list
-    val_jumble_ref                      // val: /path/to/jumble_ref
-    val_ensembl_vep_cache               // val: /path/to/vep
-    val_hmf_ensembl_data                // val: /path/to/ensembl_data
-    val_curation_ann                    // val: /path/to/curation_ann
-    val_germline_resource               // val: /path/to/germline_resource.vcf
-    val_germline_resource_tbi           // val: /path/to/germline_resource.vcf.tbi
-    val_sage_known_hotspots_somatic     // val: /path/to/sage_known_hotspots_somatic
-    val_sage_highconf_regions           // val: /path/to/sage_highconf_regions
-    val_sage_pon                        // val: /path/to/sage_pon
-    val_gridss_index                    // val: /path/to/gridss_index
-    val_gridss_pon_breakends            // val: /path/to/pon_breakends
-    val_gridss_pon_breakpoints          // val: /path/to/pon_breakpoints
-    val_gridss_known_fusions            // val: /path/to/known_fusions
-    val_gridss_repeatmasker_annotations // val: /path/to/repeatmasker_annotations
-    val_gridss_config                   // val: /path/to/gridss_config
-    val_multiqc_config                  // val: /path/to/multiqc_config.yaml
-    val_multiqc_logo                    // val: /path/to/multiqc_logo.png
-    val_multiqc_methods_description     // val: /path/to/multiqc_methods_description.md
-    val_outdir                          // val: /path/to/output/directory
+    samplesheet                         // channel: [mandatory] samplesheet read in from --input
+    val_bwamem2_index                   // string:  [mandatory] path to reference genome bwa-mem2 index
+    val_curation_ann                    // string:  [mandatory] path to CNV curation annotation CSV
+    val_dbsnp_vcf                       // string:  [mandatory] path to dbSNP VCF
+    val_dbsnp_vcf_tbi                   // string:  [mandatory] path to dbSNP VCF index
+    val_ensembl_vep_cache               // string:  [mandatory] path to Ensembl VEP cache directory
+    val_genome_dict                     // string:  [mandatory] path to reference genome sequence dictionary
+    val_genome_fai                      // string:  [mandatory] path to reference genome FASTA index
+    val_genome_fasta                    // string:  [mandatory] path to reference genome FASTA
+    val_germline_resource               // string:  [mandatory] path to germline resource VCF
+    val_germline_resource_tbi           // string:  [mandatory] path to germline resource VCF index
+    val_gridss_config                   // string:  [mandatory] path to GRIDSS configuration file
+    val_gridss_index                    // string:  [mandatory] path to GRIDSS genome index directory
+    val_gridss_known_fusions            // string:  [mandatory] path to GRIDSS known fusions
+    val_gridss_pon_breakends            // string:  [mandatory] path to GRIDSS PON breakends
+    val_gridss_pon_breakpoints          // string:  [mandatory] path to GRIDSS PON breakpoints
+    val_gridss_repeatmasker_annotations // string:  [mandatory] path to GRIDSS RepeatMasker annotations
+    val_hmf_ensembl_data                // string:  [mandatory] path to HMF Ensembl data resources directory
+    val_interval_list                   // string:  [mandatory] path to target regions interval list
+    val_jumble_ref                      // string:  [mandatory] path to Jumble reference RDS
+    val_multiqc_config                  // string:  [optional]  path to MultiQC config
+    val_multiqc_logo                    // string:  [optional]  path to MultiQC logo
+    val_multiqc_methods_description     // string:  [optional]  path to MultiQC methods description
+    val_outdir                          // string:  [mandatory] path to output directory
+    val_sage_highconf_regions           // string:  [mandatory] path to SAGE high-confidence regions
+    val_sage_known_hotspots_somatic     // string:  [mandatory] path to SAGE somatic hotspots
+    val_sage_pon                        // string:  [mandatory] path to SAGE panel of normals
+    val_targets_bed                     // string:  [mandatory] path to target regions BED
 
     main:
 
@@ -162,33 +162,33 @@ workflow {
     //
     NXF_AUTOSEQ (
         PIPELINE_INITIALISATION.out.samplesheet,
-        params.genome_fasta,
-        params.genome_fai,
-        params.genome_dict,
         params.bwamem2_index,
-        params.targets_bed,
-        params.interval_list,
-        params.jumble_ref,
-        params.sage_known_hotspots_somatic,
-        params.sage_highconf_regions,
-        params.sage_pon,
-        params.ensembl_vep_cache,
-        params.hmf_ensembl_data,
         params.curation_ann,
-        params.germline_resource,
-        params.germline_resource_tbi,
-        params.gridss_index,
-        params.gridss_pon_breakends,
-        params.gridss_pon_breakpoints,
-        params.gridss_known_fusions,
-        params.gridss_repeatmasker_annotations,
-        params.gridss_config,
         params.dbsnp_vcf,
         params.dbsnp_vcf_tbi,
+        params.ensembl_vep_cache,
+        params.genome_dict,
+        params.genome_fai,
+        params.genome_fasta,
+        params.germline_resource,
+        params.germline_resource_tbi,
+        params.gridss_config,
+        params.gridss_index,
+        params.gridss_known_fusions,
+        params.gridss_pon_breakends,
+        params.gridss_pon_breakpoints,
+        params.gridss_repeatmasker_annotations,
+        params.hmf_ensembl_data,
+        params.interval_list,
+        params.jumble_ref,
         params.multiqc_config,
         params.multiqc_logo,
         params.multiqc_methods_description,
-        params.outdir
+        params.outdir,
+        params.sage_highconf_regions,
+        params.sage_known_hotspots_somatic,
+        params.sage_pon,
+        params.targets_bed
     )
     //
     // SUBWORKFLOW: Run completion tasks
