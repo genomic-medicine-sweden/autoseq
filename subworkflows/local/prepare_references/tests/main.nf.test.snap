@@ -4,7 +4,15 @@
             [
                 [
                     {
-                        "id": "genome_fasta"
+                        "id": "human_g1k_v37_decoy"
+                    },
+                    "/imsarath/test-data/refs/heads/main/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "human_g1k_v37_decoy"
                     },
                     [
                         "human_g1k_v37_decoy.fasta.0123",
@@ -18,10 +26,14 @@
             [
                 [
                     {
-                        "id": "vep_cache"
+                        "id": "vep"
                     },
                     [
-                        
+                        [
+                            [
+                                "info.txt:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            ]
+                        ]
                     ]
                 ]
             ],
@@ -61,7 +73,7 @@
                 "versions.yml:md5,db07d261e269c4220700d88fc906a833"
             ]
         ],
-        "timestamp": "2026-07-07T15:54:42.399903876",
+        "timestamp": "2026-07-13T14:19:24.399813217",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.3"
@@ -72,7 +84,15 @@
             [
                 [
                     {
-                        "id": "genome_fasta"
+                        "id": "human_g1k_v37_decoy"
+                    },
+                    "/imsarath/test-data/refs/heads/main/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "human_g1k_v37_decoy"
                     },
                     [
                         "human_g1k_v37_decoy.fasta.0123",
@@ -86,7 +106,7 @@
             [
                 [
                     {
-                        "id": "vep_cache"
+                        "id": "vep"
                     },
                     [
                         [
@@ -133,7 +153,7 @@
                 "versions.yml:md5,db07d261e269c4220700d88fc906a833"
             ]
         ],
-        "timestamp": "2026-07-07T15:54:13.425585788",
+        "timestamp": "2026-07-13T14:19:14.522123735",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.3"

@@ -11,31 +11,53 @@ components:
   - bwamem2/index
   - untar
 input:
-  - ch_genome_fasta:
-      type: file
+  - val_genome_fasta:
+      type: string
       description: |
-        Genome FASTA used to build the BWA-MEM2 index on the fly
-        Structure: [ val(meta), path(fasta) ]
+        Path to the genome FASTA used to build the BWA-MEM2 index on the fly
       pattern: "*.{fa,fasta}"
-  - ch_vep_cache_tar:
-      type: file
+  - val_bwamem2_index:
+      type: string
       description: |
-        VEP cache directory packaged as a tar archive
-        Structure: [ val(meta), path(archive) ]
+        Path to a pre-built BWA-MEM2 index directory. When set, the index is
+        used as-is instead of being built from the genome FASTA.
+  - val_ensembl_vep_cache:
+      type: string
+      description: |
+        Path to a pre-extracted Ensembl VEP cache directory. When set, the
+        VEP cache archive is not untarred.
+  - val_ensembl_vep_cache_tar:
+      type: string
+      description: |
+        Path to the VEP cache directory packaged as a tar archive
       pattern: "*.{tar,tar.gz}"
-  - ch_gridss_index_tar:
-      type: file
+  - val_gridss_index:
+      type: string
       description: |
-        GRIDSS index directory packaged as a tar archive
-        Structure: [ val(meta), path(archive) ]
+        Path to a pre-extracted GRIDSS index directory. When set, the GRIDSS
+        index archive is not untarred.
+  - val_gridss_index_tar:
+      type: string
+      description: |
+        Path to the GRIDSS index directory packaged as a tar archive
       pattern: "*.{tar,tar.gz}"
-  - ch_hmf_ensembl_data_tar:
-      type: file
+  - val_hmf_ensembl_data:
+      type: string
       description: |
-        HMF ensembl_data directory packaged as a tar archive
-        Structure: [ val(meta), path(archive) ]
+        Path to a pre-extracted HMF ensembl_data directory. When set, the
+        HMF ensembl_data archive is not untarred.
+  - val_hmf_ensembl_data_tar:
+      type: string
+      description: |
+        Path to the HMF ensembl_data directory packaged as a tar archive
       pattern: "*.{tar,tar.gz}"
 output:
+  - genome_fasta:
+      type: file
+      description: |
+        Genome FASTA staged with a meta map
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
   - bwamem2_index:
       type: directory
       description: |

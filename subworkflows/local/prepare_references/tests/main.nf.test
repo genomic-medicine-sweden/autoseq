@@ -16,22 +16,16 @@ nextflow_workflow {
         when {
             workflow {
                 """
-                input[0] = channel.of([
-                    [ id:'genome_fasta' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
-                ])
-                input[1] = channel.of([
-                    [ id:'vep_cache' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz', checkIfExists: true)
-                ])
-                input[2] = channel.of([
-                    [ id:'gridss_index' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz', checkIfExists: true)
-                ])
-                input[3] = channel.of([
-                    [ id:'ensembl_data' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz', checkIfExists: true)
-                ])
+                // No pre-built index/cache/data paths provided, so the subworkflow
+                // builds the BWA-MEM2 index and untars the VEP, GRIDSS and HMF archives.
+                input[0] = params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta'
+                input[1] = null
+                input[2] = null
+                input[3] = params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz'
+                input[4] = null
+                input[5] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz'
+                input[6] = null
+                input[7] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
                 """
             }
         }
@@ -40,6 +34,7 @@ nextflow_workflow {
             assertAll(
                 { assert workflow.success },
                 { assert snapshot(
+                    workflow.out.genome_fasta,
                     // BWA-MEM2 index binaries are not guaranteed reproducible across versions,
                     // so snapshot only the sorted file listing of the index directory.
                     workflow.out.bwamem2_index.collect { meta, dir -> [meta, file(dir).list().sort()] },
@@ -59,22 +54,14 @@ nextflow_workflow {
         when {
             workflow {
                 """
-                input[0] = channel.of([
-                    [ id:'genome_fasta' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
-                ])
-                input[1] = channel.of([
-                    [ id:'vep_cache' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz', checkIfExists: true)
-                ])
-                input[2] = channel.of([
-                    [ id:'gridss_index' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz', checkIfExists: true)
-                ])
-                input[3] = channel.of([
-                    [ id:'ensembl_data' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz', checkIfExists: true)
-                ])
+                input[0] = params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta'
+                input[1] = null
+                input[2] = null
+                input[3] = params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz'
+                input[4] = null
+                input[5] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz'
+                input[6] = null
+                input[7] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
                 """
             }
         }
@@ -83,6 +70,7 @@ nextflow_workflow {
             assertAll(
                 { assert workflow.success },
                 { assert snapshot(
+                    workflow.out.genome_fasta,
                     workflow.out.bwamem2_index.collect { meta, dir -> [meta, file(dir).list().sort()] },
                     workflow.out.vep_cache,
                     workflow.out.gridss_index,

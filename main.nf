@@ -18,6 +18,7 @@ include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_auto
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 include { getPanelsAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
+include { PREPARE_REFERENCES      } from './subworkflows/local/prepare_references/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,13 +75,31 @@ workflow NXF_AUTOSEQ {
 
     main:
 
+    // Minimal reference preparation workflow
+    PREPARE_REFERENCES (
+        params.ref_genome_fasta,
+        params.bwamem2_index,
+        params.ensembl_vep_cache,
+        params.ensembl_vep_cache_tar,
+        params.genome_gridss_index,
+        params.gridss_index_tar,
+        params.ensembl_data_resources,
+        params.hmf_ensembl_data_tar
+    )
+    .set{ch_references}
+
+
     //
     // Initialise channels for reference genome
     //
-    ch_genome_fasta  = params.ref_genome_fasta  ? channel.fromPath(params.ref_genome_fasta).map{ it -> [[id:'genome_fasta'], it]}.collect() : channel.empty()
+    ch_genome_fasta            = ch_references.genome_fasta
+    ch_bwamem2_index           = ch_references.bwamem2_index
+    ch_ensembl_vep_cache       = ch_references.vep_cache
+    ch_ensembl_data_resources  = ch_references.hmf_ensembl_data
+    ch_genome_gridss_index     = ch_references.gridss_index
+
     ch_genome_fai    = params.ref_genome_fai    ? channel.fromPath(params.ref_genome_fai).map{ it -> [[id:'genome_fai'], it]}.collect() : channel.empty()
     ch_dict          = params.ref_genome_dict   ? channel.fromPath(params.ref_genome_dict).map{ it -> [[id:'genome_dict'], it]}.collect() : channel.empty()
-    ch_bwamem2_index = params.bwamem2_index     ? channel.fromPath(params.bwamem2_index).map{ it -> [[id:'bwamem2_index'], it]}.collect() : channel.empty()
     ch_dbsnp_vcf     = params.dbsnp_vcf        ? channel.fromPath(params.dbsnp_vcf).map{ it -> [[id:'dbsnp_vcf'], it]}.collect() : channel.empty()
     ch_dbsnp_vcf_tbi = params.dbsnp_vcf_tbi  ? channel.fromPath(params.dbsnp_vcf_tbi).map{ it -> [[id:'dbsnp_vcf_tbi'], it]}.collect() : channel.empty()
 
@@ -88,19 +107,16 @@ workflow NXF_AUTOSEQ {
     ch_targets_bed             = params.targets_bed ? channel.fromPath(params.targets_bed).map{ it -> [[id:'targets_bed'], it]}.collect() : channel.empty()
     ch_interval_list_slopped20 = params.interval_list_slopped20 ? channel.fromPath(params.interval_list_slopped20).map{ it -> [[id:'interval_list_slopped20'], it]}.collect() : channel.empty()
     ch_jumble_ref              = params.jumble_ref ? channel.fromPath(params.jumble_ref).map{ it -> [[id:'jumble_ref'], it]}.collect() : channel.empty()
-    ch_ensembl_vep_cache       = params.ensembl_vep_cache ? channel.fromPath(params.ensembl_vep_cache).map{ it -> [[id:'ensembl_vep_cache'], it]}.collect() : channel.empty()
 
     //
     ch_sage_known_hotspots_somatic = params.sage_known_hotspots_somatic ? channel.fromPath(params.sage_known_hotspots_somatic).map{ it -> [[id:'sage_known_hotspots_somatic'], it]}.collect() : channel.empty()
     ch_sage_highconf_regions       = params.sage_highconf_regions ? channel.fromPath(params.sage_highconf_regions).map{ it -> [[id:'sage_highconf_regions'], it]}.collect() : channel.empty()
     ch_sage_pon                    = params.sage_pon ? channel.fromPath(params.sage_pon).map{ it -> [[id:'sage_pon'], it]}.collect() : channel.empty()
-    ch_ensembl_data_resources      = params.ensembl_data_resources ? channel.fromPath(params.ensembl_data_resources).map{ it -> [[id:'ensembl_data_resources'], it]}.collect() : channel.empty()
     ch_curation_ann                = params.curation_ann ? channel.fromPath(params.curation_ann).map{ it -> [[id:'curation_ann'], it]}.collect() : channel.empty()
     ch_germline_resource           = params.germline_resource ? channel.fromPath(params.germline_resource).map{ it -> [[id:'germline_resource'], it]}.collect() : channel.empty()
     ch_germline_resource_tbi       = params.germline_resource_tbi ? channel.fromPath(params.germline_resource_tbi).map{ it -> [[id:'germline_resource_tbi'], it]}.collect() : channel.empty()
 
     // GRIDSS-specific channels for SV calling
-    ch_genome_gridss_index      = params.genome_gridss_index ? channel.fromPath(params.genome_gridss_index).map{ it -> [[id:'genome_gridss_index'], it]}.collect() : channel.empty()
     ch_pon_breakends            = params.gridss_pon_breakends ? channel.fromPath(params.gridss_pon_breakends).map{ it -> [[id:'pon_breakends'], it]}.collect() : channel.empty()
     ch_pon_breakpoints          = params.gridss_pon_breakpoints ? channel.fromPath(params.gridss_pon_breakpoints).map{ it -> [[id:'pon_breakpoints'], it]}.collect() : channel.empty()
     ch_known_fusions            = params.gridss_known_fusions ? channel.fromPath(params.gridss_known_fusions).map{ it -> [[id:'known_fusions'], it]}.collect() : channel.empty()
