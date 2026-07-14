@@ -76,17 +76,16 @@ workflow NXF_AUTOSEQ {
     main:
 
     // Minimal reference preparation workflow
-    PREPARE_REFERENCES (
-        params.ref_genome_fasta,
-        params.bwamem2_index,
-        params.ensembl_vep_cache,
-        params.ensembl_vep_cache_tar,
-        params.genome_gridss_index,
-        params.gridss_index_tar,
-        params.ensembl_data_resources,
-        params.hmf_ensembl_data_tar
-    )
-    .set{ch_references}
+    def ch_references = PREPARE_REFERENCES (
+                            params.ref_genome_fasta,
+                            params.bwamem2_index,
+                            params.ensembl_vep_cache,
+                            params.ensembl_vep_cache_tar,
+                            params.genome_gridss_index,
+                            params.gridss_index_tar,
+                            params.ensembl_data_resources,
+                            params.hmf_ensembl_data_tar
+                        )
 
 
     //
