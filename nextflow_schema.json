@@ -297,6 +297,18 @@
                     "type": "number",
                     "default": 0.01,
                     "description": "Minimum variant allele frequency for a SNV to be considered by PureCN"
+                },
+                "ensembl_vep_cache_tar": {
+                    "type": "string",
+                    "description": "Path to Ensembl VEP cache tar archive"
+                },
+                "gridss_index_tar": {
+                    "type": "string",
+                    "description": "Path to GRIDSS index tar archive"
+                },
+                "hmf_ensembl_data_tar": {
+                    "type": "string",
+                    "description": "Path to HMF Ensembl data tar archive"
                 }
             }
         },

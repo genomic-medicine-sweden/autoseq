@@ -1,0 +1,81 @@
+nextflow_workflow {
+
+    name "Test Subworkflow PREPARE_REFERENCES"
+    script "../main.nf"
+    workflow "PREPARE_REFERENCES"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "prepare_references"
+    tag "bwamem2"
+    tag "bwamem2/index"
+    tag "untar"
+
+    test("build bwamem2 index and untar directories") {
+
+        when {
+            workflow {
+                """
+                // No pre-built index/cache/data paths provided, so the subworkflow
+                // builds the BWA-MEM2 index and untars the VEP, GRIDSS and HMF archives.
+                input[0] = params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta'
+                input[1] = null
+                input[2] = null
+                input[3] = params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz'
+                input[4] = null
+                input[5] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz'
+                input[6] = null
+                input[7] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    workflow.out.genome_fasta,
+                    workflow.out.bwamem2_index,
+                    workflow.out.vep_cache,
+                    workflow.out.gridss_index,
+                    workflow.out.hmf_ensembl_data,
+                    workflow.out.versions
+                ).match() }
+            )
+        }
+    }
+
+    test("build bwamem2 index and untar directories - stub") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                input[0] = params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta'
+                input[1] = null
+                input[2] = null
+                input[3] = params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz'
+                input[4] = null
+                input[5] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz'
+                input[6] = null
+                input[7] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    workflow.out.genome_fasta,
+                    workflow.out.bwamem2_index,
+                    workflow.out.vep_cache,
+                    workflow.out.gridss_index,
+                    workflow.out.hmf_ensembl_data,
+                    workflow.out.versions
+                ).match() }
+            )
+        }
+    }
+}

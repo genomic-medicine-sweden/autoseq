@@ -155,6 +155,11 @@
                         "git_sha": "f2cfcf9d3f6a2d123e6c44aefa788aa232204a7a",
                         "installed_by": ["modules"]
                     },
+                    "untar": {
+                        "branch": "master",
+                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "installed_by": ["modules"]
+                    },
                     "vt/decompose": {
                         "branch": "master",
                         "git_sha": "ddb0d667cf6cdee3bab9497241de4bbf6b88d8cc",
