@@ -4,11 +4,7 @@ nextflow_pipeline {
     script "../main.nf"
     tag "pipeline"
 
-    test("-profile test") {
-
-        // output {} block ignores params.outdir set in nf-test and always creates results/ in the test work directory
-        // github issue link - https://github.com/nextflow-io/nextflow/issues/7069
-        options "-stub -output-dir $outputDir"
+    test("-profile test ") {
 
         when {
             params {
@@ -34,4 +30,35 @@ nextflow_pipeline {
             )
         }
     }
+
+    // test("-profile test - stub") {
+
+    //     // output {} block ignores params.outdir set in nf-test and always creates results/ in the test work directory
+    //     // github issue link - https://github.com/nextflow-io/nextflow/issues/7069
+    //     options "-stub -output-dir $outputDir"
+
+    //     when {
+    //         params {
+    //             outdir = "$outputDir"
+    //         }
+    //     }
+
+    //     then {
+    //         // stable_path: All files + folders in ${params.outdir}/ with a stable path (including file name)
+    //         def stable_path = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+    //         // stable_content: All files in ${params.outdir}/ with stable content
+    //         def stable_content = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+    //         assert workflow.success
+    //         assertAll(
+    //             { assert snapshot(
+    //                 // pipeline versions.yml file for multiqc from which Nextflow version is removed because we test pipelines on multiple Nextflow versions
+    //                 removeNextflowVersion("$outputDir/pipeline_info/autoseq_software_mqc_versions.yml"),
+    //                 // All stable path name, with a relative path
+    //                 stable_path,
+    //                 // All files with stable contents
+    //                 // stable_content # should be enabled while testing the pipeline with actual small test-data
+    //             ).match() }
+    //         )
+    //     }
+    // }
 }

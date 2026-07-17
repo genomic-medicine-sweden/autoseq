@@ -1,4 +1,206 @@
 {
+    "-profile test ": {
+        "content": [
+            {
+                "ANNOTATE_CNVS": {
+                    "annotate_cnvs": "annotate_cnvs.py 1.0.0"
+                },
+                "ANNOTATE_VEP": {
+                    "ensemblvep": 115.2,
+                    "tabix": 1.21
+                },
+                "BWAMEM2_MEM": {
+                    "bwamem2": "2.2.1",
+                    "samtools": 1.21
+                },
+                "FASTP": {
+                    "fastp": "0.24.0"
+                },
+                "FASTQC": {
+                    "fastqc": "0.12.1"
+                },
+                "GATK4_CALCULATECONTAMINATION": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_FILTERMUTECTCALLS": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_GETPILEUPSUMMARIES_NORMAL": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_GETPILEUPSUMMARIES_TUMOR": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_LEARNREADORIENTATIONMODEL": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_MUTECT2": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GRIDSS_ASSEMBLE": {
+                    "gridss": "2.13.2"
+                },
+                "GRIDSS_CALL": {
+                    "gridss": "2.13.2"
+                },
+                "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS": {
+                    "gridss": "2.13.2",
+                    "samtools": 1.21
+                },
+                "GRIDSS_PREPROCESS": {
+                    "gridss": "2.13.2"
+                },
+                "GRIPSS_GERMLINE": {
+                    "gripss": 2.4
+                },
+                "GRIPSS_SOMATIC": {
+                    "gripss": 2.4
+                },
+                "JUMBLE_RUN": {
+                    "Jumble": 0.6
+                },
+                "MARKDUPLICATES": {
+                    "gatk4": "4.6.1.0",
+                    "samtools": 1.21
+                },
+                "PASSFILTER_FOR_MUTECT2": {
+                    "bcftools": 1.22
+                },
+                "PASSFILTER_FOR_SAGE": {
+                    "bcftools": 1.22
+                },
+                "PICARD_COLLECTHSMETRICS": {
+                    "picard": "3.3.0"
+                },
+                "PICARD_COLLECTMULTIPLEMETRICS": {
+                    "picard": "3.3.0"
+                },
+                "PURECN_RUN": {
+                    "PureCN": "2.12.0"
+                },
+                "SAGE_SOMATIC": {
+                    "sage": 4.1
+                },
+                "SOMATIC_VCFMERGE": {
+                    "bcftools": "bcftools 1.22",
+                    "tabix": "tabix (htslib) 1.22.1"
+                },
+                "TYPEDPYD": {
+                    "typeDPYD": "0.1.0"
+                },
+                "UNTAR_GRIDSS_INDEX": {
+                    "untar": 1.34
+                },
+                "UNTAR_HMF_ENSEMBL_DATA": {
+                    "untar": 1.34
+                },
+                "UNTAR_VEP_CACHE": {
+                    "untar": 1.34
+                },
+                "VT_DECOMPOSE": {
+                    "vt": "2015.11.10"
+                },
+                "VT_NORMALIZE": {
+                    "vt": "2015.11.10"
+                },
+                "Workflow": {
+                    "genomic-medicine-sweden/autoseq": "v1.0.0dev"
+                }
+            },
+            [
+                "alignment",
+                "alignment/NORMAL37_dedup.bai",
+                "alignment/NORMAL37_dedup.bam",
+                "alignment/TUMOR37_dedup.bai",
+                "alignment/TUMOR37_dedup.bam",
+                "cnv",
+                "cnv/NORMAL37.cnr",
+                "cnv/NORMAL37.cns",
+                "cnv/NORMAL37.png",
+                "cnv/NORMAL37_ann.cns",
+                "cnv/NORMAL37_dnacopy.seg",
+                "cnv/NORMAL37_profile.bedgraph",
+                "cnv/NORMAL37_segments.bedgraph",
+                "cnv/TUMOR37.cnr",
+                "cnv/TUMOR37.cns",
+                "cnv/TUMOR37.png",
+                "cnv/TUMOR37_ann.cns",
+                "cnv/TUMOR37_dnacopy.seg",
+                "cnv/TUMOR37_profile.bedgraph",
+                "cnv/TUMOR37_segments.bedgraph",
+                "dpyd",
+                "dpyd/NORMAL37.DPYD.csv",
+                "dpyd/NORMAL37.DPYD.json",
+                "dpyd/TUMOR37.DPYD.csv",
+                "dpyd/TUMOR37.DPYD.json",
+                "multiqc",
+                "multiqc/multiqc_report.html",
+                "pipeline_info",
+                "pipeline_info/autoseq_software_mqc_versions.yml",
+                "purecn",
+                "purecn/TUMOR37_purecn.csv",
+                "purecn/TUMOR37_purecn.pdf",
+                "purecn/TUMOR37_purecn_local_optima.pdf",
+                "purecn/TUMOR37_purecn_segmentation.pdf",
+                "qc",
+                "qc/contamination",
+                "qc/contamination/TUMOR37_NORMAL37.contamination.table",
+                "qc/picard",
+                "qc/picard/NORMAL37.CollectHsMetrics.coverage_metrics",
+                "qc/picard/NORMAL37.CollectMultipleMetrics.alignment_summary_metrics",
+                "qc/picard/NORMAL37.CollectMultipleMetrics.base_distribution_by_cycle_metrics",
+                "qc/picard/NORMAL37.CollectMultipleMetrics.insert_size_metrics",
+                "qc/picard/NORMAL37.CollectMultipleMetrics.quality_by_cycle_metrics",
+                "qc/picard/NORMAL37.CollectMultipleMetrics.quality_distribution_metrics",
+                "qc/picard/TUMOR37.CollectHsMetrics.coverage_metrics",
+                "qc/picard/TUMOR37.CollectMultipleMetrics.alignment_summary_metrics",
+                "qc/picard/TUMOR37.CollectMultipleMetrics.base_distribution_by_cycle_metrics",
+                "qc/picard/TUMOR37.CollectMultipleMetrics.insert_size_metrics",
+                "qc/picard/TUMOR37.CollectMultipleMetrics.quality_by_cycle_metrics",
+                "qc/picard/TUMOR37.CollectMultipleMetrics.quality_distribution_metrics",
+                "qc/samtools",
+                "qc/samtools/NORMAL37.flagstat",
+                "qc/samtools/TUMOR37.flagstat",
+                "svs",
+                "svs/germline",
+                "svs/germline/TUMOR37.gripss.filtered.germline.vcf.gz",
+                "svs/germline/TUMOR37.gripss.filtered.germline.vcf.gz.tbi",
+                "svs/germline/TUMOR37.gripss.germline.vcf.gz",
+                "svs/germline/TUMOR37.gripss.germline.vcf.gz.tbi",
+                "svs/somatic",
+                "svs/somatic/TUMOR37.gripss.filtered.somatic.vcf.gz",
+                "svs/somatic/TUMOR37.gripss.filtered.somatic.vcf.gz.tbi",
+                "svs/somatic/TUMOR37.gripss.somatic.vcf.gz",
+                "svs/somatic/TUMOR37.gripss.somatic.vcf.gz.tbi",
+                "variants",
+                "variants/germline",
+                "variants/germline/NORMAL37-all.germline.vep.vcf.gz",
+                "variants/germline/NORMAL37-all.germline.vep.vcf.gz.tbi",
+                "variants/germline/haplotypecaller",
+                "variants/germline/haplotypecaller/NORMAL37_haplotypecaller.vcf.gz",
+                "variants/germline/haplotypecaller/NORMAL37_haplotypecaller.vcf.gz.tbi",
+                "variants/somatic",
+                "variants/somatic/TUMOR37_NORMAL37-all.somatic.vep.vcf.gz",
+                "variants/somatic/TUMOR37_NORMAL37-all.somatic.vep.vcf.gz.tbi",
+                "variants/somatic/merged",
+                "variants/somatic/merged/TUMOR37_NORMAL37-all.somatic.vcf.gz",
+                "variants/somatic/merged/TUMOR37_NORMAL37-all.somatic.vcf.gz.tbi",
+                "variants/somatic/mutect2",
+                "variants/somatic/mutect2/TUMOR37_NORMAL37_mutect2_filtered.vcf.gz",
+                "variants/somatic/mutect2/TUMOR37_NORMAL37_mutect2_filtered.vcf.gz.filteringStats.tsv",
+                "variants/somatic/mutect2/TUMOR37_NORMAL37_mutect2_filtered.vcf.gz.tbi",
+                "variants/somatic/sage",
+                "variants/somatic/sage/somatic",
+                "variants/somatic/sage/somatic/TUMOR37.sage.somatic.vcf.gz",
+                "variants/somatic/sage/somatic/TUMOR37.sage.somatic.vcf.gz.tbi"
+            ]
+        ],
+        "timestamp": "2026-07-16T16:38:56.589344735",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.3"
+        }
+    },
     "-profile test": {
         "content": [
             {
