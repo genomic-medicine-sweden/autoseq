@@ -9,7 +9,7 @@ process SOMATIC_VCFMERGE {
         'community.wave.seqera.io/library/bcftools_tabix:04336756d7b46b1b' }"
 
     input:
-    tuple val(meta), path(mutect_vcf)
+    tuple val(meta), path(mutect_vcf), path(mutect_tbi)
     tuple val(meta2), path(sage_vcf)
 
     output:
