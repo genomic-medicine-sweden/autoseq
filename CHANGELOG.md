@@ -43,6 +43,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #37 ](https://github.com/genomic-medicine-sweden/autoseq/pull/38) Updated documentation reference in `multiqc_config.yml` and disabled the nf-core linting check for multiqc config.
 - [ #41 ](https://github.com/genomic-medicine-sweden/autoseq/pull/41) Refactored `annotate_cnvs` local module to accept `sample_type` as part of the input tuple instead of deriving it from `meta.sample_type` inside the module.
 - [ #52 ](https://github.com/genomic-medicine-sweden/autoseq/pull/52) Replaced leftover `oncorefiner` references in `docs/CONTRIBUTING.md` with the correct pipeline name `autoseq`.
+- [ #54 ](https://github.com/genomic-medicine-sweden/autoseq/pull/54) Emit a tabix index for the Mutect2 pass-filtered VCF and pass it to `SOMATIC_VCFMERGE` so `bcftools concat -a` can load the index.
 - [ #56 ](https://github.com/genomic-medicine-sweden/autoseq/pull/56) Use `meta.id` instead of `meta.tumor_id` for the `PURECN_RUN` output prefix.
 
 ### `Dependencies`
