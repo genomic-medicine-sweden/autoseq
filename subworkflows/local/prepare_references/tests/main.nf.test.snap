@@ -73,7 +73,7 @@
                 "versions.yml:md5,db07d261e269c4220700d88fc906a833"
             ]
         ],
-        "timestamp": "2026-07-14T13:34:41.895600666",
+        "timestamp": "2026-07-20T15:51:18.283604716",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.3"
@@ -141,11 +141,11 @@
                         "id": "ensembl_data"
                     },
                     [
-                        "ensembl_gene_data.csv:md5,b4847bcf74efdef14b413852ba354584",
-                        "ensembl_protein_features.csv:md5,c6b9143310ff5d66b99866fe49b1046b",
-                        "ensembl_trans_amino_acids.csv:md5,d8bf851c14436f4b6f166fec41596726",
-                        "ensembl_trans_exon_data.csv:md5,8992e3039c32d7dfcbb1d831f66c7b7f",
-                        "ensembl_trans_splice_data.csv:md5,7c93a4b2b30c9d3b5cf907b31e8bda93"
+                        "ensembl_gene_data.csv:md5,3888be06b14b74e8f2c7785443ef1b69",
+                        "ensembl_protein_features.csv:md5,d4dcb1614482b6f4e0357cebf0c15f33",
+                        "ensembl_trans_amino_acids.csv:md5,ecac8ae1d70b15a8f086860b0f8eb3ee",
+                        "ensembl_trans_exon_data.csv:md5,dd2e5924ea9a8f06deffb98b4f5c32f1",
+                        "ensembl_trans_splice_data.csv:md5,e397cc7c4bd537e685a713292de193ee"
                     ]
                 ]
             ],
@@ -153,7 +153,7 @@
                 "versions.yml:md5,db07d261e269c4220700d88fc906a833"
             ]
         ],
-        "timestamp": "2026-07-14T13:33:08.05634036",
+        "timestamp": "2026-07-20T15:51:10.442151125",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.3"
