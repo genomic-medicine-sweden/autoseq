@@ -31,6 +31,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Template update for nf-core/tools v4.0.2.
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated multiqc module from 1.32 to 1.34 and fastqc module (included in the template update).
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated the minimum required nextflow version to 25.10.4 (included in new template).
+- [ #57 ](https://github.com/genomic-medicine-sweden/autoseq/pull/57) Regenerated the `PREPARE_REFERENCES` nf-test snapshot to match the updated HMF `ensembl_data` reference CSVs.
 
 ### `Fixed`
 
@@ -44,6 +45,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #37 ](https://github.com/genomic-medicine-sweden/autoseq/pull/38) Updated documentation reference in `multiqc_config.yml` and disabled the nf-core linting check for multiqc config.
 - [ #41 ](https://github.com/genomic-medicine-sweden/autoseq/pull/41) Refactored `annotate_cnvs` local module to accept `sample_type` as part of the input tuple instead of deriving it from `meta.sample_type` inside the module.
 - [ #52 ](https://github.com/genomic-medicine-sweden/autoseq/pull/52) Replaced leftover `oncorefiner` references in `docs/CONTRIBUTING.md` with the correct pipeline name `autoseq`.
+- [ #53 ](https://github.com/genomic-medicine-sweden/autoseq/pull/53) Added `-tumor-segmentation` argument to `GATK4_CALCULATECONTAMINATION` so the tumor segmentation table is written for downstream filtering.
 - [ #54 ](https://github.com/genomic-medicine-sweden/autoseq/pull/54) Emit a tabix index for the Mutect2 pass-filtered VCF and pass it to `SOMATIC_VCFMERGE` so `bcftools concat -a` can load the index.
 - [ #56 ](https://github.com/genomic-medicine-sweden/autoseq/pull/56) Use `meta.id` instead of `meta.tumor_id` for the `PURECN_RUN` output prefix.
 
