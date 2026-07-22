@@ -47,6 +47,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #53 ](https://github.com/genomic-medicine-sweden/autoseq/pull/53) Added `-tumor-segmentation` argument to `GATK4_CALCULATECONTAMINATION` so the tumor segmentation table is written for downstream filtering.
 - [ #54 ](https://github.com/genomic-medicine-sweden/autoseq/pull/54) Emit a tabix index for the Mutect2 pass-filtered VCF and pass it to `SOMATIC_VCFMERGE` so `bcftools concat -a` can load the index.
 - [ #56 ](https://github.com/genomic-medicine-sweden/autoseq/pull/56) Use `meta.id` instead of `meta.tumor_id` for the `PURECN_RUN` output prefix.
+- [ #58 ](https://github.com/genomic-medicine-sweden/autoseq/pull/58) Replaced the stubbed `PURECN_RUN` and `PROFILE_TUMOR_BIOMARKERS` nf-tests with real-VCF runs, added dedicated stub cases, and regenerated the snapshots.
 
 ### `Dependencies`
 
