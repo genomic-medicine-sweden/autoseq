@@ -11,13 +11,7 @@ nextflow_workflow {
     tag "typedpyd"
 
 
-    test("profile_tumor_biomarkers - with VCF - stub") {
-
-        options "-stub"
-
-        // PureCN requires specific germline/somatic tags that are difficult to mock manually.
-        // I've implemented the stub as a temporary measure so we can move forward;
-        // we'll transition to a real VCF once the end-to-end test data is available.
+    test("profile_tumor_biomarkers - with VCF ") {
 
         when {
 
@@ -47,7 +41,14 @@ nextflow_workflow {
         then {
             assertAll(
                 { assert workflow.success },
-                { assert snapshot(workflow.out).match() }
+                // PDFs are non-deterministic (R embeds timestamps), so assert existence only
+                { assert workflow.out.purecn_pdf[0][1].every { f -> file(f).exists() } },
+                { assert snapshot(
+                    workflow.out.purecn_csv,
+                    workflow.out.purecn_genes_csv,
+                    workflow.out.dpyd_csv,
+                    workflow.out.dpyd_json
+                ).match() }
             )
         }
     }
@@ -83,7 +84,6 @@ nextflow_workflow {
         then {
             assertAll(
                 { assert workflow.success },
-                // PDFs are non-deterministic (R embeds timestamps), so assert existence only
                 { assert workflow.out.purecn_pdf[0][1].every { f -> file(f).exists() } },
                 { assert snapshot(
                     workflow.out.purecn_csv,
@@ -91,6 +91,44 @@ nextflow_workflow {
                     workflow.out.dpyd_csv,
                     workflow.out.dpyd_json
                 ).match() }
+            )
+        }
+    }
+
+
+    test("profile_tumor_biomarkers - stub") {
+
+        options " -stub "
+
+        when {
+
+            workflow {
+                """
+                input[0] = Channel.of([
+                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true)
+                ])
+                input[1] = Channel.of([
+                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
+                ])
+                input[2] = Channel.of([
+                    [ : ],
+                    []
+                ])
+                input[3] = Channel.of([
+                    [ id:'test_sample' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(sanitizeOutput(workflow.out)).match() }
             )
         }
     }
