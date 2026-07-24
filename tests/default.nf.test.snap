@@ -216,7 +216,7 @@
                 "TUMOR_NORMAL.contamination.table:md5,a47aaa6933a5cfd12bcba937d74c0991",
                 "NORMAL.flagstat:md5,7a13b0d1418967691bda2c72ad4443cb",
                 "TUMOR.flagstat:md5,9140f04f5f15fcb58cdb04c1c061c650",
-                "TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv:md5,bed3d20374ea4629747e73f5fb00c097"
+                "TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv:md5,eb61b96f3d2566a2c05aaf68f08a584d"
             ],
             [
                 [
@@ -259,11 +259,11 @@
                 ],
                 [
                     "TUMOR_NORMAL-all.somatic.vcf.gz",
-                    "360b84e8fd1850d85afd42360f8d5253"
+                    "15d5903edd6e671a148453861f88552f"
                 ],
                 [
                     "TUMOR_NORMAL_mutect2_filtered.vcf.gz",
-                    "ce2a1eb8cc7ac238bd3d2b2f73102ac3"
+                    "673d3ee2ad91e129bf8137aeeba1cd04"
                 ],
                 [
                     "TUMOR.sage.somatic.vcf.gz",
@@ -271,7 +271,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-07-20T15:08:01.054505016",
+        "timestamp": "2026-07-24T11:08:11.600728145",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.3"
@@ -473,7 +473,7 @@
                 "variants/somatic/sage/somatic/TUMOR.sage.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-07-20T15:09:01.463243201",
+        "timestamp": "2026-07-24T11:09:41.558020402",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.3"
