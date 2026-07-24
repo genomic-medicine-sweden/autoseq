@@ -20,6 +20,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #42 ](https://github.com/genomic-medicine-sweden/autoseq/pull/42) Added nf-test for `gridss/extract_overlapping_fragments` module.
 - [ #43 ](https://github.com/genomic-medicine-sweden/autoseq/pull/43) Added nf-test for the `gridss/preprocess` local module covering a targeted BAM scenario and stub case.
 - [ #50 ](https://github.com/genomic-medicine-sweden/autoseq/pull/50) Added `PREPARE_REFERENCES` subworkflow to build the BWA-MEM2 index and untar the VEP cache, GRIDSS index and HMF ensembl_data references, with nf-test coverage.
+- [ #55 ](https://github.com/genomic-medicine-sweden/autoseq/pull/55) Enabled an end-to-end `-profile test` run of the paired tumor/normal workflow on real GRCh37 test data.
 
 ### `Changed`
 
