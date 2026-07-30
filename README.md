@@ -1,23 +1,16 @@
 # genomic-medicine-sweden/autoseq
 
-<h1>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-autoseq_logo_dark.png">
-      <img alt="autoseq"  src="docs/images/nf-core-autoseq_logo_light.png">
-  </picture>
-</h1>
-
 [![Open in GitHub Codespaces](https://img.shields.io/badge/Open_In_GitHub_Codespaces-black?labelColor=grey&logo=github)](https://github.com/codespaces/new/genomic-medicine-sweden/autoseq)
 [![GitHub Actions CI Status](https://github.com/genomic-medicine-sweden/autoseq/actions/workflows/nf-test.yml/badge.svg)](https://github.com/genomic-medicine-sweden/autoseq/actions/workflows/nf-test.yml)
 [![GitHub Actions Linting Status](https://github.com/genomic-medicine-sweden/autoseq/actions/workflows/linting.yml/badge.svg)](https://github.com/genomic-medicine-sweden/autoseq/actions/workflows/linting.yml)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.10.4-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
-[![nf-core template version](https://img.shields.io/badge/nf--core_template-4.0.2-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/4.0.2)
+[![nf-core template version](https://img.shields.io/badge/nf--core_template-4.1.0-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/4.1.0)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
-[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/imsarath/nf-core-autoseq)
+[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/genomic-medicine-sweden/autoseq)
 
 ## Introduction
 
@@ -69,13 +62,13 @@ nextflow run genomic-medicine-sweden/autoseq \
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
-For more details and further functionality, please refer to the [usage documentation]() and the [parameter documentation]().
+For more details and further functionality, please refer to the [usage documentation](<>) and the [parameter documentation](<>).
 
 ## Pipeline output
 
-To see the results of an example test run with a full size dataset refer to the [results]() tab on the nf-core website pipeline page.
+To see the results of an example test run with a full size dataset refer to the [results](<>) tab on the nf-core website pipeline page.
 For more details about the output files and reports, please refer to the
-[output documentation]().
+[output documentation](<>).
 
 ## Credits
 
@@ -83,7 +76,7 @@ For more details about the output files and reports, please refer to the
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
-- [Johan Lindberg]()
+- [Johan Lindberg](<>)
 - [Rebecka Bergström](https://github.com/rebber)
 - [Markus Mayrhofer](https://github.com/mayrhofer)
 - [Venkatesh Chellappa](https://github.com/drvenki)
