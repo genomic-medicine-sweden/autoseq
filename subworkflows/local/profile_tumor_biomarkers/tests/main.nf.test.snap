@@ -1,53 +1,44 @@
 {
-    "profile_tumor_biomarkers - with VCF - stub": {
+    "profile_tumor_biomarkers - with VCF ": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample",
+                        "tumor_id": "test_tumor"
+                    },
+                    "test_sample_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
+                ]
+            ],
+            [
+                
+            ],
+            [
+                [
+                    {
+                        "id": "test_sample"
+                    },
+                    "test_sample.DPYD.csv:md5,4e966b6e924ce8660de4b9a0ed971f07"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "test_sample"
+                    },
+                    "test_sample.DPYD.json:md5,4c63101c786af43f474ddfcf561f7ca4"
+                ]
+            ]
+        ],
+        "timestamp": "2026-07-21T17:57:37.459125721",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.3"
+        }
+    },
+    "profile_tumor_biomarkers - stub": {
         "content": [
             {
-                "0": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        "test_tumor_purecn.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "1": [
-                    
-                ],
-                "2": [
-                    
-                ],
-                "3": [
-                    
-                ],
-                "4": [
-                    [
-                        {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
-                        },
-                        [
-                            "test_tumor_purecn.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "test_tumor_purecn_local_optima.pdf:md5,d41d8cd98f00b204e9800998ecf8427e"
-                        ]
-                    ]
-                ],
-                "5": [
-                    [
-                        {
-                            "id": "test_sample"
-                        },
-                        "test_sample.DPYD.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "6": [
-                    [
-                        {
-                            "id": "test_sample"
-                        },
-                        "test_sample.DPYD.json:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
                 "dpyd_csv": [
                     [
                         {
@@ -70,7 +61,7 @@
                             "id": "test_sample",
                             "tumor_id": "test_tumor"
                         },
-                        "test_tumor_purecn.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "test_sample_purecn.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "purecn_genes_csv": [
@@ -86,8 +77,8 @@
                             "tumor_id": "test_tumor"
                         },
                         [
-                            "test_tumor_purecn.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "test_tumor_purecn_local_optima.pdf:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "test_sample_purecn.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "test_sample_purecn_local_optima.pdf:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -96,10 +87,10 @@
                 ]
             }
         ],
-        "timestamp": "2026-04-23T18:48:25.233026261",
+        "timestamp": "2026-07-21T17:58:13.434806387",
         "meta": {
             "nf-test": "0.9.4",
-            "nextflow": "25.10.4"
+            "nextflow": "26.04.3"
         }
     },
     "profile_tumor_biomarkers - without VCF": {
@@ -110,7 +101,7 @@
                         "id": "test_sample",
                         "tumor_id": "test_tumor"
                     },
-                    "test_tumor_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
+                    "test_sample_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
                 ]
             ],
             [
@@ -119,7 +110,7 @@
                         "id": "test_sample",
                         "tumor_id": "test_tumor"
                     },
-                    "test_tumor_purecn_genes.csv:md5,1275096e64e3304019ddfdca21442df3"
+                    "test_sample_purecn_genes.csv:md5,a1485ae8fc2e3aa20acb01b9489fbc18"
                 ]
             ],
             [
@@ -139,10 +130,10 @@
                 ]
             ]
         ],
-        "timestamp": "2026-04-23T18:48:15.862404283",
+        "timestamp": "2026-07-21T17:58:01.646389351",
         "meta": {
             "nf-test": "0.9.4",
-            "nextflow": "25.10.4"
+            "nextflow": "26.04.3"
         }
     }
 }

@@ -10,3 +10,12 @@ multiqc/multiqc_plots/{svg,pdf,png}/*.{svg,pdf,png}
 multiqc/multiqc_report.html
 fastqc/*_fastqc.{html,zip}
 pipeline_info/*.{html,json,txt,yml}
+alignment/*.{bam,bai}
+variants/**/*.{vcf.gz,tbi}
+svs/**/*.{vcf.gz,tbi}
+cnv/*.png
+cnv/*.cnr
+cnv/*_dnacopy.seg
+cnv/*_profile.bedgraph
+purecn/*.pdf
+qc/picard/*

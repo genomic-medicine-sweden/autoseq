@@ -72,6 +72,9 @@ Other options specific to this pipeline.
 | `minpurity` | Minimum tumour purity estimate accepted by PureCN; solutions below this threshold are discarded | `number` | 0.05 |  |  |
 | `purecn_error` | Expected sequencing error rate passed to PureCN for modelling variant allele frequencies | `number` | 0.0005 |  |  |
 | `minaf` | Minimum variant allele frequency for a SNV to be considered by PureCN | `number` | 0.01 |  |  |
+| `ensembl_vep_cache_tar` | Path to Ensembl VEP cache tar archive | `string` |  |  |  |
+| `gridss_index_tar` | Path to GRIDSS index tar archive | `string` |  |  |  |
+| `hmf_ensembl_data_tar` | Path to HMF Ensembl data tar archive | `string` |  |  |  |
 
 ## Generic options
 

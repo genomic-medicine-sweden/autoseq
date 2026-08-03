@@ -194,6 +194,33 @@ def validateInputSamplesheet(input) {
     return [ metas[0], fastqs ]
 }
 
+
+//
+// Get attribute from genome config file e.g. fasta
+//
+def getGenomeAttribute(attribute) {
+    if (params.genomes && params.genome && params.genomes.containsKey(params.genome)) {
+        if (params.genomes[ params.genome ].containsKey(attribute)) {
+            return params.genomes[ params.genome ][ attribute ]
+        }
+    }
+    return null
+}
+
+//
+// Get attribute from panels config file e.g. bed file
+//
+def getPanelsAttribute(attribute) {
+    if (params.panels && params.panel && params.panels.containsKey(params.panel)) {
+        if (params.panels[ params.panel ].containsKey(attribute)) {
+            return params.panels[ params.panel ][ attribute ]
+        }
+    }
+    return null
+}
+
+
+
 //
 // Generate methods description for MultiQC
 //

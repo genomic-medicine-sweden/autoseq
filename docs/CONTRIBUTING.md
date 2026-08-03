@@ -29,7 +29,7 @@ Contributions to the code are even more welcome ;)
     - [Pipeline tests](#pipeline-tests)
   - [Adding citations](#adding-citations)
     - [1. `CITATIONS.md`](#1-citationsmd)
-    - [2. `subworkflows/local/utils_nfcore_oncorefiner_pipeline/main.nf`](#2-subworkflowslocalutils_nfcore_oncorefiner_pipelinemainnf)
+    - [2. `subworkflows/local/utils_nfcore_autoseq_pipeline/main.nf`](#2-subworkflowslocalutils_nfcore_autoseq_pipelinemainnf)
     - [3. `README.md`](#3-readmemd)
   - [Images and figures](#images-and-figures)
 - [Coding conventions](#coding-conventions)
@@ -192,7 +192,7 @@ Add an entry for the tool in alphabetical order under `## Pipeline tools`. If th
   > Author A, Author B. Title. Journal. Year;vol(issue):pages. doi:...
 ```
 
-#### 2. `subworkflows/local/utils_nfcore_oncorefiner_pipeline/main.nf`
+#### 2. `subworkflows/local/utils_nfcore_autoseq_pipeline/main.nf`
 
 Add citation text and bibliography entries inside `toolCitationText()` and `toolBibliographyText()`. Both functions are structured identically — group the tool's entry under the relevant category variable (e.g. `align_text`, `qc_bam_text`, `preprocessing_text`, `snv_annotation_text`). Mirror any conditional logic that gates the tool's execution (e.g. skip params, analysis type, or input content) so the citation only appears when the tool actually runs:
 
@@ -226,7 +226,7 @@ To make the `genomic-medicine-sweden/autoseq` code and processing logic more und
 
 ### Architecture & structure
 
-- **Use subworkflows** — Don't add logic to `workflows/oncorefiner.nf` that is specific to a subworkflow. Create new subworkflows as needed under `subworkflows/` and import them into `workflows/oncorefiner.nf`.
+- **Use subworkflows** — Don't add logic to `workflows/autoseq.nf` that is specific to a subworkflow. Create new subworkflows as needed under `subworkflows/` and import them into `workflows/autoseq.nf`.
 - **Reuse over duplication** — `ENSEMBLVEP_VEP` and `BCFTOOLS_VIEW` are intentionally included multiple times under different aliases. Follow this pattern before creating a near-identical subworkflow.
 - **nf-core modules take precedence** — prefer a module from modules/nf-core/ over writing a local one. Only add to modules/local/ when no nf-core module exists or the use case is too pipeline-specific.
 - **Use and share subworkflows with the GMS community** — subworkflows from [genomic-medicine-sweden/nf-core-modules](https://github.com/genomic-medicine-sweden/nf-core-modules) are intended for use across pipelines within the Genomic Medicine Sweden group. Prefer using and contributing to these rather than writing pipeline-specific code in `modules/local/`. If you think a subworkflow could be useful for other pipelines, consider adding it there instead of `subworkflows/local/`.
@@ -303,5 +303,5 @@ Please use the following naming schemes, to make it easy to understand what is g
   ```
 
 - Avoid using the `.set {ch_*}` operator to create new channels. Use `ch_* = <...>` whenever possible.
-- Intermediate publish channels in `workflows/oncorefiner.nf` follow the `ch_<subworkflow_name>_publish` naming convention and are assigned immediately after the subworkflow call, not inline in the emit block.
+- Intermediate publish channels in `workflows/autoseq.nf` follow the `ch_<subworkflow_name>_publish` naming convention and are assigned immediately after the subworkflow call, not inline in the emit block.
 - Initialize all `ch_*_publish` variables at the top of the `main:` block alongside `ch_multiqc_files`.

@@ -16,7 +16,44 @@
 include { AUTOSEQ                 } from './workflows/autoseq'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
-include { channelFromPathWithMeta } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
+include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
+include { getPanelsAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
+include { PREPARE_REFERENCES      } from './subworkflows/local/prepare_references/main'
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    GENOME PARAMETER VALUES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+//   This is an example of how to use getGenomeAttribute() to fetch parameters
+//   from igenomes.config using `--genome`
+params.ref_genome_fasta                 = getGenomeAttribute('fasta')
+params.ref_genome_fai                   = getGenomeAttribute('fai')
+params.ref_genome_dict                  = getGenomeAttribute('dict')
+params.bwamem2_index                    = getGenomeAttribute('bwamem2_index')
+params.dbsnp_vcf                        = getGenomeAttribute('dbsnp_vcf')
+params.dbsnp_vcf_tbi                    = getGenomeAttribute('dbsnp_vcf_tbi')
+params.germline_resource                = getGenomeAttribute('germline_resource')
+params.germline_resource_tbi            = getGenomeAttribute('germline_resource_tbi')
+params.sage_known_hotspots_somatic      = getGenomeAttribute('sage_known_hotspots_somatic')
+params.sage_highconf_regions            = getGenomeAttribute('sage_highconf_regions')
+params.sage_pon                         = getGenomeAttribute('sage_pon')
+params.ensembl_vep_cache                = getGenomeAttribute('ensembl_vep_cache')
+params.ensembl_data_resources           = getGenomeAttribute('ensembl_data_resources')
+params.curation_ann                     = getGenomeAttribute('curation_annotations')
+params.genome_gridss_index              = getGenomeAttribute('gridss_index')
+params.gridss_config                    = getGenomeAttribute('gridss_config')
+params.gridss_pon_breakends             = getGenomeAttribute('gridss_pon_breakends')
+params.gridss_pon_breakpoints           = getGenomeAttribute('gridss_pon_breakpoints')
+params.gridss_known_fusions             = getGenomeAttribute('gridss_known_fusions')
+params.gridss_repeatmasker_annotations  = getGenomeAttribute('gridss_repeatmasker_annotations')
+
+
+params.targets_bed             = getPanelsAttribute('targets_bed_slopped20')
+params.interval_list_slopped20 = getPanelsAttribute('targets_interval_list_slopped20')
+params.jumble_ref              = getPanelsAttribute('jumble_ref')
+
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,38 +98,52 @@ workflow NXF_AUTOSEQ {
 
     main:
 
+    // Minimal reference preparation workflow
+    def ch_references = PREPARE_REFERENCES (
+                            params.ref_genome_fasta,
+                            params.bwamem2_index,
+                            params.ensembl_vep_cache,
+                            params.ensembl_vep_cache_tar,
+                            params.genome_gridss_index,
+                            params.gridss_index_tar,
+                            params.ensembl_data_resources,
+                            params.hmf_ensembl_data_tar
+                        )
+
+
     //
     // Initialise channels for reference genome
     //
-    // Using channelFromPathWithMeta helper (with simpleName as meta id).
-    // If filepath is null, returns, channel.empty())
-    ch_genome_fasta                = channelFromPathWithMeta(val_genome_fasta)
-    ch_genome_fai                  = channelFromPathWithMeta(val_genome_fai)
-    ch_dict                        = channelFromPathWithMeta(val_genome_dict)
-    ch_bwamem2_index               = channelFromPathWithMeta(val_bwamem2_index)
-    ch_dbsnp_vcf                   = channelFromPathWithMeta(val_dbsnp_vcf)
-    ch_dbsnp_vcf_tbi               = channelFromPathWithMeta(val_dbsnp_vcf_tbi)
-    ch_germline_resource           = channelFromPathWithMeta(val_germline_resource)
-    ch_germline_resource_tbi       = channelFromPathWithMeta(val_germline_resource_tbi)
+    ch_genome_fasta            = ch_references.genome_fasta
+    ch_bwamem2_index           = ch_references.bwamem2_index
+    ch_ensembl_vep_cache       = ch_references.vep_cache
+    ch_ensembl_data_resources  = ch_references.hmf_ensembl_data
+    ch_gridss_index     = ch_references.gridss_index
 
-    ch_targets_bed                 = channelFromPathWithMeta(val_targets_bed)
-    ch_interval_list               = channelFromPathWithMeta(val_interval_list)
-    ch_jumble_ref                  = channelFromPathWithMeta(val_jumble_ref)
-    ch_ensembl_vep_cache           = channelFromPathWithMeta(val_ensembl_vep_cache)
+    ch_genome_fai    = params.ref_genome_fai    ? channel.fromPath(params.ref_genome_fai).map{ it -> [[id:'genome_fai'], it]}.collect() : channel.empty()
+    ch_dict          = params.ref_genome_dict   ? channel.fromPath(params.ref_genome_dict).map{ it -> [[id:'genome_dict'], it]}.collect() : channel.empty()
+    ch_dbsnp_vcf     = params.dbsnp_vcf        ? channel.fromPath(params.dbsnp_vcf).map{ it -> [[id:'dbsnp_vcf'], it]}.collect() : channel.empty()
+    ch_dbsnp_vcf_tbi = params.dbsnp_vcf_tbi  ? channel.fromPath(params.dbsnp_vcf_tbi).map{ it -> [[id:'dbsnp_vcf_tbi'], it]}.collect() : channel.empty()
 
-    ch_sage_known_hotspots_somatic = channelFromPathWithMeta(val_sage_known_hotspots_somatic)
-    ch_sage_highconf_regions       = channelFromPathWithMeta(val_sage_highconf_regions)
-    ch_sage_pon                    = channelFromPathWithMeta(val_sage_pon)
-    ch_hmf_ensembl_data            = channelFromPathWithMeta(val_hmf_ensembl_data)
-    ch_curation_ann                = channelFromPathWithMeta(val_curation_ann)
+    //
+    ch_targets_bed             = params.targets_bed ? channel.fromPath(params.targets_bed).map{ it -> [[id:'targets_bed'], it]}.collect() : channel.empty()
+    ch_interval_list_slopped20 = params.interval_list_slopped20 ? channel.fromPath(params.interval_list_slopped20).map{ it -> [[id:'interval_list_slopped20'], it]}.collect() : channel.empty()
+    ch_jumble_ref              = params.jumble_ref ? channel.fromPath(params.jumble_ref).map{ it -> [[id:'jumble_ref'], it]}.collect() : channel.empty()
+
+    //
+    ch_sage_known_hotspots_somatic = params.sage_known_hotspots_somatic ? channel.fromPath(params.sage_known_hotspots_somatic).map{ it -> [[id:'sage_known_hotspots_somatic'], it]}.collect() : channel.empty()
+    ch_sage_highconf_regions       = params.sage_highconf_regions ? channel.fromPath(params.sage_highconf_regions).map{ it -> [[id:'sage_highconf_regions'], it]}.collect() : channel.empty()
+    ch_sage_pon                    = params.sage_pon ? channel.fromPath(params.sage_pon).map{ it -> [[id:'sage_pon'], it]}.collect() : channel.empty()
+    ch_curation_ann                = params.curation_ann ? channel.fromPath(params.curation_ann).map{ it -> [[id:'curation_ann'], it]}.collect() : channel.empty()
+    ch_germline_resource           = params.germline_resource ? channel.fromPath(params.germline_resource).map{ it -> [[id:'germline_resource'], it]}.collect() : channel.empty()
+    ch_germline_resource_tbi       = params.germline_resource_tbi ? channel.fromPath(params.germline_resource_tbi).map{ it -> [[id:'germline_resource_tbi'], it]}.collect() : channel.empty()
 
     // GRIDSS-specific channels for SV calling
-    ch_gridss_index                    = channelFromPathWithMeta(val_gridss_index)
-    ch_gridss_pon_breakends            = channelFromPathWithMeta(val_gridss_pon_breakends)
-    ch_gridss_pon_breakpoints          = channelFromPathWithMeta(val_gridss_pon_breakpoints)
-    ch_gridss_known_fusions            = channelFromPathWithMeta(val_gridss_known_fusions)
-    ch_gridss_repeatmasker_annotations = channelFromPathWithMeta(val_gridss_repeatmasker_annotations)
-    ch_gridss_config                   = channelFromPathWithMeta(val_gridss_config)
+    ch_gridss_pon_breakends            = params.gridss_pon_breakends ? channel.fromPath(params.gridss_pon_breakends).map{ it -> [[id:'pon_breakends'], it]}.collect() : channel.empty()
+    ch_gridss_pon_breakpoints          = params.gridss_pon_breakpoints ? channel.fromPath(params.gridss_pon_breakpoints).map{ it -> [[id:'pon_breakpoints'], it]}.collect() : channel.empty()
+    ch_gridss_known_fusions            = params.gridss_known_fusions ? channel.fromPath(params.gridss_known_fusions).map{ it -> [[id:'known_fusions'], it]}.collect() : channel.empty()
+    ch_gridss_repeatmasker_annotations = params.gridss_repeatmasker_annotations ? channel.fromPath(params.gridss_repeatmasker_annotations).map{ it -> [[id:'repeatmasker_annotations'], it]}.collect() : channel.empty()
+    ch_gridss_config            = params.gridss_config ? channel.fromPath(params.gridss_config).map{ it -> [[id: 'gridss_config'], it]}.collect() : channel.empty()
 
     //
     // WORKFLOW: Run pipeline
@@ -104,13 +155,13 @@ workflow NXF_AUTOSEQ {
         ch_dict,
         ch_bwamem2_index,
         ch_targets_bed,
-        ch_interval_list,
+        ch_interval_list_slopped20,
         ch_jumble_ref,
         ch_sage_known_hotspots_somatic,
         ch_sage_highconf_regions,
         ch_sage_pon,
         ch_ensembl_vep_cache,
-        ch_hmf_ensembl_data,
+        ch_ensembl_data_resources,
         ch_curation_ann,
         ch_germline_resource,
         ch_germline_resource_tbi,

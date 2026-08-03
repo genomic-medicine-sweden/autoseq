@@ -90,7 +90,7 @@ workflow CALL_SOMATIC_SNVS {
     PASSFILTER_FOR_SAGE (ch_sage_vcf)
 
     SOMATIC_VCFMERGE (
-        PASSFILTER_FOR_MUTECT2.out.vcf,
+        PASSFILTER_FOR_MUTECT2.out.vcf.join(PASSFILTER_FOR_MUTECT2.out.tbi),
         PASSFILTER_FOR_SAGE.out.vcf
     )
 
