@@ -196,17 +196,11 @@
                 "variants/somatic/sage/somatic/TUMOR.sage.somatic.vcf.gz.tbi"
             ],
             [
-                "NORMAL.cnr:md5,a1aa435589a8d7fe23f424bb3d0bc1e6",
                 "NORMAL.cns:md5,05b74f7bb5bc72879ab382fa07187227",
                 "NORMAL_ann.cns:md5,3aa49cf3093d9d0fbe3f57ca10c4b785",
-                "NORMAL_dnacopy.seg:md5,62fd17f6194753eb3068880fbb2c7dcd",
-                "NORMAL_profile.bedgraph:md5,cb79393c11d05185a2f4168d7eed56a2",
                 "NORMAL_segments.bedgraph:md5,3403ab6b1c036d688b79a1aae937be89",
-                "TUMOR.cnr:md5,13f495ac03553d44deada3c0181334f1",
                 "TUMOR.cns:md5,86dd10fb9bba9d4627c72da10f0e051f",
                 "TUMOR_ann.cns:md5,86284c73bb11714625b718c5f8ee94ef",
-                "TUMOR_dnacopy.seg:md5,3eb328c055916cb931c3c0482e4a90f6",
-                "TUMOR_profile.bedgraph:md5,ebb82b697b5f176374e9d4c5026a6e60",
                 "TUMOR_segments.bedgraph:md5,e1826f8163e12facfc620c07f370c0e3",
                 "NORMAL.DPYD.csv:md5,7ace75e81aecf36a3cd6227532b6e96a",
                 "NORMAL.DPYD.json:md5,bc844dd3cb9083e2c914ddc8300def2c",
@@ -271,10 +265,10 @@
                 ]
             ]
         ],
-        "timestamp": "2026-07-24T11:08:11.600728145",
+        "timestamp": "2026-07-31T10:35:43.426844268",
         "meta": {
             "nf-test": "0.9.4",
-            "nextflow": "26.04.3"
+            "nextflow": "26.04.6"
         }
     },
     "test profile - paired tumor-normal - stub": {
@@ -473,10 +467,10 @@
                 "variants/somatic/sage/somatic/TUMOR.sage.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-07-24T11:09:41.558020402",
+        "timestamp": "2026-07-31T10:39:37.02227299",
         "meta": {
             "nf-test": "0.9.4",
-            "nextflow": "26.04.3"
+            "nextflow": "26.04.6"
         }
     }
 }

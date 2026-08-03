@@ -14,5 +14,8 @@ alignment/*.{bam,bai}
 variants/**/*.{vcf.gz,tbi}
 svs/**/*.{vcf.gz,tbi}
 cnv/*.png
+cnv/*.cnr
+cnv/*_dnacopy.seg
+cnv/*_profile.bedgraph
 purecn/*.pdf
 qc/picard/*
