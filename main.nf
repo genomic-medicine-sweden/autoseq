@@ -16,8 +16,6 @@
 include { AUTOSEQ                 } from './workflows/autoseq'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
-include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
-include { getPanelsAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 include { PREPARE_REFERENCES      } from './subworkflows/local/prepare_references/main'
 include { channelFromPathWithMeta } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 
