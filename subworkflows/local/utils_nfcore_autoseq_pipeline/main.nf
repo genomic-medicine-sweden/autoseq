@@ -207,19 +207,6 @@ def getGenomeAttribute(attribute) {
     return null
 }
 
-//
-// Get attribute from panels config file e.g. bed file
-//
-def getPanelsAttribute(attribute) {
-    if (params.panels && params.panel && params.panels.containsKey(params.panel)) {
-        if (params.panels[ params.panel ].containsKey(attribute)) {
-            return params.panels[ params.panel ][ attribute ]
-        }
-    }
-    return null
-}
-
-
 
 //
 // Generate methods description for MultiQC
