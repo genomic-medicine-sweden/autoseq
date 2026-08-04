@@ -64,7 +64,7 @@ params.jumble_ref              = getPanelsAttribute('jumble_ref')
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow NXF_AUTOSEQ {
+workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
 
     take:
     samplesheet                         // channel: samplesheet read in from --input
@@ -188,7 +188,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    NXF_AUTOSEQ (
+    GENOMICMEDICINESWEDEN_AUTOSEQ (
         PIPELINE_INITIALISATION.out.samplesheet,
         params.multiqc_config,
         params.multiqc_logo,
@@ -204,12 +204,12 @@ workflow {
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
-        NXF_AUTOSEQ.out.multiqc_report
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.multiqc_report
     )
 
     publish:
-    autoseq_output  = NXF_AUTOSEQ.out.autoseq_output  // channel: [ val(meta + [file: description]), path(file) ]
-    multiqc_report  = NXF_AUTOSEQ.out.multiqc_report   // channel: /path/to/multiqc_report.html
+    autoseq_output  = GENOMICMEDICINESWEDEN_AUTOSEQ.out.autoseq_output  // channel: [ val(meta + [file: description]), path(file) ]
+    multiqc_report  = GENOMICMEDICINESWEDEN_AUTOSEQ.out.multiqc_report   // channel: /path/to/multiqc_report.html
 }
 
 
