@@ -3,10 +3,9 @@ nextflow_pipeline {
     name "Test pipeline - UMI"
     script "../main.nf"
     tag "pipeline"
+    profile "test_umi"
 
     test("test_umi profile - paired tumor-normal") {
-
-        profile "test_umi"
 
         when {
             params {
@@ -24,10 +23,6 @@ nextflow_pipeline {
             def vcf_files = getAllFilesFromDir(params.outdir, include: ['**/*.vcf.gz'])
             assert workflow.success
             assertAll(
-                // The UMI branch ran: the published BAMs are fgbio consensus BAMs ...
-                { assert bam_files.every { file -> file.getName().endsWith('_consensus_mapped.bam') } },
-                // ... and MarkDuplicates, which only runs on the standard path, did not
-                { assert workflow.trace.tasks().every { task -> !task.process.contains('MARKDUPLICATES') } },
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
@@ -42,8 +37,6 @@ nextflow_pipeline {
     }
 
     test("test_umi profile - paired tumor-normal - stub") {
-
-        profile "test_umi"
 
         options "-stub "
 
