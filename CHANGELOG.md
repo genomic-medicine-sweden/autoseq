@@ -54,6 +54,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #62 ](https://github.com/genomic-medicine-sweden/autoseq/pull/62) Excluded non-deterministic Jumble CNV outputs from the `tests/default.nf.test` content snapshot to fix md5 failures in CI.
 - [ #72 ](https://github.com/genomic-medicine-sweden/autoseq/pull/72) Added `--sample` and `--library` to `FASTQTOBAM` so the read group sample name matches `meta.id` for downstream callers.
 - [ #73 ](https://github.com/genomic-medicine-sweden/autoseq/pull/73) Moved the `ZIPPERBAMS_(PRE|POST)` tag options from `ext.args` to `ext.args2` so they are passed to `ZipperBams` instead of to the fgbio wrapper.
+- [ #74 ](https://github.com/genomic-medicine-sweden/autoseq/pull/74) Collected the reference channel passed to `UMI_PROCESSING` so it is reusable across all samples instead of being consumed by the first one.
 
 ### `Dependencies`
 
