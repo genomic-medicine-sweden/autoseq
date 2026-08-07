@@ -52,6 +52,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #58 ](https://github.com/genomic-medicine-sweden/autoseq/pull/58) Replaced the stubbed `PURECN_RUN` and `PROFILE_TUMOR_BIOMARKERS` nf-tests with real-VCF runs, added dedicated stub cases, and regenerated the snapshots.
 - [ #59 ](https://github.com/genomic-medicine-sweden/autoseq/pull/59) Added `--normal-sample ${meta.normal_id}` to `GATK4_MUTECT2` so the normal sample is correctly identified in paired tumor/normal calling.
 - [ #62 ](https://github.com/genomic-medicine-sweden/autoseq/pull/62) Excluded non-deterministic Jumble CNV outputs from the `tests/default.nf.test` content snapshot to fix md5 failures in CI.
+- [ #72 ](https://github.com/genomic-medicine-sweden/autoseq/pull/72) Added `--sample` and `--library` to `FASTQTOBAM` so the read group sample name matches `meta.id` for downstream callers.
 
 ### `Dependencies`
 
