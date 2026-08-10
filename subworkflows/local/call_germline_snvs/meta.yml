@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "call_germline_snvs"
+description: Call germline SNVs and indels from a normal sample with GATK HaplotypeCaller and annotate them with Ensembl VEP
+keywords:
+  - germline
+  - snv
+  - haplotypecaller
+  - annotation
+  - vep
+components:
+  - gatk4/haplotypecaller
+  - ensemblvep/vep
+input:
+  - ch_input:
+      type: file
+      description: |
+        Aligned, deduplicated BAM of the normal sample with its index, the intervals
+        to restrict calling to and an optional DragSTR model
+        Structure: [ val(meta), path(bam), path(bai), path(intervals), path(dragstr_model) ]
+      pattern: "*.bam"
+  - ch_genome_fasta:
+      type: file
+      description: |
+        Reference genome FASTA
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
+  - ch_genome_fai:
+      type: file
+      description: |
+        Index of the reference genome FASTA
+        Structure: [ val(meta), path(fai) ]
+      pattern: "*.fai"
+  - ch_dict:
+      type: file
+      description: |
+        Sequence dictionary of the reference genome
+        Structure: [ val(meta), path(dict) ]
+      pattern: "*.dict"
+  - ch_vep_cache:
+      type: directory
+      description: |
+        Ensembl VEP cache directory
+        Structure: [ val(meta), path(cache) ]
+  - ch_dbsnp_vcf:
+      type: file
+      description: |
+        dbSNP VCF used to annotate the called variants with rsIDs
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
+  - ch_dbsnp_vcf_tbi:
+      type: file
+      description: |
+        Index of the dbSNP VCF
+        Structure: [ val(meta), path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+output:
+  - vcf:
+      type: file
+      description: |
+        Germline variants called by HaplotypeCaller
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
+  - tbi:
+      type: file
+      description: |
+        Index of the HaplotypeCaller VCF
+        Structure: [ val(meta), path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+  - vep_vcf:
+      type: file
+      description: |
+        Germline variants annotated with Ensembl VEP
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
+  - vep_tbi:
+      type: file
+      description: |
+        Index of the VEP annotated VCF
+        Structure: [ val(meta), path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
