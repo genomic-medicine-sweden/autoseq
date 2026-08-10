@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v1.0.0dev - [date]
+## v1.0.0dev - [unreleased<!-- TODO nf-core: replace with date on release -->]
 
 Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](https://nf-co.re/) template.
 
@@ -21,6 +21,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #43 ](https://github.com/genomic-medicine-sweden/autoseq/pull/43) Added nf-test for the `gridss/preprocess` local module covering a targeted BAM scenario and stub case.
 - [ #50 ](https://github.com/genomic-medicine-sweden/autoseq/pull/50) Added `PREPARE_REFERENCES` subworkflow to build the BWA-MEM2 index and untar the VEP cache, GRIDSS index and HMF ensembl_data references, with nf-test coverage.
 - [ #55 ](https://github.com/genomic-medicine-sweden/autoseq/pull/55) Enabled an end-to-end `-profile test` run of the paired tumor/normal workflow on real GRCh37 test data.
+- [ #71 ](https://github.com/genomic-medicine-sweden/autoseq/pull/71) Added a `test_umi` profile and pipeline-level nf-test covering the UMI alignment branch on paired tumor/normal test data.
 
 ### `Changed`
 
@@ -33,6 +34,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated the minimum required nextflow version to 25.10.4 (included in new template).
 - [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Flattened reference genome and panel parameters into flat reference-file params passed as explicit workflow inputs.
 - [ #57 ](https://github.com/genomic-medicine-sweden/autoseq/pull/57) Regenerated the `PREPARE_REFERENCES` nf-test snapshot to match the updated HMF `ensembl_data` reference CSVs.
+- [ #63 ](https://github.com/genomic-medicine-sweden/autoseq/pull/63) Updated the nf-core `fastq_create_umi_consensus_fgbio` subworkflow and its fgbio and samtools modules.
 
 ### `Fixed`
 
@@ -52,6 +54,9 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #58 ](https://github.com/genomic-medicine-sweden/autoseq/pull/58) Replaced the stubbed `PURECN_RUN` and `PROFILE_TUMOR_BIOMARKERS` nf-tests with real-VCF runs, added dedicated stub cases, and regenerated the snapshots.
 - [ #59 ](https://github.com/genomic-medicine-sweden/autoseq/pull/59) Added `--normal-sample ${meta.normal_id}` to `GATK4_MUTECT2` so the normal sample is correctly identified in paired tumor/normal calling.
 - [ #62 ](https://github.com/genomic-medicine-sweden/autoseq/pull/62) Excluded non-deterministic Jumble CNV outputs from the `tests/default.nf.test` content snapshot to fix md5 failures in CI.
+- [ #72 ](https://github.com/genomic-medicine-sweden/autoseq/pull/72) Added `--sample` and `--library` to `FASTQTOBAM` so the read group sample name matches `meta.id` for downstream callers.
+- [ #73 ](https://github.com/genomic-medicine-sweden/autoseq/pull/73) Moved the `ZIPPERBAMS_(PRE|POST)` tag options from `ext.args` to `ext.args2` so they are passed to `ZipperBams` instead of to the fgbio wrapper.
+- [ #74 ](https://github.com/genomic-medicine-sweden/autoseq/pull/74) Collected the reference channel passed to `UMI_PROCESSING` so it is reusable across all samples instead of being consumed by the first one.
 
 ### `Dependencies`
 
