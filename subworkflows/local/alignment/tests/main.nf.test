@@ -48,15 +48,15 @@ nextflow_workflow {
                         ]
                     ]
                 )
-                input[1] = channel.of([
+                input[1] = channel.value([
                     [ id:'genome' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
                 ])
-                input[2] = channel.of([
+                input[2] = channel.value([
                     [ id:'genome_fai' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
                 ])
-                input[3] = BWAMEM2_INDEX.out.index
+                input[3] = BWAMEM2_INDEX.out.index.collect()
                 """
             }
         }
@@ -99,15 +99,15 @@ nextflow_workflow {
                         ]
                     ]
                 )
-                input[1] = channel.of([
+                input[1] = channel.value([
                     [ id:'genome' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
                 ])
-                input[2] = channel.of([
+                input[2] = channel.value([
                     [ id:'genome_fai' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
                 ])
-                input[3] = BWAMEM2_INDEX.out.index
+                input[3] = BWAMEM2_INDEX.out.index.collect()
                 """
             }
         }
