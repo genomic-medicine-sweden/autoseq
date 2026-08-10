@@ -55,50 +55,6 @@
     "tumor bam with panel intervals - stub": {
         "content": [
             {
-                "0": [
-                    [
-                        {
-                            "id": "TUMOR",
-                            "case_id": "TEST",
-                            "sample_name": "TUMOR",
-                            "sample_type": "tumor"
-                        },
-                        [
-                            "TUMOR.CollectMultipleMetrics.alignment_summary_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "TUMOR.CollectMultipleMetrics.base_distribution_by_cycle_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "TUMOR.CollectMultipleMetrics.insert_size_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "TUMOR.CollectMultipleMetrics.quality_by_cycle_metrics:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "TUMOR.CollectMultipleMetrics.quality_distribution_metrics:md5,d41d8cd98f00b204e9800998ecf8427e"
-                        ]
-                    ]
-                ],
-                "1": [
-                    [
-                        {
-                            "id": "TUMOR",
-                            "case_id": "TEST",
-                            "sample_name": "TUMOR",
-                            "sample_type": "tumor"
-                        },
-                        "TUMOR.CollectHsMetrics.coverage_metrics:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "2": [
-                    [
-                        {
-                            "id": "TUMOR",
-                            "case_id": "TEST",
-                            "sample_name": "TUMOR",
-                            "sample_type": "tumor"
-                        },
-                        "TUMOR.flagstat:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "3": [
-                    "versions.yml:md5,386f1181f2d5010266e75252f86b1f8c",
-                    "versions.yml:md5,65c1215c48474d67f90a87d4f82e9211",
-                    "versions.yml:md5,65c1215c48474d67f90a87d4f82e9211"
-                ],
                 "flagstat": [
                     [
                         {
@@ -145,7 +101,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-08-10T12:52:34.865855973",
+        "timestamp": "2026-08-10T12:58:05.295951031",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
