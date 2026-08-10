@@ -1,0 +1,180 @@
+nextflow_workflow {
+
+    name "Test Subworkflow CALL_SVS"
+    script "../main.nf"
+    workflow "CALL_SVS"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "subworkflows/call_svs"
+    tag "gridss"
+    tag "gripss"
+    tag "untar"
+
+    setup {
+        run("UNTAR") {
+            script "../../../../modules/nf-core/untar/main.nf"
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'gridss_index' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz', checkIfExists: true)
+                ])
+                """
+            }
+        }
+    }
+
+    test("paired tumor and normal samples") {
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of(
+                    [
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                    ],
+                    [
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ]
+                )
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = UNTAR.out.untar.collect()
+                input[4] = channel.value([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                input[5] = channel.value([
+                    [ id:'pon_breakends' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
+                ])
+                input[6] = channel.value([
+                    [ id:'pon_breakpoints' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
+                ])
+                input[7] = channel.value([
+                    [ id:'known_fusions' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/known_fusions.37.bedpe', checkIfExists: true)
+                ])
+                input[8] = channel.value([
+                    [ id:'repeatmasker_annotations' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/repeat_mask_data.37.fa.gz', checkIfExists: true)
+                ])
+                input[9] = channel.value([
+                    [ id:'targets_bed' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.bed', checkIfExists: true)
+                ])
+                input[10] = channel.value([
+                    [ id:'gridss_config' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
+                ])
+                input[11] = '37'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // GRIDSS and GRIPSS write the tool version and the full command line into
+                    // the VCF header, so only the variant records are hashed
+                    workflow.out.gridss_vcf.collect { meta, vcf -> [meta, path(vcf).vcf.variantsMD5] },
+                    workflow.out.gripss_somatic_filtered_vcf.collect { meta, vcf, tbi -> [meta, path(vcf).vcf.variantsMD5, file(tbi).name] },
+                    workflow.out.gripss_somatic_unfiltered_vcf.collect { meta, vcf, tbi -> [meta, path(vcf).vcf.variantsMD5, file(tbi).name] },
+                    workflow.out.gripss_germline_filtered_vcf.collect { meta, vcf, tbi -> [meta, path(vcf).vcf.variantsMD5, file(tbi).name] },
+                    workflow.out.gripss_germline_unfiltered_vcf.collect { meta, vcf, tbi -> [meta, path(vcf).vcf.variantsMD5, file(tbi).name] }
+                ).match() }
+            )
+        }
+    }
+
+    test("paired tumor and normal samples - stub") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of(
+                    [
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                    ],
+                    [
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ]
+                )
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = UNTAR.out.untar.collect()
+                input[4] = channel.value([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                input[5] = channel.value([
+                    [ id:'pon_breakends' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
+                ])
+                input[6] = channel.value([
+                    [ id:'pon_breakpoints' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
+                ])
+                input[7] = channel.value([
+                    [ id:'known_fusions' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/known_fusions.37.bedpe', checkIfExists: true)
+                ])
+                input[8] = channel.value([
+                    [ id:'repeatmasker_annotations' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/repeat_mask_data.37.fa.gz', checkIfExists: true)
+                ])
+                input[9] = channel.value([
+                    [ id:'targets_bed' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.bed', checkIfExists: true)
+                ])
+                input[10] = channel.value([
+                    [ id:'gridss_config' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
+                ])
+                input[11] = '37'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                // the empty `.vcf.gz` written by the GRIDSS and GRIPSS stubs cannot be
+                // decompressed and is serialised as an absolute work path, so only the
+                // file names are asserted
+                { assert snapshot(
+                    workflow.out.gridss_vcf.collect { meta, vcf -> [meta, file(vcf).name] },
+                    workflow.out.gripss_somatic_filtered_vcf.collect { meta, vcf, tbi -> [meta, file(vcf).name, file(tbi).name] },
+                    workflow.out.gripss_somatic_unfiltered_vcf.collect { meta, vcf, tbi -> [meta, file(vcf).name, file(tbi).name] },
+                    workflow.out.gripss_germline_filtered_vcf.collect { meta, vcf, tbi -> [meta, file(vcf).name, file(tbi).name] },
+                    workflow.out.gripss_germline_unfiltered_vcf.collect { meta, vcf, tbi -> [meta, file(vcf).name, file(tbi).name] }
+                ).match() }
+            )
+        }
+    }
+}
