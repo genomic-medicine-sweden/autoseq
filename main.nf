@@ -105,7 +105,6 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     ch_sage_known_hotspots_somatic     = channelFromPathWithMeta(val_sage_known_hotspots_somatic)
     ch_sage_highconf_regions           = channelFromPathWithMeta(val_sage_highconf_regions)
     ch_sage_pon                        = channelFromPathWithMeta(val_sage_pon)
-    ch_hmf_ensembl_data                = channelFromPathWithMeta(val_hmf_ensembl_data)
     ch_curation_ann                    = channelFromPathWithMeta(val_curation_ann)
 
     // GRIDSS-specific channels for SV calling
