@@ -1,0 +1,104 @@
+nextflow_workflow {
+
+    name "Test Subworkflow QC_ALIGNMENT"
+    script "../main.nf"
+    workflow "QC_ALIGNMENT"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "subworkflows/qc_alignment"
+    tag "picard"
+    tag "picard/collectmultiplemetrics"
+    tag "picard/collecthsmetrics"
+    tag "samtools"
+    tag "samtools/flagstat"
+
+    test("tumor bam with panel intervals") {
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.of([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.of([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                input[4] = channel.of([
+                    [ id:'test_panel' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.interval_list', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // Picard writes `# Started on:` and the full command line into the metrics
+                    // header, so the comment lines are dropped before hashing
+                    workflow.out.multiple_metrics.collect { meta, metrics ->
+                        [meta, metrics.collect { m -> "${file(m).name}:md5,${listToMD5(path(m).readLines().findAll { line -> !line.startsWith("#") })}" }.sort()]
+                    },
+                    workflow.out.hs_metrics.collect { meta, metrics ->
+                        [meta, "${file(metrics).name}:md5,${listToMD5(path(metrics).readLines().findAll { line -> !line.startsWith("#") })}"]
+                    },
+                    workflow.out.flagstat,
+                    workflow.out.versions
+                ).match() }
+            )
+        }
+    }
+
+    test("tumor bam with panel intervals - stub") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.of([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.of([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                input[4] = channel.of([
+                    [ id:'test_panel' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.interval_list', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(workflow.out).match() }
+            )
+        }
+    }
+}
