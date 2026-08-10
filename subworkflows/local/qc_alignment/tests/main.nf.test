@@ -23,19 +23,19 @@ nextflow_workflow {
                     file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
                 ])
-                input[1] = channel.of([
+                input[1] = channel.value([
                     [ id:'genome' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
                 ])
-                input[2] = channel.of([
+                input[2] = channel.value([
                     [ id:'genome_fai' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
                 ])
-                input[3] = channel.of([
+                input[3] = channel.value([
                     [ id:'genome_dict' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
                 ])
-                input[4] = channel.of([
+                input[4] = channel.value([
                     [ id:'test_panel' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.interval_list', checkIfExists: true)
                 ])
@@ -74,19 +74,19 @@ nextflow_workflow {
                     file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
                 ])
-                input[1] = channel.of([
+                input[1] = channel.value([
                     [ id:'genome' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
                 ])
-                input[2] = channel.of([
+                input[2] = channel.value([
                     [ id:'genome_fai' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
                 ])
-                input[3] = channel.of([
+                input[3] = channel.value([
                     [ id:'genome_dict' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
                 ])
-                input[4] = channel.of([
+                input[4] = channel.value([
                     [ id:'test_panel' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.interval_list', checkIfExists: true)
                 ])
