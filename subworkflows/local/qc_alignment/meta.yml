@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "qc_alignment"
+description: Collect alignment quality metrics for each aligned BAM with Picard CollectMultipleMetrics, Picard CollectHsMetrics against the target panel, and samtools flagstat
+keywords:
+  - qc
+  - metrics
+  - picard
+  - samtools
+  - bam
+components:
+  - picard/collectmultiplemetrics
+  - picard/collecthsmetrics
+  - samtools/flagstat
+input:
+  - ch_input_bam:
+      type: file
+      description: |
+        Aligned, deduplicated BAM files with their indices
+        Structure: [ val(meta), path(bam), path(bai) ]
+      pattern: "*.bam"
+  - ch_genome_fasta:
+      type: file
+      description: |
+        Reference genome FASTA
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
+  - ch_genome_fai:
+      type: file
+      description: |
+        Index of the reference genome FASTA
+        Structure: [ val(meta), path(fai) ]
+      pattern: "*.fai"
+  - ch_genome_dict:
+      type: file
+      description: |
+        Sequence dictionary of the reference genome
+        Structure: [ val(meta), path(dict) ]
+      pattern: "*.dict"
+  - ch_interval_list:
+      type: file
+      description: |
+        Target panel interval list, used as both the bait and the target
+        intervals of Picard CollectHsMetrics
+        Structure: [ val(meta), path(interval_list) ]
+      pattern: "*.interval_list"
+output:
+  - multiple_metrics:
+      type: file
+      description: |
+        Alignment summary, insert size, quality and base distribution metrics
+        collected by Picard CollectMultipleMetrics
+        Structure: [ val(meta), [ path(metrics) ] ]
+      pattern: "*_metrics"
+  - hs_metrics:
+      type: file
+      description: |
+        Hybrid-selection coverage metrics collected by Picard CollectHsMetrics
+        Structure: [ val(meta), path(metrics) ]
+      pattern: "*_metrics"
+  - flagstat:
+      type: file
+      description: |
+        Alignment counts reported by samtools flagstat
+        Structure: [ val(meta), path(flagstat) ]
+      pattern: "*.flagstat"
+  - versions:
+      type: file
+      description: |
+        File containing software versions
+        Structure: [ path(versions.yml) ]
+      pattern: "versions.yml"
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
