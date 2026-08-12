@@ -1,0 +1,101 @@
+nextflow_workflow {
+
+    name "Test Subworkflow CALL_CNVS"
+    script "../main.nf"
+    workflow "CALL_CNVS"
+    config "./nextflow.config"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "subworkflows/call_cnvs"
+    tag "jumble"
+    tag "annotate_cnvs"
+
+    test("tumor and normal samples") {
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of(
+                    [
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                    ],
+                    [
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ]
+                )
+                input[1] = channel.value([
+                    [ id:'test_panel' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'curation_ann' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/cancer_gene_annotations_for_curation.37.v2.csv', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    workflow.out.jumble_cns,
+                    workflow.out.segments_bedgraph,
+                    // `_ann.cns` is annotated as somatic for the tumor sample and germline for
+                    // the normal sample, so the routing on `meta.sample_type` is covered here
+                    workflow.out.cns,
+                    // Jumble writes per-run values into the plots and the bin-level outputs,
+                    // so only their file names are asserted
+                    workflow.out.cnr.collect { meta, cnr -> [meta, file(cnr).name] },
+                    workflow.out.seg.collect { meta, seg -> [meta, file(seg).name] },
+                    workflow.out.profile_bedgraph.collect { meta, bedgraph -> [meta, file(bedgraph).name] },
+                    workflow.out.png.collect { meta, png -> [meta, file(png).name] }
+                ).match() }
+            )
+        }
+    }
+
+    test("tumor and normal samples - stub") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of(
+                    [
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                    ],
+                    [
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ]
+                )
+                input[1] = channel.value([
+                    [ id:'test_panel' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'curation_ann' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/cancer_gene_annotations_for_curation.37.v2.csv', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(sanitizeOutput(workflow.out)).match() }
+            )
+        }
+    }
+}
