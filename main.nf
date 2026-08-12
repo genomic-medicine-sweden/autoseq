@@ -32,7 +32,7 @@ include { channelFromPathWithMeta } from './subworkflows/local/utils_nfcore_auto
 workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
 
     take:
-    samplesheet                         // channel: [mandatory] samplesheet read in from --input
+    samplesheet                         // channel: samplesheet read in from --input
     val_bwamem2_index                   // string:  [mandatory] path to reference genome bwa-mem2 index
     val_curation_ann                    // string:  [mandatory] path to CNV curation annotation CSV
     val_dbsnp_vcf                       // string:  [optional]  path to dbSNP VCF
@@ -55,10 +55,10 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     val_hmf_ensembl_data_tar            // string:  [optional]  path to HMF Ensembl data resources tarball
     val_interval_list                   // string:  [mandatory] path to target regions interval list
     val_jumble_ref                      // string:  [mandatory] path to Jumble reference RDS
-    val_multiqc_config                  // string:  [optional]  path to MultiQC config
-    val_multiqc_logo                    // string:  [optional]  path to MultiQC logo
-    val_multiqc_methods_description     // string:  [optional]  path to MultiQC methods description
-    val_outdir                          // string:  [mandatory] path to output directory
+    val_multiqc_config                  // val: /path/to/multiqc_config.yaml
+    val_multiqc_logo                    // val: /path/to/multiqc_logo.png
+    val_multiqc_methods_description     // val: /path/to/multiqc_methods_description.md
+    val_outdir                          // val: /path/to/output/directory
     val_sage_highconf_regions           // string:  [mandatory] path to SAGE high-confidence regions
     val_sage_known_hotspots_somatic     // string:  [mandatory] path to SAGE somatic hotspots
     val_sage_pon                        // string:  [mandatory] path to SAGE panel of normals

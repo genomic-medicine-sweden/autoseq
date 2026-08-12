@@ -32,7 +32,8 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Template update for nf-core/tools v4.0.2.
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated multiqc module from 1.32 to 1.34 and fastqc module (included in the template update).
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated the minimum required nextflow version to 25.10.4 (included in new template).
-- [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Flattened reference genome and panel parameters into flat reference-file params passed as explicit workflow inputs.
+- [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Replaced the nested `genomes {}` / `panels {}` config maps with flat reference-file params, passed as explicit `GENOMICMEDICINESWEDEN_AUTOSEQ` inputs instead of read from `params.*` inside the workflow.
+- [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Renamed `interval_list_slopped20` → `interval_list`, `ensembl_data_resources` → `hmf_ensembl_data`, `genome_gridss_index` → `gridss_index` and `ref_genome_*` → `genome_*`.
 - [ #57 ](https://github.com/genomic-medicine-sweden/autoseq/pull/57) Regenerated the `PREPARE_REFERENCES` nf-test snapshot to match the updated HMF `ensembl_data` reference CSVs.
 - [ #63 ](https://github.com/genomic-medicine-sweden/autoseq/pull/63) Updated the nf-core `fastq_create_umi_consensus_fgbio` subworkflow and its fgbio and samtools modules.
 
@@ -57,6 +58,10 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #72 ](https://github.com/genomic-medicine-sweden/autoseq/pull/72) Added `--sample` and `--library` to `FASTQTOBAM` so the read group sample name matches `meta.id` for downstream callers.
 - [ #73 ](https://github.com/genomic-medicine-sweden/autoseq/pull/73) Moved the `ZIPPERBAMS_(PRE|POST)` tag options from `ext.args` to `ext.args2` so they are passed to `ZipperBams` instead of to the fgbio wrapper.
 - [ #74 ](https://github.com/genomic-medicine-sweden/autoseq/pull/74) Collected the reference channel passed to `UMI_PROCESSING` so it is reusable across all samples instead of being consumed by the first one.
+
+### `Removed`
+
+- [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Removed `conf/reference_genomes.config`, `conf/panels_data.config`, the `ref_genomes_base` / `panel` params and the `getPanelsAttribute()` / `panelExistsError()` helpers.
 
 ### `Dependencies`
 
