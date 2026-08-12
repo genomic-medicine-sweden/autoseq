@@ -24,6 +24,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #71 ](https://github.com/genomic-medicine-sweden/autoseq/pull/71) Added a `test_umi` profile and pipeline-level nf-test covering the UMI alignment branch on paired tumor/normal test data.
 - [ #85 ](https://github.com/genomic-medicine-sweden/autoseq/pull/85) Added nf-test and `meta.yml` for the `ALIGNMENT` subworkflow covering a multi-lane tumor sample and a stub case.
 - [ #86 ](https://github.com/genomic-medicine-sweden/autoseq/pull/86) Added nf-test and `meta.yml` for the `QC_ALIGNMENT` subworkflow covering a tumor BAM with the panel interval list and a stub case.
+- [ #87 ](https://github.com/genomic-medicine-sweden/autoseq/pull/87) Added nf-test and `meta.yml` for the `CALL_CNVS` subworkflow covering paired tumor/normal samples and a stub case.
 
 ### `Changed`
 

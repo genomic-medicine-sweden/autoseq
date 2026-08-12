@@ -1,0 +1,79 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "call_cnvs"
+description: Call copy number variants from aligned BAM files with Jumble and annotate the resulting segments with cancer relevant genes
+keywords:
+  - cnv
+  - copy number
+  - jumble
+  - annotation
+components:
+  - jumble
+  - annotate_cnvs
+input:
+  - ch_input_bam:
+      type: file
+      description: |
+        Aligned, deduplicated BAM files with their indices. `meta.sample_type`
+        decides whether the segments are annotated as somatic (`tumor`) or
+        germline (`normal`).
+        Structure: [ val(meta), path(bam), path(bai) ]
+      pattern: "*.bam"
+  - ch_jumble_ref:
+      type: file
+      description: |
+        Panel-specific Jumble reference built from a set of normal samples
+        Structure: [ val(meta), path(rds) ]
+      pattern: "*.RDS"
+  - ch_curation_ann:
+      type: file
+      description: |
+        Cancer gene annotation table used to annotate the called segments
+        Structure: [ val(meta), path(csv) ]
+      pattern: "*.csv"
+output:
+  - jumble_cns:
+      type: file
+      description: |
+        Called copy number segments
+        Structure: [ val(meta), path(cns) ]
+      pattern: "*.cns"
+  - cnr:
+      type: file
+      description: |
+        Bin-level copy number ratios
+        Structure: [ val(meta), path(cnr) ]
+      pattern: "*.cnr"
+  - seg:
+      type: file
+      description: |
+        DNAcopy segmentation table
+        Structure: [ val(meta), path(seg) ]
+      pattern: "*_dnacopy.seg"
+  - profile_bedgraph:
+      type: file
+      description: |
+        Bin-level copy number profile in bedGraph format for IGV
+        Structure: [ val(meta), path(bedgraph) ]
+      pattern: "*_profile.bedgraph"
+  - segments_bedgraph:
+      type: file
+      description: |
+        Segment-level copy number calls in bedGraph format for IGV
+        Structure: [ val(meta), path(bedgraph) ]
+      pattern: "*_segments.bedgraph"
+  - png:
+      type: file
+      description: |
+        Copy number profile plot
+        Structure: [ val(meta), path(png) ]
+      pattern: "*.png"
+  - cns:
+      type: file
+      description: |
+        Copy number segments annotated with cancer relevant genes
+        Structure: [ val(meta), path(cns) ]
+      pattern: "*_ann.cns"
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
