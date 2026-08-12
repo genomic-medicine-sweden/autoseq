@@ -308,3 +308,19 @@ def methodsDescriptionText(mqc_methods_yaml) {
 
     return description_html.toString()
 }
+
+/**
+ * Creates a channel from a file path, maps it to [id, file] format, and collects
+ * @param filePath The path to the file (can be null), when filePath is null; returns channel.empty()
+ * @param customId The custom ID to be used in meta.id (default: null)
+ * @return Channel with [[id:name], file] format and collected, or fallback channel
+ */
+def channelFromPathWithMeta(filePath, customId = null) {
+    if (!filePath) {
+        return channel.empty()
+    }
+    return channel.fromPath(filePath).map { file ->
+        def meta_id = customId ?: file.simpleName
+        return [[id: meta_id], file]
+    }.collect()
+}
