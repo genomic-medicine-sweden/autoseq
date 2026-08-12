@@ -68,11 +68,11 @@ params.jumble_ref              = getPanelsAttribute('jumble_ref')
 workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
 
     take:
-    samplesheet                         // channel: [mandatory] samplesheet read in from --input
-    val_multiqc_config                  // string:  [optional]  path to MultiQC config
-    val_multiqc_logo                    // string:  [optional]  path to MultiQC logo
-    val_multiqc_methods_description     // string:  [optional]  path to MultiQC methods description
-    val_outdir                          // string:  [mandatory] path to output directory
+    samplesheet                         // channel: samplesheet read in from --input
+    val_multiqc_config                  // val: /path/to/multiqc_config.yaml
+    val_multiqc_logo                    // val: /path/to/multiqc_logo.png
+    val_multiqc_methods_description     // val: /path/to/multiqc_methods_description.md
+    val_outdir                          // val: /path/to/output/directory
 
     main:
 
