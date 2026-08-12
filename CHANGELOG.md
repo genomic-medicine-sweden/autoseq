@@ -22,6 +22,9 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #50 ](https://github.com/genomic-medicine-sweden/autoseq/pull/50) Added `PREPARE_REFERENCES` subworkflow to build the BWA-MEM2 index and untar the VEP cache, GRIDSS index and HMF ensembl_data references, with nf-test coverage.
 - [ #55 ](https://github.com/genomic-medicine-sweden/autoseq/pull/55) Enabled an end-to-end `-profile test` run of the paired tumor/normal workflow on real GRCh37 test data.
 - [ #71 ](https://github.com/genomic-medicine-sweden/autoseq/pull/71) Added a `test_umi` profile and pipeline-level nf-test covering the UMI alignment branch on paired tumor/normal test data.
+- [ #85 ](https://github.com/genomic-medicine-sweden/autoseq/pull/85) Added nf-test and `meta.yml` for the `ALIGNMENT` subworkflow covering a multi-lane tumor sample and a stub case.
+- [ #86 ](https://github.com/genomic-medicine-sweden/autoseq/pull/86) Added nf-test and `meta.yml` for the `QC_ALIGNMENT` subworkflow covering a tumor BAM with the panel interval list and a stub case.
+- [ #87 ](https://github.com/genomic-medicine-sweden/autoseq/pull/87) Added nf-test and `meta.yml` for the `CALL_CNVS` subworkflow covering paired tumor/normal samples and a stub case.
 - [ #90 ](https://github.com/genomic-medicine-sweden/autoseq/pull/90) Added nf-test and `meta.yml` for the `CALL_SOMATIC_SNVS` subworkflow covering a paired tumor/normal case and a stub case.
 
 ### `Changed`

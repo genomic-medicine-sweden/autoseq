@@ -1,0 +1,302 @@
+{
+    "tumor and normal samples - stub": {
+        "content": [
+            {
+                "cnr": [
+                    [
+                        {
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
+                        },
+                        "NORMAL.cnr:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR.cnr:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "cns": [
+                    [
+                        {
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
+                        },
+                        "NORMAL_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "jumble_cns": [
+                    [
+                        {
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
+                        },
+                        "NORMAL.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "png": [
+                    [
+                        {
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
+                        },
+                        "NORMAL.png:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR.png:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "profile_bedgraph": [
+                    [
+                        {
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
+                        },
+                        "NORMAL_profile.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR_profile.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "seg": [
+                    [
+                        {
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
+                        },
+                        "NORMAL_dnacopy.seg:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR_dnacopy.seg:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "segments_bedgraph": [
+                    [
+                        {
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
+                        },
+                        "NORMAL_segments.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR_segments.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-08-10T13:58:41.384568163",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    },
+    "tumor and normal samples": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "NORMAL",
+                        "case_id": "TEST",
+                        "sample_name": "NORMAL",
+                        "sample_type": "normal"
+                    },
+                    "NORMAL.cns:md5,05b74f7bb5bc72879ab382fa07187227"
+                ],
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.cns:md5,86dd10fb9bba9d4627c72da10f0e051f"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "NORMAL",
+                        "case_id": "TEST",
+                        "sample_name": "NORMAL",
+                        "sample_type": "normal"
+                    },
+                    "NORMAL_segments.bedgraph:md5,3403ab6b1c036d688b79a1aae937be89"
+                ],
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR_segments.bedgraph:md5,e1826f8163e12facfc620c07f370c0e3"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "NORMAL",
+                        "case_id": "TEST",
+                        "sample_name": "NORMAL",
+                        "sample_type": "normal"
+                    },
+                    "NORMAL_ann.cns:md5,3aa49cf3093d9d0fbe3f57ca10c4b785"
+                ],
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR_ann.cns:md5,86284c73bb11714625b718c5f8ee94ef"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "NORMAL",
+                        "case_id": "TEST",
+                        "sample_name": "NORMAL",
+                        "sample_type": "normal"
+                    },
+                    "NORMAL.cnr"
+                ],
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.cnr"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "NORMAL",
+                        "case_id": "TEST",
+                        "sample_name": "NORMAL",
+                        "sample_type": "normal"
+                    },
+                    "NORMAL_dnacopy.seg"
+                ],
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR_dnacopy.seg"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "NORMAL",
+                        "case_id": "TEST",
+                        "sample_name": "NORMAL",
+                        "sample_type": "normal"
+                    },
+                    "NORMAL_profile.bedgraph"
+                ],
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR_profile.bedgraph"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "NORMAL",
+                        "case_id": "TEST",
+                        "sample_name": "NORMAL",
+                        "sample_type": "normal"
+                    },
+                    "NORMAL.png"
+                ],
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.png"
+                ]
+            ]
+        ],
+        "timestamp": "2026-08-10T13:58:32.145002661",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    }
+}

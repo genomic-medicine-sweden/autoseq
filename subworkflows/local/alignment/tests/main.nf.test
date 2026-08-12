@@ -1,0 +1,122 @@
+nextflow_workflow {
+
+    name "Test Subworkflow ALIGNMENT"
+    script "../main.nf"
+    workflow "ALIGNMENT"
+    config "./nextflow.config"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "subworkflows/alignment"
+    tag "bwamem2"
+    tag "bwamem2/mem"
+    tag "gatk4"
+    tag "gatk4/markduplicates"
+
+    setup {
+        run("BWAMEM2_INDEX") {
+            script "../../../../modules/nf-core/bwamem2/index/main.nf"
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                """
+            }
+        }
+    }
+
+    test("multi-lane tumor sample") {
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of(
+                    [
+                        [ id:'TEST_TUMOR_L001', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor', lane:'L001', datatype:'fastq', single_end:false ],
+                        [
+                            file(params.pipelines_testdata_base_path + 'testdata/fastqs/GRCh37/tumor/tiny_t_L001_R1_xxx.fastq.gz', checkIfExists: true),
+                            file(params.pipelines_testdata_base_path + 'testdata/fastqs/GRCh37/tumor/tiny_t_L001_R2_xxx.fastq.gz', checkIfExists: true)
+                        ]
+                    ],
+                    [
+                        [ id:'TEST_TUMOR_L002', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor', lane:'L002', datatype:'fastq', single_end:false ],
+                        [
+                            file(params.pipelines_testdata_base_path + 'testdata/fastqs/GRCh37/tumor/tiny_t_L002_R1_xxx.fastq.gz', checkIfExists: true),
+                            file(params.pipelines_testdata_base_path + 'testdata/fastqs/GRCh37/tumor/tiny_t_L002_R2_xxx.fastq.gz', checkIfExists: true)
+                        ]
+                    ]
+                )
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = BWAMEM2_INDEX.out.index.collect()
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    workflow.out.dedup_bam.collect { meta, b -> [meta, bam(b).getReadsMD5()] },
+                    workflow.out.dedup_bai.collect { meta, bai -> [meta, file(bai).name] },
+                    // Picard writes `# Started on:` and the full command line into the metrics
+                    // header, so only the file name is asserted
+                    workflow.out.dedup_metrics.collect { meta, metrics -> [meta, file(metrics).name] },
+                    workflow.out.versions
+                ).match() }
+            )
+        }
+    }
+
+    test("multi-lane tumor sample - stub") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of(
+                    [
+                        [ id:'TEST_TUMOR_L001', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor', lane:'L001', datatype:'fastq', single_end:false ],
+                        [
+                            file(params.pipelines_testdata_base_path + 'testdata/fastqs/GRCh37/tumor/tiny_t_L001_R1_xxx.fastq.gz', checkIfExists: true),
+                            file(params.pipelines_testdata_base_path + 'testdata/fastqs/GRCh37/tumor/tiny_t_L001_R2_xxx.fastq.gz', checkIfExists: true)
+                        ]
+                    ],
+                    [
+                        [ id:'TEST_TUMOR_L002', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor', lane:'L002', datatype:'fastq', single_end:false ],
+                        [
+                            file(params.pipelines_testdata_base_path + 'testdata/fastqs/GRCh37/tumor/tiny_t_L002_R1_xxx.fastq.gz', checkIfExists: true),
+                            file(params.pipelines_testdata_base_path + 'testdata/fastqs/GRCh37/tumor/tiny_t_L002_R2_xxx.fastq.gz', checkIfExists: true)
+                        ]
+                    ]
+                )
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = BWAMEM2_INDEX.out.index.collect()
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(sanitizeOutput(workflow.out)).match() }
+            )
+        }
+    }
+}
