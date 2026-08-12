@@ -123,7 +123,7 @@ jumble_ref: /path/to/GRCh37/targets/comprehensive3_baits_twist.bed.reference.RDS
 
 ### Panel Support
 
-Target panels are configured through the `targets_bed`, `interval_list`, and `jumble_ref` parameters. To run a different panel, point these parameters at the corresponding files for that panel (e.g. in a dedicated `-params-file` per panel). The pipeline no longer resolves panels through a preset `--panel` name.
+Target panels are configured through the `targets_bed`, `interval_list`, and `jumble_ref` parameters. To run a different panel, point these parameters at the corresponding files for that panel (e.g. in a dedicated `-params-file` per panel).
 
 #### Parameter Usage
 
