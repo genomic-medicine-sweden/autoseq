@@ -81,7 +81,7 @@
                         "normal_id": "NORMAL",
                         "tumor_id": "TUMOR"
                     },
-                    "d41d8cd98f00b204e9800998ecf8427e",
+                    "TUMOR.gripss.filtered.somatic.vcf.gz:d41d8cd98f00b204e9800998ecf8427e",
                     "TUMOR.gripss.filtered.somatic.vcf.gz.tbi"
                 ]
             ],
@@ -92,7 +92,7 @@
                         "normal_id": "NORMAL",
                         "tumor_id": "TUMOR"
                     },
-                    "d41d8cd98f00b204e9800998ecf8427e",
+                    "TUMOR.gripss.somatic.vcf.gz:d41d8cd98f00b204e9800998ecf8427e",
                     "TUMOR.gripss.somatic.vcf.gz.tbi"
                 ]
             ],
@@ -103,7 +103,7 @@
                         "normal_id": "NORMAL",
                         "tumor_id": "TUMOR"
                     },
-                    "d41d8cd98f00b204e9800998ecf8427e",
+                    "TUMOR.gripss.filtered.germline.vcf.gz:d41d8cd98f00b204e9800998ecf8427e",
                     "TUMOR.gripss.filtered.germline.vcf.gz.tbi"
                 ]
             ],
@@ -114,12 +114,12 @@
                         "normal_id": "NORMAL",
                         "tumor_id": "TUMOR"
                     },
-                    "d41d8cd98f00b204e9800998ecf8427e",
+                    "TUMOR.gripss.germline.vcf.gz:d41d8cd98f00b204e9800998ecf8427e",
                     "TUMOR.gripss.germline.vcf.gz.tbi"
                 ]
             ]
         ],
-        "timestamp": "2026-08-10T14:31:54.751853163",
+        "timestamp": "2026-08-13T14:50:27.587352",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"

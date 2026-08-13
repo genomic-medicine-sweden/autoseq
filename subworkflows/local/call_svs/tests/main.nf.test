@@ -91,10 +91,10 @@ nextflow_workflow {
                     // GRIDSS and GRIPSS write the tool version and the full command line into
                     // the VCF header, so only the variant records are hashed
                     workflow.out.gridss_vcf.collect { meta, vcf -> [meta, path(vcf).vcf.variantsMD5] },
-                    workflow.out.gripss_somatic_filtered_vcf.collect { meta, vcf, tbi -> [meta, path(vcf).vcf.variantsMD5, file(tbi).name] },
-                    workflow.out.gripss_somatic_unfiltered_vcf.collect { meta, vcf, tbi -> [meta, path(vcf).vcf.variantsMD5, file(tbi).name] },
-                    workflow.out.gripss_germline_filtered_vcf.collect { meta, vcf, tbi -> [meta, path(vcf).vcf.variantsMD5, file(tbi).name] },
-                    workflow.out.gripss_germline_unfiltered_vcf.collect { meta, vcf, tbi -> [meta, path(vcf).vcf.variantsMD5, file(tbi).name] }
+                    workflow.out.gripss_somatic_filtered_vcf.collect { meta, vcf, tbi -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}", file(tbi).name] },
+                    workflow.out.gripss_somatic_unfiltered_vcf.collect { meta, vcf, tbi -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}", file(tbi).name] },
+                    workflow.out.gripss_germline_filtered_vcf.collect { meta, vcf, tbi -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}", file(tbi).name] },
+                    workflow.out.gripss_germline_unfiltered_vcf.collect { meta, vcf, tbi -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}", file(tbi).name] }
                 ).match() }
             )
         }
