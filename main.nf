@@ -88,8 +88,8 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     ch_hmf_ensembl_data        = ch_references.hmf_ensembl_data
     ch_gridss_index            = ch_references.gridss_index
 
-    // Using channelFromPathWithMeta helper (with simpleName as meta id).
-    // If filepath is null, returns, channel.empty())
+    // channelFromPathWithMeta() builds a [[id:simpleName], file] channel from a path,
+    // or channel.empty() when the path is null
 
     ch_genome_fai                      = channelFromPathWithMeta(val_genome_fai)
     ch_dict                            = channelFromPathWithMeta(val_genome_dict)
@@ -113,6 +113,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     ch_gridss_known_fusions            = channelFromPathWithMeta(val_gridss_known_fusions)
     ch_gridss_repeatmasker_annotations = channelFromPathWithMeta(val_gridss_repeatmasker_annotations)
     ch_gridss_config                   = channelFromPathWithMeta(val_gridss_config)
+
 
     //
     // WORKFLOW: Run pipeline
