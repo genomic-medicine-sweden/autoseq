@@ -1,0 +1,120 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "call_svs"
+description: Call structural variants from a paired tumor/normal case with GRIDSS and filter them into somatic and germline call sets with GRIPSS
+keywords:
+  - structural variants
+  - sv
+  - gridss
+  - gripss
+components:
+  - gridss/extract_overlapping_fragments
+  - gridss/preprocess
+  - gridss/assemble
+  - gridss/call
+  - gripss/somatic
+  - gripss/germline
+input:
+  - ch_aligned_bam:
+      type: file
+      description: |
+        Aligned, deduplicated BAM files with their indices. Tumor and normal samples
+        are paired on `meta.case_id` before the assemble step.
+        Structure: [ val(meta), path(bam), path(bai) ]
+      pattern: "*.bam"
+  - ch_genome_fasta:
+      type: file
+      description: |
+        Reference genome FASTA
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
+  - ch_genome_fai:
+      type: file
+      description: |
+        Index of the reference genome FASTA
+        Structure: [ val(meta), path(fai) ]
+      pattern: "*.fai"
+  - ch_genome_gridss_index:
+      type: directory
+      description: |
+        Directory holding the BWA and GRIDSS indices of the reference genome
+        Structure: [ val(meta), path(index) ]
+  - ch_genome_dict:
+      type: file
+      description: |
+        Sequence dictionary of the reference genome
+        Structure: [ val(meta), path(dict) ]
+      pattern: "*.dict"
+  - ch_pon_breakends:
+      type: file
+      description: |
+        Panel of normals of single breakends
+        Structure: [ val(meta), path(bed) ]
+      pattern: "*.bed.gz"
+  - ch_pon_breakpoints:
+      type: file
+      description: |
+        Panel of normals of breakpoints
+        Structure: [ val(meta), path(bedpe) ]
+      pattern: "*.bedpe.gz"
+  - ch_known_fusions:
+      type: file
+      description: |
+        Known fusion breakpoints rescued during filtering
+        Structure: [ val(meta), path(bedpe) ]
+      pattern: "*.bedpe"
+  - ch_repeatmasker_annotations:
+      type: file
+      description: |
+        RepeatMasker annotations used to flag repeat driven calls
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.fa.gz"
+  - ch_target_region_bed:
+      type: file
+      description: |
+        Target panel BED used to extract overlapping fragments and to restrict filtering
+        Structure: [ val(meta), path(bed) ]
+      pattern: "*.bed"
+  - ch_gridss_config:
+      type: file
+      description: |
+        GRIDSS configuration properties
+        Structure: [ val(meta), path(properties) ]
+      pattern: "*.properties"
+  - genome_version:
+      type: string
+      description: Numeric reference genome version passed to GRIPSS ('37' or '38')
+output:
+  - gridss_vcf:
+      type: file
+      description: |
+        Unfiltered structural variants called by GRIDSS for the case
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.sv.gridss.vcf.gz"
+  - gripss_somatic_filtered_vcf:
+      type: file
+      description: |
+        Somatic structural variants passing the GRIPSS filters, with index
+        Structure: [ val(meta), path(vcf), path(tbi) ]
+      pattern: "*.gripss.filtered.somatic.vcf.gz"
+  - gripss_somatic_unfiltered_vcf:
+      type: file
+      description: |
+        All somatic structural variants with their GRIPSS filter annotations, with index
+        Structure: [ val(meta), path(vcf), path(tbi) ]
+      pattern: "*.gripss.somatic.vcf.gz"
+  - gripss_germline_filtered_vcf:
+      type: file
+      description: |
+        Germline structural variants passing the GRIPSS filters, with index
+        Structure: [ val(meta), path(vcf), path(tbi) ]
+      pattern: "*.gripss.filtered.germline.vcf.gz"
+  - gripss_germline_unfiltered_vcf:
+      type: file
+      description: |
+        All germline structural variants with their GRIPSS filter annotations, with index
+        Structure: [ val(meta), path(vcf), path(tbi) ]
+      pattern: "*.gripss.germline.vcf.gz"
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"

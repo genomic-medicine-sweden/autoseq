@@ -25,6 +25,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #85 ](https://github.com/genomic-medicine-sweden/autoseq/pull/85) Added nf-test and `meta.yml` for the `ALIGNMENT` subworkflow covering a multi-lane tumor sample and a stub case.
 - [ #86 ](https://github.com/genomic-medicine-sweden/autoseq/pull/86) Added nf-test and `meta.yml` for the `QC_ALIGNMENT` subworkflow covering a tumor BAM with the panel interval list and a stub case.
 - [ #87 ](https://github.com/genomic-medicine-sweden/autoseq/pull/87) Added nf-test and `meta.yml` for the `CALL_CNVS` subworkflow covering paired tumor/normal samples and a stub case.
+- [ #89 ](https://github.com/genomic-medicine-sweden/autoseq/pull/89) Added nf-test and `meta.yml` for the `CALL_SVS` subworkflow covering a paired tumor/normal case and a stub case.
 - [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Added the `channelFromPathWithMeta` helper to build `[[id:...], file]` reference channels from a path, or `channel.empty()` when the path is null.
 
 ### `Changed`
