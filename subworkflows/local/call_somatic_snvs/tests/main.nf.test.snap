@@ -217,7 +217,7 @@
                         "tumor_sample": "TUMOR",
                         "normal_sample": "NORMAL"
                     },
-                    "79a9e8d4fa57fabf3fd82051c03488c7"
+                    "TEST.vcf.gz:md5,79a9e8d4fa57fabf3fd82051c03488c7"
                 ]
             ],
             [
@@ -230,7 +230,7 @@
                         "tumor_sample": "TUMOR",
                         "normal_sample": "NORMAL"
                     },
-                    "673d3ee2ad91e129bf8137aeeba1cd04"
+                    "TUMOR_NORMAL_mutect2_filtered.vcf.gz:md5,673d3ee2ad91e129bf8137aeeba1cd04"
                 ]
             ],
             [
@@ -243,7 +243,7 @@
                         "tumor_sample": "TUMOR",
                         "normal_sample": "NORMAL"
                     },
-                    "b2181f9945a8d84ed2a8e40b94a9d675"
+                    "TUMOR.sage.somatic.vcf.gz:md5,b2181f9945a8d84ed2a8e40b94a9d675"
                 ]
             ],
             [
@@ -256,7 +256,7 @@
                         "tumor_sample": "TUMOR",
                         "normal_sample": "NORMAL"
                     },
-                    "15d5903edd6e671a148453861f88552f"
+                    "TUMOR_NORMAL-all.somatic.vcf.gz:md5,15d5903edd6e671a148453861f88552f"
                 ]
             ],
             [
@@ -269,7 +269,7 @@
                         "tumor_sample": "TUMOR",
                         "normal_sample": "NORMAL"
                     },
-                    "d41d8cd98f00b204e9800998ecf8427e"
+                    "TUMOR_NORMAL-all.somatic.vep.vcf.gz:md5,d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ],
             [
@@ -405,7 +405,7 @@
                 "versions.yml:md5,e9144de1ba616dfa846e8fe234bce2e1"
             ]
         ],
-        "timestamp": "2026-08-10T14:41:06.837812489",
+        "timestamp": "2026-08-13T15:59:20.106934312",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"

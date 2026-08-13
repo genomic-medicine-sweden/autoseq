@@ -104,11 +104,11 @@ nextflow_workflow {
                 { assert snapshot(
                     // GATK, SAGE, bcftools and VEP all write the tool version and the full
                     // command line into the VCF header, so only the variant records are hashed
-                    workflow.out.mutect2_unfiltered_vcf.collect { meta, vcf -> [meta, path(vcf).vcf.variantsMD5] },
-                    workflow.out.mutect2_vcf.collect { meta, vcf -> [meta, path(vcf).vcf.variantsMD5] },
-                    workflow.out.sage_vcf.collect { meta, vcf -> [meta, path(vcf).vcf.variantsMD5] },
-                    workflow.out.somatic_vcf.collect { meta, vcf -> [meta, path(vcf).vcf.variantsMD5] },
-                    workflow.out.vep_vcf.collect { meta, vcf -> [meta, path(vcf).vcf.variantsMD5] },
+                    workflow.out.mutect2_unfiltered_vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}"] },
+                    workflow.out.mutect2_vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}"] },
+                    workflow.out.sage_vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}"] },
+                    workflow.out.somatic_vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}"] },
+                    workflow.out.vep_vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}"] },
                     workflow.out.mutect2_unfiltered_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
                     workflow.out.mutect2_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
                     workflow.out.sage_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
