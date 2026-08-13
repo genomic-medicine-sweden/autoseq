@@ -37,7 +37,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated multiqc module from 1.32 to 1.34 and fastqc module (included in the template update).
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated the minimum required nextflow version to 25.10.4 (included in new template).
 - [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Replaced the nested `genomes {}` / `panels {}` config maps with flat reference-file params, passed as explicit `GENOMICMEDICINESWEDEN_AUTOSEQ` inputs instead of read from `params.*` inside the workflow.
-- [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Renamed `interval_list_slopped20` → `interval_list`, `ensembl_data_resources` → `hmf_ensembl_data`, `genome_gridss_index` → `gridss_index` and `ref_genome_*` → `genome_*`.
+- [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Renamed `interval_list_slopped20` → `interval_list`, `ensembl_data_resources` → `hmf_ensembl_data`, `genome_gridss_index` → `gridss_index`, `ch_*` → `ch_gridss*` gridss reference channels and `ref_genome_*` → `genome_*`.
 - [ #57 ](https://github.com/genomic-medicine-sweden/autoseq/pull/57) Regenerated the `PREPARE_REFERENCES` nf-test snapshot to match the updated HMF `ensembl_data` reference CSVs.
 - [ #63 ](https://github.com/genomic-medicine-sweden/autoseq/pull/63) Updated the nf-core `fastq_create_umi_consensus_fgbio` subworkflow and its fgbio and samtools modules.
 - [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Reference channels in `main.nf` now use `channelFromPathWithMeta`.
