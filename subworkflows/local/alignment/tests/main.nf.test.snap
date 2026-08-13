@@ -1,0 +1,96 @@
+{
+    "multi-lane tumor sample - stub": {
+        "content": [
+            {
+                "dedup_bai": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR_dedup.bai:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "dedup_bam": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR_dedup.bam:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "dedup_metrics": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR_dedup.bam.metrics:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,6386be019befbc8fb2ae4114bb24a7ec",
+                    "versions.yml:md5,d12926dfd823b99d2deea28029c98ec6"
+                ]
+            }
+        ],
+        "timestamp": "2026-08-10T13:54:13.091108131",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    },
+    "multi-lane tumor sample": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "f61b9fbc22ec519ac91385ef25f7f51b"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR_dedup.bai"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR_dedup.bam.metrics"
+                ]
+            ],
+            [
+                "versions.yml:md5,6386be019befbc8fb2ae4114bb24a7ec",
+                "versions.yml:md5,d12926dfd823b99d2deea28029c98ec6"
+            ]
+        ],
+        "timestamp": "2026-08-10T14:04:10.55340802",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    }
+}
