@@ -1,0 +1,128 @@
+{
+    "paired tumor and normal samples - stub": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "normal_id": "NORMAL",
+                        "tumor_id": "TUMOR"
+                    },
+                    "TEST.sv.gridss.vcf.gz"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "normal_id": "NORMAL",
+                        "tumor_id": "TUMOR"
+                    },
+                    "TUMOR.gripss.filtered.somatic.vcf.gz",
+                    "TUMOR.gripss.filtered.somatic.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "normal_id": "NORMAL",
+                        "tumor_id": "TUMOR"
+                    },
+                    "TUMOR.gripss.somatic.vcf.gz",
+                    "TUMOR.gripss.somatic.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "normal_id": "NORMAL",
+                        "tumor_id": "TUMOR"
+                    },
+                    "NORMAL.gripss.filtered.germline.vcf.gz",
+                    "NORMAL.gripss.filtered.germline.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "normal_id": "NORMAL",
+                        "tumor_id": "TUMOR"
+                    },
+                    "NORMAL.gripss.germline.vcf.gz",
+                    "NORMAL.gripss.germline.vcf.gz.tbi"
+                ]
+            ]
+        ],
+        "timestamp": "2026-08-10T14:32:14.993362626",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    },
+    "paired tumor and normal samples": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "normal_id": "NORMAL",
+                        "tumor_id": "TUMOR"
+                    },
+                    "d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "normal_id": "NORMAL",
+                        "tumor_id": "TUMOR"
+                    },
+                    "TUMOR.gripss.filtered.somatic.vcf.gz:d41d8cd98f00b204e9800998ecf8427e",
+                    "TUMOR.gripss.filtered.somatic.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "normal_id": "NORMAL",
+                        "tumor_id": "TUMOR"
+                    },
+                    "TUMOR.gripss.somatic.vcf.gz:d41d8cd98f00b204e9800998ecf8427e",
+                    "TUMOR.gripss.somatic.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "normal_id": "NORMAL",
+                        "tumor_id": "TUMOR"
+                    },
+                    "TUMOR.gripss.filtered.germline.vcf.gz:d41d8cd98f00b204e9800998ecf8427e",
+                    "TUMOR.gripss.filtered.germline.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "normal_id": "NORMAL",
+                        "tumor_id": "TUMOR"
+                    },
+                    "TUMOR.gripss.germline.vcf.gz:d41d8cd98f00b204e9800998ecf8427e",
+                    "TUMOR.gripss.germline.vcf.gz.tbi"
+                ]
+            ]
+        ],
+        "timestamp": "2026-08-13T14:50:27.587352",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    }
+}
