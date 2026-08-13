@@ -71,9 +71,9 @@ nextflow_workflow {
                 { assert snapshot(
                     // GATK and VEP write the tool version and the full command line into the
                     // VCF header, so only the variant records are hashed
-                    workflow.out.vcf.collect { meta, vcf -> [meta, path(vcf).vcf.variantsMD5] },
+                    workflow.out.vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}"] },
                     workflow.out.tbi.collect { meta, tbi -> [meta, file(tbi).name] },
-                    workflow.out.vep_vcf.collect { meta, vcf -> [meta, path(vcf).vcf.variantsMD5] },
+                    workflow.out.vep_vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}"] },
                     workflow.out.vep_tbi.collect { meta, tbi -> [meta, file(tbi).name] }
                 ).match() }
             )

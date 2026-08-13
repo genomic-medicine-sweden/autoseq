@@ -62,7 +62,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "52b988e94f0b29a95e76ba24a654ac5c"
+                    "NORMAL_haplotypecaller.vcf.gz:52b988e94f0b29a95e76ba24a654ac5c"
                 ]
             ],
             [
@@ -84,7 +84,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "d41d8cd98f00b204e9800998ecf8427e"
+                    "NORMAL-all.germline.vep.vcf.gz:d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ],
             [
@@ -99,7 +99,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-08-10T14:16:49.423664698",
+        "timestamp": "2026-08-13T14:21:00.73870608",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
