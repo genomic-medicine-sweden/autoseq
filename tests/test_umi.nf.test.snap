@@ -275,7 +275,7 @@
                 ],
                 [
                     "TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz",
-                    "9b611230accf47943fc83f22fbd3e3a4"
+                    "c259936a0e7e2dcc3414f7c1e4b9dd6c"
                 ],
                 [
                     "TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz",
@@ -283,11 +283,11 @@
                 ],
                 [
                     "TEST.TUMOR.sage.somatic.vcf.gz",
-                    "62d7088937937949af79f37612dfc70b"
+                    "1e426bb8e04150d6b456c5c5ea97cab1"
                 ]
             ]
         ],
-        "timestamp": "2026-08-14T13:39:17.521574861",
+        "timestamp": "2026-08-14T16:29:50.375549685",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"

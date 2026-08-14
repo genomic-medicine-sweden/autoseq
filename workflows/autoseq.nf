@@ -102,11 +102,10 @@ workflow AUTOSEQ {
             }
             .groupTuple()
             .map { _sample_name, grouped_reads ->
-                // `groupTuple` does not guarantee the order of the grouped lanes, so sort them
-                // before concatenating. Otherwise the merged FASTQ read order changes between
-                // runs, which cascades into different alignments, UMI consensus reads and
-                // variant calls.
-                def sorted = grouped_reads.sort(false) { a, b -> a[0].lane <=> b[0].lane }
+                // groupTuple is unordered. Sort before concatenating to
+                // ensure consistent FASTQ read order and reproducible
+                // downstream results (alignments, UMIs, variants).
+                def sorted = grouped_reads.sort(false) { it -> it[1].name }
                 def metas = sorted.collect{it -> it[0]}
                 def files = sorted.collect{it -> it[1]}.flatten()
                 return [metas[0], files]
