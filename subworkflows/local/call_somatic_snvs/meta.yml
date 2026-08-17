@@ -1,0 +1,201 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "call_somatic_snvs"
+description: Call somatic SNVs and indels from a paired tumor/normal case with GATK Mutect2 and SAGE, merge the two call sets and annotate them with Ensembl VEP
+keywords:
+  - somatic
+  - snv
+  - mutect2
+  - sage
+  - annotation
+  - vep
+components:
+  - bam_tumor_normal_somatic_variant_calling_gatk
+  - vt/decompose
+  - vt/normalize
+  - tabix/tabix
+  - bcftools/filter
+  - sage/somatic
+  - vcfmerge
+  - ensemblvep/vep
+input:
+  - ch_input:
+      type: file
+      description: |
+        Aligned, deduplicated tumor and normal BAM files with their indices and the
+        intervals to restrict calling to. The tumor sample must come first in both lists.
+        Structure: [ val(meta), [ path(tumor_bam), path(normal_bam) ], [ path(tumor_bai), path(normal_bai) ], path(intervals) ]
+      pattern: "*.bam"
+  - ch_fasta:
+      type: file
+      description: |
+        Reference genome FASTA
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
+  - ch_fai:
+      type: file
+      description: |
+        Index of the reference genome FASTA
+        Structure: [ val(meta), path(fai) ]
+      pattern: "*.fai"
+  - ch_dict:
+      type: file
+      description: |
+        Sequence dictionary of the reference genome
+        Structure: [ val(meta), path(dict) ]
+      pattern: "*.dict"
+  - ch_germline_resource:
+      type: file
+      description: |
+        Population allele frequency resource used by Mutect2
+        Structure: [ path(vcf) ]
+      pattern: "*.vcf.gz"
+  - ch_germline_resource_tbi:
+      type: file
+      description: |
+        Index of the germline resource
+        Structure: [ path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+  - ch_panel_of_normals:
+      type: file
+      description: |
+        Panel of normals used by Mutect2
+        Structure: [ path(vcf) ]
+      pattern: "*.vcf.gz"
+  - ch_panel_of_normals_tbi:
+      type: file
+      description: |
+        Index of the panel of normals
+        Structure: [ path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+  - ch_interval_file:
+      type: file
+      description: |
+        Interval list used for the pileup summaries
+        Structure: [ path(intervals) ]
+      pattern: "*.interval_list"
+  - ch_sage_known_hotspots_somatic:
+      type: file
+      description: |
+        Known somatic hotspots rescued by SAGE
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
+  - ch_sage_highconf_regions:
+      type: file
+      description: |
+        High confidence regions used by SAGE
+        Structure: [ val(meta), path(bed) ]
+      pattern: "*.bed.gz"
+  - ch_sage_pon:
+      type: file
+      description: |
+        SAGE panel of normals
+        Structure: [ val(meta), path(tsv) ]
+      pattern: "*.tsv.gz"
+  - ch_ensembl_data_resources:
+      type: directory
+      description: |
+        HMF Ensembl data resource directory used by SAGE
+        Structure: [ val(meta), path(dir) ]
+  - ch_ensembl_vep_cache:
+      type: directory
+      description: |
+        Ensembl VEP cache directory
+        Structure: [ val(meta), path(cache) ]
+  - genome_version:
+      type: string
+      description: Numeric reference genome version passed to SAGE ('37' or '38')
+output:
+  - contamination_table:
+      type: file
+      description: |
+        Contamination estimate of the tumor sample
+        Structure: [ val(meta), path(table) ]
+      pattern: "*.contamination.table"
+  - mutect2_stats:
+      type: file
+      description: |
+        Filtering statistics of the Mutect2 call set
+        Structure: [ val(meta), path(stats) ]
+      pattern: "*.filteringStats.tsv"
+  - mutect2_tbi:
+      type: file
+      description: |
+        Index of the filtered Mutect2 VCF
+        Structure: [ val(meta), path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+  - mutect2_vcf:
+      type: file
+      description: |
+        Filtered Mutect2 call set
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
+  - pileup_table_normal:
+      type: file
+      description: |
+        Pileup summaries of the normal sample
+        Structure: [ val(meta), path(table) ]
+      pattern: "*.pileups.table"
+  - pileup_table_tumor:
+      type: file
+      description: |
+        Pileup summaries of the tumor sample
+        Structure: [ val(meta), path(table) ]
+      pattern: "*.pileups.table"
+  - mutect2_unfiltered_vcf:
+      type: file
+      description: |
+        Raw Mutect2 call set before filtering
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
+  - mutect2_unfiltered_tbi:
+      type: file
+      description: |
+        Index of the raw Mutect2 VCF
+        Structure: [ val(meta), path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+  - sage_vcf:
+      type: file
+      description: |
+        SAGE call set
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
+  - sage_tbi:
+      type: file
+      description: |
+        Index of the SAGE VCF
+        Structure: [ val(meta), path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+  - somatic_vcf:
+      type: file
+      description: |
+        Merged Mutect2 and SAGE call set
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
+  - somatic_tbi:
+      type: file
+      description: |
+        Index of the merged VCF
+        Structure: [ val(meta), path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+  - vep_vcf:
+      type: file
+      description: |
+        Merged call set annotated with Ensembl VEP
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
+  - vep_tbi:
+      type: file
+      description: |
+        Index of the VEP annotated VCF
+        Structure: [ val(meta), path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+  - versions:
+      type: file
+      description: |
+        Files containing software versions
+        Structure: [ path(versions.yml) ]
+      pattern: "versions.yml"
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"

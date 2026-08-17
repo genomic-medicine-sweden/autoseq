@@ -1,0 +1,210 @@
+nextflow_workflow {
+
+    name "Test Subworkflow CALL_SOMATIC_SNVS"
+    script "../main.nf"
+    workflow "CALL_SOMATIC_SNVS"
+    config "./nextflow.config"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "subworkflows/call_somatic_snvs"
+    tag "gatk4"
+    tag "gatk4/mutect2"
+    tag "sage"
+    tag "vt"
+    tag "bcftools"
+    tag "bcftools/filter"
+    tag "vcfmerge"
+    tag "ensemblvep"
+    tag "ensemblvep/vep"
+    tag "untar"
+
+    setup {
+        run("UNTAR", alias: "UNTAR_VEP_CACHE") {
+            script "../../../../modules/nf-core/untar/main.nf"
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'vep_cache' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        run("UNTAR", alias: "UNTAR_ENSEMBL_DATA") {
+            script "../../../../modules/nf-core/untar/main.nf"
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'ensembl_data' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz', checkIfExists: true)
+                ])
+                """
+            }
+        }
+    }
+
+    test("paired tumor and normal samples") {
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of([
+                    [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL', tumor_sample:'TUMOR', normal_sample:'NORMAL' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true)
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.interval_list', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.value([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                input[4] = channel.value(file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/af-only-gnomad.raw.sites.vcf.gz', checkIfExists: true))
+                input[5] = channel.value(file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/af-only-gnomad.raw.sites.vcf.gz.tbi', checkIfExists: true))
+                input[6] = []
+                input[7] = []
+                input[8] = channel.value(file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.interval_list', checkIfExists: true))
+                input[9] = channel.value([
+                    [ id:'sage_known_hotspots_somatic' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/KnownHotspots.somatic.37.vcf.gz', checkIfExists: true)
+                ])
+                input[10] = channel.value([
+                    [ id:'sage_highconf_regions' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/NA12878_GIAB_highconf_IllFB-IllGATKHC-CG-Ion-Solid_ALLCHROM_v3.2.2_highconf.bed.gz', checkIfExists: true)
+                ])
+                input[11] = channel.value([
+                    [ id:'sage_pon' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/SageGermlinePon.1000x.37.tsv.gz', checkIfExists: true)
+                ])
+                input[12] = UNTAR_ENSEMBL_DATA.out.untar.collect()
+                input[13] = UNTAR_VEP_CACHE.out.untar.collect()
+                input[14] = '37'
+                """
+            }
+        }
+
+        then {
+            def vcfVariantsMd5 = { ch -> ch.collect { meta, vcf -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}"] } }
+
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // GATK, SAGE, bcftools and VEP all write the tool version and the full
+                    // command line into the VCF header, so only the variant records are hashed
+                    vcfVariantsMd5(workflow.out.mutect2_unfiltered_vcf),
+                    vcfVariantsMd5(workflow.out.mutect2_vcf),
+                    vcfVariantsMd5(workflow.out.sage_vcf),
+                    vcfVariantsMd5(workflow.out.somatic_vcf),
+                    vcfVariantsMd5(workflow.out.vep_vcf),
+                    workflow.out.mutect2_unfiltered_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.mutect2_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.sage_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.somatic_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.vep_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.contamination_table,
+                    workflow.out.pileup_table_tumor,
+                    workflow.out.pileup_table_normal,
+                    workflow.out.mutect2_stats,
+                    workflow.out.versions
+                ).match() }
+            )
+        }
+    }
+
+    test("paired tumor and normal samples - stub") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of([
+                    [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL', tumor_sample:'TUMOR', normal_sample:'NORMAL' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true)
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.interval_list', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.value([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                input[4] = channel.value(file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/af-only-gnomad.raw.sites.vcf.gz', checkIfExists: true))
+                input[5] = channel.value(file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/af-only-gnomad.raw.sites.vcf.gz.tbi', checkIfExists: true))
+                input[6] = []
+                input[7] = []
+                input[8] = channel.value(file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.interval_list', checkIfExists: true))
+                input[9] = channel.value([
+                    [ id:'sage_known_hotspots_somatic' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/KnownHotspots.somatic.37.vcf.gz', checkIfExists: true)
+                ])
+                input[10] = channel.value([
+                    [ id:'sage_highconf_regions' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/NA12878_GIAB_highconf_IllFB-IllGATKHC-CG-Ion-Solid_ALLCHROM_v3.2.2_highconf.bed.gz', checkIfExists: true)
+                ])
+                input[11] = channel.value([
+                    [ id:'sage_pon' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/SageGermlinePon.1000x.37.tsv.gz', checkIfExists: true)
+                ])
+                input[12] = UNTAR_ENSEMBL_DATA.out.untar.collect()
+                input[13] = UNTAR_VEP_CACHE.out.untar.collect()
+                input[14] = '37'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                // the empty `.vcf.gz` written by the SAGE and vcfmerge stubs cannot be
+                // decompressed and is serialised as an absolute work path, so only the
+                // file names are asserted
+                { assert snapshot(
+                    workflow.out.mutect2_unfiltered_vcf.collect { meta, vcf -> [meta, file(vcf).name] },
+                    workflow.out.mutect2_vcf.collect { meta, vcf -> [meta, file(vcf).name] },
+                    workflow.out.sage_vcf.collect { meta, vcf -> [meta, file(vcf).name] },
+                    workflow.out.somatic_vcf.collect { meta, vcf -> [meta, file(vcf).name] },
+                    workflow.out.vep_vcf.collect { meta, vcf -> [meta, file(vcf).name] },
+                    workflow.out.mutect2_unfiltered_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.mutect2_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.sage_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.somatic_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.vep_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.contamination_table,
+                    workflow.out.pileup_table_tumor,
+                    workflow.out.pileup_table_normal,
+                    workflow.out.mutect2_stats,
+                    workflow.out.versions
+                ).match() }
+            )
+        }
+    }
+}

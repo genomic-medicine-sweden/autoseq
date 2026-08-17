@@ -1,0 +1,414 @@
+{
+    "paired tumor and normal samples - stub": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TEST.vcf.gz"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL_mutect2_filtered.vcf.gz"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR.sage.somatic.vcf.gz"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL-all.somatic.vcf.gz"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL-all.somatic.vep.vcf.gz"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TEST.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR.sage.somatic.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL-all.somatic.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL-all.somatic.vep.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL.contamination.table:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TEST_TUMOR.pileups.table:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TEST_NORMAL.pileups.table:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            [
+                "versions.yml:md5,0eee4697c4e6354b97ad8dee726beac7",
+                "versions.yml:md5,200a49bb791cb91cdc7b98743846ded5",
+                "versions.yml:md5,326cdfa4370c5f01df917aa8241c15eb",
+                "versions.yml:md5,73fd69579fc8eafe575f6eb6b9f1dd7d",
+                "versions.yml:md5,770bc1ffe972799e73555b39bcfb7ed8",
+                "versions.yml:md5,8bcf6c9c31a7acfa29c74c5854c0591f",
+                "versions.yml:md5,9450fdae8ac9eed8d06b14402971d32b",
+                "versions.yml:md5,a658f41fc132c2773f220c7df665149b",
+                "versions.yml:md5,ae52273f9353ec9e68006dcbaa78287c",
+                "versions.yml:md5,ba3d0fb10abd7c7cf87331d07b7c80f9",
+                "versions.yml:md5,c49ac7b84e76c6642e942c5bdd7543bf",
+                "versions.yml:md5,e6bcface9c0377031854a66cf2932747",
+                "versions.yml:md5,e9144de1ba616dfa846e8fe234bce2e1"
+            ]
+        ],
+        "timestamp": "2026-08-10T14:47:04.751582424",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    },
+    "paired tumor and normal samples": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TEST.vcf.gz:md5,79a9e8d4fa57fabf3fd82051c03488c7"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL_mutect2_filtered.vcf.gz:md5,673d3ee2ad91e129bf8137aeeba1cd04"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR.sage.somatic.vcf.gz:md5,b2181f9945a8d84ed2a8e40b94a9d675"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL-all.somatic.vcf.gz:md5,c17d2b6276b5f7b40b2afb3f25f055b3"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL-all.somatic.vep.vcf.gz:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TEST.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR.sage.somatic.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL-all.somatic.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL-all.somatic.vep.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL.contamination.table:md5,a47aaa6933a5cfd12bcba937d74c0991"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TEST_TUMOR.pileups.table:md5,84bf40340a0433542ba926fad290c8eb"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TEST_NORMAL.pileups.table:md5,24b0f7ca933ea5839821f4041b79f9b2"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL",
+                        "tumor_sample": "TUMOR",
+                        "normal_sample": "NORMAL"
+                    },
+                    "TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv:md5,eb61b96f3d2566a2c05aaf68f08a584d"
+                ]
+            ],
+            [
+                "versions.yml:md5,0eee4697c4e6354b97ad8dee726beac7",
+                "versions.yml:md5,200a49bb791cb91cdc7b98743846ded5",
+                "versions.yml:md5,326cdfa4370c5f01df917aa8241c15eb",
+                "versions.yml:md5,5936f081866e24879df93abeba8a493e",
+                "versions.yml:md5,770bc1ffe972799e73555b39bcfb7ed8",
+                "versions.yml:md5,8bcf6c9c31a7acfa29c74c5854c0591f",
+                "versions.yml:md5,9450fdae8ac9eed8d06b14402971d32b",
+                "versions.yml:md5,a658f41fc132c2773f220c7df665149b",
+                "versions.yml:md5,ae52273f9353ec9e68006dcbaa78287c",
+                "versions.yml:md5,ba3d0fb10abd7c7cf87331d07b7c80f9",
+                "versions.yml:md5,c49ac7b84e76c6642e942c5bdd7543bf",
+                "versions.yml:md5,e6bcface9c0377031854a66cf2932747",
+                "versions.yml:md5,e9144de1ba616dfa846e8fe234bce2e1"
+            ]
+        ],
+        "timestamp": "2026-08-14T14:09:22.313097949",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    }
+}
