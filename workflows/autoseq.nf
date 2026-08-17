@@ -102,8 +102,12 @@ workflow AUTOSEQ {
             }
             .groupTuple()
             .map { _sample_name, grouped_reads ->
-                def metas = grouped_reads.collect{it -> it[0]}
-                def files = grouped_reads.collect{it -> it[1]}.flatten()
+                // groupTuple is unordered. Sort before concatenating to
+                // ensure consistent FASTQ read order and reproducible
+                // downstream results (alignments, UMIs, variants).
+                def sorted = grouped_reads.sort(false) { it -> it[1].name }
+                def metas = sorted.collect{it -> it[0]}
+                def files = sorted.collect{it -> it[1]}.flatten()
                 return [metas[0], files]
             }
             .set { ch_input_reads }
