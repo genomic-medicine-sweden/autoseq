@@ -43,6 +43,8 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #63 ](https://github.com/genomic-medicine-sweden/autoseq/pull/63) Updated the nf-core `fastq_create_umi_consensus_fgbio` subworkflow and its fgbio and samtools modules.
 - [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Reference channels in `main.nf` now use `channelFromPathWithMeta`.
 - [ #95 ](https://github.com/genomic-medicine-sweden/autoseq/pull/95) Updated the contribution guidelines `docs/CONTRIBUTING.md` with new publishing strategy for pipeline outputs.
+- [ #98 ](https://github.com/genomic-medicine-sweden/autoseq/pull/98) Replaced the local GRIDSS modules with the nf-core `gridss/extractoverlappingfragments`, `gridss/preprocess`, `gridss/assemble` and `gridss/call` modules in the `CALL_SVS` subworkflow, and removed `modules/local/gridss`.
+- [ #98 ](https://github.com/genomic-medicine-sweden/autoseq/pull/98) `CALL_SVS` now indexes the targeted BAM with `SAMTOOLS_INDEX` and no longer takes the genome sequence dictionary, to match the inputs and outputs of the nf-core GRIDSS modules.
 
 ### `Fixed`
 
