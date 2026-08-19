@@ -308,7 +308,7 @@ Please use the following naming schemes, to make it easy to understand what is g
 
   emit:
   somatic_vcf  = ch_vcf             // channel: [ val(meta), path(vcf) ]
-  index        = ch_tbi.mix(ch_csi) // channel: [ val(meta), path(index) ]
+  tbi          = ch_tbi.mix(ch_csi) // channel: [ val(meta), path(tbi) ]
   ```
 
 - Use `ch_* = <...>` whenever possible. Avoid using the `.set {ch_*}` operator to create new channels.
