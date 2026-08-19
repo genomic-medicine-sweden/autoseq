@@ -43,6 +43,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #63 ](https://github.com/genomic-medicine-sweden/autoseq/pull/63) Updated the nf-core `fastq_create_umi_consensus_fgbio` subworkflow and its fgbio and samtools modules.
 - [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Reference channels in `main.nf` now use `channelFromPathWithMeta`.
 - [ #95 ](https://github.com/genomic-medicine-sweden/autoseq/pull/95) Updated the contribution guidelines `docs/CONTRIBUTING.md` with new publishing strategy for pipeline outputs.
+- [ #97 ](https://github.com/genomic-medicine-sweden/autoseq/pull/97) Updated the style conventions in `docs/CONTRIBUTING.md` with sorting rules for `include` statements and `take`/`emit`/`publish` blocks, and dropped the `ch_publish` bullets left over from the previous publishing strategy.
 
 ### `Fixed`
 
