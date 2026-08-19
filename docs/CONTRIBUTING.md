@@ -307,8 +307,8 @@ Please use the following naming schemes, to make it easy to understand what is g
   val_genome         // string:  [optional]  genome assembly (e.g. "GRCh38")
 
   emit:
-  vcf  = ch_vcf             // channel: [ val(meta), path(vcf) ]
-  tbi  = ch_tbi.mix(ch_csi) // channel: [ val(meta), path(tbi_index) ]
+  somatic_vcf  = ch_vcf             // channel: [ val(meta), path(vcf) ]
+  index        = ch_tbi.mix(ch_csi) // channel: [ val(meta), path(index) ]
   ```
 
 - Use `ch_* = <...>` whenever possible. Avoid using the `.set {ch_*}` operator to create new channels.
