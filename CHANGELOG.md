@@ -21,6 +21,14 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #43 ](https://github.com/genomic-medicine-sweden/autoseq/pull/43) Added nf-test for the `gridss/preprocess` local module covering a targeted BAM scenario and stub case.
 - [ #50 ](https://github.com/genomic-medicine-sweden/autoseq/pull/50) Added `PREPARE_REFERENCES` subworkflow to build the BWA-MEM2 index and untar the VEP cache, GRIDSS index and HMF ensembl_data references, with nf-test coverage.
 - [ #55 ](https://github.com/genomic-medicine-sweden/autoseq/pull/55) Enabled an end-to-end `-profile test` run of the paired tumor/normal workflow on real GRCh37 test data.
+- [ #71 ](https://github.com/genomic-medicine-sweden/autoseq/pull/71) Added a `test_umi` profile and pipeline-level nf-test covering the UMI alignment branch on paired tumor/normal test data.
+- [ #85 ](https://github.com/genomic-medicine-sweden/autoseq/pull/85) Added nf-test and `meta.yml` for the `ALIGNMENT` subworkflow covering a multi-lane tumor sample and a stub case.
+- [ #86 ](https://github.com/genomic-medicine-sweden/autoseq/pull/86) Added nf-test and `meta.yml` for the `QC_ALIGNMENT` subworkflow covering a tumor BAM with the panel interval list and a stub case.
+- [ #87 ](https://github.com/genomic-medicine-sweden/autoseq/pull/87) Added nf-test and `meta.yml` for the `CALL_CNVS` subworkflow covering paired tumor/normal samples and a stub case.
+- [ #88 ](https://github.com/genomic-medicine-sweden/autoseq/pull/88) Added nf-test and `meta.yml` for the `CALL_GERMLINE_SNVS` subworkflow covering a normal sample with the panel interval list and a stub case.
+- [ #89 ](https://github.com/genomic-medicine-sweden/autoseq/pull/89) Added nf-test and `meta.yml` for the `CALL_SVS` subworkflow covering a paired tumor/normal case and a stub case.
+- [ #90 ](https://github.com/genomic-medicine-sweden/autoseq/pull/90) Added nf-test and `meta.yml` for the `CALL_SOMATIC_SNVS` subworkflow covering a paired tumor/normal case and a stub case.
+- [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Added the `channelFromPathWithMeta` helper to build `[[id:...], file]` reference channels from a path, or `channel.empty()` when the path is null.
 
 ### `Changed`
 
@@ -32,6 +40,9 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated multiqc module from 1.32 to 1.34 and fastqc module (included in the template update).
 - [ #36 ](https://github.com/genomic-medicine-sweden/autoseq/pull/36) Updated the minimum required nextflow version to 25.10.4 (included in new template).
 - [ #57 ](https://github.com/genomic-medicine-sweden/autoseq/pull/57) Regenerated the `PREPARE_REFERENCES` nf-test snapshot to match the updated HMF `ensembl_data` reference CSVs.
+- [ #63 ](https://github.com/genomic-medicine-sweden/autoseq/pull/63) Updated the nf-core `fastq_create_umi_consensus_fgbio` subworkflow and its fgbio and samtools modules.
+- [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Reference channels in `main.nf` now use `channelFromPathWithMeta`.
+- [ #95 ](https://github.com/genomic-medicine-sweden/autoseq/pull/95) Updated the contribution guidelines `docs/CONTRIBUTING.md` with new publishing strategy for pipeline outputs.
 
 ### `Fixed`
 
@@ -51,6 +62,10 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #58 ](https://github.com/genomic-medicine-sweden/autoseq/pull/58) Replaced the stubbed `PURECN_RUN` and `PROFILE_TUMOR_BIOMARKERS` nf-tests with real-VCF runs, added dedicated stub cases, and regenerated the snapshots.
 - [ #59 ](https://github.com/genomic-medicine-sweden/autoseq/pull/59) Added `--normal-sample ${meta.normal_id}` to `GATK4_MUTECT2` so the normal sample is correctly identified in paired tumor/normal calling.
 - [ #62 ](https://github.com/genomic-medicine-sweden/autoseq/pull/62) Excluded non-deterministic Jumble CNV outputs from the `tests/default.nf.test` content snapshot to fix md5 failures in CI.
+- [ #72 ](https://github.com/genomic-medicine-sweden/autoseq/pull/72) Added `--sample` and `--library` to `FASTQTOBAM` so the read group sample name matches `meta.id` for downstream callers.
+- [ #73 ](https://github.com/genomic-medicine-sweden/autoseq/pull/73) Moved the `ZIPPERBAMS_(PRE|POST)` tag options from `ext.args` to `ext.args2` so they are passed to `ZipperBams` instead of to the fgbio wrapper.
+- [ #74 ](https://github.com/genomic-medicine-sweden/autoseq/pull/74) Collected the reference channel passed to `UMI_PROCESSING` so it is reusable across all samples instead of being consumed by the first one.
+- [ #94 ](https://github.com/genomic-medicine-sweden/autoseq/pull/94) Sorted grouped lane FASTQs by filename before `CAT_FASTQ` in the UMI branch, since `groupTuple` does not guarantee ordering and multi-lane samples could be concatenated in a non-reproducible order.
 
 ### `Dependencies`
 

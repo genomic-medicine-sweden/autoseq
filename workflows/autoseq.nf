@@ -102,8 +102,12 @@ workflow AUTOSEQ {
             }
             .groupTuple()
             .map { _sample_name, grouped_reads ->
-                def metas = grouped_reads.collect{it -> it[0]}
-                def files = grouped_reads.collect{it -> it[1]}.flatten()
+                // groupTuple is unordered. Sort before concatenating to
+                // ensure consistent FASTQ read order and reproducible
+                // downstream results (alignments, UMIs, variants).
+                def sorted = grouped_reads.sort(false) { it -> it[1].name }
+                def metas = sorted.collect{it -> it[0]}
+                def files = sorted.collect{it -> it[1]}.flatten()
                 return [metas[0], files]
             }
             .set { ch_input_reads }
@@ -112,12 +116,20 @@ workflow AUTOSEQ {
             ch_input_reads
         )
 
+        // `.collect()` restores the value-channel semantics lost by `combine`, so that the
+        // reference can be reused by every sample inside UMI_PROCESSING
+        def ch_fasta_fai_dict = ch_genome_fasta
+            .combine(ch_genome_fai)
+            .combine(ch_dict)
+            .map { meta, fasta, _meta_fai, fai, _meta_dict, dict ->
+                [meta, fasta, fai, dict]
+            }
+            .collect()
 
         UMI_PROCESSING(
             CAT_FASTQ.out.reads,
-            ch_genome_fasta,
+            ch_fasta_fai_dict,
             ch_bwamem2_index,
-            ch_dict,
             "paired",
             "bwa-mem2",
             params.duplex,
@@ -132,8 +144,6 @@ workflow AUTOSEQ {
 
         ch_aligned_bam = UMI_PROCESSING.out.mappedconsensusbam
             .join(SAMTOOLS_INDEX.out.bai)
-
-        ch_versions = ch_versions.mix(UMI_PROCESSING.out.versions)
 
     } else {
 

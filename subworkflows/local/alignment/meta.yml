@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "alignment"
+description: Align paired-end reads to the reference genome with BWA-MEM2, merge the per-lane alignments of each sample and mark/remove duplicates with GATK MarkDuplicates
+keywords:
+  - alignment
+  - bwamem2
+  - markduplicates
+  - bam
+  - deduplication
+components:
+  - bwamem2/mem
+  - gatk4/markduplicates
+input:
+  - ch_input_reads:
+      type: file
+      description: |
+        Trimmed paired-end reads, one entry per sample and lane. Entries sharing
+        `meta.sample_name` are grouped so that each lane gets its own `id`
+        (`<sample_name>.<n>`) and read group before alignment.
+        Structure: [ val(meta), [ path(fastq_1), path(fastq_2) ] ]
+      pattern: "*.{fq,fastq}.gz"
+  - ch_genome_fasta:
+      type: file
+      description: |
+        Reference genome FASTA
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
+  - ch_genome_fai:
+      type: file
+      description: |
+        Index of the reference genome FASTA
+        Structure: [ val(meta), path(fai) ]
+      pattern: "*.fai"
+  - ch_bwamem2_index:
+      type: directory
+      description: |
+        BWA-MEM2 genome index directory
+        Structure: [ val(meta), path(index) ]
+output:
+  - dedup_bam:
+      type: file
+      description: |
+        Deduplicated, coordinate-sorted alignments, one BAM per sample
+        Structure: [ val(meta), path(bam) ]
+      pattern: "*.bam"
+  - dedup_bai:
+      type: file
+      description: |
+        Index of the deduplicated BAM
+        Structure: [ val(meta), path(bai) ]
+      pattern: "*.bai"
+  - dedup_metrics:
+      type: file
+      description: |
+        Duplicate metrics reported by GATK MarkDuplicates
+        Structure: [ val(meta), path(metrics) ]
+      pattern: "*.metrics"
+  - versions:
+      type: file
+      description: |
+        File containing software versions
+        Structure: [ path(versions.yml) ]
+      pattern: "versions.yml"
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
