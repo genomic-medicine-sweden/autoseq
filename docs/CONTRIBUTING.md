@@ -287,20 +287,28 @@ Please use the following naming schemes, to make it easy to understand what is g
 
 ### Style
 
+- Sort `include` statements alphabetically by the name inside the brackets. Right-pad each name with spaces so all closing `}` align to the same column (the longest name in the block sets the width):
+
+  ```groovy
+  include { BCFTOOLS_VIEW as FILTER_VCF } from '../../../modules/nf-core/bcftools/view/main'
+  include { TIDDIT_COV                  } from '../../../modules/nf-core/tiddit/cov/main'
+  include { VCF2CYTOSURE                } from '../../../modules/nf-core/vcf2cytosure/main'
+  ```
+
+- Sort items in the `take`, `emit` and `publish` blocks, alphabetically (see example below).
+
 - Both `take:` and `emit:` block entries require an inline type comment. Use `name // type: [mandatory|optional] description` for `take:` and `name = value // channel: [type description]` for `emit:`. Always include the comment — never leave an entry uncommented.
 
   ```groovy
   take:
-      ch_vcf                // channel: [mandatory] [ val(meta), path(vcf) ]
-      ch_reduced_penetrance // channel: [optional]  [ path(penetrance) ]
-      val_aligner           // string:  [mandatory] aligner name (bwa/bwamem2/bwameme)
-      process_with_sort     // Boolean
+  ch_vep_cache       // channel: [optional]  [path(vep_cache)]
+  ch_vep_extra_files // channel: [optional]  [path(plugin_file1), path(plugin_file2), ...]
+  val_cadd_resources // string:  [optional]  path to CADD resources directory
+  val_genome         // string:  [optional]  genome assembly (e.g. "GRCh38")
 
   emit:
-      vcf     = ch_vcf      // channel: [ val(meta), path(vcf) ]
-      publish = ch_publish  // channel: [ val(destination), val(value) ]
+  somatic_vcf  = ch_vcf             // channel: [ val(meta), path(vcf) ]
+  tbi          = ch_tbi.mix(ch_csi) // channel: [ val(meta), path(tbi) ]
   ```
 
-- Avoid using the `.set {ch_*}` operator to create new channels. Use `ch_* = <...>` whenever possible.
-- Intermediate publish channels in `workflows/autoseq.nf` follow the `ch_<subworkflow_name>_publish` naming convention and are assigned immediately after the subworkflow call, not inline in the emit block.
-- Initialize all `ch_*_publish` variables at the top of the `main:` block alongside `ch_multiqc_files`.
+- Use `ch_* = <...>` whenever possible. Avoid using the `.set {ch_*}` operator to create new channels.
