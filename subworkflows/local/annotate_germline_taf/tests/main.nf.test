@@ -1,0 +1,96 @@
+nextflow_workflow {
+
+    name "Test Subworkflow ANNOTATE_GERMLINE_TAF"
+    script "../main.nf"
+    workflow "ANNOTATE_GERMLINE_TAF"
+    config "./nextflow.config"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "subworkflows/annotate_germline_taf"
+    tag "gatk4"
+    tag "gatk4/haplotypecaller"
+    tag "gatk4/genotypegvcfs"
+    tag "bcftools"
+    tag "bcftools/merge"
+
+
+    test("tumor sample with germline vcf") {
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz.tbi', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.value([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    // GATK and bcftools write the tool version and the full command line into
+                    // the VCF header, so only the variant records are hashed
+                    workflow.out.germline_taf_vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}"] },
+                    workflow.out.germline_taf_tbi.collect { meta, tbi -> [meta, file(tbi).name] }
+                ).match() }
+            )
+        }
+    }
+
+    test("tumor sample with germline vcf - stub") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz.tbi', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.value([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(sanitizeOutput(workflow.out)).match() }
+            )
+        }
+    }
+}

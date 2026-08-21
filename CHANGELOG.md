@@ -29,6 +29,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #89 ](https://github.com/genomic-medicine-sweden/autoseq/pull/89) Added nf-test and `meta.yml` for the `CALL_SVS` subworkflow covering a paired tumor/normal case and a stub case.
 - [ #90 ](https://github.com/genomic-medicine-sweden/autoseq/pull/90) Added nf-test and `meta.yml` for the `CALL_SOMATIC_SNVS` subworkflow covering a paired tumor/normal case and a stub case.
 - [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Added the `channelFromPathWithMeta` helper to build `[[id:...], file]` reference channels from a path, or `channel.empty()` when the path is null.
+- [ #96 ](https://github.com/genomic-medicine-sweden/autoseq/pull/96) Added the `ANNOTATE_GERMLINE_TAF` subworkflow to annotate germline variants with the tumor allele fraction, with nf-test and `meta.yml`.
 
 ### `Changed`
 
@@ -43,6 +44,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #63 ](https://github.com/genomic-medicine-sweden/autoseq/pull/63) Updated the nf-core `fastq_create_umi_consensus_fgbio` subworkflow and its fgbio and samtools modules.
 - [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Reference channels in `main.nf` now use `channelFromPathWithMeta`.
 - [ #95 ](https://github.com/genomic-medicine-sweden/autoseq/pull/95) Updated the contribution guidelines `docs/CONTRIBUTING.md` with new publishing strategy for pipeline outputs.
+- [ #97 ](https://github.com/genomic-medicine-sweden/autoseq/pull/97) Updated the style conventions in `docs/CONTRIBUTING.md` with sorting rules for `include` statements and `take`/`emit`/`publish` blocks, and dropped the `ch_publish` bullets left over from the previous publishing strategy.
 - [ #99 ](https://github.com/genomic-medicine-sweden/autoseq/pull/99) Replaced the local GRIDSS modules with the nf-core `gridss/extractoverlappingfragments`, `gridss/preprocess`, `gridss/assemble` and `gridss/call` modules in the `CALL_SVS` subworkflow, and removed `modules/local/gridss`.
 - [ #99 ](https://github.com/genomic-medicine-sweden/autoseq/pull/99) `CALL_SVS` now indexes the targeted BAM with `SAMTOOLS_INDEX` and no longer takes the genome sequence dictionary, to match the inputs and outputs of the nf-core GRIDSS modules.
 
