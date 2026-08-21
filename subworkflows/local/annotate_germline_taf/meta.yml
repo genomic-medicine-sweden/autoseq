@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/subworkflows/yaml-schema.json
+name: "annotate_germline_taf"
+description: Genotype the tumour BAM at the germline variant sites with GATK HaplotypeCaller and GenotypeGVCFs, then merge the result back with the germline VCF so that every germline variant carries the tumour allele fraction (TAF)
+keywords:
+  - germline
+  - tumor allele fraction
+  - taf
+  - loh
+  - haplotypecaller
+  - genotypegvcfs
+  - bcftools
+components:
+  - gatk4/haplotypecaller
+  - gatk4/genotypegvcfs
+  - bcftools/merge
+input:
+  - ch_tbam_gvcf:
+      type: file
+      description: |
+        Aligned, deduplicated BAM of the tumour sample with its index, together with the
+        germline VCF and its index. The germline VCF restricts the tumour genotyping to the
+        sites at which a germline variant was called
+        Structure: [ val(meta), path(tbam), path(tbai), path(gvcf), path(gvcf_tbi) ]
+      pattern: "*.{bam,vcf.gz}"
+  - ch_genome_fasta:
+      type: file
+      description: |
+        Reference genome FASTA
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
+  - ch_genome_fai:
+      type: file
+      description: |
+        Index of the reference genome FASTA
+        Structure: [ val(meta), path(fai) ]
+      pattern: "*.fai"
+  - ch_genome_dict:
+      type: file
+      description: |
+        Sequence dictionary of the reference genome
+        Structure: [ val(meta), path(dict) ]
+      pattern: "*.dict"
+output:
+  - germline_taf_vcf:
+      type: file
+      description: |
+        Germline variants merged with the tumour genotypes, carrying the tumour allele
+        fraction for each germline variant
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
+  - germline_taf_tbi:
+      type: file
+      description: |
+        Index of the merged VCF
+        Structure: [ val(meta), path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+  - versions:
+      type: file
+      description: |
+        File containing software versions
+        Structure: [ path(versions.yml) ]
+      pattern: "versions.yml"
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
