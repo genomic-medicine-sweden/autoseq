@@ -14,6 +14,7 @@ nextflow_workflow {
     tag "bcftools"
     tag "bcftools/merge"
 
+
     test("tumor sample with germline vcf") {
 
         when {
@@ -88,12 +89,7 @@ nextflow_workflow {
         then {
             assertAll(
                 { assert workflow.success },
-                // the empty `.vcf.gz` written by the stubs cannot be decompressed and is
-                // serialised as an absolute work path, so only the file names are asserted
-                { assert snapshot(
-                    workflow.out.germline_taf_vcf.collect { meta, vcf -> [meta, file(vcf).name] },
-                    workflow.out.germline_taf_tbi.collect { meta, tbi -> [meta, file(tbi).name] }
-                ).match() }
+                { assert snapshot(sanitizeOutput(workflow.out)).match() }
             )
         }
     }

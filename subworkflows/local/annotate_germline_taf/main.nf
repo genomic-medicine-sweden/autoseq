@@ -12,8 +12,6 @@ workflow ANNOTATE_GERMLINE_TAF {
 
     main:
 
-    def ch_versions = channel.empty()
-
     // The germline VCF is passed through the `intervals` slot so that the tumour is
     // genotyped only at the sites where a germline variant was called
     def ch_tbam_gvcf_for_haplotypecaller = ch_tbam_gvcf
@@ -37,8 +35,6 @@ workflow ANNOTATE_GERMLINE_TAF {
         [[], []],
         ch_gvcf_tbi_for_haplotypecaller
     )
-
-    ch_versions = ch_versions.mix(GATK4_HAPLOTYPECALLER.out.versions)
 
     def ch_haplotypecaller_for_genotypegvcfs = ch_tbam_gvcf
         .join(GATK4_HAPLOTYPECALLER.out.vcf)
@@ -82,6 +78,5 @@ workflow ANNOTATE_GERMLINE_TAF {
     emit:
     germline_taf_vcf = BCFTOOLS_MERGE.out.vcf   // channel: [ val(meta), path(vcf) ]
     germline_taf_tbi = BCFTOOLS_MERGE.out.index // channel: [ val(meta), path(tbi) ]
-    versions         = ch_versions              // channel: [ path(versions.yml) ]
 
 }

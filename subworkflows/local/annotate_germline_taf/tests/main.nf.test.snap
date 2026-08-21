@@ -1,30 +1,32 @@
 {
     "tumor sample with germline vcf - stub": {
         "content": [
-            [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR-all.germline.taf.vcf.gz"
+            {
+                "germline_taf_tbi": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR-all.germline.taf.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "germline_taf_vcf": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR-all.germline.taf.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
                 ]
-            ],
-            [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR-all.germline.taf.vcf.gz.tbi"
-                ]
-            ]
+            }
         ],
-        "timestamp": "2026-08-17T13:49:41.792010435",
+        "timestamp": "2026-08-20T15:57:08.402993314",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
