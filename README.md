@@ -58,7 +58,6 @@ nextflow run genomic-medicine-sweden/autoseq \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
    --outdir results/ \
-   --genome GRCh37 \
    -params-file references.yaml
 ```
 
