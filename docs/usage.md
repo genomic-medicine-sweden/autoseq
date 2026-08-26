@@ -31,9 +31,10 @@ nextflow run genomic-medicine-sweden/autoseq \
         --outdir ./results \
         --genome GRCh37  \
         -profile docker \
-        --ref_genomes_base references \
-        --panel probio_comprehensive4
+        -params-file references.yaml
 ```
+
+Reference files are provided as individual parameters rather than a single base directory. Because there are many of them, collect the paths in a `-params-file` (see [Reference Files and Panels](#reference-files-and-panels) below).
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
 
@@ -99,44 +100,30 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 
 ### Reference Files and Panels
 
-The `nf-autoseq` pipeline relies on reference genomes and gene panels to perform its analyses. By default, the pipeline will download these files from public repositories (eg. Ensembl) as needed during the run. However, you can also specify a local directory containing these files if you have them available.
+The `nf-autoseq` pipeline relies on reference genome files and target panel files to perform its analyses. Each file is supplied as its own parameter, so you have full control over which files are used and can mix references from different locations. `--genome` (`GRCh37` or `GRCh38`) is still required — it only selects the numeric genome version (`37`/`38`) used by SAGE and GRIPSS.
 
-#### Reference Directory Structure
+The full list of reference parameters and their descriptions is documented in [`parameters.md`](parameters.md#reference-genome-options), which is auto-generated from the pipeline schema.
 
-```
-references/
-└── GRCh37/
-    ├── genome/             # FASTA, FAI, and DICT files
-    ├── bwamem2_index/      # BWA-mem2 alignment indices
-    ├── annotations/        # Germline resources and curation CSVs
-    ├── hmfdata/            # SAGE blocklists, hotspots, and driver panels
-    ├── vep/                # Ensembl VEP cache
-    ├── gridss_index        # GRIDSS cache and bwa-index
-    └── gridss/             # GRIDSS configuration, PONs, and fusions
-└── GRCh38/
-    ├── genome/             # FASTA, FAI, and DICT files
-    ...
+Because there are many reference parameters, the recommended approach is to collect them in a `-params-file`:
+
+```yaml title="references.yaml"
+genome: GRCh37
+genome_fasta: /path/to/GRCh37/genome/human_g1k_v37_decoy.fasta
+genome_fai: /path/to/GRCh37/genome/human_g1k_v37_decoy.fasta.fai
+genome_dict: /path/to/GRCh37/genome/human_g1k_v37_decoy.dict
+bwamem2_index: /path/to/GRCh37/bwamem2_index
+# ... remaining reference parameters
+targets_bed: /path/to/GRCh37/targets/probio_comprehensive3.slopped20.bed
+interval_list: /path/to/GRCh37/targets/probio_comprehensive3.slopped20.interval_list
+jumble_ref: /path/to/GRCh37/targets/comprehensive3_baits_twist.bed.reference.RDS
 ```
 
 > [!IMPORTANT]
-> Automation Note: Automated downloading and generation of these reference files is not yet implemented. Users must ensure the reference path is correctly populated before running the pipeline. Full automation of reference setup is planned for a future release.
+> Automation Note: Automated downloading and generation of these reference files is not yet implemented. Users must ensure each reference parameter points to a valid file before running the pipeline. Full automation of reference setup is planned for a future release.
 
 ### Panel Support
 
-The pipeline uses the `--panel` parameter to load specific genomic coordinates and bait information required for targeted sequencing analysis.
-
-#### Currently Supported Panels
-
-The following panels are pre-configured in the pipeline:
-
-| Panel ID              | Description             | Components Included                                     |
-| --------------------- | ----------------------- | ------------------------------------------------------- |
-| probio_comprehensive3 | ProBio Comprehensive v3 | BED (slopped), Interval lists, and Jumble RDS reference |
-| gmck_v3               | GMCK v3                 | BED (slopped), Interval lists, and Jumble RDS reference |
-
-#### Custom Panels
-
-If you have a custom panel that is not included in the above list, you can specify it using the `--panel_bed` parameter. The pipeline expects a BED file with the genomic coordinates of the panel targets. Pipeline will automatically generate the necessary interval lists. This option is not implemented in the current version of the pipeline.
+Target panels are configured through the `targets_bed`, `interval_list`, and `jumble_ref` parameters. To run a different panel, point these parameters at the corresponding files for that panel (e.g. in a dedicated `-params-file` per panel).
 
 #### Parameter Usage
 
