@@ -35,22 +35,22 @@
                     "fgbio": "3.1.2"
                 },
                 "GATK4_CALCULATECONTAMINATION": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_FILTERMUTECTCALLS": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_NORMAL": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_TUMOR": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_LEARNREADORIENTATIONMODEL": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_MUTECT2": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GRIDSS_ASSEMBLE": {
                     "gridss": "2.13.2"
@@ -287,7 +287,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-08-06T14:28:03.290980692",
+        "timestamp": "2026-08-26T15:20:37.281658355",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
@@ -329,22 +329,22 @@
                     "fgbio": "3.1.2"
                 },
                 "GATK4_CALCULATECONTAMINATION": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_FILTERMUTECTCALLS": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_NORMAL": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_TUMOR": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_LEARNREADORIENTATIONMODEL": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_MUTECT2": {
-                    "gatk4": "4.6.1.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GRIDSS_ASSEMBLE": {
                     "gridss": "2.13.2"
@@ -511,7 +511,7 @@
                 "variants/somatic/sage/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-08-06T14:30:52.787544099",
+        "timestamp": "2026-08-26T15:25:26.252175572",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
