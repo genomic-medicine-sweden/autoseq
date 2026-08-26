@@ -45,6 +45,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Reference channels in `main.nf` now use `channelFromPathWithMeta`.
 - [ #95 ](https://github.com/genomic-medicine-sweden/autoseq/pull/95) Updated the contribution guidelines `docs/CONTRIBUTING.md` with new publishing strategy for pipeline outputs.
 - [ #97 ](https://github.com/genomic-medicine-sweden/autoseq/pull/97) Updated the style conventions in `docs/CONTRIBUTING.md` with sorting rules for `include` statements and `take`/`emit`/`publish` blocks, and dropped the `ch_publish` bullets left over from the previous publishing strategy.
+- [ #102 ](https://github.com/genomic-medicine-sweden/autoseq/pull/102) Updated the nf-core `bam_tumor_normal_somatic_variant_calling_gatk` subworkflow and its GATK4 modules, and adapted `CALL_SOMATIC_SNVS` to the new `alleles`/`alleles_tbi` inputs and the `[ meta, fai, gzi ]` index tuple.
 
 ### `Fixed`
 
