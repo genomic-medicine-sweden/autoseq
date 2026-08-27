@@ -22,11 +22,29 @@ Reference genome related files and options required for the workflow.
 | `genome` | Name of iGenomes reference. (accepted: `GRCh37`\|`GRCh38`) <details><summary>Help</summary><small>If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. <br><br>See the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details.</small></details>| `string` | GRCh37 |  |  |
 | `igenomes_ignore` | Do not load the iGenomes reference config. <details><summary>Help</summary><small>Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`.</small></details>| `boolean` | True |  | True |
 | `igenomes_base` | The base path to the igenomes reference files | `string` | s3://ngi-igenomes/igenomes/ |  | True |
-| `ref_genomes_base` | The base path to the HMF genome reference files | `string` |  |  |  |
-| `ref_genome_fasta` | Path to reference genome FASTA. | `string` |  |  |  |
-| `ref_genome_fai` | Path to reference genome FAI. | `string` |  |  |  |
-| `ref_genome_dict` | Path to reference genome dict. | `string` |  |  |  |
+| `genome_fasta` | Path to reference genome FASTA. | `string` |  |  |  |
+| `genome_fai` | Path to reference genome FAI. | `string` |  |  |  |
+| `genome_dict` | Path to reference genome dict. | `string` |  |  |  |
 | `bwamem2_index` | Path to reference genome bwa-mem2 index. | `string` |  |  |  |
+| `dbsnp_vcf` | Path to dbSNP VCF file for variant annotation. | `string` |  |  |  |
+| `dbsnp_vcf_tbi` | Path to dbSNP VCF tabix index file. | `string` |  |  |  |
+| `germline_resource` | Path to germline resource file. | `string` |  |  |  |
+| `germline_resource_tbi` | Path to germline resource tabix index file. | `string` |  |  |  |
+| `sage_known_hotspots_somatic` | Path to known somatic hotspots file for SAGE. | `string` |  |  |  |
+| `sage_highconf_regions` | Path to high confidence regions file for SAGE. | `string` |  |  |  |
+| `sage_pon` | Path to Panel of Normals file for SAGE. | `string` |  |  |  |
+| `ensembl_vep_cache` | Path to Ensembl VEP cache directory. | `string` |  |  |  |
+| `hmf_ensembl_data` | Path to HMF Ensembl data resources directory. | `string` |  |  |  |
+| `curation_ann` | Path to curation annotation file. | `string` |  |  |  |
+| `gridss_index` | Path to GRIDSS genome index. | `string` |  |  |  |
+| `gridss_config` | Path to GRIDSS configuration file. | `string` |  |  |  |
+| `gridss_pon_breakends` | Path to GRIDSS Panel of Normals breakends file. | `string` |  |  |  |
+| `gridss_pon_breakpoints` | Path to GRIDSS Panel of Normals breakpoints file. | `string` |  |  |  |
+| `gridss_known_fusions` | Path to known fusions file for GRIDSS. | `string` |  |  |  |
+| `gridss_repeatmasker_annotations` | Path to RepeatMasker annotations for GRIDSS. | `string` |  |  |  |
+| `targets_bed` | Path to the BED file containing target regions. | `string` |  |  |  |
+| `interval_list` | Path to the slopped interval list file. | `string` |  |  |  |
+| `jumble_ref` | Path to the reference RDS (R data object) for Jumble. | `string` |  |  |  |
 
 ## Other options
 
@@ -43,33 +61,13 @@ Other options specific to this pipeline.
 | `min_reads` | Minimum number of reads required <details><summary>Help</summary><small>Space-separated values specifying minimum read counts for different processing stages</small></details>| `string` | 1 1 0 |  |  |
 | `min_baseq` | Minimum base quality score <details><summary>Help</summary><small>Minimum Phred quality score required for bases to be considered high quality</small></details>| `integer` | 30 |  |  |
 | `max_base_error_rate` | Maximum base error rate allowed <details><summary>Help</summary><small>Maximum allowable error rate for bases (0.0 = no errors allowed, 1.0 = all errors allowed)</small></details>| `number` | 0.0 |  |  |
-| `panel` | Target panel for the sequencing run | `string` | probio_comprehensive3 |  |  |
-| `targets_bed` | Path to the BED file containing target regions | `string` |  |  |  |
-| `interval_list_slopped20` | Path to the slopped interval list file | `string` |  |  |  |
-| `jumble_ref` | Path to the reference RDS (R data object) for Jumble | `string` |  |  |  |
-| `sage_known_hotspots_somatic` | Path to known somatic hotspots file for SAGE | `string` |  |  |  |
-| `sage_highconf_regions` | Path to high confidence regions file for SAGE | `string` |  |  |  |
-| `sage_pon` | Path to Panel of Normals file for SAGE | `string` |  |  |  |
-| `ensembl_data_resources` | Path to Ensembl data resources directory | `string` |  |  |  |
 | `sage_min_tumor_vaf` |  | `number` | 0.0002 |  |  |
 | `sage_hotspot_tumor_qual` |  | `integer` | 150 |  |  |
 | `sage_min_tumor_qual` |  | `integer` | 250 |  |  |
 | `sage_min_map_quality` |  | `integer` | 20 |  |  |
 | `ensemblvep_version` | Version of Ensembl VEP to use | `integer` | 115 |  |  |
-| `curation_ann` | Path to curation annotation file | `string` |  |  |  |
 | `cancer_type` | Cancer project code for gene-specific annotation. (accepted: `PANCANCER`\|`CBC`\|`CCR`\|`CEC`\|`COV`\|`SARC`) <details><summary>Help</summary><small>Specifies the project shorthand used to filter the master curation file. This ensures that CNV segments are annotated with comments relevant to the specific cancer biology being studied.</small></details>| `string` | PANCANCER |  |  |
-| `genome_gridss_index` | Path to GRIDSS genome index | `string` |  |  |  |
-| `gridss_config` | Path to GRIDSS configuration file | `string` |  |  |  |
-| `gridss_pon_breakends` | Path to GRIDSS Panel of Normals breakends file | `string` |  |  |  |
-| `gridss_pon_breakpoints` | Path to GRIDSS Panel of Normals breakpoints file | `string` |  |  |  |
-| `gridss_known_fusions` | Path to known fusions file for GRIDSS | `string` |  |  |  |
-| `gridss_repeatmasker_annotations` | Path to RepeatMasker annotations for GRIDSS | `string` |  |  |  |
-| `germline_resource` | Path to germline resource file | `string` |  |  |  |
-| `germline_resource_tbi` | Path to germline resource tabix index file | `string` |  |  |  |
-| `ensembl_vep_cache` | Path to Ensembl VEP cache directory | `string` |  |  |  |
 | `vep_species` | Species name for Ensembl VEP annotation | `string` | homo_sapiens |  |  |
-| `dbsnp_vcf` | Path to dbSNP VCF file for variant annotation | `string` |  |  |  |
-| `dbsnp_vcf_tbi` | Path to dbSNP VCF tabix index file | `string` |  |  |  |
 | `maxnonclonal` | Maximum fraction of subclonal variants allowed; used by PureCN to filter solutions with high subclonality | `number` | 0.2 |  |  |
 | `minpurity` | Minimum tumour purity estimate accepted by PureCN; solutions below this threshold are discarded | `number` | 0.05 |  |  |
 | `purecn_error` | Expected sequencing error rate passed to PureCN for modelling variant allele frequencies | `number` | 0.0005 |  |  |
