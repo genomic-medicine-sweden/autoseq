@@ -45,6 +45,8 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Reference channels in `main.nf` now use `channelFromPathWithMeta`.
 - [ #95 ](https://github.com/genomic-medicine-sweden/autoseq/pull/95) Updated the contribution guidelines `docs/CONTRIBUTING.md` with new publishing strategy for pipeline outputs.
 - [ #97 ](https://github.com/genomic-medicine-sweden/autoseq/pull/97) Updated the style conventions in `docs/CONTRIBUTING.md` with sorting rules for `include` statements and `take`/`emit`/`publish` blocks, and dropped the `ch_publish` bullets left over from the previous publishing strategy.
+- [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Replaced the nested `genomes {}` / `panels {}` config maps with flat reference-file params, passed as explicit `GENOMICMEDICINESWEDEN_AUTOSEQ` inputs instead of read from `params.*` inside the workflow.
+- [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Renamed `interval_list_slopped20` → `interval_list`, `ensembl_data_resources` → `hmf_ensembl_data`, `genome_gridss_index` → `gridss_index`, `ch_*` → `ch_gridss*` gridss reference channels and `ref_genome_*` → `genome_*`.
 - [ #102 ](https://github.com/genomic-medicine-sweden/autoseq/pull/102) Updated the nf-core `bam_tumor_normal_somatic_variant_calling_gatk` subworkflow and its GATK4 modules, and adapted `CALL_SOMATIC_SNVS` to the new `alleles`/`alleles_tbi` inputs and the `[ meta, fai, gzi ]` index tuple.
 
 ### `Fixed`
@@ -69,6 +71,10 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #73 ](https://github.com/genomic-medicine-sweden/autoseq/pull/73) Moved the `ZIPPERBAMS_(PRE|POST)` tag options from `ext.args` to `ext.args2` so they are passed to `ZipperBams` instead of to the fgbio wrapper.
 - [ #74 ](https://github.com/genomic-medicine-sweden/autoseq/pull/74) Collected the reference channel passed to `UMI_PROCESSING` so it is reusable across all samples instead of being consumed by the first one.
 - [ #94 ](https://github.com/genomic-medicine-sweden/autoseq/pull/94) Sorted grouped lane FASTQs by filename before `CAT_FASTQ` in the UMI branch, since `groupTuple` does not guarantee ordering and multi-lane samples could be concatenated in a non-reproducible order.
+
+### `Removed`
+
+- [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Removed `conf/reference_genomes.config`, `conf/panels_data.config`, the `ref_genomes_base` / `panel` params and the `getPanelsAttribute()` / `panelExistsError()` helpers.
 
 ### `Dependencies`
 

@@ -51,13 +51,17 @@ PATIENT_ID,NORMAL_ID,normal,L5,/path/to/SAMPLE_L5_R1_001.fastq.gz,/path/to/SAMPL
 
 Now, you can run the pipeline using:
 
+Reference files are supplied as individual parameters (e.g. `--ref_genome_fasta`, `--bwamem2_index`, `--targets_bed`). As there are many of them, the recommended approach is to collect them in a `-params-file`:
+
 ```bash
 nextflow run genomic-medicine-sweden/autoseq \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
-   --outdir results/  \
-   --ref_genomes_base /path/to/ref_genomes_base/
+   --outdir results/ \
+   -params-file references.yaml
 ```
+
+See the [usage documentation](docs/usage.md) for the full list of reference parameters.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).

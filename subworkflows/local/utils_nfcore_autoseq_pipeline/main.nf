@@ -175,7 +175,6 @@ workflow PIPELINE_COMPLETION {
 //
 def validateInputParameters() {
     genomeExistsError()
-    panelExistsError()
 }
 
 //
@@ -192,6 +191,8 @@ def validateInputSamplesheet(input) {
 
     return [ metas[0], fastqs ]
 }
+
+
 //
 // Get attribute from genome config file e.g. fasta
 //
@@ -199,18 +200,6 @@ def getGenomeAttribute(attribute) {
     if (params.genomes && params.genome && params.genomes.containsKey(params.genome)) {
         if (params.genomes[ params.genome ].containsKey(attribute)) {
             return params.genomes[ params.genome ][ attribute ]
-        }
-    }
-    return null
-}
-
-//
-// Get attribute from panels config file e.g. bed file
-//
-def getPanelsAttribute(attribute) {
-    if (params.panels && params.panel && params.panels.containsKey(params.panel)) {
-        if (params.panels[ params.panel ].containsKey(attribute)) {
-            return params.panels[ params.panel ][ attribute ]
         }
     }
     return null
@@ -229,19 +218,7 @@ def genomeExistsError() {
         error(error_string)
     }
 }
-//
-// Exit pipeline if incorrect --panel key provided
-//
-def panelExistsError() {
-    if (params.panels && params.panel && !params.panels.containsKey(params.panel)) {
-        def error_string = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-            "  Panel '${params.panel}' not found in any config files provided to the pipeline.\n" +
-            "  Currently, the available panel keys are:\n" +
-            "  ${params.panels.keySet().join(", ")}\n" +
-            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        error(error_string)
-    }
-}
+
 
 //
 // Generate methods description for MultiQC

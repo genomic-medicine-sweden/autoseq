@@ -16,44 +16,8 @@
 include { AUTOSEQ                 } from './workflows/autoseq'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
-include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
-include { getPanelsAttribute      } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
-include { channelFromPathWithMeta } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 include { PREPARE_REFERENCES      } from './subworkflows/local/prepare_references/main'
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    GENOME PARAMETER VALUES
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-//   This is an example of how to use getGenomeAttribute() to fetch parameters
-//   from igenomes.config using `--genome`
-params.ref_genome_fasta                 = getGenomeAttribute('fasta')
-params.ref_genome_fai                   = getGenomeAttribute('fai')
-params.ref_genome_dict                  = getGenomeAttribute('dict')
-params.bwamem2_index                    = getGenomeAttribute('bwamem2_index')
-params.dbsnp_vcf                        = getGenomeAttribute('dbsnp_vcf')
-params.dbsnp_vcf_tbi                    = getGenomeAttribute('dbsnp_vcf_tbi')
-params.germline_resource                = getGenomeAttribute('germline_resource')
-params.germline_resource_tbi            = getGenomeAttribute('germline_resource_tbi')
-params.sage_known_hotspots_somatic      = getGenomeAttribute('sage_known_hotspots_somatic')
-params.sage_highconf_regions            = getGenomeAttribute('sage_highconf_regions')
-params.sage_pon                         = getGenomeAttribute('sage_pon')
-params.ensembl_vep_cache                = getGenomeAttribute('ensembl_vep_cache')
-params.ensembl_data_resources           = getGenomeAttribute('ensembl_data_resources')
-params.curation_ann                     = getGenomeAttribute('curation_annotations')
-params.genome_gridss_index              = getGenomeAttribute('gridss_index')
-params.gridss_config                    = getGenomeAttribute('gridss_config')
-params.gridss_pon_breakends             = getGenomeAttribute('gridss_pon_breakends')
-params.gridss_pon_breakpoints           = getGenomeAttribute('gridss_pon_breakpoints')
-params.gridss_known_fusions             = getGenomeAttribute('gridss_known_fusions')
-params.gridss_repeatmasker_annotations  = getGenomeAttribute('gridss_repeatmasker_annotations')
-
-
-params.targets_bed             = getPanelsAttribute('targets_bed_slopped20')
-params.interval_list_slopped20 = getPanelsAttribute('targets_interval_list_slopped20')
-params.jumble_ref              = getPanelsAttribute('jumble_ref')
+include { channelFromPathWithMeta } from './subworkflows/local/utils_nfcore_autoseq_pipeline'
 
 
 /*
@@ -68,24 +32,50 @@ params.jumble_ref              = getPanelsAttribute('jumble_ref')
 workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
 
     take:
-    samplesheet                         // channel: samplesheet read in from --input
-    val_multiqc_config                  // val: /path/to/multiqc_config.yaml
-    val_multiqc_logo                    // val: /path/to/multiqc_logo.png
-    val_multiqc_methods_description     // val: /path/to/multiqc_methods_description.md
-    val_outdir                          // val: /path/to/output/directory
+    samplesheet                         // channel: [mandatory] samplesheet read in from --input
+    val_bwamem2_index                   // string:  [mandatory] path to reference genome bwa-mem2 index
+    val_curation_ann                    // string:  [mandatory] path to CNV curation annotation CSV
+    val_dbsnp_vcf                       // string:  [optional]  path to dbSNP VCF
+    val_dbsnp_vcf_tbi                   // string:  [optional]  path to dbSNP VCF index
+    val_ensembl_vep_cache               // string:  [mandatory] path to Ensembl VEP cache directory
+    val_ensembl_vep_cache_tar           // string:  [optional]  path to Ensembl VEP cache tarball
+    val_genome_dict                     // string:  [mandatory] path to reference genome sequence dictionary
+    val_genome_fai                      // string:  [mandatory] path to reference genome FASTA index
+    val_genome_fasta                    // string:  [mandatory] path to reference genome FASTA
+    val_germline_resource               // string:  [mandatory] path to germline resource VCF
+    val_germline_resource_tbi           // string:  [mandatory] path to germline resource VCF index
+    val_gridss_config                   // string:  [mandatory] path to GRIDSS configuration file
+    val_gridss_index                    // string:  [mandatory] path to GRIDSS genome index directory
+    val_gridss_index_tar                // string:  [optional]  path to GRIDSS genome index tarball
+    val_gridss_known_fusions            // string:  [mandatory] path to GRIDSS known fusions
+    val_gridss_pon_breakends            // string:  [mandatory] path to GRIDSS PON breakends
+    val_gridss_pon_breakpoints          // string:  [mandatory] path to GRIDSS PON breakpoints
+    val_gridss_repeatmasker_annotations // string:  [mandatory] path to GRIDSS RepeatMasker annotations
+    val_hmf_ensembl_data                // string:  [mandatory] path to HMF Ensembl data resources directory
+    val_hmf_ensembl_data_tar            // string:  [optional]  path to HMF Ensembl data resources tarball
+    val_interval_list                   // string:  [mandatory] path to target regions interval list
+    val_jumble_ref                      // string:  [mandatory] path to Jumble reference RDS
+    val_multiqc_config                  // string:  [optional]  path to MultiQC config
+    val_multiqc_logo                    // string:  [optional]  path to MultiQC logo
+    val_multiqc_methods_description     // string:  [optional]  path to MultiQC methods description
+    val_outdir                          // string:  [mandatory] path to output directory
+    val_sage_highconf_regions           // string:  [mandatory] path to SAGE high-confidence regions
+    val_sage_known_hotspots_somatic     // string:  [mandatory] path to SAGE somatic hotspots
+    val_sage_pon                        // string:  [mandatory] path to SAGE panel of normals
+    val_targets_bed                     // string:  [mandatory] path to target regions BED
 
     main:
 
     // Minimal reference preparation workflow
     def ch_references = PREPARE_REFERENCES (
-                            params.ref_genome_fasta,
-                            params.bwamem2_index,
-                            params.ensembl_vep_cache,
-                            params.ensembl_vep_cache_tar,
-                            params.genome_gridss_index,
-                            params.gridss_index_tar,
-                            params.ensembl_data_resources,
-                            params.hmf_ensembl_data_tar
+                            val_genome_fasta,
+                            val_bwamem2_index,
+                            val_ensembl_vep_cache,
+                            val_ensembl_vep_cache_tar,
+                            val_gridss_index,
+                            val_gridss_index_tar,
+                            val_hmf_ensembl_data,
+                            val_hmf_ensembl_data_tar
                         )
 
 
@@ -95,35 +85,35 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     ch_genome_fasta            = ch_references.genome_fasta
     ch_bwamem2_index           = ch_references.bwamem2_index
     ch_ensembl_vep_cache       = ch_references.vep_cache
-    ch_ensembl_data_resources  = ch_references.hmf_ensembl_data
-    ch_genome_gridss_index     = ch_references.gridss_index
+    ch_hmf_ensembl_data        = ch_references.hmf_ensembl_data
+    ch_gridss_index            = ch_references.gridss_index
 
     // channelFromPathWithMeta() builds a [[id:simpleName], file] channel from a path,
     // or channel.empty() when the path is null
-    ch_genome_fai    = channelFromPathWithMeta(params.ref_genome_fai)
-    ch_dict          = channelFromPathWithMeta(params.ref_genome_dict)
-    ch_dbsnp_vcf     = channelFromPathWithMeta(params.dbsnp_vcf)
-    ch_dbsnp_vcf_tbi = channelFromPathWithMeta(params.dbsnp_vcf_tbi)
 
-    //
-    ch_targets_bed             = channelFromPathWithMeta(params.targets_bed)
-    ch_interval_list_slopped20 = channelFromPathWithMeta(params.interval_list_slopped20)
-    ch_jumble_ref              = channelFromPathWithMeta(params.jumble_ref)
+    ch_genome_fai                      = channelFromPathWithMeta(val_genome_fai)
+    ch_dict                            = channelFromPathWithMeta(val_genome_dict)
+    ch_dbsnp_vcf                       = channelFromPathWithMeta(val_dbsnp_vcf)
+    ch_dbsnp_vcf_tbi                   = channelFromPathWithMeta(val_dbsnp_vcf_tbi)
+    ch_germline_resource               = channelFromPathWithMeta(val_germline_resource)
+    ch_germline_resource_tbi           = channelFromPathWithMeta(val_germline_resource_tbi)
 
-    //
-    ch_sage_known_hotspots_somatic = channelFromPathWithMeta(params.sage_known_hotspots_somatic)
-    ch_sage_highconf_regions       = channelFromPathWithMeta(params.sage_highconf_regions)
-    ch_sage_pon                    = channelFromPathWithMeta(params.sage_pon)
-    ch_curation_ann                = channelFromPathWithMeta(params.curation_ann)
-    ch_germline_resource           = channelFromPathWithMeta(params.germline_resource)
-    ch_germline_resource_tbi       = channelFromPathWithMeta(params.germline_resource_tbi)
+    ch_targets_bed                     = channelFromPathWithMeta(val_targets_bed)
+    ch_interval_list                   = channelFromPathWithMeta(val_interval_list)
+    ch_jumble_ref                      = channelFromPathWithMeta(val_jumble_ref)
+
+    ch_sage_known_hotspots_somatic     = channelFromPathWithMeta(val_sage_known_hotspots_somatic)
+    ch_sage_highconf_regions           = channelFromPathWithMeta(val_sage_highconf_regions)
+    ch_sage_pon                        = channelFromPathWithMeta(val_sage_pon)
+    ch_curation_ann                    = channelFromPathWithMeta(val_curation_ann)
 
     // GRIDSS-specific channels for SV calling
-    ch_pon_breakends            = channelFromPathWithMeta(params.gridss_pon_breakends)
-    ch_pon_breakpoints          = channelFromPathWithMeta(params.gridss_pon_breakpoints)
-    ch_known_fusions            = channelFromPathWithMeta(params.gridss_known_fusions)
-    ch_repeatmasker_annotations = channelFromPathWithMeta(params.gridss_repeatmasker_annotations)
-    ch_gridss_config            = channelFromPathWithMeta(params.gridss_config)
+    ch_gridss_pon_breakends            = channelFromPathWithMeta(val_gridss_pon_breakends)
+    ch_gridss_pon_breakpoints          = channelFromPathWithMeta(val_gridss_pon_breakpoints)
+    ch_gridss_known_fusions            = channelFromPathWithMeta(val_gridss_known_fusions)
+    ch_gridss_repeatmasker_annotations = channelFromPathWithMeta(val_gridss_repeatmasker_annotations)
+    ch_gridss_config                   = channelFromPathWithMeta(val_gridss_config)
+
 
     //
     // WORKFLOW: Run pipeline
@@ -135,21 +125,21 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
         ch_dict,
         ch_bwamem2_index,
         ch_targets_bed,
-        ch_interval_list_slopped20,
+        ch_interval_list,
         ch_jumble_ref,
         ch_sage_known_hotspots_somatic,
         ch_sage_highconf_regions,
         ch_sage_pon,
         ch_ensembl_vep_cache,
-        ch_ensembl_data_resources,
+        ch_hmf_ensembl_data,
         ch_curation_ann,
         ch_germline_resource,
         ch_germline_resource_tbi,
-        ch_genome_gridss_index,
-        ch_pon_breakends,
-        ch_pon_breakpoints,
-        ch_known_fusions,
-        ch_repeatmasker_annotations,
+        ch_gridss_index,
+        ch_gridss_pon_breakends,
+        ch_gridss_pon_breakpoints,
+        ch_gridss_known_fusions,
+        ch_gridss_repeatmasker_annotations,
         ch_gridss_config,
         ch_dbsnp_vcf,
         ch_dbsnp_vcf_tbi,
@@ -193,10 +183,36 @@ workflow {
     //
     GENOMICMEDICINESWEDEN_AUTOSEQ (
         PIPELINE_INITIALISATION.out.samplesheet,
+        params.bwamem2_index,
+        params.curation_ann,
+        params.dbsnp_vcf,
+        params.dbsnp_vcf_tbi,
+        params.ensembl_vep_cache,
+        params.ensembl_vep_cache_tar,
+        params.genome_dict,
+        params.genome_fai,
+        params.genome_fasta,
+        params.germline_resource,
+        params.germline_resource_tbi,
+        params.gridss_config,
+        params.gridss_index,
+        params.gridss_index_tar,
+        params.gridss_known_fusions,
+        params.gridss_pon_breakends,
+        params.gridss_pon_breakpoints,
+        params.gridss_repeatmasker_annotations,
+        params.hmf_ensembl_data,
+        params.hmf_ensembl_data_tar,
+        params.interval_list,
+        params.jumble_ref,
         params.multiqc_config,
         params.multiqc_logo,
         params.multiqc_methods_description,
-        params.outdir
+        params.outdir,
+        params.sage_highconf_regions,
+        params.sage_known_hotspots_somatic,
+        params.sage_pon,
+        params.targets_bed
     )
     //
     // SUBWORKFLOW: Run completion tasks
