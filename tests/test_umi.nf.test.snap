@@ -1,7 +1,7 @@
 {
     "test_umi profile - paired tumor-normal": {
         "content": [
-            76,
+            78,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -58,9 +58,8 @@
                 "GRIDSS_CALL": {
                     "gridss": "2.13.2"
                 },
-                "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS": {
-                    "gridss": "2.13.2",
-                    "samtools": 1.21
+                "GRIDSS_EXTRACTOVERLAPPINGFRAGMENTS": {
+                    "gridss": "2.13.2"
                 },
                 "GRIDSS_PREPROCESS": {
                     "gridss": "2.13.2"
@@ -287,7 +286,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-08-06T14:28:03.290980692",
+        "timestamp": "2026-08-19T13:16:54.504891867",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
@@ -295,7 +294,7 @@
     },
     "test_umi profile - paired tumor-normal - stub": {
         "content": [
-            76,
+            78,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -352,9 +351,8 @@
                 "GRIDSS_CALL": {
                     "gridss": "2.13.2"
                 },
-                "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS": {
-                    "gridss": "2.13.2",
-                    "samtools": 1.21
+                "GRIDSS_EXTRACTOVERLAPPINGFRAGMENTS": {
+                    "gridss": "2.13.2"
                 },
                 "GRIDSS_PREPROCESS": {
                     "gridss": "2.13.2"
@@ -511,7 +509,7 @@
                 "variants/somatic/sage/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-08-06T14:30:52.787544099",
+        "timestamp": "2026-08-19T13:18:40.380575986",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"

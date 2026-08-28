@@ -125,6 +125,26 @@
                         "git_sha": "a57253204b8f4022edfeaa3ae2f5e2abecd8858b",
                         "installed_by": ["bam_tumor_normal_somatic_variant_calling_gatk"]
                     },
+                    "gridss/assemble": {
+                        "branch": "master",
+                        "git_sha": "dba388cb6d87d390543f2c108bb8684c4c36c644",
+                        "installed_by": ["modules"]
+                    },
+                    "gridss/call": {
+                        "branch": "master",
+                        "git_sha": "26550158a8b044f1c390ea8dbb54ea4a6cd251b2",
+                        "installed_by": ["modules"]
+                    },
+                    "gridss/extractoverlappingfragments": {
+                        "branch": "master",
+                        "git_sha": "cf0584a6e02ebb94bdb64f54dca4beddb128f986",
+                        "installed_by": ["modules"]
+                    },
+                    "gridss/preprocess": {
+                        "branch": "master",
+                        "git_sha": "ca25f8bcd92bd47aed93f806b9290c8b15782b40",
+                        "installed_by": ["modules"]
+                    },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "98403d15b0e50edae1f3fec5eae5e24982f1fade",

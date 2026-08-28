@@ -9,6 +9,7 @@ nextflow_workflow {
     tag "subworkflows/call_svs"
     tag "gridss"
     tag "gripss"
+    tag "samtools/index"
     tag "untar"
 
     setup {
@@ -52,34 +53,30 @@ nextflow_workflow {
                 ])
                 input[3] = UNTAR.out.untar.collect()
                 input[4] = channel.value([
-                    [ id:'genome_dict' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
-                ])
-                input[5] = channel.value([
                     [ id:'pon_breakends' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
                 ])
-                input[6] = channel.value([
+                input[5] = channel.value([
                     [ id:'pon_breakpoints' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
                 ])
-                input[7] = channel.value([
+                input[6] = channel.value([
                     [ id:'known_fusions' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/known_fusions.37.bedpe', checkIfExists: true)
                 ])
-                input[8] = channel.value([
+                input[7] = channel.value([
                     [ id:'repeatmasker_annotations' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/repeat_mask_data.37.fa.gz', checkIfExists: true)
                 ])
-                input[9] = channel.value([
+                input[8] = channel.value([
                     [ id:'targets_bed' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.bed', checkIfExists: true)
                 ])
-                input[10] = channel.value([
+                input[9] = channel.value([
                     [ id:'gridss_config' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
                 ])
-                input[11] = '37'
+                input[10] = '37'
                 """
             }
         }
@@ -129,34 +126,30 @@ nextflow_workflow {
                 ])
                 input[3] = UNTAR.out.untar.collect()
                 input[4] = channel.value([
-                    [ id:'genome_dict' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
-                ])
-                input[5] = channel.value([
                     [ id:'pon_breakends' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
                 ])
-                input[6] = channel.value([
+                input[5] = channel.value([
                     [ id:'pon_breakpoints' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
                 ])
-                input[7] = channel.value([
+                input[6] = channel.value([
                     [ id:'known_fusions' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/known_fusions.37.bedpe', checkIfExists: true)
                 ])
-                input[8] = channel.value([
+                input[7] = channel.value([
                     [ id:'repeatmasker_annotations' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/repeat_mask_data.37.fa.gz', checkIfExists: true)
                 ])
-                input[9] = channel.value([
+                input[8] = channel.value([
                     [ id:'targets_bed' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.bed', checkIfExists: true)
                 ])
-                input[10] = channel.value([
+                input[9] = channel.value([
                     [ id:'gridss_config' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
                 ])
-                input[11] = '37'
+                input[10] = '37'
                 """
             }
         }

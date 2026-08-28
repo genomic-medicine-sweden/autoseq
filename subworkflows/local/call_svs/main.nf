@@ -2,12 +2,13 @@
 // Subworkflow for structural variant calling using GRIDSS and filtering with GRIPSS
 //
 
-include { GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS  } from '../../../modules/local/gridss/extract_overlapping_fragments/main'
-include { GRIDSS_PREPROCESS                     } from '../../../modules/local/gridss/preprocess/main'
-include { GRIDSS_ASSEMBLE                       } from '../../../modules/local/gridss/assemble/main'
-include { GRIDSS_CALL                           } from '../../../modules/local/gridss/call/main'
-include { GRIPSS_SOMATIC                        } from '../../../modules/local/gripss/somatic/main'
-include { GRIPSS_GERMLINE                       } from '../../../modules/local/gripss/germline/main'
+include { GRIDSS_EXTRACTOVERLAPPINGFRAGMENTS } from '../../../modules/nf-core/gridss/extractoverlappingfragments/main'
+include { GRIDSS_PREPROCESS                  } from '../../../modules/nf-core/gridss/preprocess/main'
+include { GRIDSS_ASSEMBLE                    } from '../../../modules/nf-core/gridss/assemble/main'
+include { GRIDSS_CALL                        } from '../../../modules/nf-core/gridss/call/main'
+include { SAMTOOLS_INDEX                     } from '../../../modules/nf-core/samtools/index/main'
+include { GRIPSS_SOMATIC                     } from '../../../modules/local/gripss/somatic/main'
+include { GRIPSS_GERMLINE                    } from '../../../modules/local/gripss/germline/main'
 
 workflow CALL_SVS {
     take:
@@ -15,7 +16,6 @@ workflow CALL_SVS {
     ch_genome_fasta
     ch_genome_fai
     ch_genome_gridss_index
-    ch_genome_dict
     ch_pon_breakends
     ch_pon_breakpoints
     ch_known_fusions
@@ -26,27 +26,44 @@ workflow CALL_SVS {
 
     main:
 
+    // The nf-core GRIDSS modules take the reference as a single tuple. `.collect()`
+    // restores the value-channel semantics lost by `combine`, so that the reference
+    // can be reused by every sample.
+    def ch_fasta_fai_gridss_index = ch_genome_fasta
+        .combine(ch_genome_fai)
+        .combine(ch_genome_gridss_index)
+        .map { meta, fasta, _meta_fai, fai, _meta_gridss_index, gridss_index ->
+            [meta, fasta, fai, gridss_index]
+        }
+        .collect()
+
     //
-    // GRIDSS: Extract overlapping fragments from tumor BAM
+    // GRIDSS: Extract overlapping fragments from the aligned BAM
     //
-    GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS (
+    GRIDSS_EXTRACTOVERLAPPINGFRAGMENTS (
         ch_aligned_bam,
         ch_target_region_bed
     )
 
     //
+    // SAMTOOLS: Index the targeted BAM, the GRIDSS steps require an indexed input
+    //
+    SAMTOOLS_INDEX (
+        GRIDSS_EXTRACTOVERLAPPINGFRAGMENTS.out.bam
+    )
+
+    ch_targeted_bam = GRIDSS_EXTRACTOVERLAPPINGFRAGMENTS.out.bam
+        .join(SAMTOOLS_INDEX.out.bai)
+
+    //
     // GRIDSS: Preprocess step
     //
     GRIDSS_PREPROCESS (
-        GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS.out.gridss_targeted_bam,
-        ch_genome_fasta,
-        ch_genome_gridss_index,
-        ch_genome_fai,
-        ch_genome_dict,
-        ch_gridss_config  // Convert to value channel
+        ch_targeted_bam,
+        ch_fasta_fai_gridss_index
     )
 
-    ch_assemble_input = GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS.out.gridss_targeted_bam
+    ch_assemble_input = ch_targeted_bam
         .join(GRIDSS_PREPROCESS.out.preprocess_dir)
         .map { meta, bam, bai, preprocess_dir ->
             [meta.case_id, [meta, bam, bai, preprocess_dir]]
@@ -79,13 +96,9 @@ workflow CALL_SVS {
     //
     GRIDSS_ASSEMBLE (
         ch_assemble_input,
-        ch_genome_fasta,
-        ch_genome_gridss_index,
-        ch_genome_fai,
-        ch_genome_dict,
+        ch_fasta_fai_gridss_index,
         ch_gridss_config
     )
-
 
     ch_call_input = ch_assemble_input
         .join(GRIDSS_ASSEMBLE.out.assemble_dir)
@@ -95,10 +108,7 @@ workflow CALL_SVS {
     //
     GRIDSS_CALL (
         ch_call_input,
-        ch_genome_fasta,
-        ch_genome_gridss_index,
-        ch_genome_fai,
-        ch_genome_dict,
+        ch_fasta_fai_gridss_index,
         ch_gridss_config
     )
 

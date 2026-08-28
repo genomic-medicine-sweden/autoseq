@@ -280,7 +280,6 @@ workflow AUTOSEQ {
         ch_genome_fasta,
         ch_genome_fai,
         ch_genome_gridss_index,
-        ch_dict,
         ch_pon_breakends,
         ch_pon_breakpoints,
         ch_known_fusions,
