@@ -1,7 +1,7 @@
 {
     "test_umi profile - paired tumor-normal": {
         "content": [
-            76,
+            78,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -58,9 +58,8 @@
                 "GRIDSS_CALL": {
                     "gridss": "2.13.2"
                 },
-                "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS": {
-                    "gridss": "2.13.2",
-                    "samtools": 1.21
+                "GRIDSS_EXTRACTOVERLAPPINGFRAGMENTS": {
+                    "gridss": "2.13.2"
                 },
                 "GRIDSS_PREPROCESS": {
                     "gridss": "2.13.2"
@@ -295,7 +294,7 @@
     },
     "test_umi profile - paired tumor-normal - stub": {
         "content": [
-            76,
+            78,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -352,9 +351,8 @@
                 "GRIDSS_CALL": {
                     "gridss": "2.13.2"
                 },
-                "GRIDSS_EXTRACT_OVERLAPPING_FRAGMENTS": {
-                    "gridss": "2.13.2",
-                    "samtools": 1.21
+                "GRIDSS_EXTRACTOVERLAPPINGFRAGMENTS": {
+                    "gridss": "2.13.2"
                 },
                 "GRIDSS_PREPROCESS": {
                     "gridss": "2.13.2"

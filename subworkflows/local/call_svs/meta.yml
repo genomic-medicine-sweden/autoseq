@@ -7,12 +7,13 @@ keywords:
   - gridss
   - gripss
 components:
-  - gridss/extract_overlapping_fragments
+  - gridss/extractoverlappingfragments
   - gridss/preprocess
   - gridss/assemble
   - gridss/call
   - gripss/somatic
   - gripss/germline
+  - samtools/index
 input:
   - ch_aligned_bam:
       type: file
@@ -38,12 +39,6 @@ input:
       description: |
         Directory holding the BWA and GRIDSS indices of the reference genome
         Structure: [ val(meta), path(index) ]
-  - ch_genome_dict:
-      type: file
-      description: |
-        Sequence dictionary of the reference genome
-        Structure: [ val(meta), path(dict) ]
-      pattern: "*.dict"
   - ch_pon_breakends:
       type: file
       description: |
