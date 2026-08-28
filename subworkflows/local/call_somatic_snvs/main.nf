@@ -32,12 +32,19 @@ workflow CALL_SOMATIC_SNVS {
     main:
     versions = Channel.empty()
 
+    // GATK4_MUTECT2 expects the index tuple as [ val(meta), path(fai), path(gzi) ]
+    ch_fai_for_mutect2 = ch_fai.map { meta, fai ->
+        return tuple(meta, fai, [])
+    }
+
     // Call somatic SNVs using GATK Mutect2 in tumor-normal mode
     CALL_GATK_MUTECT2(
         ch_input,
         ch_fasta,
-        ch_fai,
+        ch_fai_for_mutect2,
         ch_dict,
+        [], // alleles
+        [], // alleles_tbi
         ch_germline_resource,
         ch_germline_resource_tbi,
         ch_panel_of_normals,
@@ -111,7 +118,6 @@ workflow CALL_SOMATIC_SNVS {
     )
 
 
-    versions = versions.mix(CALL_GATK_MUTECT2.out.versions)
     versions = versions.mix(VT_DECOMPOSE.out.versions)
     versions = versions.mix(VT_NORMALIZE.out.versions)
     versions = versions.mix(SAGE_SOMATIC.out.versions)

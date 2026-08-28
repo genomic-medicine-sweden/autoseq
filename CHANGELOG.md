@@ -49,6 +49,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #49 ](https://github.com/genomic-medicine-sweden/autoseq/pull/49) Renamed `interval_list_slopped20` → `interval_list`, `ensembl_data_resources` → `hmf_ensembl_data`, `genome_gridss_index` → `gridss_index`, `ch_*` → `ch_gridss*` gridss reference channels and `ref_genome_*` → `genome_*`.
 - [ #99 ](https://github.com/genomic-medicine-sweden/autoseq/pull/99) Replaced the local GRIDSS modules with the nf-core `gridss/extractoverlappingfragments`, `gridss/preprocess`, `gridss/assemble` and `gridss/call` modules in the `CALL_SVS` subworkflow, and removed `modules/local/gridss`.
 - [ #99 ](https://github.com/genomic-medicine-sweden/autoseq/pull/99) `CALL_SVS` now indexes the targeted BAM with `SAMTOOLS_INDEX` and no longer takes the genome sequence dictionary, to match the inputs and outputs of the nf-core GRIDSS modules.
+- [ #102 ](https://github.com/genomic-medicine-sweden/autoseq/pull/102) Updated the nf-core `bam_tumor_normal_somatic_variant_calling_gatk` subworkflow and its GATK4 modules, and adapted `CALL_SOMATIC_SNVS` to the new `alleles`/`alleles_tbi` inputs and the `[ meta, fai, gzi ]` index tuple.
 
 ### `Fixed`
 
