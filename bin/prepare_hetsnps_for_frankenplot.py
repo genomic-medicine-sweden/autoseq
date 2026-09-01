@@ -262,7 +262,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--samplename", required=True, help="Name of the sample to add")
     parser.add_argument(
         "--site-quality",
-        # int, like PyVCF, so the FILTER id reads 'sq5' rather than 'sq5.0'.
         type=int,
         default=None,
         metavar="QUAL",
