@@ -1,0 +1,116 @@
+{
+    "germline vcf with tumor bam - filtered sites kept": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.hetsnps.vcf.gz:99379cd3b6b88bb6952cb13963040a55"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.hetsnps.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    "PREPARE_HETSNPS_FOR_FRANKENPLOT",
+                    "prepare_hetsnps_for_frankenplot",
+                    "prepare_hetsnps_for_frankenplot.py 1.0.0"
+                ]
+            ]
+        ],
+        "timestamp": "2026-09-01T12:19:23.96661939",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    },
+    "germline vcf with tumor bam - stub": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.hetsnps.vcf.gz"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.hetsnps.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    "PREPARE_HETSNPS_FOR_FRANKENPLOT",
+                    "prepare_hetsnps_for_frankenplot",
+                    "prepare_hetsnps_for_frankenplot.py 1.0.0"
+                ]
+            ]
+        ],
+        "timestamp": "2026-09-01T12:20:20.217910112",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    },
+    "germline vcf with tumor bam": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.hetsnps.vcf.gz:81c20457e174fdb5a65ddd5b4060f126"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.hetsnps.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    "PREPARE_HETSNPS_FOR_FRANKENPLOT",
+                    "prepare_hetsnps_for_frankenplot",
+                    "prepare_hetsnps_for_frankenplot.py 1.0.0"
+                ]
+            ]
+        ],
+        "timestamp": "2026-09-01T12:19:18.018685916",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    }
+}

@@ -1,0 +1,117 @@
+nextflow_process {
+
+    name "Test Process PREPARE_HETSNPS_FOR_FRANKENPLOT"
+    script "../main.nf"
+    process "PREPARE_HETSNPS_FOR_FRANKENPLOT"
+    config "./nextflow.config"
+
+    tag "modules"
+    tag "modules_local"
+    tag "prepare_hetsnps_for_frankenplot"
+
+
+    test("germline vcf with tumor bam") {
+
+        when {
+            params {
+                prepare_hetsnps_for_frankenplot_args = "--site-quality 5 --filter-hom --no-filtered"
+            }
+
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz.tbi', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    // GATK writes the tool version and the full command line into the VCF
+                    // header, so only the variant records are hashed
+                    process.out.vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}"] },
+                    process.out.tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    process.out.versions
+                ).match() }
+            )
+        }
+    }
+
+    test("germline vcf with tumor bam - filtered sites kept") {
+
+        when {
+            params {
+                // Without `--no-filtered` the low quality sites stay in the output, tagged
+                // in FILTER instead of being dropped
+                prepare_hetsnps_for_frankenplot_args = "--site-quality 100 --filter-hom"
+            }
+
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz.tbi', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}"] },
+                    process.out.tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    process.out.versions
+                ).match() }
+            )
+        }
+    }
+
+    test("germline vcf with tumor bam - stub") {
+
+        options "-stub"
+
+        when {
+            params {
+                prepare_hetsnps_for_frankenplot_args = "--site-quality 5 --filter-hom --no-filtered"
+            }
+
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz.tbi', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                // the empty `.vcf.gz` written by the stub cannot be decompressed and is
+                // serialised as an absolute work path, so only the file names are asserted
+                { assert snapshot(
+                    process.out.vcf.collect { meta, vcf -> [meta, file(vcf).name] },
+                    process.out.tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    process.out.versions
+                ).match() }
+            )
+        }
+    }
+
+}
