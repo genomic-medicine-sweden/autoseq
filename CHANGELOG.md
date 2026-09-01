@@ -30,6 +30,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #90 ](https://github.com/genomic-medicine-sweden/autoseq/pull/90) Added nf-test and `meta.yml` for the `CALL_SOMATIC_SNVS` subworkflow covering a paired tumor/normal case and a stub case.
 - [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Added the `channelFromPathWithMeta` helper to build `[[id:...], file]` reference channels from a path, or `channel.empty()` when the path is null.
 - [ #96 ](https://github.com/genomic-medicine-sweden/autoseq/pull/96) Added the `ANNOTATE_GERMLINE_TAF` subworkflow to annotate germline variants with the tumor allele fraction, with nf-test and `meta.yml`.
+- [ #103 ](https://github.com/genomic-medicine-sweden/autoseq/pull/103) Added the `PREPARE_HETSNPS_FOR_FRANKENPLOT` local module and its `prepare_hetsnps_for_frankenplot.py` script, which filters a germline VCF to heterozygous SNVs and appends a sample column with BAM-derived `GT`, `DP` and `AD` for Frankenplot BAF plotting, with nf-test and `meta.yml`.
 
 ### `Changed`
 
