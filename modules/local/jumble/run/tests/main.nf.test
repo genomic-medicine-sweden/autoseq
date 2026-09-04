@@ -1,0 +1,79 @@
+nextflow_process {
+
+    name "Test Process JUMBLE_RUN"
+    script "../main.nf"
+    process "JUMBLE_RUN"
+
+    tag "modules"
+    tag "modules_local"
+    tag "jumble"
+    tag "jumble/run"
+
+    test("tumor bam") {
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'test_panel' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.bins_csv,
+                    process.out.cnr,
+                    process.out.cns,
+                    process.out.counts,
+                    process.out.genes_csv,
+                    process.out.profile_bedgraph,
+                    process.out.qc_csv,
+                    process.out.seg,
+                    process.out.segments_bedgraph,
+                    // The plot is rendered by R, so only its file name is asserted
+                    process.out.png.collect { meta, png -> [meta, file(png).name] },
+                    process.out.versions_jumble
+                ).match() }
+            )
+        }
+    }
+
+    test("tumor bam - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'test_panel' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(sanitizeOutput(process.out)).match() }
+            )
+        }
+    }
+
+}

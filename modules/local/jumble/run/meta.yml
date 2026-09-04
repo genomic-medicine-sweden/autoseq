@@ -24,7 +24,9 @@ input:
         e.g. `[ id:'sample1', single_end:false ]`
   - bam:
       type: file
-      description: BAM file containing aligned reads
+      description: |
+        BAM file containing aligned reads. All output files are named after this
+        file, since Jumble derives the sample name from the BAM file name.
       pattern: "*.bam"
   - bai:
       type: file
@@ -46,35 +48,47 @@ output:
       description: |
         Groovy Map containing sample information
         e.g. `[ id:'sample1', single_end:false ]`
-  - cns:
+  - bins_csv:
       type: file
-      description: Copy number segments file
-      pattern: "*.cns"
+      description: Bin-level table with counts, corrections and annotations
+      pattern: "*.jumble.csv"
   - cnr:
       type: file
       description: Copy number ratios file (bin-level)
       pattern: "*.cnr"
+  - cns:
+      type: file
+      description: Copy number segments file
+      pattern: "*.cns"
+  - counts:
+      type: file
+      description: Read counts per bin, reusable as input instead of the BAM file
+      pattern: "*.counts.RDS"
+  - genes_csv:
+      type: file
+      description: Per-gene copy number metrics
+      pattern: "*.genes.csv"
+  - profile_bedgraph:
+      type: file
+      description: BedGraph file of copy number profile for IGV visualization
+      pattern: "*_profile.bedgraph"
+  - qc_csv:
+      type: file
+      description: QC metrics such as noise, waviness, GC bias and coverage
+      pattern: "*.qc.csv"
   - seg:
       type: file
       description: DNAcopy segmentation output file
       pattern: "*_dnacopy.seg"
-  - profile_bedgraph:
-      type: file
-      description: BedGraph file of copy number profile for IGV visualization
-      pattern: "*_profile_bedgraph"
   - segments_bedgraph:
       type: file
       description: BedGraph file of copy number segments for IGV visualization
-      pattern: "*_segments_bedgraph"
+      pattern: "*_segments.bedgraph"
   - png:
       type: file
       description: Optional PNG plot of copy number profile
       pattern: "*.png"
-  - rds:
-      type: file
-      description: Optional RDS file containing R objects
-      pattern: "*.RDS"
-  - versions:
+  - versions_jumble:
       type: file
       description: File containing software versions
       pattern: "versions.yml"
