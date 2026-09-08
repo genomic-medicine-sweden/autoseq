@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
 name: "jumble_run"
-description: Run JUMBLE for copy number variant detection from dna sequencing data
+description: Run Jumble for copy number variant detection from DNA sequencing data
 keywords:
   - cnv
   - copy number
@@ -12,87 +12,171 @@ tools:
   - jumble:
       description: |
         Jumble is a method for copy number analysis of short read sequencing data.
-      homepage: https://github.com/ClinSeq/jumble/
-      documentation: https://github.com/ClinSeq/jumble/
-      licence: ["GPL-3"]
-
+      homepage: "https://github.com/ClinSeq/jumble/"
+      documentation: "https://github.com/ClinSeq/jumble/"
+      tool_dev_url: "https://github.com/ClinSeq/jumble/"
+      licence:
+        - "GPL v3"
+      identifier: ""
 input:
-  - meta:
-      type: map
-      description: |
-        Groovy Map containing sample information
-        e.g. `[ id:'sample1', single_end:false ]`
-  - bam:
-      type: file
-      description: |
-        BAM file containing aligned reads. All output files are named after this
-        file, since Jumble derives the sample name from the BAM file name.
-      pattern: "*.bam"
-  - bai:
-      type: file
-      description: BAM index file
-      pattern: "*.bai"
-  - meta2:
-      type: map
-      description: |
-        Groovy Map containing reference information
-        e.g. `[ id:'jumble_ref' ]`
-  - jumbleref:
-      type: file
-      description: JUMBLE reference file in RDS format containing precomputed statistics
-      pattern: "*.RDS"
-
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. `[ id:'sample1' ]`
+    - bam:
+        type: file
+        description: BAM file containing aligned reads
+        pattern: "*.bam"
+        ontologies:
+          - edam: http://edamontology.org/format_2572
+    - bai:
+        type: file
+        description: Index of the input BAM file
+        pattern: "*.bai"
+        ontologies: []
+  - - meta2:
+        type: map
+        description: |
+          Groovy Map containing reference information
+          e.g. `[ id:'jumble_ref' ]`
+    - jumbleref:
+        type: file
+        description: Jumble reference file in RDS format containing precomputed statistics
+        pattern: "*.RDS"
+        ontologies: []
 output:
-  - meta:
-      type: map
-      description: |
-        Groovy Map containing sample information
-        e.g. `[ id:'sample1', single_end:false ]`
-  - bins_csv:
-      type: file
-      description: Bin-level table with counts, corrections and annotations
-      pattern: "*.jumble.csv"
-  - cnr:
-      type: file
-      description: Copy number ratios file (bin-level)
-      pattern: "*.cnr"
-  - cns:
-      type: file
-      description: Copy number segments file
-      pattern: "*.cns"
-  - counts:
-      type: file
-      description: Read counts per bin, reusable as input instead of the BAM file
-      pattern: "*.counts.RDS"
-  - genes_csv:
-      type: file
-      description: Per-gene copy number metrics
-      pattern: "*.genes.csv"
-  - profile_bedgraph:
-      type: file
-      description: BedGraph file of copy number profile for IGV visualization
-      pattern: "*_profile.bedgraph"
-  - qc_csv:
-      type: file
-      description: QC metrics such as noise, waviness, GC bias and coverage
-      pattern: "*.qc.csv"
-  - seg:
-      type: file
-      description: DNAcopy segmentation output file
-      pattern: "*_dnacopy.seg"
-  - segments_bedgraph:
-      type: file
-      description: BedGraph file of copy number segments for IGV visualization
-      pattern: "*_segments.bedgraph"
-  - png:
-      type: file
-      description: Optional PNG plot of copy number profile
-      pattern: "*.png"
-  - versions_jumble:
-      type: file
-      description: File containing software versions
-      pattern: "versions.yml"
-
+  bins_csv:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1' ]`
+      - "*.jumble.csv":
+          type: file
+          description: Bin-level table with counts, corrections and annotations
+          pattern: "*.jumble.csv"
+          ontologies: []
+  cnr:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1' ]`
+      - "*.cnr":
+          type: file
+          description: Copy number ratios file (bin-level)
+          pattern: "*.cnr"
+          ontologies: []
+  cns:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1' ]`
+      - "*.cns":
+          type: file
+          description: Copy number segments file
+          pattern: "*.cns"
+          ontologies: []
+  counts:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1' ]`
+      - "*.counts.RDS":
+          type: file
+          description: Read counts per bin, reusable as input instead of the BAM file
+          pattern: "*.counts.RDS"
+          ontologies: []
+  genes_csv:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1' ]`
+      - "*.genes.csv":
+          type: file
+          description: Per-gene copy number metrics
+          pattern: "*.genes.csv"
+          ontologies: []
+  profile_bedgraph:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1' ]`
+      - "*_profile.bedgraph":
+          type: file
+          description: BedGraph file of the copy number profile for IGV visualization
+          pattern: "*_profile.bedgraph"
+          ontologies: []
+  qc_csv:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1' ]`
+      - "*.qc.csv":
+          type: file
+          description: QC metrics such as noise, waviness, GC bias and coverage
+          pattern: "*.qc.csv"
+          ontologies: []
+  seg:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1' ]`
+      - "*_dnacopy.seg":
+          type: file
+          description: DNAcopy segmentation output file
+          pattern: "*_dnacopy.seg"
+          ontologies: []
+  segments_bedgraph:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1' ]`
+      - "*_segments.bedgraph":
+          type: file
+          description: BedGraph file of the copy number segments for IGV visualization
+          pattern: "*_segments.bedgraph"
+          ontologies: []
+  png:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1' ]`
+      - "*.png":
+          type: file
+          description: Plot of the copy number profile
+          pattern: "*.png"
+          ontologies: []
+  versions_jumble:
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - Jumble:
+          type: string
+          description: The tool name
+      - Rscript -e 'cat(as.character(packageVersion("Jumble")))':
+          type: eval
+          description: The expression to obtain the version of the tool
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - Jumble:
+          type: string
+          description: The tool name
+      - Rscript -e 'cat(as.character(packageVersion("Jumble")))':
+          type: eval
+          description: The expression to obtain the version of the tool
 authors:
   - "@imsarath"
 maintainers:
