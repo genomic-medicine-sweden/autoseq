@@ -57,7 +57,7 @@
                     "gripss": 2.4
                 },
                 "JUMBLE_RUN": {
-                    "Jumble": 0.6
+                    "Jumble": "0.5.5"
                 },
                 "MARKDUPLICATES": {
                     "gatk4": "4.6.1.0",
@@ -195,17 +195,17 @@
                 "variants/somatic/sage/somatic/TUMOR.sage.somatic.vcf.gz.tbi"
             ],
             [
-                "NORMAL.cns:md5,05b74f7bb5bc72879ab382fa07187227",
-                "NORMAL_ann.cns:md5,3aa49cf3093d9d0fbe3f57ca10c4b785",
-                "NORMAL_segments.bedgraph:md5,3403ab6b1c036d688b79a1aae937be89",
-                "TUMOR.cns:md5,86dd10fb9bba9d4627c72da10f0e051f",
-                "TUMOR_ann.cns:md5,86284c73bb11714625b718c5f8ee94ef",
-                "TUMOR_segments.bedgraph:md5,e1826f8163e12facfc620c07f370c0e3",
+                "NORMAL.cns:md5,9430d1649900c63ba34a40d064e0cb20",
+                "NORMAL_ann.cns:md5,6bc35f7c1969157f511a4b2b9e9cccb0",
+                "NORMAL_segments.bedgraph:md5,3ec54917a94542887c7e0e4f6b5ac6db",
+                "TUMOR.cns:md5,e41dbdf513a19b863d6b930db5ab8646",
+                "TUMOR_ann.cns:md5,27d3bbef1a64909bb9177a7ccfec1c4b",
+                "TUMOR_segments.bedgraph:md5,9e0c544b55f85ef593dfd8d65865d583",
                 "NORMAL.DPYD.csv:md5,7ace75e81aecf36a3cd6227532b6e96a",
                 "NORMAL.DPYD.json:md5,bc844dd3cb9083e2c914ddc8300def2c",
                 "TUMOR.DPYD.csv:md5,1421172466850143df4b9eca249156dc",
                 "TUMOR.DPYD.json:md5,d2035d04b6bba7cdad1da8b35309f9bd",
-                "TUMOR_purecn.csv:md5,06af57ce80a26b956eac833f95726298",
+                "TUMOR_purecn.csv:md5,03780f14c9744204befd10bacbe8a3fc",
                 "TUMOR_NORMAL.contamination.table:md5,a47aaa6933a5cfd12bcba937d74c0991",
                 "NORMAL.flagstat:md5,7a13b0d1418967691bda2c72ad4443cb",
                 "TUMOR.flagstat:md5,9140f04f5f15fcb58cdb04c1c061c650",
@@ -264,7 +264,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-08-26T16:06:47.238055846",
+        "timestamp": "2026-09-08T11:46:09.74783678",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
@@ -328,7 +328,7 @@
                     "gripss": 2.4
                 },
                 "JUMBLE_RUN": {
-                    "Jumble": 0.6
+                    "Jumble": "0.5.5"
                 },
                 "MARKDUPLICATES": {
                     "gatk4": "4.6.1.0",
@@ -465,7 +465,7 @@
                 "variants/somatic/sage/somatic/TUMOR.sage.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-08-26T16:07:56.682833145",
+        "timestamp": "2026-09-08T11:46:56.956426086",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"

@@ -160,7 +160,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL.cns:md5,05b74f7bb5bc72879ab382fa07187227"
+                    "NORMAL.cns:md5,9430d1649900c63ba34a40d064e0cb20"
                 ],
                 [
                     {
@@ -169,7 +169,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR.cns:md5,86dd10fb9bba9d4627c72da10f0e051f"
+                    "TUMOR.cns:md5,e41dbdf513a19b863d6b930db5ab8646"
                 ]
             ],
             [
@@ -180,7 +180,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL_segments.bedgraph:md5,3403ab6b1c036d688b79a1aae937be89"
+                    "NORMAL_segments.bedgraph:md5,3ec54917a94542887c7e0e4f6b5ac6db"
                 ],
                 [
                     {
@@ -189,7 +189,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_segments.bedgraph:md5,e1826f8163e12facfc620c07f370c0e3"
+                    "TUMOR_segments.bedgraph:md5,9e0c544b55f85ef593dfd8d65865d583"
                 ]
             ],
             [
@@ -200,7 +200,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL_ann.cns:md5,3aa49cf3093d9d0fbe3f57ca10c4b785"
+                    "NORMAL_ann.cns:md5,6bc35f7c1969157f511a4b2b9e9cccb0"
                 ],
                 [
                     {
@@ -209,7 +209,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_ann.cns:md5,86284c73bb11714625b718c5f8ee94ef"
+                    "TUMOR_ann.cns:md5,27d3bbef1a64909bb9177a7ccfec1c4b"
                 ]
             ],
             [
@@ -293,7 +293,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-08-10T13:58:32.145002661",
+        "timestamp": "2026-09-08T11:43:37.618875522",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
