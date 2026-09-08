@@ -26,12 +26,9 @@ process JUMBLE_RUN {
 
     script:
     def args = task.ext.args ?: ''
-    // Jumble names every output after the input BAM, so the prefix is not configurable
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
-
-    # Run the tool
     jumble-run.R \\
         $args \\
         -r ${jumbleref} \\
