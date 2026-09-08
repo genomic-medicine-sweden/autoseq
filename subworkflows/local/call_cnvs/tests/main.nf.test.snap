@@ -10,7 +10,7 @@
                             "sample_name": "NORMAL",
                             "sample_type": "normal"
                         },
-                        "NORMAL_dedup.cnr:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "NORMAL.cnr:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -19,7 +19,7 @@
                             "sample_name": "TUMOR",
                             "sample_type": "tumor"
                         },
-                        "TUMOR_dedup.cnr:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "TUMOR.cnr:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "cns": [
@@ -50,7 +50,7 @@
                             "sample_name": "NORMAL",
                             "sample_type": "normal"
                         },
-                        "NORMAL_dedup.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "NORMAL.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -59,7 +59,7 @@
                             "sample_name": "TUMOR",
                             "sample_type": "tumor"
                         },
-                        "TUMOR_dedup.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "TUMOR.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "png": [
@@ -70,7 +70,7 @@
                             "sample_name": "NORMAL",
                             "sample_type": "normal"
                         },
-                        "NORMAL_dedup.png:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "NORMAL.png:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -79,7 +79,7 @@
                             "sample_name": "TUMOR",
                             "sample_type": "tumor"
                         },
-                        "TUMOR_dedup.png:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "TUMOR.png:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "profile_bedgraph": [
@@ -90,7 +90,7 @@
                             "sample_name": "NORMAL",
                             "sample_type": "normal"
                         },
-                        "NORMAL_dedup_profile.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "NORMAL_profile.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -99,7 +99,7 @@
                             "sample_name": "TUMOR",
                             "sample_type": "tumor"
                         },
-                        "TUMOR_dedup_profile.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "TUMOR_profile.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "seg": [
@@ -110,7 +110,7 @@
                             "sample_name": "NORMAL",
                             "sample_type": "normal"
                         },
-                        "NORMAL_dedup_dnacopy.seg:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "NORMAL_dnacopy.seg:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -119,7 +119,7 @@
                             "sample_name": "TUMOR",
                             "sample_type": "tumor"
                         },
-                        "TUMOR_dedup_dnacopy.seg:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "TUMOR_dnacopy.seg:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "segments_bedgraph": [
@@ -130,7 +130,7 @@
                             "sample_name": "NORMAL",
                             "sample_type": "normal"
                         },
-                        "NORMAL_dedup_segments.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "NORMAL_segments.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -139,12 +139,12 @@
                             "sample_name": "TUMOR",
                             "sample_type": "tumor"
                         },
-                        "TUMOR_dedup_segments.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "TUMOR_segments.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-09-04T12:15:01.095772818",
+        "timestamp": "2026-08-10T13:58:41.384568163",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
@@ -160,7 +160,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL_dedup.cns:md5,9430d1649900c63ba34a40d064e0cb20"
+                    "NORMAL.cns:md5,05b74f7bb5bc72879ab382fa07187227"
                 ],
                 [
                     {
@@ -169,7 +169,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_dedup.cns:md5,e41dbdf513a19b863d6b930db5ab8646"
+                    "TUMOR.cns:md5,86dd10fb9bba9d4627c72da10f0e051f"
                 ]
             ],
             [
@@ -180,7 +180,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL_dedup_segments.bedgraph:md5,3ec54917a94542887c7e0e4f6b5ac6db"
+                    "NORMAL_segments.bedgraph:md5,3403ab6b1c036d688b79a1aae937be89"
                 ],
                 [
                     {
@@ -189,7 +189,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_dedup_segments.bedgraph:md5,9e0c544b55f85ef593dfd8d65865d583"
+                    "TUMOR_segments.bedgraph:md5,e1826f8163e12facfc620c07f370c0e3"
                 ]
             ],
             [
@@ -200,7 +200,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL_ann.cns:md5,6bc35f7c1969157f511a4b2b9e9cccb0"
+                    "NORMAL_ann.cns:md5,3aa49cf3093d9d0fbe3f57ca10c4b785"
                 ],
                 [
                     {
@@ -209,7 +209,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_ann.cns:md5,27d3bbef1a64909bb9177a7ccfec1c4b"
+                    "TUMOR_ann.cns:md5,86284c73bb11714625b718c5f8ee94ef"
                 ]
             ],
             [
@@ -220,7 +220,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL_dedup.cnr"
+                    "NORMAL.cnr"
                 ],
                 [
                     {
@@ -229,7 +229,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_dedup.cnr"
+                    "TUMOR.cnr"
                 ]
             ],
             [
@@ -240,7 +240,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL_dedup_dnacopy.seg"
+                    "NORMAL_dnacopy.seg"
                 ],
                 [
                     {
@@ -249,7 +249,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_dedup_dnacopy.seg"
+                    "TUMOR_dnacopy.seg"
                 ]
             ],
             [
@@ -260,7 +260,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL_dedup_profile.bedgraph"
+                    "NORMAL_profile.bedgraph"
                 ],
                 [
                     {
@@ -269,7 +269,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_dedup_profile.bedgraph"
+                    "TUMOR_profile.bedgraph"
                 ]
             ],
             [
@@ -280,7 +280,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL_dedup.png"
+                    "NORMAL.png"
                 ],
                 [
                     {
@@ -289,11 +289,11 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_dedup.png"
+                    "TUMOR.png"
                 ]
             ]
         ],
-        "timestamp": "2026-09-04T12:14:54.859810007",
+        "timestamp": "2026-08-10T13:58:32.145002661",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"

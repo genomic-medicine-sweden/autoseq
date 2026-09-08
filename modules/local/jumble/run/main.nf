@@ -27,7 +27,7 @@ process JUMBLE_RUN {
     script:
     def args = task.ext.args ?: ''
     // Jumble names every output after the input BAM, so the prefix is not configurable
-    def prefix = bam.baseName
+    def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
 
@@ -36,6 +36,7 @@ process JUMBLE_RUN {
         $args \\
         -r ${jumbleref} \\
         -b ${bam} \\
+        -p ${prefix} \\
         -o "./"
 
     ## Convert to bedgraph for IGV visualization
@@ -48,7 +49,7 @@ process JUMBLE_RUN {
     """
 
     stub:
-    def prefix = bam.baseName
+    def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
     touch ${prefix}.jumble.csv
