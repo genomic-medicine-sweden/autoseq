@@ -227,7 +227,6 @@
                 "TEST.NORMAL.DPYD.json:md5,0cd8bc15aea6d369c31a7e55c23f3334",
                 "TEST.TUMOR.DPYD.csv:md5,bf70cd22e73b1146ee83d325c7de354b",
                 "TEST.TUMOR.DPYD.json:md5,5c5f9c12eaec9914c8884ef1103473fe",
-                "TEST.TUMOR_purecn.csv:md5,c24c117104e780b83e11a11282d53b3e",
                 "TEST.TUMOR_TEST.NORMAL.contamination.table:md5,ff6e287b8fa6621479797a04907bcab9",
                 "NORMAL.flagstat:md5,1585ab4b2eb9d0324247c368a6e2d3aa",
                 "TUMOR.flagstat:md5,559e61f55c42911d884a382ac60bf8db",

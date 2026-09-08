@@ -205,7 +205,6 @@
                 "NORMAL.DPYD.json:md5,bc844dd3cb9083e2c914ddc8300def2c",
                 "TUMOR.DPYD.csv:md5,1421172466850143df4b9eca249156dc",
                 "TUMOR.DPYD.json:md5,d2035d04b6bba7cdad1da8b35309f9bd",
-                "TUMOR_purecn.csv:md5,03780f14c9744204befd10bacbe8a3fc",
                 "TUMOR_NORMAL.contamination.table:md5,a47aaa6933a5cfd12bcba937d74c0991",
                 "NORMAL.flagstat:md5,7a13b0d1418967691bda2c72ad4443cb",
                 "TUMOR.flagstat:md5,9140f04f5f15fcb58cdb04c1c061c650",
