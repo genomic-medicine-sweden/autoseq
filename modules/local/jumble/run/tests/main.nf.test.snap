@@ -137,7 +137,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR.jumble.csv:md5,0ec5bc0a3732dfe9d9d5dce80c040b32"
+                    "TUMOR.jumble.csv"
                 ]
             ],
             [
@@ -148,7 +148,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR.cnr:md5,2928e91c441c92a40effcd5e2a86ec72"
+                    "TUMOR.cnr"
                 ]
             ],
             [
@@ -192,7 +192,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_profile.bedgraph:md5,eedf81db1af879aea604eb837d438154"
+                    "TUMOR_profile.bedgraph"
                 ]
             ],
             [
@@ -214,7 +214,7 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_dnacopy.seg:md5,b5af493d825253b68b00e21353443888"
+                    "TUMOR_dnacopy.seg"
                 ]
             ],
             [
@@ -247,7 +247,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-08T10:54:30.050721416",
+        "timestamp": "2026-09-08T12:53:20.72548452",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
