@@ -3,7 +3,7 @@ process JUMBLE_RUN {
     tag "${meta.id}"
     label 'process_medium'
 
-    // Jumble is not distributed via CRAN, Bioconda or Seqera Containers, so the image
+    // Jumble is not distributed via CRAN, Bioconda or Seqera Containers, so use the image
     // hosted on the Clinical Genomics Docker Hub account.
     container "docker.io/clinicalgenomics/jumble:0.5.5"
 
