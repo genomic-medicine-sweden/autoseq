@@ -1,0 +1,88 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "prepare_hetsnps_for_frankenplot"
+description: Quality-filters a germline VCF down to heterozygous simple SNVs and appends
+  a sample column carrying GT, DP and AD read from a tumour BAM pileup, so that B-allele
+  frequencies can be plotted in a Frankenplot.
+keywords:
+  - baf
+  - frankenplot
+  - germline
+  - heterozygous
+  - snp
+  - vcf
+tools:
+  - prepare_hetsnps_for_frankenplot:
+      description: Standalone python script that filters a VCF to heterozygous SNVs and adds BAM-derived allelic depths as a new sample column
+      homepage: "https://www.python.org/"
+      documentation: "https://docs.python.org/3/"
+  - pysam:
+      description: Python module for reading and manipulating SAM/BAM/VCF files
+      homepage: "https://pysam.readthedocs.io/en/latest/"
+      documentation: "https://pysam.readthedocs.io/en/latest/api.html"
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ]`
+  - vcf:
+      type: file
+      description: Germline VCF to filter for heterozygous SNVs
+      pattern: "*.{vcf,vcf.gz}"
+      ontologies:
+        - edam: "http://edamontology.org/format_3016" # VCF
+  - tbi:
+      type: file
+      description: Tabix index for the germline VCF
+      pattern: "*.{tbi,csi}"
+  - bam:
+      type: file
+      description: Tumour BAM to pile up at each retained site
+      pattern: "*.bam"
+      ontologies:
+        - edam: "http://edamontology.org/format_2572" # BAM
+  - bai:
+      type: file
+      description: Index for the tumour BAM
+      pattern: "*.{bai,csi}"
+
+output:
+  vcf:
+    - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. `[ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ]`
+    - "*.hetsnps.vcf.gz":
+        type: file
+        description: Bgzipped heterozygous SNP VCF with the tumour sample column appended
+        pattern: "*.hetsnps.vcf.gz"
+        ontologies:
+          - edam: "http://edamontology.org/format_3016" # VCF
+  tbi:
+    - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. `[ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ]`
+    - "*.hetsnps.vcf.gz.tbi":
+        type: file
+        description: Tabix index for the heterozygous SNP VCF
+        pattern: "*.hetsnps.vcf.gz.tbi"
+
+topics:
+  versions:
+    - ${task.process}:
+        type: string
+        description: The name of the process
+    - prepare_hetsnps_for_frankenplot:
+        type: string
+        description: The name of the tool
+    - prepare_hetsnps_for_frankenplot.py --version:
+        type: eval
+        description: The expression to obtain the version of the tool
+
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
