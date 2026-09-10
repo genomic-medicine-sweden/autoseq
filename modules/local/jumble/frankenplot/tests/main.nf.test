@@ -1,0 +1,170 @@
+nextflow_process {
+
+    name "Test Process JUMBLE_FRANKENPLOT"
+    script "../main.nf"
+    process "JUMBLE_FRANKENPLOT"
+
+    tag "modules"
+    tag "modules_local"
+    tag "jumble"
+    tag "jumble/frankenplot"
+
+    test("tumor only") {
+
+        setup {
+            run("JUMBLE_RUN") {
+                script "../../run/main.nf"
+                process {
+                    """
+                    input[0] = channel.of([
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                    ])
+                    input[1] = channel.value([
+                        [ id:'test_panel' ],
+                        file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
+                    ])
+                    """
+                }
+            }
+        }
+
+        when {
+            process {
+                """
+                input[0] = JUMBLE_RUN.out.cns
+                    .join(JUMBLE_RUN.out.bins_csv)
+                    .map { meta, cns, jumble_csv -> [ meta, [cns], [jumble_csv], [], [], [] ] }
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                // The report embeds a render timestamp and re-generated plots, so it is not
+                // byte-reproducible. Snapshot the file name and assert on the content instead.
+                { assert snapshot(
+                    process.out.html.collect { meta, html -> [meta, file(html).name] },
+                    process.out.versions_jumble
+                ).match() },
+                { assert path(process.out.html[0][1]).text.contains('<title>TUMOR</title>') },
+                { assert path(process.out.html[0][1]).text.contains('Session Info') }
+            )
+        }
+    }
+
+    test("tumor and normal with het snps") {
+
+        setup {
+            run("JUMBLE_RUN", alias: "JUMBLE_RUN_TUMOR") {
+                script "../../run/main.nf"
+                process {
+                    """
+                    input[0] = channel.of([
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                    ])
+                    input[1] = channel.value([
+                        [ id:'test_panel' ],
+                        file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
+                    ])
+                    """
+                }
+            }
+
+            run("JUMBLE_RUN", alias: "JUMBLE_RUN_NORMAL") {
+                script "../../run/main.nf"
+                process {
+                    """
+                    input[0] = channel.of([
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ])
+                    input[1] = channel.value([
+                        [ id:'test_panel' ],
+                        file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
+                    ])
+                    """
+                }
+            }
+        }
+
+        when {
+            process {
+                """
+                input[0] = JUMBLE_RUN_TUMOR.out.cns
+                    .join(JUMBLE_RUN_TUMOR.out.bins_csv)
+                    .combine(JUMBLE_RUN_NORMAL.out.cns.join(JUMBLE_RUN_NORMAL.out.bins_csv))
+                    .map { meta, cns, jumble_csv, meta2, normal_cns, normal_jumble_csv ->
+                        [
+                            meta,
+                            [cns, normal_cns],
+                            [jumble_csv, normal_jumble_csv],
+                            [],
+                            file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true),
+                            []
+                        ]
+                    }
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.html.collect { meta, html -> [meta, file(html).name] },
+                    process.out.versions_jumble
+                ).match() },
+                { assert path(process.out.html[0][1]).text.contains('<title>TUMOR</title>') },
+                { assert path(process.out.html[0][1]).text.contains('Session Info') }
+            )
+        }
+    }
+
+    test("tumor only - stub") {
+
+        options "-stub"
+
+        setup {
+            run("JUMBLE_RUN") {
+                script "../../run/main.nf"
+                process {
+                    """
+                    input[0] = channel.of([
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true)
+                    ])
+                    input[1] = channel.value([
+                        [ id:'test_panel' ],
+                        file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
+                    ])
+                    """
+                }
+            }
+        }
+
+        when {
+            process {
+                """
+                input[0] = JUMBLE_RUN.out.cns
+                    .join(JUMBLE_RUN.out.bins_csv)
+                    .map { meta, cns, jumble_csv -> [ meta, [cns], [jumble_csv], [], [], [] ] }
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(sanitizeOutput(process.out)).match() }
+            )
+        }
+    }
+
+}

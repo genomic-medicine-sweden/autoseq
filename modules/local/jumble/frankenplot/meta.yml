@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "jumble_frankenplot"
+description: Render a Frankenplot, a single self-contained HTML report giving a comprehensive
+  overview of the genomic profile of a case - copy number profile, B-allele frequencies,
+  somatic and germline variant overlays, HRD and DPYD status - from Jumble output files.
+keywords:
+  - cnv
+  - copy number
+  - frankenplot
+  - genomics
+  - report
+  - visualisation
+tools:
+  - jumble:
+      description: |
+        Jumble is a method for copy number analysis of short read sequencing data.
+      homepage: "https://github.com/ClinSeq/jumble/"
+      documentation: "https://github.com/ClinSeq/jumble/"
+      tool_dev_url: "https://github.com/ClinSeq/jumble/"
+      licence:
+        - "GPL v3"
+      identifier: ""
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. `[ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ]`
+    - cns:
+        type: file
+        description: |
+          List of Jumble copy number segment files as `[tumor_cns, normal_cns]`. The tumour
+          entry is mandatory, the normal entry optional. A normal entry must be paired with a
+          normal entry in `jumble_csv`, otherwise the tool errors out.
+        pattern: "*.cns"
+        ontologies: []
+    - jumble_csv:
+        type: file
+        description: |
+          List of Jumble bin-level tables as `[tumor_csv, normal_csv]`. The tumour entry is
+          mandatory, the normal entry optional.
+        pattern: "*.jumble.csv"
+        ontologies: []
+    - vcf:
+        type: file
+        description: |
+          List of annotated variant VCFs to overlay as `[somatic_vcf, germline_vcf]`. Pass
+          `[]` to leave both overlays out. Positional, so a germline-only overlay is not
+          expressible.
+        pattern: "*.{vcf,vcf.gz}"
+        ontologies:
+          - edam: "http://edamontology.org/format_3016" # VCF
+    - het_snps:
+        type: file
+        description: |
+          Heterozygous SNP VCF carrying tumour allelic depths, used for B-allele frequency
+          plotting. Pass `[]` to leave the allele-ratio track out.
+        pattern: "*.{vcf,vcf.gz}"
+        ontologies:
+          - edam: "http://edamontology.org/format_3016" # VCF
+    - dpyd:
+        type: file
+        description: |
+          List of DPYD typing results as `[dpyd_json, dpyd_csv]`. Pass `[]` to leave the DPYD
+          tab out.
+        pattern: "*.{json,csv}"
+        ontologies: []
+output:
+  html:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ]`
+      - "*.frankenplot.html":
+          type: file
+          description: Self-contained Frankenplot HTML genome report
+          pattern: "*.frankenplot.html"
+          ontologies: []
+  versions_jumble:
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - Jumble:
+          type: string
+          description: The tool name
+      - Rscript -e 'cat(as.character(packageVersion("Jumble")))':
+          type: eval
+          description: The expression to obtain the version of the tool
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - Jumble:
+          type: string
+          description: The tool name
+      - Rscript -e 'cat(as.character(packageVersion("Jumble")))':
+          type: eval
+          description: The expression to obtain the version of the tool
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
