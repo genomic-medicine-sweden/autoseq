@@ -1,7 +1,7 @@
 
 
-include { JUMBLE_RUN     } from '../../../modules/local/jumble/main'
-include { ANNOTATE_CNVS  } from '../../../modules/local/annotate_cnvs/main'
+include { ANNOTATE_CNVS } from '../../../modules/local/annotate_cnvs/main'
+include { JUMBLE_RUN    } from '../../../modules/local/jumble/run/main'
 
 
 workflow CALL_CNVS {

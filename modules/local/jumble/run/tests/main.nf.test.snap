@@ -1,17 +1,19 @@
 {
-    "tumor and normal samples - stub": {
+    "tumor bam - stub": {
         "content": [
             {
-                "cnr": [
+                "bins_csv": [
                     [
                         {
-                            "id": "NORMAL",
+                            "id": "TUMOR",
                             "case_id": "TEST",
-                            "sample_name": "NORMAL",
-                            "sample_type": "normal"
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
                         },
-                        "NORMAL.cnr:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ],
+                        "TUMOR.jumble.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "cnr": [
                     [
                         {
                             "id": "TUMOR",
@@ -25,35 +27,6 @@
                 "cns": [
                     [
                         {
-                            "id": "NORMAL",
-                            "case_id": "TEST",
-                            "sample_name": "NORMAL",
-                            "sample_type": "normal"
-                        },
-                        "NORMAL_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ],
-                    [
-                        {
-                            "id": "TUMOR",
-                            "case_id": "TEST",
-                            "sample_name": "TUMOR",
-                            "sample_type": "tumor"
-                        },
-                        "TUMOR_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "jumble_cns": [
-                    [
-                        {
-                            "id": "NORMAL",
-                            "case_id": "TEST",
-                            "sample_name": "NORMAL",
-                            "sample_type": "normal"
-                        },
-                        "NORMAL.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ],
-                    [
-                        {
                             "id": "TUMOR",
                             "case_id": "TEST",
                             "sample_name": "TUMOR",
@@ -62,16 +35,29 @@
                         "TUMOR.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "png": [
+                "counts": [
                     [
                         {
-                            "id": "NORMAL",
+                            "id": "TUMOR",
                             "case_id": "TEST",
-                            "sample_name": "NORMAL",
-                            "sample_type": "normal"
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
                         },
-                        "NORMAL.png:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ],
+                        "TUMOR.bam.counts.RDS:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "genes_csv": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR.genes.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "png": [
                     [
                         {
                             "id": "TUMOR",
@@ -85,15 +71,6 @@
                 "profile_bedgraph": [
                     [
                         {
-                            "id": "NORMAL",
-                            "case_id": "TEST",
-                            "sample_name": "NORMAL",
-                            "sample_type": "normal"
-                        },
-                        "NORMAL_profile.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ],
-                    [
-                        {
                             "id": "TUMOR",
                             "case_id": "TEST",
                             "sample_name": "TUMOR",
@@ -102,16 +79,18 @@
                         "TUMOR_profile.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "seg": [
+                "qc_csv": [
                     [
                         {
-                            "id": "NORMAL",
+                            "id": "TUMOR",
                             "case_id": "TEST",
-                            "sample_name": "NORMAL",
-                            "sample_type": "normal"
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
                         },
-                        "NORMAL_dnacopy.seg:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ],
+                        "TUMOR.qc.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "seg": [
                     [
                         {
                             "id": "TUMOR",
@@ -125,15 +104,6 @@
                 "segments_bedgraph": [
                     [
                         {
-                            "id": "NORMAL",
-                            "case_id": "TEST",
-                            "sample_name": "NORMAL",
-                            "sample_type": "normal"
-                        },
-                        "NORMAL_segments.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ],
-                    [
-                        {
                             "id": "TUMOR",
                             "case_id": "TEST",
                             "sample_name": "TUMOR",
@@ -141,87 +111,36 @@
                         },
                         "TUMOR_segments.bedgraph:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
+                ],
+                "versions_jumble": [
+                    [
+                        "JUMBLE_RUN",
+                        "Jumble",
+                        "0.5.5"
+                    ]
                 ]
             }
         ],
-        "timestamp": "2026-08-10T13:58:41.384568163",
+        "timestamp": "2026-09-08T10:54:35.604010802",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
         }
     },
-    "tumor and normal samples": {
+    "tumor bam": {
         "content": [
             [
                 [
                     {
-                        "id": "NORMAL",
-                        "case_id": "TEST",
-                        "sample_name": "NORMAL",
-                        "sample_type": "normal"
-                    },
-                    "NORMAL.cns:md5,9430d1649900c63ba34a40d064e0cb20"
-                ],
-                [
-                    {
                         "id": "TUMOR",
                         "case_id": "TEST",
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR.cns:md5,e41dbdf513a19b863d6b930db5ab8646"
+                    "TUMOR.jumble.csv"
                 ]
             ],
             [
-                [
-                    {
-                        "id": "NORMAL",
-                        "case_id": "TEST",
-                        "sample_name": "NORMAL",
-                        "sample_type": "normal"
-                    },
-                    "NORMAL_segments.bedgraph:md5,3ec54917a94542887c7e0e4f6b5ac6db"
-                ],
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR_segments.bedgraph:md5,9e0c544b55f85ef593dfd8d65865d583"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "NORMAL",
-                        "case_id": "TEST",
-                        "sample_name": "NORMAL",
-                        "sample_type": "normal"
-                    },
-                    "NORMAL_ann.cns:md5,6bc35f7c1969157f511a4b2b9e9cccb0"
-                ],
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR_ann.cns:md5,27d3bbef1a64909bb9177a7ccfec1c4b"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "NORMAL",
-                        "case_id": "TEST",
-                        "sample_name": "NORMAL",
-                        "sample_type": "normal"
-                    },
-                    "NORMAL.cnr"
-                ],
                 [
                     {
                         "id": "TUMOR",
@@ -235,13 +154,15 @@
             [
                 [
                     {
-                        "id": "NORMAL",
+                        "id": "TUMOR",
                         "case_id": "TEST",
-                        "sample_name": "NORMAL",
-                        "sample_type": "normal"
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
                     },
-                    "NORMAL_dnacopy.seg"
-                ],
+                    "TUMOR.cns:md5,e41dbdf513a19b863d6b930db5ab8646"
+                ]
+            ],
+            [
                 [
                     {
                         "id": "TUMOR",
@@ -249,19 +170,21 @@
                         "sample_name": "TUMOR",
                         "sample_type": "tumor"
                     },
-                    "TUMOR_dnacopy.seg"
+                    "TUMOR_dedup.bam.counts.RDS:md5,4b22705ab48d423fd882bc83d58297d7"
                 ]
             ],
             [
                 [
                     {
-                        "id": "NORMAL",
+                        "id": "TUMOR",
                         "case_id": "TEST",
-                        "sample_name": "NORMAL",
-                        "sample_type": "normal"
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
                     },
-                    "NORMAL_profile.bedgraph"
-                ],
+                    "TUMOR.genes.csv:md5,e40cf589608380854a6e88c3e2e7b22e"
+                ]
+            ],
+            [
                 [
                     {
                         "id": "TUMOR",
@@ -275,13 +198,37 @@
             [
                 [
                     {
-                        "id": "NORMAL",
+                        "id": "TUMOR",
                         "case_id": "TEST",
-                        "sample_name": "NORMAL",
-                        "sample_type": "normal"
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
                     },
-                    "NORMAL.png"
-                ],
+                    "TUMOR.qc.csv:md5,c4137f27ced4f9556845e2a2b710ce49"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR_dnacopy.seg"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR_segments.bedgraph:md5,9e0c544b55f85ef593dfd8d65865d583"
+                ]
+            ],
+            [
                 [
                     {
                         "id": "TUMOR",
@@ -291,9 +238,16 @@
                     },
                     "TUMOR.png"
                 ]
+            ],
+            [
+                [
+                    "JUMBLE_RUN",
+                    "Jumble",
+                    "0.5.5"
+                ]
             ]
         ],
-        "timestamp": "2026-09-08T11:43:37.618875522",
+        "timestamp": "2026-09-08T12:53:20.72548452",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
