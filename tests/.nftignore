@@ -18,4 +18,5 @@ cnv/*.cnr
 cnv/*_dnacopy.seg
 cnv/*_profile.bedgraph
 purecn/*.pdf
+purecn/*_purecn.csv
 qc/picard/*

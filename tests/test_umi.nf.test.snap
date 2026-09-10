@@ -74,7 +74,7 @@
                     "fgbio": "3.1.2"
                 },
                 "JUMBLE_RUN": {
-                    "Jumble": 0.6
+                    "Jumble": "0.5.5"
                 },
                 "PASSFILTER_FOR_MUTECT2": {
                     "bcftools": 1.22
@@ -217,17 +217,16 @@
                 "variants/somatic/sage/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi"
             ],
             [
-                "TEST.NORMAL.cns:md5,78f6c0b312e30579aa2511f8fde8670a",
-                "TEST.NORMAL_ann.cns:md5,f1fd6cd4e44df367267a00119a3be24e",
-                "TEST.NORMAL_segments.bedgraph:md5,1a76e952d14c04272d6c8928c6e92d7a",
-                "TEST.TUMOR.cns:md5,7933061df26ca31c024347f6404a269a",
-                "TEST.TUMOR_ann.cns:md5,b04bf58ccd1cb6ce6cdedb974e188cc3",
-                "TEST.TUMOR_segments.bedgraph:md5,38b9f6b0eedb8ad36f69bb8113cf8a27",
+                "TEST.NORMAL.cns:md5,d93cdaa525c9408d5c034e2b1d8f3b82",
+                "TEST.NORMAL_ann.cns:md5,0abcb727bc50707e3cc4abb00a76685c",
+                "TEST.NORMAL_segments.bedgraph:md5,60df890ce4b58de4ccbd612ae1ce524b",
+                "TEST.TUMOR.cns:md5,0f6dadc92476a88131b35ef9a7fb38ce",
+                "TEST.TUMOR_ann.cns:md5,bd7beef7dc20e0e24925286558971abb",
+                "TEST.TUMOR_segments.bedgraph:md5,a3fd3d9577daf2bb2e131d84cf87e3f9",
                 "TEST.NORMAL.DPYD.csv:md5,143ffaa9d7b70b853f022dcc02d45800",
                 "TEST.NORMAL.DPYD.json:md5,0cd8bc15aea6d369c31a7e55c23f3334",
                 "TEST.TUMOR.DPYD.csv:md5,bf70cd22e73b1146ee83d325c7de354b",
                 "TEST.TUMOR.DPYD.json:md5,5c5f9c12eaec9914c8884ef1103473fe",
-                "TEST.TUMOR_purecn.csv:md5,0a81935cd5900a478dacafae6de8e689",
                 "TEST.TUMOR_TEST.NORMAL.contamination.table:md5,ff6e287b8fa6621479797a04907bcab9",
                 "NORMAL.flagstat:md5,1585ab4b2eb9d0324247c368a6e2d3aa",
                 "TUMOR.flagstat:md5,559e61f55c42911d884a382ac60bf8db",
@@ -286,7 +285,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-08-26T15:20:37.281658355",
+        "timestamp": "2026-09-08T11:56:52.698464892",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"
@@ -367,7 +366,7 @@
                     "fgbio": "3.1.2"
                 },
                 "JUMBLE_RUN": {
-                    "Jumble": 0.6
+                    "Jumble": "0.5.5"
                 },
                 "PASSFILTER_FOR_MUTECT2": {
                     "bcftools": 1.22
@@ -509,7 +508,7 @@
                 "variants/somatic/sage/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-08-26T15:25:26.252175572",
+        "timestamp": "2026-09-08T11:57:53.920206465",
         "meta": {
             "nf-test": "0.9.4",
             "nextflow": "26.04.6"

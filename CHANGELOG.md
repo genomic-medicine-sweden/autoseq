@@ -30,6 +30,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #90 ](https://github.com/genomic-medicine-sweden/autoseq/pull/90) Added nf-test and `meta.yml` for the `CALL_SOMATIC_SNVS` subworkflow covering a paired tumor/normal case and a stub case.
 - [ #91 ](https://github.com/genomic-medicine-sweden/autoseq/pull/91) Added the `channelFromPathWithMeta` helper to build `[[id:...], file]` reference channels from a path, or `channel.empty()` when the path is null.
 - [ #96 ](https://github.com/genomic-medicine-sweden/autoseq/pull/96) Added the `ANNOTATE_GERMLINE_TAF` subworkflow to annotate germline variants with the tumor allele fraction, with nf-test and `meta.yml`.
+- [ #104 ](https://github.com/genomic-medicine-sweden/autoseq/pull/104) Added nf-test and `meta.yml` for the `JUMBLE_RUN` module.
 - [ #103 ](https://github.com/genomic-medicine-sweden/autoseq/pull/103) Added the `PREPARE_HETSNPS_FOR_FRANKENPLOT` local module and its `prepare_hetsnps_for_frankenplot.py` script, which filters a germline VCF to heterozygous SNVs and appends a sample column with BAM-derived `GT`, `DP` and `AD` for Frankenplot BAF plotting, with nf-test and `meta.yml`.
 
 ### `Changed`
@@ -51,6 +52,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #99 ](https://github.com/genomic-medicine-sweden/autoseq/pull/99) Replaced the local GRIDSS modules with the nf-core `gridss/extractoverlappingfragments`, `gridss/preprocess`, `gridss/assemble` and `gridss/call` modules in the `CALL_SVS` subworkflow, and removed `modules/local/gridss`.
 - [ #99 ](https://github.com/genomic-medicine-sweden/autoseq/pull/99) `CALL_SVS` now indexes the targeted BAM with `SAMTOOLS_INDEX` and no longer takes the genome sequence dictionary, to match the inputs and outputs of the nf-core GRIDSS modules.
 - [ #102 ](https://github.com/genomic-medicine-sweden/autoseq/pull/102) Updated the nf-core `bam_tumor_normal_somatic_variant_calling_gatk` subworkflow and its GATK4 modules, and adapted `CALL_SOMATIC_SNVS` to the new `alleles`/`alleles_tbi` inputs and the `[ meta, fai, gzi ]` index tuple.
+- [ #104 ](https://github.com/genomic-medicine-sweden/autoseq/pull/104) Moved `modules/local/jumble` to `modules/local/jumble/run` and switched it to the `clinicalgenomics/jumble:0.5.5` container, with new `bins_csv`, `genes_csv`, `qc_csv` and `counts` outputs and updated the bedgraph column index values.
 
 ### `Fixed`
 
