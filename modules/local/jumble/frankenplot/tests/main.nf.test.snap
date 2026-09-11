@@ -12,19 +12,17 @@
                     "TUMOR.frankenplot.html"
                 ]
             ],
-            {
-                "versions": [
-                    [
-                        "JUMBLE_FRANKENPLOT",
-                        "Jumble",
-                        "0.5.6"
-                    ]
+            [
+                [
+                    "JUMBLE_FRANKENPLOT",
+                    "Jumble",
+                    "0.5.6"
                 ]
-            }
+            ]
         ],
-        "timestamp": "2026-09-11T15:06:15.777869017",
+        "timestamp": "2026-09-10T15:08:27.678655125",
         "meta": {
-            "nf-test": "0.9.5",
+            "nf-test": "0.9.4",
             "nextflow": "26.04.6"
         }
     },
@@ -70,19 +68,17 @@
                     "TUMOR.frankenplot.html"
                 ]
             ],
-            {
-                "versions": [
-                    [
-                        "JUMBLE_FRANKENPLOT",
-                        "Jumble",
-                        "0.5.6"
-                    ]
+            [
+                [
+                    "JUMBLE_FRANKENPLOT",
+                    "Jumble",
+                    "0.5.6"
                 ]
-            }
+            ]
         ],
-        "timestamp": "2026-09-11T15:05:56.77665897",
+        "timestamp": "2026-09-10T15:07:56.212357223",
         "meta": {
-            "nf-test": "0.9.5",
+            "nf-test": "0.9.4",
             "nextflow": "26.04.6"
         }
     }
