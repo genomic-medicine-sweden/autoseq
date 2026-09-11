@@ -7,7 +7,7 @@ process JUMBLE_FRANKENPLOT {
     container "docker.io/clinicalgenomics/jumble:0.5.6"
 
     input:
-    tuple val(meta), path(cns), path(jumble_csv), path(vcf), path(het_snps), path(dpyd)
+    tuple val(meta), path(tcns), path(ncns), path(t_csv), path(n_csv), path(svcf), path(gvcf), path(het_snps), path(dpyd_json), path(dpyd_csv)
 
     output:
     tuple val(meta), path("*.frankenplot.html"), emit: html
@@ -20,28 +20,19 @@ process JUMBLE_FRANKENPLOT {
     def args   = task.ext.args   ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
 
-    // `cns`, `jumble_csv`, `vcf` and `dpyd` are lists holding the tumour entry first and the
-    // optional normal / secondary entry second. Nextflow unwraps a single-element list into a
-    // bare path, and `size()` on a path returns its byte count rather than an element count,
-    // so normalise back to a list before unpacking positionally.
-    def cns_files  = cns        instanceof List ? cns        : [cns]
-    def csv_files  = jumble_csv instanceof List ? jumble_csv : [jumble_csv]
-    def vcf_files  = vcf        instanceof List ? vcf        : [vcf]
-    def dpyd_files = dpyd       instanceof List ? dpyd       : [dpyd]
-
-    def normal_cns_arg = cns_files.size()  > 1 ? "--normal-cns ${cns_files[1]}"             : ''
-    def normal_csv_arg = csv_files.size()  > 1 ? "--normal-jumble-csv ${csv_files[1]}"      : ''
-    def het_snps_arg   = het_snps              ? "--tumor-snp-vcf ${het_snps}"              : ''
-    def somatic_arg    = vcf_files.size()  > 0 ? "--somatic-vcf ${vcf_files[0]}"            : ''
-    def germline_arg   = vcf_files.size()  > 1 ? "--germline-vcf ${vcf_files[1]}"           : ''
-    def dpyd_json_arg  = dpyd_files.size() > 0 ? "--dpyd-json ${dpyd_files[0]}"             : ''
-    def dpyd_csv_arg   = dpyd_files.size() > 1 ? "--dpyd-csv ${dpyd_files[1]}"              : ''
+    def normal_cns_arg = ncns       ? "--normal-cns ${ncns}"           : ''
+    def normal_csv_arg = n_csv      ? "--normal-jumble-csv ${n_csv}"   : ''
+    def het_snps_arg   = het_snps   ? "--tumor-snp-vcf ${het_snps}"    : ''
+    def somatic_arg    = svcf       ? "--somatic-vcf ${svcf}"          : ''
+    def germline_arg   = gvcf       ? "--germline-vcf ${gvcf}"         : ''
+    def dpyd_json_arg  = dpyd_json  ? "--dpyd-json ${dpyd_json}"       : ''
+    def dpyd_csv_arg   = dpyd_csv   ? "--dpyd-csv ${dpyd_csv}"         : ''
 
     """
     jumble-frankenplot.R \\
         $args \\
-        -c ${cns_files[0]} \\
-        -j ${csv_files[0]} \\
+        -c ${tcns} \\
+        -j ${t_csv} \\
         ${normal_cns_arg} \\
         ${normal_csv_arg} \\
         ${het_snps_arg} \\
@@ -50,6 +41,7 @@ process JUMBLE_FRANKENPLOT {
         ${dpyd_json_arg} \\
         ${dpyd_csv_arg} \\
         -o ${prefix}.frankenplot.html
+
     """
 
     stub:
