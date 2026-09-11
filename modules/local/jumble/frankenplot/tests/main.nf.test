@@ -9,6 +9,8 @@ nextflow_process {
     tag "jumble"
     tag "jumble/frankenplot"
 
+    topics "versions"
+
     test("tumor only") {
 
         when {
@@ -35,7 +37,7 @@ nextflow_process {
                 { assert process.success },
                 { assert snapshot(
                     process.out.html.collect { meta, html -> [meta, file(html).name] },
-                    process.out.versions_jumble
+                    topics
                 ).match() }
             )
         }
@@ -67,7 +69,7 @@ nextflow_process {
                 { assert process.success },
                 { assert snapshot(
                     process.out.html.collect { meta, html -> [meta, file(html).name] },
-                    process.out.versions_jumble
+                    topics
                 ).match() }
             )
         }
