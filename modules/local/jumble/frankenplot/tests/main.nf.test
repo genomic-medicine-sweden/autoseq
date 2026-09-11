@@ -1,0 +1,107 @@
+nextflow_process {
+
+    name "Test Process JUMBLE_FRANKENPLOT"
+    script "../main.nf"
+    process "JUMBLE_FRANKENPLOT"
+
+    tag "modules"
+    tag "modules_local"
+    tag "jumble"
+    tag "jumble/frankenplot"
+
+    test("tumor only") {
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.cns', checkIfExists: true),
+                    [],
+                    file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.jumble.csv', checkIfExists: true),
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    []
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.html.collect { meta, html -> [meta, file(html).name] },
+                    process.out.versions_jumble
+                ).match() }
+            )
+        }
+    }
+
+    test("tumor and normal with het snps") {
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.cns', checkIfExists: true),
+                    [],
+                    file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.jumble.csv', checkIfExists: true),
+                    [],
+                    [],
+                    [],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true),
+                    [],
+                    []
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.html.collect { meta, html -> [meta, file(html).name] },
+                    process.out.versions_jumble
+                ).match() }
+            )
+        }
+    }
+
+    test("tumor only - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.cns', checkIfExists: true),
+                    [],
+                    file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.jumble.csv', checkIfExists: true),
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    []
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(sanitizeOutput(process.out)).match() }
+            )
+        }
+    }
+
+}
