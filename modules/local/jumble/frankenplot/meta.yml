@@ -26,44 +26,67 @@ input:
         description: |
           Groovy Map containing sample information
           e.g. `[ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ]`
-    - cns:
+    - tcns:
         type: file
         description: |
-          List of Jumble copy number segment files as `[tumor_cns, normal_cns]`. The tumour
-          entry is mandatory, the normal entry optional. A normal entry must be paired with a
-          normal entry in `jumble_csv`, otherwise the tool errors out.
+          Mandatory tumour Jumble copy number segment file.
         pattern: "*.cns"
         ontologies: []
-    - jumble_csv:
+    - ncns:
         type: file
         description: |
-          List of Jumble bin-level tables as `[tumor_csv, normal_csv]`. The tumour entry is
-          mandatory, the normal entry optional.
+          Optional normal Jumble copy number segment file. Must be paired with `n_csv`,
+          otherwise the tool errors out. Pass `[]` to leave the normal track out.
+        pattern: "*.cns"
+        ontologies: []
+    - t_csv:
+        type: file
+        description: |
+          Mandatory tumour Jumble bin-level table.
         pattern: "*.jumble.csv"
         ontologies: []
-    - vcf:
+    - n_csv:
         type: file
         description: |
-          List of annotated variant VCFs to overlay as `[somatic_vcf, germline_vcf]`. Pass
-          `[]` to leave both overlays out. Positional, so a germline-only overlay is not
-          expressible.
+          Optional normal Jumble bin-level table. Must be paired with `ncns`. Pass `[]` to
+          leave the normal track out.
+        pattern: "*.jumble.csv"
+        ontologies: []
+    - svcf:
+        type: file
+        description: |
+          Optional annotated somatic VCF to overlay. Pass `[]` to leave the somatic overlay
+          out.
+        pattern: "*.{vcf,vcf.gz}"
+        ontologies:
+          - edam: "http://edamontology.org/format_3016" # VCF
+    - gvcf:
+        type: file
+        description: |
+          Optional annotated germline VCF to overlay. Pass `[]` to leave the germline overlay
+          out.
         pattern: "*.{vcf,vcf.gz}"
         ontologies:
           - edam: "http://edamontology.org/format_3016" # VCF
     - het_snps:
         type: file
         description: |
-          Heterozygous SNP VCF carrying tumour allelic depths, used for B-allele frequency
-          plotting. Pass `[]` to leave the allele-ratio track out.
+          Optional heterozygous SNP VCF carrying tumour allelic depths, used for B-allele
+          frequency plotting. Pass `[]` to leave the allele-ratio track out.
         pattern: "*.{vcf,vcf.gz}"
         ontologies:
           - edam: "http://edamontology.org/format_3016" # VCF
-    - dpyd:
+    - dpyd_json:
         type: file
         description: |
-          List of DPYD typing results as `[dpyd_json, dpyd_csv]`. Pass `[]` to leave the DPYD
-          tab out.
-        pattern: "*.{json,csv}"
+          Optional DPYD typing results in JSON format. Pass `[]` to leave the DPYD tab out.
+        pattern: "*.json"
+        ontologies: []
+    - dpyd_csv:
+        type: file
+        description: |
+          Optional DPYD typing results in CSV format. Pass `[]` to leave the DPYD tab out.
+        pattern: "*.csv"
         ontologies: []
 output:
   html:
