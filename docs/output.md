@@ -68,7 +68,6 @@ results/
 ├── snvs
 │   ├── germline
 │   └── somatic
-│       └── somatic
 └── svs
     ├── germline
     └── somatic
