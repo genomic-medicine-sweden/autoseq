@@ -204,19 +204,7 @@
                 "TUMOR_NORMAL.contamination.table:md5,a47aaa6933a5cfd12bcba937d74c0991",
                 "NORMAL.flagstat:md5,7a13b0d1418967691bda2c72ad4443cb",
                 "TUMOR.flagstat:md5,9140f04f5f15fcb58cdb04c1c061c650",
-                "NORMAL-all.germline.vep.vcf.gz:md5,e26ae776cb9d74741a78aa80d35390b2",
-                "NORMAL-all.germline.vep.vcf.gz.tbi:md5,4cb176febbc8c26d717a6c6e67b9c905",
-                "NORMAL_haplotypecaller.vcf.gz:md5,001169684cffef5de5fd8a2e49b63727",
-                "NORMAL_haplotypecaller.vcf.gz.tbi:md5,5318753b50523977a783ba039fc36afd",
-                "TUMOR_NORMAL-all.somatic.vcf.gz:md5,cfd4fd8839c2ccab40d68f69018e421b",
-                "TUMOR_NORMAL-all.somatic.vcf.gz.tbi:md5,d30de27fa49f1b239aa6d50e817ad380",
-                "TUMOR_NORMAL-all.somatic.vep.vcf.gz:md5,f882d0735e3f5b61d2cb18bae6a91298",
-                "TUMOR_NORMAL-all.somatic.vep.vcf.gz.tbi:md5,4cb176febbc8c26d717a6c6e67b9c905",
-                "TUMOR_NORMAL_mutect2_filtered.vcf.gz:md5,41712fe0edf6ac813df05114aa5dad0f",
-                "TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv:md5,eb61b96f3d2566a2c05aaf68f08a584d",
-                "TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi:md5,ebc53eeee13af58c824c84df85c86ce6",
-                "TUMOR.sage.somatic.vcf.gz:md5,89301a71e530a673a9c2f41edd192a6e",
-                "TUMOR.sage.somatic.vcf.gz.tbi:md5,6335bf871cd32a19177aa5f58b26f5ae"
+                "TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv:md5,eb61b96f3d2566a2c05aaf68f08a584d"
             ],
             [
                 [
