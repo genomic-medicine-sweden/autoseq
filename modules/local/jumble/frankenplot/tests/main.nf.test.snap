@@ -1,0 +1,85 @@
+{
+    "tumor and normal with het snps": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.frankenplot.html"
+                ]
+            ],
+            [
+                [
+                    "JUMBLE_FRANKENPLOT",
+                    "Jumble",
+                    "0.5.6"
+                ]
+            ]
+        ],
+        "timestamp": "2026-09-10T15:08:27.678655125",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    },
+    "tumor only - stub": {
+        "content": [
+            {
+                "html": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR.frankenplot.html:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_jumble": [
+                    [
+                        "JUMBLE_FRANKENPLOT",
+                        "Jumble",
+                        "0.5.6"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-09-10T15:08:35.768126982",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    },
+    "tumor only": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.frankenplot.html"
+                ]
+            ],
+            [
+                [
+                    "JUMBLE_FRANKENPLOT",
+                    "Jumble",
+                    "0.5.6"
+                ]
+            ]
+        ],
+        "timestamp": "2026-09-10T15:07:56.212357223",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "26.04.6"
+        }
+    }
+}

@@ -1,0 +1,127 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "jumble_frankenplot"
+description: Render a Frankenplot, a single self-contained HTML report giving a comprehensive
+  overview of the genomic profile of a case - copy number profile, B-allele frequencies,
+  somatic and germline variant overlays, HRD and DPYD status - from Jumble output files.
+keywords:
+  - cnv
+  - copy number
+  - frankenplot
+  - genomics
+  - report
+  - visualisation
+tools:
+  - jumble:
+      description: |
+        Jumble is a method for copy number analysis of short read sequencing data.
+      homepage: "https://github.com/ClinSeq/jumble/"
+      documentation: "https://github.com/ClinSeq/jumble/"
+      tool_dev_url: "https://github.com/ClinSeq/jumble/"
+      licence:
+        - "GPL v3"
+      identifier: ""
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. `[ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ]`
+    - tcns:
+        type: file
+        description: |
+          Mandatory tumour Jumble copy number segment file.
+        pattern: "*.cns"
+        ontologies: []
+    - ncns:
+        type: file
+        description: |
+          Optional normal Jumble copy number segment file. Must be paired with `n_csv`,
+          otherwise the tool errors out. Pass `[]` to leave the normal track out.
+        pattern: "*.cns"
+        ontologies: []
+    - t_csv:
+        type: file
+        description: |
+          Mandatory tumour Jumble bin-level table.
+        pattern: "*.jumble.csv"
+        ontologies: []
+    - n_csv:
+        type: file
+        description: |
+          Optional normal Jumble bin-level table. Must be paired with `ncns`. Pass `[]` to
+          leave the normal track out.
+        pattern: "*.jumble.csv"
+        ontologies: []
+    - svcf:
+        type: file
+        description: |
+          Optional annotated somatic VCF to overlay. Pass `[]` to leave the somatic overlay
+          out.
+        pattern: "*.{vcf,vcf.gz}"
+        ontologies:
+          - edam: "http://edamontology.org/format_3016" # VCF
+    - gvcf:
+        type: file
+        description: |
+          Optional annotated germline VCF to overlay. Pass `[]` to leave the germline overlay
+          out.
+        pattern: "*.{vcf,vcf.gz}"
+        ontologies:
+          - edam: "http://edamontology.org/format_3016" # VCF
+    - het_snps:
+        type: file
+        description: |
+          Optional heterozygous SNP VCF carrying tumour allelic depths, used for B-allele
+          frequency plotting. Pass `[]` to leave the allele-ratio track out.
+        pattern: "*.{vcf,vcf.gz}"
+        ontologies:
+          - edam: "http://edamontology.org/format_3016" # VCF
+    - dpyd_json:
+        type: file
+        description: |
+          Optional DPYD typing results in JSON format. Pass `[]` to leave the DPYD tab out.
+        pattern: "*.json"
+        ontologies: []
+    - dpyd_csv:
+        type: file
+        description: |
+          Optional DPYD typing results in CSV format. Pass `[]` to leave the DPYD tab out.
+        pattern: "*.csv"
+        ontologies: []
+output:
+  html:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ]`
+      - "*.frankenplot.html":
+          type: file
+          description: Self-contained Frankenplot HTML genome report
+          pattern: "*.frankenplot.html"
+          ontologies: []
+  versions_jumble:
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - Jumble:
+          type: string
+          description: The tool name
+      - Rscript -e 'cat(as.character(packageVersion("Jumble")))':
+          type: eval
+          description: The expression to obtain the version of the tool
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - Jumble:
+          type: string
+          description: The tool name
+      - Rscript -e 'cat(as.character(packageVersion("Jumble")))':
+          type: eval
+          description: The expression to obtain the version of the tool
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
