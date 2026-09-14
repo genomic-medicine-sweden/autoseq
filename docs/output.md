@@ -65,16 +65,13 @@ results/
 │   ├── contamination
 │   ├── picard
 │   └── samtools
-├── svs
-│   ├── germline
-│   └── somatic
-└── variants
-    └── germline
-    │   ├── haplotypecaller
+├── snvs
+│   ├── germline
+│   └── somatic
+│       └── somatic
+└── svs
+    ├── germline
     └── somatic
-        ├── merged
-        ├── mutect2
-        └── sage
 
 ```
 
@@ -133,7 +130,7 @@ GATK Mutect2 is a specialized tool for identifying somatic mutations in tumor sa
 <details markdown="1">
 <summary>Output files for GATK4 Mutect2</summary>
 
-- `{outdir}/variants/somatic/mutect2`
+- `{outdir}/snvs/somatic/`
   - `*_mutect2_filtered.vcf.gz`:
   - `*_mutect2_filtered.vcf.gz.tbi`:
   - `*_mutect2_filtered.vcf.gz.filteringStats.tsv`:
@@ -147,7 +144,7 @@ SAGE is a somatic SNV (Single Nucleotide Variant) caller tailored for cancer res
 <details markdown="1">
 <summary>Output files for SAGE</summary>
 
-- `{outdir}/variants/somatic/sage`
+- `{outdir}/snvs/somatic/somatic/`
   - `*.sage.somatic.vcf.gz`:
   - `*.sage.somatic.vcf.gz.tbi`:
 
@@ -162,7 +159,7 @@ GATK HaplotypeCaller is a robust germline variant caller that identifies SNPs an
 <details markdown="1">
 <summary>Output files for GATK4 HaplotypeCaller:</summary>
 
-- `{outdir}/variants/germline/haplotypecaller`
+- `{outdir}/snvs/germline/`
   - `*_haplotypecaller.vcf.gz`: germline variants in compressed vcf file format
   - `*_haplotypecaller.vcf.tbi`: index file for germline vcf.
 
@@ -223,10 +220,10 @@ VEP (Variant Effect Predictor) annotates genetic variants with their predicted e
 <details markdown="1">
 <summary>Output files for VEP Annotation: </summary>
 
-- `{outdir}/variants/somatic/`
+- `{outdir}/snvs/somatic/`
   - `*-all.somatic.vep.vcf.gz`: VEP annotated variants in compressed VCF format.
   - `*-all.somatic.vep.vcf.gz.tbi`: Index file for VEP annotated VCF.
-- `{outdir}/variants/germline/`
+- `{outdir}/snvs/germline/`
   - `*-all.germline.vep.vcf.gz`: VEP annotated variants in compressed VCF format.
   - `*-all.germline.vep.vcf.gz.tbi`: Index file for VEP annotated VCF.
 
