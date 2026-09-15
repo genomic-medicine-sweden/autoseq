@@ -55,12 +55,6 @@ output:
         Duplicate metrics reported by GATK MarkDuplicates
         Structure: [ val(meta), path(metrics) ]
       pattern: "*.metrics"
-  - versions:
-      type: file
-      description: |
-        File containing software versions
-        Structure: [ path(versions.yml) ]
-      pattern: "versions.yml"
 authors:
   - "@imsarath"
 maintainers:

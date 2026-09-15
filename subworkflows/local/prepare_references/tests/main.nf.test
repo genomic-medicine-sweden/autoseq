@@ -38,8 +38,7 @@ nextflow_workflow {
                     workflow.out.bwamem2_index,
                     workflow.out.vep_cache,
                     workflow.out.gridss_index,
-                    workflow.out.hmf_ensembl_data,
-                    workflow.out.versions
+                    workflow.out.hmf_ensembl_data
                 ).match() }
             )
         }
@@ -72,8 +71,7 @@ nextflow_workflow {
                     workflow.out.bwamem2_index,
                     workflow.out.vep_cache,
                     workflow.out.gridss_index,
-                    workflow.out.hmf_ensembl_data,
-                    workflow.out.versions
+                    workflow.out.hmf_ensembl_data
                 ).match() }
             )
         }

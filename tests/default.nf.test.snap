@@ -10,9 +10,12 @@
                     "ensemblvep": 115.2,
                     "tabix": 1.21
                 },
+                "BWAMEM2_INDEX": {
+                    "bwamem2": "2.2.1"
+                },
                 "BWAMEM2_MEM": {
                     "bwamem2": "2.2.1",
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "FASTP": {
                     "fastp": "0.24.0"
@@ -60,7 +63,7 @@
                     "Jumble": "0.5.5"
                 },
                 "MARKDUPLICATES": {
-                    "gatk4": "4.6.1.0",
+                    "gatk4": "4.7.0.0",
                     "samtools": 1.21
                 },
                 "PASSFILTER_FOR_MUTECT2": {
@@ -263,9 +266,9 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-08T11:46:09.74783678",
+        "timestamp": "2026-09-15T16:18:19.130316797",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     },
@@ -280,9 +283,12 @@
                     "ensemblvep": 115.2,
                     "tabix": 1.21
                 },
+                "BWAMEM2_INDEX": {
+                    "bwamem2": "2.2.1"
+                },
                 "BWAMEM2_MEM": {
                     "bwamem2": "2.2.1",
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "FASTP": {
                     "fastp": "0.24.0"
@@ -330,7 +336,7 @@
                     "Jumble": "0.5.5"
                 },
                 "MARKDUPLICATES": {
-                    "gatk4": "4.6.1.0",
+                    "gatk4": "4.7.0.0",
                     "samtools": 1.21
                 },
                 "PASSFILTER_FOR_MUTECT2": {
@@ -464,9 +470,9 @@
                 "variants/somatic/sage/somatic/TUMOR.sage.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-08T11:46:56.956426086",
+        "timestamp": "2026-09-15T16:19:12.544958581",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     }
