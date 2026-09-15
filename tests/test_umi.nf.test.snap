@@ -16,6 +16,17 @@
                 "BAM2FASTQ_PRE": {
                     "samtools": 1.24
                 },
+                "BWAMEM2_INDEX": {
+                    "bwamem2": "2.2.1"
+                },
+                "BWAMEM2_MEM_POST": {
+                    "bwamem2": "2.2.1",
+                    "samtools": "1.22.1"
+                },
+                "BWAMEM2_MEM_PRE": {
+                    "bwamem2": "2.2.1",
+                    "samtools": "1.22.1"
+                },
                 "CALLDUPLEXCONSENSUS": {
                     "fgbio": "3.1.2"
                 },
@@ -285,9 +296,9 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-08T11:56:52.698464892",
+        "timestamp": "2026-09-15T16:21:25.433869498",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     },
@@ -307,6 +318,17 @@
                 },
                 "BAM2FASTQ_PRE": {
                     "samtools": 1.24
+                },
+                "BWAMEM2_INDEX": {
+                    "bwamem2": "2.2.1"
+                },
+                "BWAMEM2_MEM_POST": {
+                    "bwamem2": "2.2.1",
+                    "samtools": "1.22.1"
+                },
+                "BWAMEM2_MEM_PRE": {
+                    "bwamem2": "2.2.1",
+                    "samtools": "1.22.1"
                 },
                 "CALLDUPLEXCONSENSUS": {
                     "fgbio": "3.1.2"
@@ -508,9 +530,9 @@
                 "variants/somatic/sage/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-08T11:57:53.920206465",
+        "timestamp": "2026-09-15T16:22:28.571870246",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     }
