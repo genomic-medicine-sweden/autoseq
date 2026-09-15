@@ -14,6 +14,7 @@ include { MULTIQC                                             } from '../modules
 include { FASTP                                               } from '../modules/nf-core/fastp/main'
 include { CAT_FASTQ                                           } from '../modules/nf-core/cat/fastq/main'
 include { SAMTOOLS_INDEX                                      } from '../modules/nf-core/samtools/index/main'
+include { PREPARE_HETSNPS_FOR_FRANKENPLOT                     } from '../modules/local/prepare_hetsnps_for_frankenplot/main'
 
 include { ALIGNMENT                                           } from '../subworkflows/local/alignment/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
@@ -23,6 +24,7 @@ include { CALL_GERMLINE_SNVS                                  } from '../subwork
 include { CALL_CNVS                                           } from '../subworkflows/local/call_cnvs/main.nf'
 include { CALL_SVS                                            } from '../subworkflows/local/call_svs/main.nf'
 include { PROFILE_TUMOR_BIOMARKERS                            } from '../subworkflows/local/profile_tumor_biomarkers/main.nf'
+include { ANNOTATE_GERMLINE_TAF                               } from '../subworkflows/local/annotate_germline_taf/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -287,6 +289,40 @@ workflow AUTOSEQ {
         ch_targets_bed,
         ch_gridss_config,
         genome_version
+    )
+
+    //
+    // SUBWORKFLOW: Annotate Germline Variants with Tumor AF
+    //
+
+    def ch_germline_taf_input = samples.tumor
+        .join(CALL_GERMLINE_SNVS.out.vep_vcf)
+        .join(CALL_GERMLINE_SNVS.out.vep_tbi)
+        .map { meta, tumor_bam, tumor_bai, germline_vcf, germline_tbi ->
+            return [meta, tumor_bam, tumor_bai, germline_vcf, germline_tbi]
+        }
+
+    ANNOTATE_GERMLINE_TAF(
+        ch_germline_taf_input,
+        ch_genome_fasta,
+        ch_genome_fai,
+        ch_dict
+    )
+
+
+    //
+    // MODULE: Prepare Heterozygous SNPs for Frankenplot BAF plotting
+    //
+
+    def ch_hetsnps_input = samples.tumor
+        .join(CALL_GERMLINE_SNVS.out.vcf)
+        .join(CALL_GERMLINE_SNVS.out.tbi)
+        .map { meta, germline_vcf, germline_tbi, tumor_bam, tumor_bai ->
+            return [meta, germline_vcf, germline_tbi, tumor_bam, tumor_bai]
+        }
+
+    PREPARE_HETSNPS_FOR_FRANKENPLOT(
+        ch_hetsnps_input
     )
 
     //
