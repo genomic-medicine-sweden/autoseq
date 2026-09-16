@@ -161,6 +161,23 @@
                 "qc/samtools",
                 "qc/samtools/NORMAL.flagstat",
                 "qc/samtools/TUMOR.flagstat",
+                "snvs",
+                "snvs/germline",
+                "snvs/germline/NORMAL-all.germline.vep.vcf.gz",
+                "snvs/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
+                "snvs/germline/NORMAL_haplotypecaller.vcf.gz",
+                "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
+                "snvs/somatic",
+                "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz",
+                "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz.tbi",
+                "snvs/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz",
+                "snvs/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz.tbi",
+                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz",
+                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
+                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi",
+                "snvs/somatic/somatic",
+                "snvs/somatic/somatic/TUMOR.sage.somatic.vcf.gz",
+                "snvs/somatic/somatic/TUMOR.sage.somatic.vcf.gz.tbi",
                 "svs",
                 "svs/germline",
                 "svs/germline/TUMOR.gripss.filtered.germline.vcf.gz",
@@ -171,28 +188,7 @@
                 "svs/somatic/TUMOR.gripss.filtered.somatic.vcf.gz",
                 "svs/somatic/TUMOR.gripss.filtered.somatic.vcf.gz.tbi",
                 "svs/somatic/TUMOR.gripss.somatic.vcf.gz",
-                "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi",
-                "variants",
-                "variants/germline",
-                "variants/germline/NORMAL-all.germline.vep.vcf.gz",
-                "variants/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
-                "variants/germline/haplotypecaller",
-                "variants/germline/haplotypecaller/NORMAL_haplotypecaller.vcf.gz",
-                "variants/germline/haplotypecaller/NORMAL_haplotypecaller.vcf.gz.tbi",
-                "variants/somatic",
-                "variants/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz",
-                "variants/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz.tbi",
-                "variants/somatic/merged",
-                "variants/somatic/merged/TUMOR_NORMAL-all.somatic.vcf.gz",
-                "variants/somatic/merged/TUMOR_NORMAL-all.somatic.vcf.gz.tbi",
-                "variants/somatic/mutect2",
-                "variants/somatic/mutect2/TUMOR_NORMAL_mutect2_filtered.vcf.gz",
-                "variants/somatic/mutect2/TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
-                "variants/somatic/mutect2/TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi",
-                "variants/somatic/sage",
-                "variants/somatic/sage/somatic",
-                "variants/somatic/sage/somatic/TUMOR.sage.somatic.vcf.gz",
-                "variants/somatic/sage/somatic/TUMOR.sage.somatic.vcf.gz.tbi"
+                "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
             ],
             [
                 "NORMAL.cns:md5,9430d1649900c63ba34a40d064e0cb20",
@@ -222,6 +218,30 @@
             ],
             [
                 [
+                    "NORMAL-all.germline.vep.vcf.gz",
+                    "d41d8cd98f00b204e9800998ecf8427e"
+                ],
+                [
+                    "NORMAL_haplotypecaller.vcf.gz",
+                    "52b988e94f0b29a95e76ba24a654ac5c"
+                ],
+                [
+                    "TUMOR_NORMAL-all.somatic.vcf.gz",
+                    "15d5903edd6e671a148453861f88552f"
+                ],
+                [
+                    "TUMOR_NORMAL-all.somatic.vep.vcf.gz",
+                    "d41d8cd98f00b204e9800998ecf8427e"
+                ],
+                [
+                    "TUMOR_NORMAL_mutect2_filtered.vcf.gz",
+                    "673d3ee2ad91e129bf8137aeeba1cd04"
+                ],
+                [
+                    "TUMOR.sage.somatic.vcf.gz",
+                    "b2181f9945a8d84ed2a8e40b94a9d675"
+                ],
+                [
                     "TUMOR.gripss.filtered.germline.vcf.gz",
                     "d41d8cd98f00b204e9800998ecf8427e"
                 ],
@@ -236,36 +256,12 @@
                 [
                     "TUMOR.gripss.somatic.vcf.gz",
                     "d41d8cd98f00b204e9800998ecf8427e"
-                ],
-                [
-                    "NORMAL-all.germline.vep.vcf.gz",
-                    "d41d8cd98f00b204e9800998ecf8427e"
-                ],
-                [
-                    "NORMAL_haplotypecaller.vcf.gz",
-                    "52b988e94f0b29a95e76ba24a654ac5c"
-                ],
-                [
-                    "TUMOR_NORMAL-all.somatic.vep.vcf.gz",
-                    "d41d8cd98f00b204e9800998ecf8427e"
-                ],
-                [
-                    "TUMOR_NORMAL-all.somatic.vcf.gz",
-                    "15d5903edd6e671a148453861f88552f"
-                ],
-                [
-                    "TUMOR_NORMAL_mutect2_filtered.vcf.gz",
-                    "673d3ee2ad91e129bf8137aeeba1cd04"
-                ],
-                [
-                    "TUMOR.sage.somatic.vcf.gz",
-                    "b2181f9945a8d84ed2a8e40b94a9d675"
                 ]
             ]
         ],
-        "timestamp": "2026-09-08T11:46:09.74783678",
+        "timestamp": "2026-09-14T12:03:49.84533834",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     },
@@ -430,6 +426,23 @@
                 "qc/samtools",
                 "qc/samtools/NORMAL.flagstat",
                 "qc/samtools/TUMOR.flagstat",
+                "snvs",
+                "snvs/germline",
+                "snvs/germline/NORMAL-all.germline.vep.vcf.gz",
+                "snvs/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
+                "snvs/germline/NORMAL_haplotypecaller.vcf.gz",
+                "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
+                "snvs/somatic",
+                "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz",
+                "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz.tbi",
+                "snvs/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz",
+                "snvs/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz.tbi",
+                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz",
+                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
+                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi",
+                "snvs/somatic/somatic",
+                "snvs/somatic/somatic/TUMOR.sage.somatic.vcf.gz",
+                "snvs/somatic/somatic/TUMOR.sage.somatic.vcf.gz.tbi",
                 "svs",
                 "svs/germline",
                 "svs/germline/NORMAL.gripss.filtered.germline.vcf.gz",
@@ -440,33 +453,12 @@
                 "svs/somatic/TUMOR.gripss.filtered.somatic.vcf.gz",
                 "svs/somatic/TUMOR.gripss.filtered.somatic.vcf.gz.tbi",
                 "svs/somatic/TUMOR.gripss.somatic.vcf.gz",
-                "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi",
-                "variants",
-                "variants/germline",
-                "variants/germline/NORMAL-all.germline.vep.vcf.gz",
-                "variants/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
-                "variants/germline/haplotypecaller",
-                "variants/germline/haplotypecaller/NORMAL_haplotypecaller.vcf.gz",
-                "variants/germline/haplotypecaller/NORMAL_haplotypecaller.vcf.gz.tbi",
-                "variants/somatic",
-                "variants/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz",
-                "variants/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz.tbi",
-                "variants/somatic/merged",
-                "variants/somatic/merged/TUMOR_NORMAL-all.somatic.vcf.gz",
-                "variants/somatic/merged/TUMOR_NORMAL-all.somatic.vcf.gz.tbi",
-                "variants/somatic/mutect2",
-                "variants/somatic/mutect2/TUMOR_NORMAL_mutect2_filtered.vcf.gz",
-                "variants/somatic/mutect2/TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
-                "variants/somatic/mutect2/TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi",
-                "variants/somatic/sage",
-                "variants/somatic/sage/somatic",
-                "variants/somatic/sage/somatic/TUMOR.sage.somatic.vcf.gz",
-                "variants/somatic/sage/somatic/TUMOR.sage.somatic.vcf.gz.tbi"
+                "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-08T11:46:56.956426086",
+        "timestamp": "2026-09-14T12:04:54.293555684",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     }
