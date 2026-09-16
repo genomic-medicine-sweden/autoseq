@@ -155,7 +155,6 @@ workflow AUTOSEQ {
         )
 
         ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.dedup_metrics.collect{it -> it[1]}.ifEmpty([]))
-        ch_versions = ch_versions.mix(ALIGNMENT.out.versions)
         ch_aligned_bam = ALIGNMENT.out.dedup_bam
             .join(ALIGNMENT.out.dedup_bai)
     }

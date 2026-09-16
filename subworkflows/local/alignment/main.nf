@@ -15,8 +15,6 @@ workflow ALIGNMENT {
 
     main:
 
-    ch_versions  = Channel.empty()
-
     //
     // MODULE: Run BWA-MEM2 alignment
     //
@@ -51,9 +49,6 @@ workflow ALIGNMENT {
         ch_genome_fasta,
         sort_bam
     )
-
-    ch_versions = ch_versions.mix(BWAMEM2_MEM.out.versions.first())
-
 
     ch_input_bam = BWAMEM2_MEM.out.bam
         .map { meta, bam ->
@@ -93,12 +88,8 @@ workflow ALIGNMENT {
         ch_genome_fai.collect{it[1]}
     )
 
-    ch_versions = ch_versions.mix(MARKDUPLICATES.out.versions.first())
-
-
     emit:
     dedup_bam        = MARKDUPLICATES.out.bam
     dedup_bai        = MARKDUPLICATES.out.bai
     dedup_metrics    = MARKDUPLICATES.out.metrics
-    versions         = ch_versions            // channel: versions.yml
 }

@@ -78,12 +78,6 @@ output:
       description: |
         Untarred HMF ensembl_data directory
         Structure: [ val(meta), path(dir) ]
-  - versions:
-      type: file
-      description: |
-        File containing software versions
-        Structure: [ path(versions.yml) ]
-      pattern: "versions.yml"
 authors:
   - "@imsarath"
 maintainers:
