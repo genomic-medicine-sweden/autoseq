@@ -370,52 +370,43 @@ workflow AUTOSEQ {
     )
 
 
-    // Prepare final output channel
-
-    autoseq_output = channel
-        .empty()
-        .mix(
-            ch_aligned_bam.map { meta, bam, _bai -> [ meta + [file: "bam"], bam] },
-            ch_aligned_bam.map { meta, _bam, bai -> [ meta + [file: "bai"], bai] },
-            QC_ALIGNMENT.out.flagstat.map { meta, flagstat -> [ meta + [file: "flagstat"], flagstat] },
-            QC_ALIGNMENT.out.hs_metrics.map { meta, hs_metrics -> [ meta + [file: "hs_metrics"], hs_metrics] },
-            QC_ALIGNMENT.out.multiple_metrics.map { meta, multiple_metrics -> [ meta + [file: "multiple_metrics"], multiple_metrics] },
-            CALL_CNVS.out.jumble_cns.map { meta, cns -> [ meta + [file: "jumble_cns"], cns] },
-            CALL_CNVS.out.cnr.map { meta, cnr -> [ meta + [file: "cnr"], cnr] },
-            CALL_CNVS.out.seg.map { meta, seg -> [ meta + [file: "seg"], seg] },
-            CALL_CNVS.out.profile_bedgraph.map { meta, profile_bedgraph -> [ meta + [file: "profile_bedgraph"], profile_bedgraph] },
-            CALL_CNVS.out.segments_bedgraph.map { meta, segments_bedgraph -> [ meta + [file: "segments_bedgraph"], segments_bedgraph] },
-            CALL_CNVS.out.png.map { meta, png -> [ meta + [file: "cnv_plot_png"], png] },
-            CALL_CNVS.out.cns.map { meta, annotated_cns -> [ meta + [file: "annotated_cns"], annotated_cns] },
-            CALL_SOMATIC_SNVS.out.contamination_table.map { meta, table -> [ meta + [file: "contamination_table"], table] },
-            CALL_SOMATIC_SNVS.out.mutect2_stats.map { meta, stats -> [ meta + [file: "mutect2_stats"], stats] },
-            CALL_SOMATIC_SNVS.out.mutect2_tbi.map { meta, tbi -> [ meta + [file: "mutect2_tbi"], tbi] },
-            CALL_SOMATIC_SNVS.out.mutect2_vcf.map { meta, vcf -> [ meta + [file: "mutect2_vcf"], vcf] },
-            CALL_SOMATIC_SNVS.out.sage_vcf.map { meta, vcf -> [ meta + [file: "sage_vcf"], vcf] },
-            CALL_SOMATIC_SNVS.out.sage_tbi.map { meta, tbi -> [ meta + [file: "sage_tbi"], tbi] },
-            CALL_SOMATIC_SNVS.out.somatic_vcf.map { meta, somatic_vcf -> [ meta + [file: "somatic_vcf"], somatic_vcf] },
-            CALL_SOMATIC_SNVS.out.somatic_tbi.map { meta, somatic_tbi -> [ meta + [file: "somatic_tbi"], somatic_tbi] },
-            CALL_SOMATIC_SNVS.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "vep_vcf"], vep_vcf] },
-            CALL_SOMATIC_SNVS.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "vep_tbi"], vep_tbi] },
-            CALL_GERMLINE_SNVS.out.vcf.map { meta, vcf -> [ meta + [file: "germline_vcf"], vcf] },
-            CALL_GERMLINE_SNVS.out.tbi.map { meta, tbi -> [ meta + [file: "germline_tbi"], tbi] },
-            CALL_GERMLINE_SNVS.out.vep_vcf.map { meta, vep_vcf -> [ meta + [file: "germline_vep_vcf"], vep_vcf] },
-            CALL_GERMLINE_SNVS.out.vep_tbi.map { meta, vep_tbi -> [ meta + [file: "germline_vep_tbi"], vep_tbi] },
-            CALL_SVS.out.gripss_somatic_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_filtered_vcf"], [vcf, tbi]] },
-            CALL_SVS.out.gripss_somatic_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_somatic_unfiltered_vcf"], [vcf, tbi]] },
-            CALL_SVS.out.gripss_germline_filtered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_filtered_vcf"], [vcf, tbi]] },
-            CALL_SVS.out.gripss_germline_unfiltered_vcf.map { meta, vcf, tbi -> [ meta + [file: "gripss_germline_unfiltered_vcf"], [vcf, tbi]] },
-            PROFILE_TUMOR_BIOMARKERS.out.purecn_csv.map { meta, csv -> [ meta + [file: "purecn_csv"], csv ] },
-            PROFILE_TUMOR_BIOMARKERS.out.purecn_pdf.map { meta, pdf -> [ meta + [file: "purecn_pdf"], pdf ] },
-            PROFILE_TUMOR_BIOMARKERS.out.dpyd_csv.map  { meta, csv  -> [ meta + [file: "dpyd_csv"],  csv  ] },
-            PROFILE_TUMOR_BIOMARKERS.out.dpyd_json.map { meta, json -> [ meta + [file: "dpyd_json"], json ] }
-        )
-
     emit:
-    autoseq_output = autoseq_output               // channel: [ val(meta + [file: description]), path(file) ]
-    multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
-    versions       = ch_versions                 // channel: [ path(versions.yml) ]
-
+    annotated_cns                  = CALL_CNVS.out.cns                                              // channel: [ val(meta), path(cns) ]
+    bai                            = ch_aligned_bam.map { meta, _bam, bai -> [ meta, bai ] }        // channel: [ val(meta), path(bai) ]
+    bam                            = ch_aligned_bam.map { meta, bam, _bai -> [ meta, bam ] }        // channel: [ val(meta), path(bam) ]
+    cnr                            = CALL_CNVS.out.cnr                                              // channel: [ val(meta), path(cnr) ]
+    cnv_plot_png                   = CALL_CNVS.out.png                                              // channel: [ val(meta), path(png) ]
+    contamination_table            = CALL_SOMATIC_SNVS.out.contamination_table                      // channel: [ val(meta), path(table) ]
+    dpyd_csv                       = PROFILE_TUMOR_BIOMARKERS.out.dpyd_csv                          // channel: [ val(meta), path(csv) ]
+    dpyd_json                      = PROFILE_TUMOR_BIOMARKERS.out.dpyd_json                         // channel: [ val(meta), path(json) ]
+    flagstat                       = QC_ALIGNMENT.out.flagstat                                      // channel: [ val(meta), path(flagstat) ]
+    germline_tbi                   = CALL_GERMLINE_SNVS.out.tbi                                     // channel: [ val(meta), path(tbi) ]
+    germline_vcf                   = CALL_GERMLINE_SNVS.out.vcf                                     // channel: [ val(meta), path(vcf) ]
+    germline_vep_tbi               = CALL_GERMLINE_SNVS.out.vep_tbi                                 // channel: [ val(meta), path(tbi) ]
+    germline_vep_vcf               = CALL_GERMLINE_SNVS.out.vep_vcf                                 // channel: [ val(meta), path(vcf) ]
+    gripss_germline_filtered_vcf   = CALL_SVS.out.gripss_germline_filtered_vcf                      // channel: [ val(meta), path(vcf), path(tbi) ]
+    gripss_germline_unfiltered_vcf = CALL_SVS.out.gripss_germline_unfiltered_vcf                    // channel: [ val(meta), path(vcf), path(tbi) ]
+    gripss_somatic_filtered_vcf    = CALL_SVS.out.gripss_somatic_filtered_vcf                       // channel: [ val(meta), path(vcf), path(tbi) ]
+    gripss_somatic_unfiltered_vcf  = CALL_SVS.out.gripss_somatic_unfiltered_vcf                     // channel: [ val(meta), path(vcf), path(tbi) ]
+    hs_metrics                     = QC_ALIGNMENT.out.hs_metrics                                    // channel: [ val(meta), path(metrics) ]
+    jumble_cns                     = CALL_CNVS.out.jumble_cns                                       // channel: [ val(meta), path(cns) ]
+    multiple_metrics               = QC_ALIGNMENT.out.multiple_metrics                              // channel: [ val(meta), path(metrics) ]
+    multiqc_report                 = MULTIQC.out.report.map { _meta, report -> [report] }.toList()  // channel: /path/to/multiqc_report.html
+    mutect2_stats                  = CALL_SOMATIC_SNVS.out.mutect2_stats                            // channel: [ val(meta), path(stats) ]
+    mutect2_tbi                    = CALL_SOMATIC_SNVS.out.mutect2_tbi                              // channel: [ val(meta), path(tbi) ]
+    mutect2_vcf                    = CALL_SOMATIC_SNVS.out.mutect2_vcf                              // channel: [ val(meta), path(vcf) ]
+    profile_bedgraph               = CALL_CNVS.out.profile_bedgraph                                 // channel: [ val(meta), path(bedgraph) ]
+    purecn_csv                     = PROFILE_TUMOR_BIOMARKERS.out.purecn_csv                        // channel: [ val(meta), path(csv) ]
+    purecn_pdf                     = PROFILE_TUMOR_BIOMARKERS.out.purecn_pdf                        // channel: [ val(meta), path(pdf) ]
+    sage_tbi                       = CALL_SOMATIC_SNVS.out.sage_tbi                                 // channel: [ val(meta), path(tbi) ]
+    sage_vcf                       = CALL_SOMATIC_SNVS.out.sage_vcf                                 // channel: [ val(meta), path(vcf) ]
+    seg                            = CALL_CNVS.out.seg                                              // channel: [ val(meta), path(seg) ]
+    segments_bedgraph              = CALL_CNVS.out.segments_bedgraph                                // channel: [ val(meta), path(bedgraph) ]
+    somatic_tbi                    = CALL_SOMATIC_SNVS.out.somatic_tbi                              // channel: [ val(meta), path(tbi) ]
+    somatic_vcf                    = CALL_SOMATIC_SNVS.out.somatic_vcf                              // channel: [ val(meta), path(vcf) ]
+    vep_tbi                        = CALL_SOMATIC_SNVS.out.vep_tbi                                  // channel: [ val(meta), path(tbi) ]
+    vep_vcf                        = CALL_SOMATIC_SNVS.out.vep_vcf                                  // channel: [ val(meta), path(vcf) ]
+    versions                       = ch_versions                                                    // channel: [ path(versions.yml) ]
 
 }
 

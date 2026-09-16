@@ -150,8 +150,41 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     )
 
     emit:
-    autoseq_output = AUTOSEQ.out.autoseq_output      // channel: [ val(meta + [file: description]), path(file) ]
-    multiqc_report = AUTOSEQ.out.multiqc_report     // channel: /path/to/multiqc_report.html
+    annotated_cns                  = AUTOSEQ.out.annotated_cns                  // channel: [ val(meta), path(cns) ]
+    bai                            = AUTOSEQ.out.bai                            // channel: [ val(meta), path(bai) ]
+    bam                            = AUTOSEQ.out.bam                            // channel: [ val(meta), path(bam) ]
+    cnr                            = AUTOSEQ.out.cnr                            // channel: [ val(meta), path(cnr) ]
+    cnv_plot_png                   = AUTOSEQ.out.cnv_plot_png                   // channel: [ val(meta), path(png) ]
+    contamination_table            = AUTOSEQ.out.contamination_table            // channel: [ val(meta), path(table) ]
+    dpyd_csv                       = AUTOSEQ.out.dpyd_csv                       // channel: [ val(meta), path(csv) ]
+    dpyd_json                      = AUTOSEQ.out.dpyd_json                      // channel: [ val(meta), path(json) ]
+    flagstat                       = AUTOSEQ.out.flagstat                       // channel: [ val(meta), path(flagstat) ]
+    germline_tbi                   = AUTOSEQ.out.germline_tbi                   // channel: [ val(meta), path(tbi) ]
+    germline_vcf                   = AUTOSEQ.out.germline_vcf                   // channel: [ val(meta), path(vcf) ]
+    germline_vep_tbi               = AUTOSEQ.out.germline_vep_tbi               // channel: [ val(meta), path(tbi) ]
+    germline_vep_vcf               = AUTOSEQ.out.germline_vep_vcf               // channel: [ val(meta), path(vcf) ]
+    gripss_germline_filtered_vcf   = AUTOSEQ.out.gripss_germline_filtered_vcf   // channel: [ val(meta), path(vcf), path(tbi) ]
+    gripss_germline_unfiltered_vcf = AUTOSEQ.out.gripss_germline_unfiltered_vcf // channel: [ val(meta), path(vcf), path(tbi) ]
+    gripss_somatic_filtered_vcf    = AUTOSEQ.out.gripss_somatic_filtered_vcf    // channel: [ val(meta), path(vcf), path(tbi) ]
+    gripss_somatic_unfiltered_vcf  = AUTOSEQ.out.gripss_somatic_unfiltered_vcf  // channel: [ val(meta), path(vcf), path(tbi) ]
+    hs_metrics                     = AUTOSEQ.out.hs_metrics                     // channel: [ val(meta), path(metrics) ]
+    jumble_cns                     = AUTOSEQ.out.jumble_cns                     // channel: [ val(meta), path(cns) ]
+    multiple_metrics               = AUTOSEQ.out.multiple_metrics               // channel: [ val(meta), path(metrics) ]
+    multiqc_report                 = AUTOSEQ.out.multiqc_report                 // channel: /path/to/multiqc_report.html
+    mutect2_stats                  = AUTOSEQ.out.mutect2_stats                  // channel: [ val(meta), path(stats) ]
+    mutect2_tbi                    = AUTOSEQ.out.mutect2_tbi                    // channel: [ val(meta), path(tbi) ]
+    mutect2_vcf                    = AUTOSEQ.out.mutect2_vcf                    // channel: [ val(meta), path(vcf) ]
+    profile_bedgraph               = AUTOSEQ.out.profile_bedgraph               // channel: [ val(meta), path(bedgraph) ]
+    purecn_csv                     = AUTOSEQ.out.purecn_csv                     // channel: [ val(meta), path(csv) ]
+    purecn_pdf                     = AUTOSEQ.out.purecn_pdf                     // channel: [ val(meta), path(pdf) ]
+    sage_tbi                       = AUTOSEQ.out.sage_tbi                       // channel: [ val(meta), path(tbi) ]
+    sage_vcf                       = AUTOSEQ.out.sage_vcf                       // channel: [ val(meta), path(vcf) ]
+    seg                            = AUTOSEQ.out.seg                            // channel: [ val(meta), path(seg) ]
+    segments_bedgraph              = AUTOSEQ.out.segments_bedgraph              // channel: [ val(meta), path(bedgraph) ]
+    somatic_tbi                    = AUTOSEQ.out.somatic_tbi                    // channel: [ val(meta), path(tbi) ]
+    somatic_vcf                    = AUTOSEQ.out.somatic_vcf                    // channel: [ val(meta), path(vcf) ]
+    vep_tbi                        = AUTOSEQ.out.vep_tbi                        // channel: [ val(meta), path(tbi) ]
+    vep_vcf                        = AUTOSEQ.out.vep_vcf                        // channel: [ val(meta), path(vcf) ]
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -226,54 +259,120 @@ workflow {
         GENOMICMEDICINESWEDEN_AUTOSEQ.out.multiqc_report
     )
 
+    //
+    // Mix together the outputs that share an output directory — one item per output directory
+    //
+    def ch_alignment = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.bai,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.bam
+    )
+
+    def ch_cnv = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.annotated_cns,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.cnr,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.cnv_plot_png,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.jumble_cns,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.profile_bedgraph,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.seg,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.segments_bedgraph
+    )
+
+    def ch_dpyd = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.dpyd_csv,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.dpyd_json
+    )
+
+    def ch_purecn = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.purecn_csv,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.purecn_pdf
+    )
+
+    def ch_qc_picard = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.hs_metrics,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.multiple_metrics
+    )
+
+    def ch_snvs_germline = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_tbi,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_vcf,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_vep_tbi,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_vep_vcf
+    )
+
+    def ch_snvs_somatic = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.mutect2_stats,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.mutect2_tbi,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.mutect2_vcf,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.sage_tbi,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.sage_vcf,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.somatic_tbi,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.somatic_vcf,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.vep_tbi,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.vep_vcf
+    )
+
+    def ch_svs_germline = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.gripss_germline_filtered_vcf,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.gripss_germline_unfiltered_vcf
+    )
+
+    def ch_svs_somatic = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.gripss_somatic_filtered_vcf,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.gripss_somatic_unfiltered_vcf
+    )
+
     publish:
-    autoseq_output  = GENOMICMEDICINESWEDEN_AUTOSEQ.out.autoseq_output  // channel: [ val(meta + [file: description]), path(file) ]
-    multiqc_report  = GENOMICMEDICINESWEDEN_AUTOSEQ.out.multiqc_report   // channel: /path/to/multiqc_report.html
+    alignment        = ch_alignment                                          // channel: [ val(meta), path(file) ]
+    cnv              = ch_cnv                                                // channel: [ val(meta), path(file) ]
+    dpyd             = ch_dpyd                                               // channel: [ val(meta), path(file) ]
+    multiqc_report   = GENOMICMEDICINESWEDEN_AUTOSEQ.out.multiqc_report      // channel: /path/to/multiqc_report.html
+    purecn           = ch_purecn                                             // channel: [ val(meta), path(file) ]
+    qc_contamination = GENOMICMEDICINESWEDEN_AUTOSEQ.out.contamination_table // channel: [ val(meta), path(table) ]
+    qc_picard        = ch_qc_picard                                          // channel: [ val(meta), path(metrics) ]
+    qc_samtools      = GENOMICMEDICINESWEDEN_AUTOSEQ.out.flagstat            // channel: [ val(meta), path(flagstat) ]
+    snvs_germline    = ch_snvs_germline                                      // channel: [ val(meta), path(file) ]
+    snvs_somatic     = ch_snvs_somatic                                       // channel: [ val(meta), path(file) ]
+    svs_germline     = ch_svs_germline                                       // channel: [ val(meta), path(vcf), path(tbi) ]
+    svs_somatic      = ch_svs_somatic                                        // channel: [ val(meta), path(vcf), path(tbi) ]
 }
 
 
 output {
+    alignment {
+        path { "alignment" }
+    }
+    cnv {
+        path { "cnv" }
+    }
+    dpyd {
+        path { "dpyd" }
+    }
     multiqc_report {
         path { "multiqc" }
     }
-    autoseq_output {
-        path { meta, _file ->
-            if (meta.file == 'bam' || meta.file == 'bai') {
-                return 'alignment'
-            } else if (meta.file == 'flagstat') {
-                return 'qc/samtools'
-            } else if (meta.file == 'contamination_table') {
-                return 'qc/contamination'
-            } else if (meta.file == 'hs_metrics' || meta.file == 'multiple_metrics') {
-                return 'qc/picard'
-            } else if (meta.file == 'jumble_cns' || meta.file == 'cnr' || meta.file == 'seg' ||
-                    meta.file == 'profile_bedgraph' || meta.file == 'segments_bedgraph' ||
-                    meta.file == 'annotated_cns' || meta.file == 'cnv_plot_png') {
-                return 'cnv'
-            } else if (meta.file == 'mutect2_stats' || meta.file == 'mutect2_vcf' || meta.file == 'mutect2_tbi') {
-                return 'variants/somatic/mutect2'
-            } else if (meta.file == 'sage_vcf' || meta.file == 'sage_tbi') {
-                return 'variants/somatic/sage'
-            } else if (meta.file == 'somatic_vcf' || meta.file == 'somatic_tbi') {
-                return 'variants/somatic/merged'
-            } else if (meta.file == 'vep_vcf' || meta.file == 'vep_tbi') {
-                return 'variants/somatic'
-            } else if (meta.file == 'germline_vcf' || meta.file == 'germline_tbi') {
-                return 'variants/germline/haplotypecaller'
-            } else if (meta.file == 'germline_vep_vcf' || meta.file == 'germline_vep_tbi') {
-                return 'variants/germline/'
-            } else if (meta.file == 'gripss_somatic_filtered_vcf' || meta.file == 'gripss_somatic_unfiltered_vcf') {
-                return 'svs/somatic/'
-            } else if (meta.file == 'gripss_germline_filtered_vcf' || meta.file == 'gripss_germline_unfiltered_vcf') {
-                return 'svs/germline/'
-            } else if (meta.file == "dpyd_csv" || meta.file == "dpyd_json") {
-                return 'dpyd'
-            } else if (meta.file == "purecn_csv" || meta.file == "purecn_pdf") {
-                return 'purecn'
-            } else {
-                return ''
-            }
-        }
+    purecn {
+        path { "purecn" }
+    }
+    qc_contamination {
+        path { "qc/contamination" }
+    }
+    qc_picard {
+        path { "qc/picard" }
+    }
+    qc_samtools {
+        path { "qc/samtools" }
+    }
+    snvs_germline {
+        path { "snvs/germline" }
+    }
+    snvs_somatic {
+        path { "snvs/somatic" }
+    }
+    svs_germline {
+        path { "svs/germline" }
+    }
+    svs_somatic {
+        path { "svs/somatic" }
     }
 }
 
