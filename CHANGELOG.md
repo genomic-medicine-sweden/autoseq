@@ -54,6 +54,8 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #99 ](https://github.com/genomic-medicine-sweden/autoseq/pull/99) `CALL_SVS` now indexes the targeted BAM with `SAMTOOLS_INDEX` and no longer takes the genome sequence dictionary, to match the inputs and outputs of the nf-core GRIDSS modules.
 - [ #102 ](https://github.com/genomic-medicine-sweden/autoseq/pull/102) Updated the nf-core `bam_tumor_normal_somatic_variant_calling_gatk` subworkflow and its GATK4 modules, and adapted `CALL_SOMATIC_SNVS` to the new `alleles`/`alleles_tbi` inputs and the `[ meta, fai, gzi ]` index tuple.
 - [ #104 ](https://github.com/genomic-medicine-sweden/autoseq/pull/104) Moved `modules/local/jumble` to `modules/local/jumble/run` and switched it to the `clinicalgenomics/jumble:0.5.5` container, with new `bins_csv`, `genes_csv`, `qc_csv` and `counts` outputs and updated the bedgraph column index values.
+- [ #110 ](https://github.com/genomic-medicine-sweden/autoseq/pull/110) Replaced the single `meta.file`-tagged `autoseq_output` channel with one named emit per output, mixed by destination in the `publish`/`output` blocks.
+- [ #110 ](https://github.com/genomic-medicine-sweden/autoseq/pull/110) Moved SNV outputs from `variants/` to `snvs/` and flattened the per-caller subdirectories, updating `docs/output.md` and the pipeline nf-test snapshots.
 - [ #112 ](https://github.com/genomic-medicine-sweden/autoseq/pull/112) Updated the nf-core `utils_nextflow_pipeline` and `utils_nfcore_pipeline` subworkflows, so that `dumpParametersToJSON` serialises `Path`, `Duration`, `MemoryUnit` and `VersionNumber` params explicitly and resolves `outdir` as either a `Path` or a `String`.
 
 ### `Fixed`
