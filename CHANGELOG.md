@@ -80,6 +80,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #73 ](https://github.com/genomic-medicine-sweden/autoseq/pull/73) Moved the `ZIPPERBAMS_(PRE|POST)` tag options from `ext.args` to `ext.args2` so they are passed to `ZipperBams` instead of to the fgbio wrapper.
 - [ #74 ](https://github.com/genomic-medicine-sweden/autoseq/pull/74) Collected the reference channel passed to `UMI_PROCESSING` so it is reusable across all samples instead of being consumed by the first one.
 - [ #94 ](https://github.com/genomic-medicine-sweden/autoseq/pull/94) Sorted grouped lane FASTQs by filename before `CAT_FASTQ` in the UMI branch, since `groupTuple` does not guarantee ordering and multi-lane samples could be concatenated in a non-reproducible order.
+- [ #116 ](https://github.com/genomic-medicine-sweden/autoseq/pull/116) Updated `gatk4/genotypegvcfs` to share the `gatk4-main_gcnvkernel` container with the other GATK4 modules, as its previous image stalled on a 5.2 GB layer pull and timed out in CI.
 
 ### `Removed`
 
