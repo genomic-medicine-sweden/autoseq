@@ -56,6 +56,17 @@ runs:
         channel-priority: strict
         conda-remove-defaults: true
 
+    # TEMPORARY (diagnostic): shards intermittently take ~70 min instead of ~20 min, with a
+    # single ~57 min window in which several unrelated tasks stall and then all complete
+    # within seconds of each other. Unlike sarek and oncoanalyser we run on GitHub-hosted
+    # runners (~14 GB disk, no reference cache), so record disk before/after to see whether
+    # the container set and staged references exhaust it. Remove once the cause is fixed.
+    - name: Record disk usage before tests
+      shell: bash
+      run: |
+        echo "### Disk before tests" >> $GITHUB_STEP_SUMMARY
+        df -h / /mnt 2>/dev/null | tee -a $GITHUB_STEP_SUMMARY
+
     - name: Run nf-test
       shell: bash
       env:
@@ -72,6 +83,74 @@ runs:
 
           # Save the absolute path of the test.tap file to the output
           echo "tap_file_path=$(realpath test.tap)" >> $GITHUB_OUTPUT
+
+    # TEMPORARY (diagnostic): companion to "Record disk usage before tests". The Nextflow
+    # trace separates the three candidate causes: time inside the task with low %cpu means
+    # blocked on I/O or network, `duration` far above `realtime` means queued or staging,
+    # and a high %cpu means genuinely compute-bound. Remove once the cause is fixed.
+    - name: Report disk usage and task timings
+      if: always()
+      shell: bash
+      run: |
+        echo "### Disk after tests" >> $GITHUB_STEP_SUMMARY
+        df -h / /mnt 2>/dev/null | tee -a $GITHUB_STEP_SUMMARY
+        docker system df 2>/dev/null | tee -a $GITHUB_STEP_SUMMARY || true
+        python3 - <<'PY' | tee -a $GITHUB_STEP_SUMMARY
+        import glob, re, html
+
+        reports = sorted(glob.glob('**/pipeline_info/execution_report_*.html', recursive=True))
+        if not reports:
+            print('No execution report found.')
+
+        for report in reports:
+            source = open(report, encoding='utf8', errors='replace').read()
+            start = source.find('window.data = ')
+            if start < 0:
+                print(f'{report}: no trace payload')
+                continue
+
+            tasks = []
+            for match in re.finditer(r'\{"task_id".*?\}', source[start:]):
+                blob = match.group(0)
+
+                def field(key, default='0'):
+                    hit = re.search(r'"%s":"(.*?)"' % key, blob)
+                    return hit.group(1) if hit else default
+
+                tasks.append({
+                    'name': html.unescape(field('name', '?')),
+                    'realtime': int(field('realtime') or 0),
+                    'duration': int(field('duration') or 0),
+                    'cpu': field('%cpu', '?'),
+                    'rss': field('peak_rss', '?'),
+                })
+
+            tasks.sort(key=lambda task: task['duration'], reverse=True)
+            print(f'\n### {report} ({len(tasks)} tasks)\n')
+            print('| duration | realtime | queued+staged | %cpu | peak_rss | task |')
+            print('|---:|---:|---:|---:|---:|---|')
+            for task in tasks[:15]:
+                print('| %.1fs | %.1fs | %.1fs | %s | %s | %s |' % (
+                    task['duration'] / 1000,
+                    task['realtime'] / 1000,
+                    (task['duration'] - task['realtime']) / 1000,
+                    task['cpu'],
+                    task['rss'],
+                    task['name'][-70:],
+                ))
+        PY
+
+    - name: Upload Nextflow traces
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      with:
+        name: nextflow-trace-${{ inputs.profile }}-${{ env.NXF_VERSION }}-shard${{ inputs.shard }}
+        path: |
+          **/pipeline_info/execution_*
+          **/.nextflow.log*
+        if-no-files-found: warn
+        include-hidden-files: true
+        retention-days: 7
 
     - name: Generate test summary
       if: always()
