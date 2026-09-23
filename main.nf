@@ -159,6 +159,8 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     dpyd_csv                       = AUTOSEQ.out.dpyd_csv                       // channel: [ val(meta), path(csv) ]
     dpyd_json                      = AUTOSEQ.out.dpyd_json                      // channel: [ val(meta), path(json) ]
     flagstat                       = AUTOSEQ.out.flagstat                       // channel: [ val(meta), path(flagstat) ]
+    germline_taf_tbi               = AUTOSEQ.out.germline_taf_tbi               // channel: [ val(meta), path(tbi) ]
+    germline_taf_vcf               = AUTOSEQ.out.germline_taf_vcf               // channel: [ val(meta), path(vcf) ]
     germline_tbi                   = AUTOSEQ.out.germline_tbi                   // channel: [ val(meta), path(tbi) ]
     germline_vcf                   = AUTOSEQ.out.germline_vcf                   // channel: [ val(meta), path(vcf) ]
     germline_vep_tbi               = AUTOSEQ.out.germline_vep_tbi               // channel: [ val(meta), path(tbi) ]
@@ -293,6 +295,8 @@ workflow {
     )
 
     def ch_snvs_germline = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_taf_tbi,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_taf_vcf,
         GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_tbi,
         GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_vcf,
         GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_vep_tbi,
