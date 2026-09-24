@@ -94,16 +94,22 @@
                     "bcftools": 1.22
                 },
                 "PICARD_COLLECTHSMETRICS": {
-                    "picard": "3.3.0"
+                    "picard": "3.5.0"
                 },
                 "PICARD_COLLECTMULTIPLEMETRICS": {
-                    "picard": "3.3.0"
+                    "picard": "3.5.0"
                 },
                 "PURECN_RUN": {
                     "PureCN": "2.12.0"
                 },
                 "SAGE_SOMATIC": {
                     "sage": 4.1
+                },
+                "SAMTOOLS_FLAGSTAT": {
+                    "samtools": 1.24
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": 1.24
                 },
                 "SOMATIC_VCFMERGE": {
                     "bcftools": "bcftools 1.22",
@@ -292,7 +298,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-15T16:21:25.433869498",
+        "timestamp": "2026-09-24T12:11:45.338330716",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -393,16 +399,22 @@
                     "bcftools": 1.22
                 },
                 "PICARD_COLLECTHSMETRICS": {
-                    "picard": "3.3.0"
+                    "picard": "3.5.0"
                 },
                 "PICARD_COLLECTMULTIPLEMETRICS": {
-                    "picard": "3.3.0"
+                    "picard": "3.5.0"
                 },
                 "PURECN_RUN": {
                     "PureCN": "2.12.0"
                 },
                 "SAGE_SOMATIC": {
                     "stub": "noversions"
+                },
+                "SAMTOOLS_FLAGSTAT": {
+                    "samtools": 1.24
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": 1.24
                 },
                 "SOMATIC_VCFMERGE": {
                     "bcftools": "bcftools 1.22",
@@ -522,7 +534,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-15T16:22:28.571870246",
+        "timestamp": "2026-09-24T12:12:40.445492374",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
