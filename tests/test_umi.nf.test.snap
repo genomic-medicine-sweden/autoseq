@@ -55,7 +55,7 @@
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_GENOTYPEGVCFS": {
-                    "gatk4": "4.6.2.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_NORMAL": {
                     "gatk4": "4.7.0.0"
@@ -313,7 +313,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-21T23:10:47.891679076",
+        "timestamp": "2026-09-24T15:23:37.881076314",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -375,7 +375,7 @@
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_GENOTYPEGVCFS": {
-                    "gatk4": "4.6.2.0"
+                    "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_NORMAL": {
                     "gatk4": "4.7.0.0"
@@ -556,7 +556,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-21T23:17:05.897478978",
+        "timestamp": "2026-09-24T15:24:35.132395679",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
