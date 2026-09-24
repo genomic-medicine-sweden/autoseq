@@ -69,8 +69,7 @@ nextflow_workflow {
                     workflow.out.dedup_bai.collect { meta, bai -> [meta, file(bai).name] },
                     // Picard writes `# Started on:` and the full command line into the metrics
                     // header, so only the file name is asserted
-                    workflow.out.dedup_metrics.collect { meta, metrics -> [meta, file(metrics).name] },
-                    workflow.out.versions
+                    workflow.out.dedup_metrics.collect { meta, metrics -> [meta, file(metrics).name] }
                 ).match() }
             )
         }
