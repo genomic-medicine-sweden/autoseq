@@ -1,7 +1,7 @@
 {
     "test profile - paired tumor-normal": {
         "content": [
-            59,
+            62,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -9,6 +9,9 @@
                 "ANNOTATE_VEP": {
                     "ensemblvep": 115.2,
                     "tabix": 1.21
+                },
+                "BCFTOOLS_MERGE": {
+                    "bcftools": "1.23.1"
                 },
                 "BWAMEM2_INDEX": {
                     "bwamem2": "2.2.1"
@@ -27,6 +30,9 @@
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_FILTERMUTECTCALLS": {
+                    "gatk4": "4.7.0.0"
+                },
+                "GATK4_GENOTYPEGVCFS": {
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_NORMAL": {
@@ -173,6 +179,8 @@
                 "snvs/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
+                "snvs/germline/TUMOR-all.germline.taf.vcf.gz",
+                "snvs/germline/TUMOR-all.germline.taf.vcf.gz.tbi",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
@@ -234,6 +242,10 @@
                     "52b988e94f0b29a95e76ba24a654ac5c"
                 ],
                 [
+                    "TUMOR-all.germline.taf.vcf.gz",
+                    "d41d8cd98f00b204e9800998ecf8427e"
+                ],
+                [
                     "TUMOR.hetsnps.vcf.gz",
                     "81c20457e174fdb5a65ddd5b4060f126"
                 ],
@@ -271,7 +283,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-21T22:48:42.402046596",
+        "timestamp": "2026-09-24T15:07:18.906051108",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -279,7 +291,7 @@
     },
     "test profile - paired tumor-normal - stub": {
         "content": [
-            59,
+            62,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -287,6 +299,9 @@
                 "ANNOTATE_VEP": {
                     "ensemblvep": 115.2,
                     "tabix": 1.21
+                },
+                "BCFTOOLS_MERGE": {
+                    "bcftools": "1.23.1"
                 },
                 "BWAMEM2_INDEX": {
                     "bwamem2": "2.2.1"
@@ -305,6 +320,9 @@
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_FILTERMUTECTCALLS": {
+                    "gatk4": "4.7.0.0"
+                },
+                "GATK4_GENOTYPEGVCFS": {
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_NORMAL": {
@@ -450,6 +468,8 @@
                 "snvs/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
+                "snvs/germline/TUMOR-all.germline.taf.vcf.gz",
+                "snvs/germline/TUMOR-all.germline.taf.vcf.gz.tbi",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
@@ -476,7 +496,7 @@
                 "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-21T22:53:30.453637182",
+        "timestamp": "2026-09-24T15:08:01.361685199",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

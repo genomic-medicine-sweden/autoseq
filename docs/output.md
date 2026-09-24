@@ -29,6 +29,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
       - [SAGE](#sage)
     - [Germline SNV and small Indels](#germline-snv-and-small-indels)
       - [GATK HaplotypeCaller](#gatk-haplotypecaller)
+      - [Germline Tumor Allele Fraction](#germline-tumor-allele-fraction)
       - [Heterozygous SNPs for Frankenplot](#heterozygous-snps-for-frankenplot)
     - [Structural Variant Calling](#structural-variant-calling)
       - [GRIDSS](#gridss)
@@ -164,6 +165,17 @@ GATK HaplotypeCaller is a robust germline variant caller that identifies SNPs an
   - `*_haplotypecaller.vcf.tbi`: index file for germline vcf.
 
 </details>
+
+#### Germline Tumor Allele Fraction
+
+The germline calls are re-genotyped in the matched tumor BAM with GATK GenotypeGVCFs, and the resulting tumor genotypes are merged back onto the VEP-annotated germline VCF with BCFtools merge. Every germline variant therefore carries the allele fraction observed in the tumor, which is used to distinguish germline variants that are retained, lost or amplified in the tumor.
+
+<details markdown="1">
+<summary>Output files for the germline tumor allele fraction annotation:</summary>
+
+- `{outdir}/snvs/germline/`
+  - `*-all.germline.taf.vcf.gz`: VEP-annotated germline variants with an added tumor genotype column.
+  - `*-all.germline.taf.vcf.gz.tbi`: index file for the tumor allele fraction vcf.
 
 #### Heterozygous SNPs for Frankenplot
 

@@ -24,6 +24,7 @@ include { CALL_GERMLINE_SNVS                                  } from '../subwork
 include { CALL_CNVS                                           } from '../subworkflows/local/call_cnvs/main.nf'
 include { CALL_SVS                                            } from '../subworkflows/local/call_svs/main.nf'
 include { PROFILE_TUMOR_BIOMARKERS                            } from '../subworkflows/local/profile_tumor_biomarkers/main.nf'
+include { ANNOTATE_GERMLINE_TAF                               } from '../subworkflows/local/annotate_germline_taf/main.nf'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -290,11 +291,34 @@ workflow AUTOSEQ {
     )
 
     //
-    // MODULE: Prepare Heterozygous SNPs for Frankenplot BAF plotting
+    // SUBWORKFLOW: Annotate Germline Variants with Tumor AF
     //
 
     // The germline VCFs carry the normal meta, so they are re-keyed on `case_id`
     // to be joined with the tumor BAM. The tumor meta is kept downstream.
+    def ch_germline_vep_vcf_by_case = CALL_GERMLINE_SNVS.out.vep_vcf
+        .join(CALL_GERMLINE_SNVS.out.vep_tbi)
+        .map { meta, vep_vcf, vep_tbi ->
+            return [meta.case_id, vep_vcf, vep_tbi]
+        }
+
+    def ch_germline_taf_input = tumor_ch
+        .join(ch_germline_vep_vcf_by_case)
+        .map { _case_id, meta, tumor_bam, tumor_bai, germline_vcf, germline_tbi ->
+            return [meta, tumor_bam, tumor_bai, germline_vcf, germline_tbi]
+        }
+
+    ANNOTATE_GERMLINE_TAF(
+        ch_germline_taf_input,
+        ch_genome_fasta,
+        ch_genome_fai,
+        ch_dict
+    )
+
+    //
+    // MODULE: Prepare Heterozygous SNPs for Frankenplot BAF plotting
+    //
+
     def ch_germline_vcf_by_case = CALL_GERMLINE_SNVS.out.vcf
         .join(CALL_GERMLINE_SNVS.out.tbi)
         .map { meta, vcf, tbi ->
@@ -403,6 +427,8 @@ workflow AUTOSEQ {
     dpyd_csv                       = PROFILE_TUMOR_BIOMARKERS.out.dpyd_csv                          // channel: [ val(meta), path(csv) ]
     dpyd_json                      = PROFILE_TUMOR_BIOMARKERS.out.dpyd_json                         // channel: [ val(meta), path(json) ]
     flagstat                       = QC_ALIGNMENT.out.flagstat                                      // channel: [ val(meta), path(flagstat) ]
+    germline_taf_tbi               = ANNOTATE_GERMLINE_TAF.out.germline_taf_tbi                     // channel: [ val(meta), path(tbi) ]
+    germline_taf_vcf               = ANNOTATE_GERMLINE_TAF.out.germline_taf_vcf                     // channel: [ val(meta), path(vcf) ]
     germline_tbi                   = CALL_GERMLINE_SNVS.out.tbi                                     // channel: [ val(meta), path(tbi) ]
     germline_vcf                   = CALL_GERMLINE_SNVS.out.vcf                                     // channel: [ val(meta), path(vcf) ]
     germline_vep_tbi               = CALL_GERMLINE_SNVS.out.vep_tbi                                 // channel: [ val(meta), path(tbi) ]
