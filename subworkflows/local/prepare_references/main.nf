@@ -20,7 +20,6 @@ workflow PREPARE_REFERENCES {
     def ch_vep_cache        = channel.empty()
     def ch_gridss_index     = channel.empty()
     def ch_hmf_ensembl_data = channel.empty()
-    def ch_versions         = channel.empty()
 
     ch_genome_fasta = channel.fromPath(val_genome_fasta).map { it -> [[id: it.simpleName], it] }.collect()
 
@@ -30,7 +29,6 @@ workflow PREPARE_REFERENCES {
         BWAMEM2_INDEX ( ch_genome_fasta )
 
         ch_bwamem2_index = BWAMEM2_INDEX.out.index
-        ch_versions = ch_versions.mix(BWAMEM2_INDEX.out.versions)
     } else {
         ch_bwamem2_index = channel.fromPath(val_bwamem2_index).map { it -> [[id: it.simpleName], it] }.collect()
     }
@@ -75,5 +73,4 @@ workflow PREPARE_REFERENCES {
     vep_cache        = ch_vep_cache                 // channel: [ val(meta), path(dir) ]
     gridss_index     = ch_gridss_index              // channel: [ val(meta), path(dir) ]
     hmf_ensembl_data = ch_hmf_ensembl_data          // channel: [ val(meta), path(dir) ]
-    versions         = ch_versions                  // channel: [ path(versions.yml) ]
 }
