@@ -97,7 +97,7 @@ workflow CALL_SOMATIC_SNVS {
     PASSFILTER_FOR_SAGE (ch_sage_vcf)
 
     SOMATIC_VCFMERGE (
-        PASSFILTER_FOR_MUTECT2.out.vcf.join(PASSFILTER_FOR_MUTECT2.out.tbi),
+        PASSFILTER_FOR_MUTECT2.out.vcf.join(PASSFILTER_FOR_MUTECT2.out.index),
         PASSFILTER_FOR_SAGE.out.vcf
     )
 
@@ -118,11 +118,7 @@ workflow CALL_SOMATIC_SNVS {
     )
 
 
-    versions = versions.mix(VT_DECOMPOSE.out.versions)
-    versions = versions.mix(VT_NORMALIZE.out.versions)
     versions = versions.mix(SAGE_SOMATIC.out.versions)
-    versions = versions.mix(PASSFILTER_FOR_MUTECT2.out.versions)
-    versions = versions.mix(PASSFILTER_FOR_SAGE.out.versions)
     versions = versions.mix(SOMATIC_VCFMERGE.out.versions)
     versions = versions.mix(ANNOTATE_VEP.out.versions)
 
