@@ -33,6 +33,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #104 ](https://github.com/genomic-medicine-sweden/autoseq/pull/104) Added nf-test and `meta.yml` for the `JUMBLE_RUN` module.
 - [ #103 ](https://github.com/genomic-medicine-sweden/autoseq/pull/103) Added the `PREPARE_HETSNPS_FOR_FRANKENPLOT` local module and its `prepare_hetsnps_for_frankenplot.py` script, which filters a germline VCF to heterozygous SNVs and appends a sample column with BAM-derived `GT`, `DP` and `AD` for Frankenplot BAF plotting, with nf-test and `meta.yml`.
 - [ #109 ](https://github.com/genomic-medicine-sweden/autoseq/pull/109) Added the `JUMBLE_FRANKENPLOT` module to render the Frankenplot HTML genome report, with nf-test and `meta.yml`.
+- [ #115 ](https://github.com/genomic-medicine-sweden/autoseq/pull/115) Integrated the `PREPARE_HETSNPS_FOR_FRANKENPLOT` module into the `AUTOSEQ` workflow, publishing the heterozygous SNP VCF to `snvs/germline`.
 - [ #114 ](https://github.com/genomic-medicine-sweden/autoseq/pull/114) Integrated the `ANNOTATE_GERMLINE_TAF` subworkflow into the `AUTOSEQ` workflow, publishing the tumor allele fraction VCF to `snvs/germline`.
 
 ### `Changed`
@@ -82,6 +83,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #73 ](https://github.com/genomic-medicine-sweden/autoseq/pull/73) Moved the `ZIPPERBAMS_(PRE|POST)` tag options from `ext.args` to `ext.args2` so they are passed to `ZipperBams` instead of to the fgbio wrapper.
 - [ #74 ](https://github.com/genomic-medicine-sweden/autoseq/pull/74) Collected the reference channel passed to `UMI_PROCESSING` so it is reusable across all samples instead of being consumed by the first one.
 - [ #94 ](https://github.com/genomic-medicine-sweden/autoseq/pull/94) Sorted grouped lane FASTQs by filename before `CAT_FASTQ` in the UMI branch, since `groupTuple` does not guarantee ordering and multi-lane samples could be concatenated in a non-reproducible order.
+- [ #116 ](https://github.com/genomic-medicine-sweden/autoseq/pull/116) Updated `gatk4/genotypegvcfs` to share the `gatk4-main_gcnvkernel` container with the other GATK4 modules, as its previous image stalled on a 5.2 GB layer pull and timed out in CI.
 
 ### `Removed`
 

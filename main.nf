@@ -169,6 +169,8 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     gripss_germline_unfiltered_vcf = AUTOSEQ.out.gripss_germline_unfiltered_vcf // channel: [ val(meta), path(vcf), path(tbi) ]
     gripss_somatic_filtered_vcf    = AUTOSEQ.out.gripss_somatic_filtered_vcf    // channel: [ val(meta), path(vcf), path(tbi) ]
     gripss_somatic_unfiltered_vcf  = AUTOSEQ.out.gripss_somatic_unfiltered_vcf  // channel: [ val(meta), path(vcf), path(tbi) ]
+    hetsnps_tbi                    = AUTOSEQ.out.hetsnps_tbi                    // channel: [ val(meta), path(tbi) ]
+    hetsnps_vcf                    = AUTOSEQ.out.hetsnps_vcf                    // channel: [ val(meta), path(vcf) ]
     hs_metrics                     = AUTOSEQ.out.hs_metrics                     // channel: [ val(meta), path(metrics) ]
     jumble_cns                     = AUTOSEQ.out.jumble_cns                     // channel: [ val(meta), path(cns) ]
     multiple_metrics               = AUTOSEQ.out.multiple_metrics               // channel: [ val(meta), path(metrics) ]
@@ -300,7 +302,9 @@ workflow {
         GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_tbi,
         GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_vcf,
         GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_vep_tbi,
-        GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_vep_vcf
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.germline_vep_vcf,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.hetsnps_tbi,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.hetsnps_vcf
     )
 
     def ch_snvs_somatic = channel.empty().mix(

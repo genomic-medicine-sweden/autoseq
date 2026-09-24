@@ -1,7 +1,7 @@
 {
     "test_umi profile - paired tumor-normal": {
         "content": [
-            81,
+            82,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -104,6 +104,9 @@
                 },
                 "PICARD_COLLECTMULTIPLEMETRICS": {
                     "picard": "3.3.0"
+                },
+                "PREPARE_HETSNPS_FOR_FRANKENPLOT": {
+                    "prepare_hetsnps_for_frankenplot": "prepare_hetsnps_for_frankenplot.py 1.0.0"
                 },
                 "PURECN_RUN": {
                     "PureCN": "2.12.0"
@@ -208,6 +211,8 @@
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
                 "snvs/germline/TUMOR-all.germline.taf.vcf.gz",
                 "snvs/germline/TUMOR-all.germline.taf.vcf.gz.tbi",
+                "snvs/germline/TUMOR.hetsnps.vcf.gz",
+                "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz.tbi",
@@ -271,6 +276,10 @@
                     "d41d8cd98f00b204e9800998ecf8427e"
                 ],
                 [
+                    "TUMOR.hetsnps.vcf.gz",
+                    "a1cae2cee3859d4f49dc6b173f9e8cbb"
+                ],
+                [
                     "TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz",
                     "c259936a0e7e2dcc3414f7c1e4b9dd6c"
                 ],
@@ -312,7 +321,7 @@
     },
     "test_umi profile - paired tumor-normal - stub": {
         "content": [
-            81,
+            82,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -416,6 +425,9 @@
                 "PICARD_COLLECTMULTIPLEMETRICS": {
                     "picard": "3.3.0"
                 },
+                "PREPARE_HETSNPS_FOR_FRANKENPLOT": {
+                    "prepare_hetsnps_for_frankenplot": "prepare_hetsnps_for_frankenplot.py 1.0.0"
+                },
                 "PURECN_RUN": {
                     "PureCN": "2.12.0"
                 },
@@ -518,6 +530,8 @@
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
                 "snvs/germline/TUMOR-all.germline.taf.vcf.gz",
                 "snvs/germline/TUMOR-all.germline.taf.vcf.gz.tbi",
+                "snvs/germline/TUMOR.hetsnps.vcf.gz",
+                "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz.tbi",

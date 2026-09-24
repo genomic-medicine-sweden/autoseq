@@ -30,6 +30,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
     - [Germline SNV and small Indels](#germline-snv-and-small-indels)
       - [GATK HaplotypeCaller](#gatk-haplotypecaller)
       - [Germline Tumor Allele Fraction](#germline-tumor-allele-fraction)
+      - [Heterozygous SNPs for Frankenplot](#heterozygous-snps-for-frankenplot)
     - [Structural Variant Calling](#structural-variant-calling)
       - [GRIDSS](#gridss)
       - [GRIPSS](#gripss)
@@ -175,6 +176,17 @@ The germline calls are re-genotyped in the matched tumor BAM with GATK GenotypeG
 - `{outdir}/snvs/germline/`
   - `*-all.germline.taf.vcf.gz`: VEP-annotated germline variants with an added tumor genotype column.
   - `*-all.germline.taf.vcf.gz.tbi`: index file for the tumor allele fraction vcf.
+
+#### Heterozygous SNPs for Frankenplot
+
+`prepare_hetsnps_for_frankenplot.py` filters the germline calls to high-quality heterozygous SNVs and appends a sample column holding `GT`, `DP` and `AD` read from a pileup of the matched tumor BAM. The resulting B-allele frequencies are the input to the Frankenplot genome report.
+
+<details markdown="1">
+<summary>Output files for the heterozygous SNP preparation:</summary>
+
+- `{outdir}/snvs/germline/`
+  - `*.hetsnps.vcf.gz`: heterozygous germline SNVs with tumor-derived `GT`, `DP` and `AD`.
+  - `*.hetsnps.vcf.gz.tbi`: index file for the heterozygous SNP vcf.
 
 </details>
 
