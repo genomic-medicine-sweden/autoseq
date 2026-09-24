@@ -79,14 +79,12 @@ workflow AUTOSEQ {
     // MODULE: Run FastP
     //
     FASTP (
-        ch_samplesheet,
-        [], // adapter_fasta: not used in this pipeline
+        ch_samplesheet.map { meta, reads -> [meta, reads, []] }, // adapter_fasta: not used in this pipeline
         params.discard_trimmed_pass,
         params.save_trimmed_fail,
         params.save_merged
     )
 
-    ch_versions = ch_versions.mix(FASTP.out.versions)
     ch_input_reads = FASTP.out.reads
 
     //
