@@ -14,6 +14,7 @@ include { MULTIQC                                             } from '../modules
 include { FASTP                                               } from '../modules/nf-core/fastp/main'
 include { CAT_FASTQ                                           } from '../modules/nf-core/cat/fastq/main'
 include { SAMTOOLS_INDEX                                      } from '../modules/nf-core/samtools/index/main'
+include { PREPARE_HETSNPS_FOR_FRANKENPLOT                     } from '../modules/local/prepare_hetsnps_for_frankenplot/main'
 
 include { ALIGNMENT                                           } from '../subworkflows/local/alignment/main.nf'
 include { FASTQ_CREATE_UMI_CONSENSUS_FGBIO as UMI_PROCESSING  } from '../subworkflows/nf-core/fastq_create_umi_consensus_fgbio/main'
@@ -289,6 +290,28 @@ workflow AUTOSEQ {
     )
 
     //
+    // MODULE: Prepare Heterozygous SNPs for Frankenplot BAF plotting
+    //
+
+    // The germline VCFs carry the normal meta, so they are re-keyed on `case_id`
+    // to be joined with the tumor BAM. The tumor meta is kept downstream.
+    def ch_germline_vcf_by_case = CALL_GERMLINE_SNVS.out.vcf
+        .join(CALL_GERMLINE_SNVS.out.tbi)
+        .map { meta, vcf, tbi ->
+            return [meta.case_id, vcf, tbi]
+        }
+
+    def ch_hetsnps_input = tumor_ch
+        .join(ch_germline_vcf_by_case)
+        .map { _case_id, meta, tumor_bam, tumor_bai, germline_vcf, germline_tbi ->
+            return [meta, germline_vcf, germline_tbi, tumor_bam, tumor_bai]
+        }
+
+    PREPARE_HETSNPS_FOR_FRANKENPLOT(
+        ch_hetsnps_input
+    )
+
+    //
     // SUBWORKFLOW: Tumor Biomarker Profiling (e.g. purity/ploidy, MSI, TMB, etc.)
     //
 
@@ -388,6 +411,8 @@ workflow AUTOSEQ {
     gripss_germline_unfiltered_vcf = CALL_SVS.out.gripss_germline_unfiltered_vcf                    // channel: [ val(meta), path(vcf), path(tbi) ]
     gripss_somatic_filtered_vcf    = CALL_SVS.out.gripss_somatic_filtered_vcf                       // channel: [ val(meta), path(vcf), path(tbi) ]
     gripss_somatic_unfiltered_vcf  = CALL_SVS.out.gripss_somatic_unfiltered_vcf                     // channel: [ val(meta), path(vcf), path(tbi) ]
+    hetsnps_tbi                    = PREPARE_HETSNPS_FOR_FRANKENPLOT.out.tbi                        // channel: [ val(meta), path(tbi) ]
+    hetsnps_vcf                    = PREPARE_HETSNPS_FOR_FRANKENPLOT.out.vcf                        // channel: [ val(meta), path(vcf) ]
     hs_metrics                     = QC_ALIGNMENT.out.hs_metrics                                    // channel: [ val(meta), path(metrics) ]
     jumble_cns                     = CALL_CNVS.out.jumble_cns                                       // channel: [ val(meta), path(cns) ]
     multiple_metrics               = QC_ALIGNMENT.out.multiple_metrics                              // channel: [ val(meta), path(metrics) ]
