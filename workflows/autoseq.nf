@@ -144,7 +144,7 @@ workflow AUTOSEQ {
         )
 
         ch_aligned_bam = UMI_PROCESSING.out.mappedconsensusbam
-            .join(SAMTOOLS_INDEX.out.bai)
+            .join(SAMTOOLS_INDEX.out.index)
 
     } else {
 
@@ -171,8 +171,6 @@ workflow AUTOSEQ {
         ch_dict,
         ch_interval_list_slopped20
     )
-
-    ch_versions = ch_versions.mix(QC_ALIGNMENT.out.versions)
 
     //
     // SUBWORKFLOW: Somatic SNV and INDELs Calling

@@ -14,8 +14,6 @@ workflow QC_ALIGNMENT {
 
     main:
 
-    ch_versions = Channel.empty()
-
     //
     // MODULE: Collect BAM metrics with Picard
     //
@@ -25,8 +23,6 @@ workflow QC_ALIGNMENT {
         ch_genome_fasta,
         ch_genome_fai
     )
-
-    ch_versions = ch_versions.mix(PICARD_COLLECTMULTIPLEMETRICS.out.versions.first())
 
     ch_bam = ch_input_bam
         .combine(ch_interval_list)
@@ -43,10 +39,9 @@ workflow QC_ALIGNMENT {
         ch_bam,
         ch_genome_fasta,
         ch_genome_fai,
-        ch_genome_dict
+        ch_genome_dict,
+        [[], []]
     )
-
-    ch_versions = ch_versions.mix(PICARD_COLLECTHSMETRICS.out.versions.first())
 
     //
     // MODULE: Collect BAM metrics with Samtools
@@ -60,6 +55,5 @@ workflow QC_ALIGNMENT {
     multiple_metrics = PICARD_COLLECTMULTIPLEMETRICS.out.metrics
     hs_metrics       = PICARD_COLLECTHSMETRICS.out.metrics
     flagstat         = SAMTOOLS_FLAGSTAT.out.flagstat
-    versions         = ch_versions.mix(PICARD_COLLECTMULTIPLEMETRICS.out.versions.first())
 
 }

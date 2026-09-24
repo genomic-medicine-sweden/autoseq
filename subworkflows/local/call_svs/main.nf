@@ -53,7 +53,7 @@ workflow CALL_SVS {
     )
 
     ch_targeted_bam = GRIDSS_EXTRACTOVERLAPPINGFRAGMENTS.out.bam
-        .join(SAMTOOLS_INDEX.out.bai)
+        .join(SAMTOOLS_INDEX.out.index)
 
     //
     // GRIDSS: Preprocess step
