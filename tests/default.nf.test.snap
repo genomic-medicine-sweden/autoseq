@@ -1,7 +1,7 @@
 {
     "test profile - paired tumor-normal": {
         "content": [
-            58,
+            59,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -77,6 +77,9 @@
                 },
                 "PICARD_COLLECTMULTIPLEMETRICS": {
                     "picard": "3.3.0"
+                },
+                "PREPARE_HETSNPS_FOR_FRANKENPLOT": {
+                    "prepare_hetsnps_for_frankenplot": "prepare_hetsnps_for_frankenplot.py 1.0.0"
                 },
                 "PURECN_RUN": {
                     "PureCN": "2.12.0"
@@ -170,6 +173,8 @@
                 "snvs/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
+                "snvs/germline/TUMOR.hetsnps.vcf.gz",
+                "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
                 "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz",
                 "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz.tbi",
@@ -229,6 +234,10 @@
                     "52b988e94f0b29a95e76ba24a654ac5c"
                 ],
                 [
+                    "TUMOR.hetsnps.vcf.gz",
+                    "81c20457e174fdb5a65ddd5b4060f126"
+                ],
+                [
                     "TUMOR_NORMAL-all.somatic.vcf.gz",
                     "15d5903edd6e671a148453861f88552f"
                 ],
@@ -262,7 +271,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-24T12:33:10.488500703",
+        "timestamp": "2026-09-21T22:48:42.402046596",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -270,7 +279,7 @@
     },
     "test profile - paired tumor-normal - stub": {
         "content": [
-            58,
+            59,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -346,6 +355,9 @@
                 },
                 "PICARD_COLLECTMULTIPLEMETRICS": {
                     "picard": "3.3.0"
+                },
+                "PREPARE_HETSNPS_FOR_FRANKENPLOT": {
+                    "prepare_hetsnps_for_frankenplot": "prepare_hetsnps_for_frankenplot.py 1.0.0"
                 },
                 "PURECN_RUN": {
                     "PureCN": "2.12.0"
@@ -438,6 +450,8 @@
                 "snvs/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
+                "snvs/germline/TUMOR.hetsnps.vcf.gz",
+                "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
                 "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz",
                 "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz.tbi",
@@ -462,7 +476,7 @@
                 "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-24T12:33:54.465939799",
+        "timestamp": "2026-09-21T22:53:30.453637182",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
