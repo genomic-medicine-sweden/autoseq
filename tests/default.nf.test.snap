@@ -35,6 +35,9 @@
                 "GATK4_GETPILEUPSUMMARIES_TUMOR": {
                     "gatk4": "4.7.0.0"
                 },
+                "GATK4_HAPLOTYPECALLER": {
+                    "gatk4": "4.7.0.0"
+                },
                 "GATK4_LEARNREADORIENTATIONMODEL": {
                     "gatk4": "4.7.0.0"
                 },
@@ -262,7 +265,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-15T16:18:19.130316797",
+        "timestamp": "2026-09-24T10:59:56.94915528",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -302,6 +305,9 @@
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_TUMOR": {
+                    "gatk4": "4.7.0.0"
+                },
+                "GATK4_HAPLOTYPECALLER": {
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_LEARNREADORIENTATIONMODEL": {
@@ -462,7 +468,7 @@
                 "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-15T16:19:12.544958581",
+        "timestamp": "2026-09-24T11:00:46.157145326",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

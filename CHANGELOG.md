@@ -58,6 +58,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #110 ](https://github.com/genomic-medicine-sweden/autoseq/pull/110) Moved SNV outputs from `variants/` to `snvs/` and flattened the per-caller subdirectories, updating `docs/output.md` and the pipeline nf-test snapshots.
 - [ #112 ](https://github.com/genomic-medicine-sweden/autoseq/pull/112) Updated the nf-core `utils_nextflow_pipeline` and `utils_nfcore_pipeline` subworkflows, so that `dumpParametersToJSON` serialises `Path`, `Duration`, `MemoryUnit` and `VersionNumber` params explicitly and resolves `outdir` as either a `Path` or a `String`.
 - [ #113 ](https://github.com/genomic-medicine-sweden/autoseq/pull/113) Updated the nf-core `bwa/index`, `bwa/mem`, `bwamem2/index`, `bwamem2/mem` and `gatk4/markduplicates` modules and the `fastq_create_umi_consensus_fgbio` subworkflow. These modules now report their versions through the `versions` topic, so `ALIGNMENT` and `PREPARE_REFERENCES` no longer emit a `versions` channel.
+- [ #117 ](https://github.com/genomic-medicine-sweden/autoseq/pull/117) Updated the nf-core `gatk4/haplotypecaller` module to GATK 4.7.0.0 and the `versions` topic.
 
 ### `Fixed`
 
