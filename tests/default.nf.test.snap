@@ -7,8 +7,9 @@
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
                 },
                 "ANNOTATE_VEP": {
-                    "ensemblvep": 115.2,
-                    "tabix": 1.21
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "BWAMEM2_INDEX": {
                     "bwamem2": "2.2.1"
@@ -16,6 +17,11 @@
                 "BWAMEM2_MEM": {
                     "bwamem2": "2.2.1",
                     "samtools": "1.22.1"
+                },
+                "ENSEMBLVEP_VEP": {
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "FASTP": {
                     "fastp": "0.24.0"
@@ -285,8 +291,9 @@
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
                 },
                 "ANNOTATE_VEP": {
-                    "ensemblvep": 115.2,
-                    "tabix": 1.21
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "BWAMEM2_INDEX": {
                     "bwamem2": "2.2.1"
@@ -294,6 +301,11 @@
                 "BWAMEM2_MEM": {
                     "bwamem2": "2.2.1",
                     "samtools": "1.22.1"
+                },
+                "ENSEMBLVEP_VEP": {
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "FASTP": {
                     "fastp": "0.24.0"
