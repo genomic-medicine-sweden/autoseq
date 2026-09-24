@@ -67,10 +67,10 @@
                     "samtools": 1.21
                 },
                 "PASSFILTER_FOR_MUTECT2": {
-                    "bcftools": 1.22
+                    "bcftools": "1.23.1"
                 },
                 "PASSFILTER_FOR_SAGE": {
-                    "bcftools": 1.22
+                    "bcftools": "1.23.1"
                 },
                 "PICARD_COLLECTHSMETRICS": {
                     "picard": "3.3.0"
@@ -262,7 +262,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-15T16:18:19.130316797",
+        "timestamp": "2026-09-24T12:33:10.488500703",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -336,10 +336,10 @@
                     "samtools": 1.21
                 },
                 "PASSFILTER_FOR_MUTECT2": {
-                    "bcftools": 1.22
+                    "bcftools": "1.23.1"
                 },
                 "PASSFILTER_FOR_SAGE": {
-                    "bcftools": 1.22
+                    "bcftools": "1.23.1"
                 },
                 "PICARD_COLLECTHSMETRICS": {
                     "picard": "3.3.0"
@@ -462,7 +462,7 @@
                 "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-15T16:19:12.544958581",
+        "timestamp": "2026-09-24T12:33:54.465939799",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
