@@ -57,6 +57,9 @@
                 "GATK4_GETPILEUPSUMMARIES_TUMOR": {
                     "gatk4": "4.7.0.0"
                 },
+                "GATK4_HAPLOTYPECALLER": {
+                    "gatk4": "4.7.0.0"
+                },
                 "GATK4_LEARNREADORIENTATIONMODEL": {
                     "gatk4": "4.7.0.0"
                 },
@@ -363,6 +366,9 @@
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_TUMOR": {
+                    "gatk4": "4.7.0.0"
+                },
+                "GATK4_HAPLOTYPECALLER": {
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_LEARNREADORIENTATIONMODEL": {
