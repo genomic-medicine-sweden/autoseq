@@ -112,9 +112,10 @@ workflow CALL_SOMATIC_SNVS {
         params.genome,
         "homo_sapiens",
         params.ensemblvep_version,
-        ch_ensembl_vep_cache.collect{it -> it[1]},
+        ch_ensembl_vep_cache.collect(),
         ch_fasta,
-        []
+        [],
+        [[], []] // no GTF, annotate from the cache
     )
 
 
@@ -124,7 +125,6 @@ workflow CALL_SOMATIC_SNVS {
     versions = versions.mix(PASSFILTER_FOR_MUTECT2.out.versions)
     versions = versions.mix(PASSFILTER_FOR_SAGE.out.versions)
     versions = versions.mix(SOMATIC_VCFMERGE.out.versions)
-    versions = versions.mix(ANNOTATE_VEP.out.versions)
 
 
     emit:

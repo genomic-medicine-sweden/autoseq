@@ -7,8 +7,9 @@
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
                 },
                 "ANNOTATE_VEP": {
-                    "ensemblvep": 115.2,
-                    "tabix": 1.21
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "BAM2FASTQ_POST": {
                     "samtools": 1.24
@@ -32,6 +33,11 @@
                 },
                 "CAT_FASTQ": {
                     "cat": 9.5
+                },
+                "ENSEMBLVEP_VEP": {
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "FASTP": {
                     "fastp": "0.24.0"
@@ -292,7 +298,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-15T16:21:25.433869498",
+        "timestamp": "2026-09-24T13:25:02.591630703",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -306,8 +312,9 @@
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
                 },
                 "ANNOTATE_VEP": {
-                    "ensemblvep": 115.2,
-                    "tabix": 1.21
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "BAM2FASTQ_POST": {
                     "samtools": 1.24
@@ -331,6 +338,11 @@
                 },
                 "CAT_FASTQ": {
                     "cat": 9.5
+                },
+                "ENSEMBLVEP_VEP": {
+                    "ensemblvep": 116.1,
+                    "perl-math-cdf": 0.1,
+                    "tabix": "1.23.1"
                 },
                 "FASTP": {
                     "fastp": "0.24.0"
@@ -522,7 +534,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-15T16:22:28.571870246",
+        "timestamp": "2026-09-24T13:26:01.511703848",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
