@@ -13,9 +13,12 @@
                 "BCFTOOLS_MERGE": {
                     "bcftools": "1.23.1"
                 },
+                "BWAMEM2_INDEX": {
+                    "bwamem2": "2.2.1"
+                },
                 "BWAMEM2_MEM": {
                     "bwamem2": "2.2.1",
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "FASTP": {
                     "fastp": "0.24.0"
@@ -66,7 +69,7 @@
                     "Jumble": "0.5.5"
                 },
                 "MARKDUPLICATES": {
-                    "gatk4": "4.6.1.0",
+                    "gatk4": "4.7.0.0",
                     "samtools": 1.21
                 },
                 "PASSFILTER_FOR_MUTECT2": {
@@ -291,9 +294,12 @@
                 "BCFTOOLS_MERGE": {
                     "bcftools": "1.23.1"
                 },
+                "BWAMEM2_INDEX": {
+                    "bwamem2": "2.2.1"
+                },
                 "BWAMEM2_MEM": {
                     "bwamem2": "2.2.1",
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "FASTP": {
                     "fastp": "0.24.0"
@@ -344,7 +350,7 @@
                     "Jumble": "0.5.5"
                 },
                 "MARKDUPLICATES": {
-                    "gatk4": "4.6.1.0",
+                    "gatk4": "4.7.0.0",
                     "samtools": 1.21
                 },
                 "PASSFILTER_FOR_MUTECT2": {
