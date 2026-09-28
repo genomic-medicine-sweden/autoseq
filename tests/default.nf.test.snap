@@ -24,7 +24,7 @@
                     "tabix": "1.23.1"
                 },
                 "FASTP": {
-                    "fastp": "0.24.0"
+                    "fastp": "1.3.6"
                 },
                 "FASTQC": {
                     "fastqc": "0.12.1"
@@ -308,7 +308,7 @@
                     "tabix": "1.23.1"
                 },
                 "FASTP": {
-                    "fastp": "0.24.0"
+                    "fastp": "1.3.6"
                 },
                 "FASTQC": {
                     "fastqc": "0.12.1"
