@@ -33,9 +33,10 @@ workflow CALL_GERMLINE_SNVS {
             params.genome,
             params.vep_species,  // Assuming human genome; adjust as needed
             params.ensemblvep_version,
-            ch_vep_cache.collect{it -> it[1]},
+            ch_vep_cache.collect(),
             ch_genome_fasta,
-            []
+            [],
+            [[], []] // no GTF, annotate from the cache
         )
 
     emit:
