@@ -159,6 +159,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     dpyd_csv                       = AUTOSEQ.out.dpyd_csv                       // channel: [ val(meta), path(csv) ]
     dpyd_json                      = AUTOSEQ.out.dpyd_json                      // channel: [ val(meta), path(json) ]
     flagstat                       = AUTOSEQ.out.flagstat                       // channel: [ val(meta), path(flagstat) ]
+    frankenplot_html               = AUTOSEQ.out.frankenplot_html               // channel: [ val(meta), path(html) ]
     germline_taf_tbi               = AUTOSEQ.out.germline_taf_tbi               // channel: [ val(meta), path(tbi) ]
     germline_taf_vcf               = AUTOSEQ.out.germline_taf_vcf               // channel: [ val(meta), path(vcf) ]
     germline_tbi                   = AUTOSEQ.out.germline_tbi                   // channel: [ val(meta), path(tbi) ]
@@ -333,6 +334,7 @@ workflow {
     alignment        = ch_alignment                                          // channel: [ val(meta), path(file) ]
     cnv              = ch_cnv                                                // channel: [ val(meta), path(file) ]
     dpyd             = ch_dpyd                                               // channel: [ val(meta), path(file) ]
+    frankenplot      = GENOMICMEDICINESWEDEN_AUTOSEQ.out.frankenplot_html    // channel: [ val(meta), path(html) ]
     multiqc_report   = GENOMICMEDICINESWEDEN_AUTOSEQ.out.multiqc_report      // channel: /path/to/multiqc_report.html
     purecn           = ch_purecn                                             // channel: [ val(meta), path(file) ]
     qc_contamination = GENOMICMEDICINESWEDEN_AUTOSEQ.out.contamination_table // channel: [ val(meta), path(table) ]
@@ -354,6 +356,9 @@ output {
     }
     dpyd {
         path { "dpyd" }
+    }
+    frankenplot {
+        path { "frankenplot" }
     }
     multiqc_report {
         path { "multiqc" }
