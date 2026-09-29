@@ -54,12 +54,6 @@ output:
         Index of the merged VCF
         Structure: [ val(meta), path(tbi) ]
       pattern: "*.vcf.gz.tbi"
-  - versions:
-      type: file
-      description: |
-        File containing software versions
-        Structure: [ path(versions.yml) ]
-      pattern: "versions.yml"
 authors:
   - "@imsarath"
 maintainers:

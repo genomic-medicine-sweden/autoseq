@@ -34,6 +34,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #103 ](https://github.com/genomic-medicine-sweden/autoseq/pull/103) Added the `PREPARE_HETSNPS_FOR_FRANKENPLOT` local module and its `prepare_hetsnps_for_frankenplot.py` script, which filters a germline VCF to heterozygous SNVs and appends a sample column with BAM-derived `GT`, `DP` and `AD` for Frankenplot BAF plotting, with nf-test and `meta.yml`.
 - [ #109 ](https://github.com/genomic-medicine-sweden/autoseq/pull/109) Added the `JUMBLE_FRANKENPLOT` module to render the Frankenplot HTML genome report, with nf-test and `meta.yml`.
 - [ #115 ](https://github.com/genomic-medicine-sweden/autoseq/pull/115) Integrated the `PREPARE_HETSNPS_FOR_FRANKENPLOT` module into the `AUTOSEQ` workflow, publishing the heterozygous SNP VCF to `snvs/germline`.
+- [ #114 ](https://github.com/genomic-medicine-sweden/autoseq/pull/114) Integrated the `ANNOTATE_GERMLINE_TAF` subworkflow into the `AUTOSEQ` workflow, publishing the tumor allele fraction VCF to `snvs/germline`.
 
 ### `Changed`
 
@@ -61,6 +62,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #113 ](https://github.com/genomic-medicine-sweden/autoseq/pull/113) Updated the nf-core `bwa/index`, `bwa/mem`, `bwamem2/index`, `bwamem2/mem` and `gatk4/markduplicates` modules and the `fastq_create_umi_consensus_fgbio` subworkflow. These modules now report their versions through the `versions` topic, so `ALIGNMENT` and `PREPARE_REFERENCES` no longer emit a `versions` channel.
 - [ #120 ](https://github.com/genomic-medicine-sweden/autoseq/pull/120) Updated the nf-core `ensemblvep/vep` module to VEP 116.1, the optional GTF annotation source and the `versions` topic.
 - [ #121 ](https://github.com/genomic-medicine-sweden/autoseq/pull/121) Updated the nf-core `fastp` module to fastp 1.3.6 and the `versions` topic.
+- [ #117 ](https://github.com/genomic-medicine-sweden/autoseq/pull/117) Updated the nf-core `gatk4/haplotypecaller` module to GATK 4.7.0.0 and the `versions` topic.
 - [ #118 ](https://github.com/genomic-medicine-sweden/autoseq/pull/118) Updated the nf-core `picard/collecthsmetrics`, `picard/collectmultiplemetrics`, `samtools/flagstat` and `samtools/index` modules to Picard 3.5.0, samtools 1.24 and the `versions` topic, so `QC_ALIGNMENT` no longer emits a `versions` channel.
 
 ### `Fixed`

@@ -1,7 +1,7 @@
 {
     "test_umi profile - paired tumor-normal": {
         "content": [
-            79,
+            82,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -16,6 +16,9 @@
                 },
                 "BAM2FASTQ_PRE": {
                     "samtools": 1.24
+                },
+                "BCFTOOLS_MERGE": {
+                    "bcftools": "1.23.1"
                 },
                 "BWAMEM2_INDEX": {
                     "bwamem2": "2.2.1"
@@ -57,10 +60,16 @@
                 "GATK4_FILTERMUTECTCALLS": {
                     "gatk4": "4.7.0.0"
                 },
+                "GATK4_GENOTYPEGVCFS": {
+                    "gatk4": "4.7.0.0"
+                },
                 "GATK4_GETPILEUPSUMMARIES_NORMAL": {
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_TUMOR": {
+                    "gatk4": "4.7.0.0"
+                },
+                "GATK4_HAPLOTYPECALLER": {
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_LEARNREADORIENTATIONMODEL": {
@@ -215,6 +224,8 @@
                 "snvs/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
+                "snvs/germline/TUMOR-all.germline.taf.vcf.gz",
+                "snvs/germline/TUMOR-all.germline.taf.vcf.gz.tbi",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
@@ -276,6 +287,10 @@
                     "79185a569cc50a38a25364bf94883da6"
                 ],
                 [
+                    "TUMOR-all.germline.taf.vcf.gz",
+                    "d41d8cd98f00b204e9800998ecf8427e"
+                ],
+                [
                     "TUMOR.hetsnps.vcf.gz",
                     "a1cae2cee3859d4f49dc6b173f9e8cbb"
                 ],
@@ -313,7 +328,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-21T23:10:47.891679076",
+        "timestamp": "2026-09-24T15:23:37.881076314",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -321,7 +336,7 @@
     },
     "test_umi profile - paired tumor-normal - stub": {
         "content": [
-            79,
+            82,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -336,6 +351,9 @@
                 },
                 "BAM2FASTQ_PRE": {
                     "samtools": 1.24
+                },
+                "BCFTOOLS_MERGE": {
+                    "bcftools": "1.23.1"
                 },
                 "BWAMEM2_INDEX": {
                     "bwamem2": "2.2.1"
@@ -377,10 +395,16 @@
                 "GATK4_FILTERMUTECTCALLS": {
                     "gatk4": "4.7.0.0"
                 },
+                "GATK4_GENOTYPEGVCFS": {
+                    "gatk4": "4.7.0.0"
+                },
                 "GATK4_GETPILEUPSUMMARIES_NORMAL": {
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_GETPILEUPSUMMARIES_TUMOR": {
+                    "gatk4": "4.7.0.0"
+                },
+                "GATK4_HAPLOTYPECALLER": {
                     "gatk4": "4.7.0.0"
                 },
                 "GATK4_LEARNREADORIENTATIONMODEL": {
@@ -534,6 +558,8 @@
                 "snvs/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
+                "snvs/germline/TUMOR-all.germline.taf.vcf.gz",
+                "snvs/germline/TUMOR-all.germline.taf.vcf.gz.tbi",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
@@ -560,7 +586,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-21T23:17:05.897478978",
+        "timestamp": "2026-09-24T15:24:35.132395679",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
