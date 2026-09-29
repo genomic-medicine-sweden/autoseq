@@ -37,6 +37,7 @@ workflow CALL_CNVS {
     )
 
     emit:
+    bins_csv            = JUMBLE_RUN.out.bins_csv
     jumble_cns          = JUMBLE_RUN.out.cns
     cnr                 = JUMBLE_RUN.out.cnr
     seg                 = JUMBLE_RUN.out.seg
