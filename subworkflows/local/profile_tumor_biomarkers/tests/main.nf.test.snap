@@ -216,10 +216,18 @@
                 ]
             ],
             [
-                
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.frankenplot.html"
+                ]
             ]
         ],
-        "timestamp": "2026-09-29T12:51:02.271448563",
+        "timestamp": "2026-09-30T12:00:21.982039163",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
