@@ -31,6 +31,12 @@ input:
         Structure: [ val(meta), path(csv) ]
       pattern: "*.csv"
 output:
+  - bins_csv:
+      type: file
+      description: |
+        Bin-level Jumble table, used as input to the Frankenplot genome report
+        Structure: [ val(meta), path(csv) ]
+      pattern: "*.jumble.csv"
   - jumble_cns:
       type: file
       description: |

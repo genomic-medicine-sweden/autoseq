@@ -51,6 +51,7 @@ nextflow_workflow {
                     workflow.out.cns,
                     // Jumble writes per-run values into the plots and the bin-level outputs,
                     // so only their file names are asserted
+                    workflow.out.bins_csv.collect { meta, csv -> [meta, file(csv).name] },
                     workflow.out.cnr.collect { meta, cnr -> [meta, file(cnr).name] },
                     workflow.out.seg.collect { meta, seg -> [meta, file(seg).name] },
                     workflow.out.profile_bedgraph.collect { meta, bedgraph -> [meta, file(bedgraph).name] },
