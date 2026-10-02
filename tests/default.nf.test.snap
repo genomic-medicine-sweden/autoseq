@@ -1,7 +1,7 @@
 {
     "test profile - paired tumor-normal": {
         "content": [
-            62,
+            63,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -73,6 +73,9 @@
                 },
                 "GRIPSS_SOMATIC": {
                     "gripss": 2.4
+                },
+                "JUMBLE_FRANKENPLOT": {
+                    "Jumble": "0.5.6"
                 },
                 "JUMBLE_RUN": {
                     "Jumble": "0.5.5"
@@ -154,6 +157,8 @@
                 "dpyd/NORMAL.DPYD.json",
                 "dpyd/TUMOR.DPYD.csv",
                 "dpyd/TUMOR.DPYD.json",
+                "frankenplot",
+                "frankenplot/TUMOR.frankenplot.html",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
@@ -292,7 +297,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-24T15:07:18.906051108",
+        "timestamp": "2026-09-30T12:55:27.035024944",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -300,7 +305,7 @@
     },
     "test profile - paired tumor-normal - stub": {
         "content": [
-            62,
+            63,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -372,6 +377,9 @@
                 },
                 "GRIPSS_SOMATIC": {
                     "gripss": 2.4
+                },
+                "JUMBLE_FRANKENPLOT": {
+                    "Jumble": "0.5.6"
                 },
                 "JUMBLE_RUN": {
                     "Jumble": "0.5.5"
@@ -453,6 +461,8 @@
                 "dpyd/NORMAL.DPYD.json",
                 "dpyd/TUMOR.DPYD.csv",
                 "dpyd/TUMOR.DPYD.json",
+                "frankenplot",
+                "frankenplot/TUMOR.frankenplot.html",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
@@ -514,7 +524,7 @@
                 "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-24T15:08:01.361685199",
+        "timestamp": "2026-09-30T12:56:21.216344209",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
