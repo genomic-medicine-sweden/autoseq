@@ -15,16 +15,18 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     //
     // MODULE: purecn
     //
-    ch_purecn_input = ch_cnr
-        .combine(ch_seg)
-        .combine(ch_mutect2_vcf)
-        .map { cnr_meta, cnr, _seg_meta, seg, _vcf_meta, vcf ->
-            def meta = cnr_meta
-            def tcnr = cnr
-            def tseg = seg
-            def tvcf = vcf
 
-            return tuple(meta, tcnr, tseg, tvcf)
+    // The VCF carries the case meta, so it is joined to the tumor CNR/SEG on `case_id`.
+    // `remainder` keeps the tumor when no VCF is given, and the VCF-only entries are dropped
+    def ch_purecn_input = ch_cnr
+        .join(ch_seg)
+        .map { meta, cnr, seg ->
+            return [meta.case_id, meta, cnr, seg]
+        }
+        .join(ch_mutect2_vcf.map { meta, vcf -> [meta.case_id, vcf] }, remainder: true)
+        .filter { row -> row[1] != null }
+        .map { _case_id, meta, cnr, seg, vcf ->
+            return [meta, cnr, seg, vcf ?: []]
         }
 
     def purecn_genome = params.genome.equals("GRCh37") ? 'hg19' : 'hg38'
