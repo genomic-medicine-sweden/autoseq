@@ -188,7 +188,7 @@
                 "dpyd/TEST.TUMOR.DPYD.csv",
                 "dpyd/TEST.TUMOR.DPYD.json",
                 "frankenplot",
-                "frankenplot/TUMOR.frankenplot.html",
+                "frankenplot/TEST.frankenplot.html",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
@@ -327,7 +327,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-30T12:59:07.128730488",
+        "timestamp": "2026-10-06T12:13:27.101428823",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -522,7 +522,7 @@
                 "dpyd/TEST.TUMOR.DPYD.csv",
                 "dpyd/TEST.TUMOR.DPYD.json",
                 "frankenplot",
-                "frankenplot/TUMOR.frankenplot.html",
+                "frankenplot/TEST.frankenplot.html",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
@@ -584,7 +584,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-30T13:00:24.557113187",
+        "timestamp": "2026-10-06T12:14:44.730910145",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
