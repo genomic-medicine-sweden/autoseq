@@ -348,11 +348,11 @@ workflow AUTOSEQ {
         ch_tumor_seg,
         CALL_SOMATIC_SNVS.out.mutect2_unfiltered_vcf,
         ch_aligned_bam,
+        ANNOTATE_GERMLINE_TAF.out.germline_taf_vcf,
+        PREPARE_HETSNPS_FOR_FRANKENPLOT.out.vcf,
         CALL_CNVS.out.jumble_cns,
         CALL_CNVS.out.bins_csv,
         CALL_SOMATIC_SNVS.out.vep_vcf,
-        ANNOTATE_GERMLINE_TAF.out.germline_taf_vcf,
-        PREPARE_HETSNPS_FOR_FRANKENPLOT.out.vcf,
     )
 
     //

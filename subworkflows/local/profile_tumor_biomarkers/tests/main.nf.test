@@ -43,7 +43,12 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
                     ]
                 )
-                input[4] = channel.of(
+                input[4] = channel.empty()
+                input[5] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true)
+                ])
+                input[6] = channel.of(
                     [
                         [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.cns', checkIfExists: true)
@@ -53,7 +58,7 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.cns', checkIfExists: true)
                     ]
                 )
-                input[5] = channel.of(
+                input[7] = channel.of(
                     [
                         [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.jumble.csv', checkIfExists: true)
@@ -63,12 +68,7 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.jumble.csv', checkIfExists: true)
                     ]
                 )
-                input[6] = channel.empty()
-                input[7] = channel.empty()
-                input[8] = channel.of([
-                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true)
-                ])
+                input[8] = channel.empty()
                 """
             }
         }
@@ -114,16 +114,16 @@ nextflow_workflow {
                     file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
                 ])
-                input[4] = channel.of([
+                input[4] = channel.empty()
+                input[5] = channel.empty()
+                input[6] = channel.of([
                     [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.cns', checkIfExists: true)
                 ])
-                input[5] = channel.of([
+                input[7] = channel.of([
                     [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.jumble.csv', checkIfExists: true)
                 ])
-                input[6] = channel.empty()
-                input[7] = channel.empty()
                 input[8] = channel.empty()
                 """
             }
@@ -177,7 +177,12 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
                     ]
                 )
-                input[4] = channel.of(
+                input[4] = channel.empty()
+                input[5] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true)
+                ])
+                input[6] = channel.of(
                     [
                         [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.cns', checkIfExists: true)
@@ -187,7 +192,7 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.cns', checkIfExists: true)
                     ]
                 )
-                input[5] = channel.of(
+                input[7] = channel.of(
                     [
                         [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.jumble.csv', checkIfExists: true)
@@ -197,12 +202,7 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.jumble.csv', checkIfExists: true)
                     ]
                 )
-                input[6] = channel.empty()
-                input[7] = channel.empty()
-                input[8] = channel.of([
-                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true)
-                ])
+                input[8] = channel.empty()
                 """
             }
         }
