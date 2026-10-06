@@ -10,7 +10,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     ch_seg                  // channel: [mandatory] [ val(meta), path(seg) ] jumble seg
     ch_mutect2_vcf          // channel: [optional]  [ val(meta), path(vcf) ] unfiltered mutect2 vcf
     ch_bam_bai              // channel: [mandatory] [ val(meta), path(bam), path(bai) ]
-    ch_jumble_cns           // channel: [mandatory] [ val(meta), path(cns) ] jumble cns of tumor and normal samples
+    ch_jumble_cns           // channel: [mandatory] [ val(meta), path(cns) ] jumble cns
     ch_jumble_csv           // channel: [mandatory] [ val(meta), path(csv) ] jumble bin-level table of tumor and normal samples
     ch_somatic_vcf          // channel: [optional]  [ val(meta), path(vcf) ] VEP annotated somatic vcf
     ch_germline_vcf         // channel: [optional]  [ val(meta), path(vcf) ] VEP annotated germline vcf with tumor allele fraction

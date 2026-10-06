@@ -352,7 +352,7 @@ workflow AUTOSEQ {
         CALL_CNVS.out.bins_csv,
         CALL_SOMATIC_SNVS.out.vep_vcf,
         ANNOTATE_GERMLINE_TAF.out.germline_taf_vcf,
-        PREPARE_HETSNPS_FOR_FRANKENPLOT.out.vcf
+        PREPARE_HETSNPS_FOR_FRANKENPLOT.out.vcf,
     )
 
     //
