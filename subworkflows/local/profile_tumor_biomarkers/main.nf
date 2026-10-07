@@ -21,12 +21,12 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     def ch_purecn_input = ch_cnr
         .join(ch_seg)
         .map { meta, cnr, seg ->
-            return [meta.case_id, meta, cnr, seg]
+            [meta.case_id, meta, cnr, seg]
         }
         .join(ch_mutect2_vcf.map { meta, vcf -> [meta.case_id, vcf] }, remainder: true)
         .filter { row -> row[1] != null }
         .map { _case_id, meta, cnr, seg, vcf ->
-            return [meta, cnr, seg, vcf ?: []]
+            [meta, cnr, seg, vcf ?: []]
         }
 
     def purecn_genome = params.genome.equals("GRCh37") ? 'hg19' : 'hg38'
