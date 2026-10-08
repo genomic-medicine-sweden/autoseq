@@ -16,8 +16,9 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     // MODULE: purecn
     //
 
-    // The VCF carries the case meta, so it is joined to the tumor CNR/SEG on `case_id`.
-    // `remainder` keeps the tumor when no VCF is given, and the VCF-only entries are dropped
+    // The VCF carries the case meta, so it is joined to the tumor [meta, cnr, seg] on `case_id`.
+    // `remainder: true` preserves the tumor tuple [meta, cnr, seg] when no VCF exists (vcf -> []),
+    // and the filter drops VCF-only rows with no matching tumor CNR/SEG.
     def ch_purecn_input = ch_cnr
         .join(ch_seg)
         .map { meta, cnr, seg ->
