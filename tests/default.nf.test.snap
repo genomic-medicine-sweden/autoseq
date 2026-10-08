@@ -193,6 +193,8 @@
                 "snvs/germline/TUMOR.hetsnps.vcf.gz",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
+                "snvs/somatic/TUMOR.sage.somatic.vcf.gz",
+                "snvs/somatic/TUMOR.sage.somatic.vcf.gz.tbi",
                 "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz",
                 "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz.tbi",
                 "snvs/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz",
@@ -200,9 +202,6 @@
                 "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz",
                 "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
                 "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi",
-                "snvs/somatic/somatic",
-                "snvs/somatic/somatic/TUMOR.sage.somatic.vcf.gz",
-                "snvs/somatic/somatic/TUMOR.sage.somatic.vcf.gz.tbi",
                 "svs",
                 "svs/germline",
                 "svs/germline/TUMOR.gripss.filtered.germline.vcf.gz",
@@ -259,6 +258,10 @@
                     "81c20457e174fdb5a65ddd5b4060f126"
                 ],
                 [
+                    "TUMOR.sage.somatic.vcf.gz",
+                    "b2181f9945a8d84ed2a8e40b94a9d675"
+                ],
+                [
                     "TUMOR_NORMAL-all.somatic.vcf.gz",
                     "15d5903edd6e671a148453861f88552f"
                 ],
@@ -269,10 +272,6 @@
                 [
                     "TUMOR_NORMAL_mutect2_filtered.vcf.gz",
                     "673d3ee2ad91e129bf8137aeeba1cd04"
-                ],
-                [
-                    "TUMOR.sage.somatic.vcf.gz",
-                    "b2181f9945a8d84ed2a8e40b94a9d675"
                 ],
                 [
                     "TUMOR.gripss.filtered.germline.vcf.gz",
@@ -292,7 +291,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-24T15:07:18.906051108",
+        "timestamp": "2026-10-08T13:22:18.66967323",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -491,6 +490,8 @@
                 "snvs/germline/TUMOR.hetsnps.vcf.gz",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
+                "snvs/somatic/TUMOR.sage.somatic.vcf.gz",
+                "snvs/somatic/TUMOR.sage.somatic.vcf.gz.tbi",
                 "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz",
                 "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz.tbi",
                 "snvs/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz",
@@ -498,9 +499,6 @@
                 "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz",
                 "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
                 "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi",
-                "snvs/somatic/somatic",
-                "snvs/somatic/somatic/TUMOR.sage.somatic.vcf.gz",
-                "snvs/somatic/somatic/TUMOR.sage.somatic.vcf.gz.tbi",
                 "svs",
                 "svs/germline",
                 "svs/germline/NORMAL.gripss.filtered.germline.vcf.gz",
@@ -514,7 +512,7 @@
                 "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-24T15:08:01.361685199",
+        "timestamp": "2026-10-08T13:23:10.190611434",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
