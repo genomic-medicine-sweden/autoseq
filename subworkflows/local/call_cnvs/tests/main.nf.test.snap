@@ -2,6 +2,26 @@
     "tumor and normal samples - stub": {
         "content": [
             {
+                "bins_csv": [
+                    [
+                        {
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
+                        },
+                        "NORMAL.jumble.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR.jumble.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
                 "cnr": [
                     [
                         {
@@ -144,9 +164,9 @@
                 ]
             }
         ],
-        "timestamp": "2026-08-10T13:58:41.384568163",
+        "timestamp": "2026-09-29T12:30:14.296169603",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     },
@@ -210,6 +230,26 @@
                         "sample_type": "tumor"
                     },
                     "TUMOR_ann.cns:md5,27d3bbef1a64909bb9177a7ccfec1c4b"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "NORMAL",
+                        "case_id": "TEST",
+                        "sample_name": "NORMAL",
+                        "sample_type": "normal"
+                    },
+                    "NORMAL.jumble.csv"
+                ],
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.jumble.csv"
                 ]
             ],
             [
@@ -293,9 +333,9 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-08T11:43:37.618875522",
+        "timestamp": "2026-09-29T12:30:04.618221563",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     }
