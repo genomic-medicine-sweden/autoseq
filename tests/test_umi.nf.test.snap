@@ -1,7 +1,7 @@
 {
     "test_umi profile - paired tumor-normal": {
         "content": [
-            82,
+            83,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -99,6 +99,9 @@
                 "GROUPREADSBYUMI": {
                     "fgbio": "3.1.2"
                 },
+                "JUMBLE_FRANKENPLOT": {
+                    "Jumble": "0.5.6"
+                },
                 "JUMBLE_RUN": {
                     "Jumble": "0.5.5"
                 },
@@ -190,6 +193,8 @@
                 "dpyd/TEST.NORMAL.DPYD.json",
                 "dpyd/TEST.TUMOR.DPYD.csv",
                 "dpyd/TEST.TUMOR.DPYD.json",
+                "frankenplot",
+                "frankenplot/TEST.frankenplot.html",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
@@ -328,7 +333,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-24T15:23:37.881076314",
+        "timestamp": "2026-10-06T12:13:27.101428823",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -336,7 +341,7 @@
     },
     "test_umi profile - paired tumor-normal - stub": {
         "content": [
-            82,
+            83,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -434,6 +439,9 @@
                 "GROUPREADSBYUMI": {
                     "fgbio": "3.1.2"
                 },
+                "JUMBLE_FRANKENPLOT": {
+                    "Jumble": "0.5.6"
+                },
                 "JUMBLE_RUN": {
                     "Jumble": "0.5.5"
                 },
@@ -525,6 +533,8 @@
                 "dpyd/TEST.NORMAL.DPYD.json",
                 "dpyd/TEST.TUMOR.DPYD.csv",
                 "dpyd/TEST.TUMOR.DPYD.json",
+                "frankenplot",
+                "frankenplot/TEST.frankenplot.html",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
@@ -586,7 +596,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-24T15:24:35.132395679",
+        "timestamp": "2026-10-06T12:14:44.730910145",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

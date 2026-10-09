@@ -1,67 +1,131 @@
 {
-    "profile_tumor_biomarkers - with VCF ": {
+    "tumor only without VCF": {
         "content": [
             [
                 [
                     {
-                        "id": "test_sample",
-                        "tumor_id": "test_tumor"
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
                     },
-                    "test_sample_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
-                ]
-            ],
-            [
-                
-            ],
-            [
-                [
-                    {
-                        "id": "test_sample"
-                    },
-                    "test_sample.DPYD.csv:md5,4e966b6e924ce8660de4b9a0ed971f07"
+                    "TUMOR_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
                 ]
             ],
             [
                 [
                     {
-                        "id": "test_sample"
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
                     },
-                    "test_sample.DPYD.json:md5,4c63101c786af43f474ddfcf561f7ca4"
+                    "TUMOR_purecn_genes.csv:md5,a0e7fecf71a67b43f8d4a9089c906a4d"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.DPYD.csv:md5,4e966b6e924ce8660de4b9a0ed971f07"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.DPYD.json:md5,4c63101c786af43f474ddfcf561f7ca4"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.frankenplot.html"
                 ]
             ]
         ],
-        "timestamp": "2026-07-21T17:57:37.459125721",
+        "timestamp": "2026-09-29T12:51:31.640123942",
         "meta": {
-            "nf-test": "0.9.4",
-            "nextflow": "26.04.3"
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
         }
     },
-    "profile_tumor_biomarkers - stub": {
+    "paired tumor-normal - stub": {
         "content": [
             {
                 "dpyd_csv": [
                     [
                         {
-                            "id": "test_sample"
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
                         },
-                        "test_sample.DPYD.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "NORMAL.DPYD.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR.DPYD.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "dpyd_json": [
                     [
                         {
-                            "id": "test_sample"
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
                         },
-                        "test_sample.DPYD.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "NORMAL.DPYD.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR.DPYD.json:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "frankenplot_html": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR.frankenplot.html:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "purecn_csv": [
                     [
                         {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
                         },
-                        "test_sample_purecn.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "TUMOR_purecn.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "purecn_genes_csv": [
@@ -73,12 +137,14 @@
                 "purecn_pdf": [
                     [
                         {
-                            "id": "test_sample",
-                            "tumor_id": "test_tumor"
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
                         },
                         [
-                            "test_sample_purecn.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                            "test_sample_purecn_local_optima.pdf:md5,d41d8cd98f00b204e9800998ecf8427e"
+                            "TUMOR_purecn.pdf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "TUMOR_purecn_local_optima.pdf:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -87,53 +153,84 @@
                 ]
             }
         ],
-        "timestamp": "2026-07-21T17:58:13.434806387",
+        "timestamp": "2026-09-29T12:51:48.375469368",
         "meta": {
-            "nf-test": "0.9.4",
-            "nextflow": "26.04.3"
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
         }
     },
-    "profile_tumor_biomarkers - without VCF": {
+    "paired tumor-normal with VCF": {
         "content": [
             [
                 [
                     {
-                        "id": "test_sample",
-                        "tumor_id": "test_tumor"
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
                     },
-                    "test_sample_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
+                    "TUMOR_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
+                ]
+            ],
+            [
+                
+            ],
+            [
+                [
+                    {
+                        "id": "NORMAL",
+                        "case_id": "TEST",
+                        "sample_name": "NORMAL",
+                        "sample_type": "normal"
+                    },
+                    "NORMAL.DPYD.csv:md5,7ace75e81aecf36a3cd6227532b6e96a"
+                ],
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.DPYD.csv:md5,4e966b6e924ce8660de4b9a0ed971f07"
                 ]
             ],
             [
                 [
                     {
-                        "id": "test_sample",
-                        "tumor_id": "test_tumor"
+                        "id": "NORMAL",
+                        "case_id": "TEST",
+                        "sample_name": "NORMAL",
+                        "sample_type": "normal"
                     },
-                    "test_sample_purecn_genes.csv:md5,a1485ae8fc2e3aa20acb01b9489fbc18"
+                    "NORMAL.DPYD.json:md5,bc844dd3cb9083e2c914ddc8300def2c"
+                ],
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.DPYD.json:md5,4c63101c786af43f474ddfcf561f7ca4"
                 ]
             ],
             [
                 [
                     {
-                        "id": "test_sample"
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
                     },
-                    "test_sample.DPYD.csv:md5,4e966b6e924ce8660de4b9a0ed971f07"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "test_sample"
-                    },
-                    "test_sample.DPYD.json:md5,4c63101c786af43f474ddfcf561f7ca4"
+                    "TUMOR.frankenplot.html"
                 ]
             ]
         ],
-        "timestamp": "2026-07-21T17:58:01.646389351",
+        "timestamp": "2026-09-30T12:00:21.982039163",
         "meta": {
-            "nf-test": "0.9.4",
-            "nextflow": "26.04.3"
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
         }
     }
 }

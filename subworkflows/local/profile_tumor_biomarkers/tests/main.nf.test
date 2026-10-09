@@ -9,31 +9,66 @@ nextflow_workflow {
     tag "subworkflows/profile_tumor_biomarkers"
     tag "purecn"
     tag "typedpyd"
+    tag "jumble"
+    tag "jumble/frankenplot"
 
 
-    test("profile_tumor_biomarkers - with VCF ") {
+    test("paired tumor-normal with VCF") {
 
         when {
 
             workflow {
                 """
-                input[0] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true)
                 ])
-                input[1] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[1] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
                 ])
-                input[2] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[2] = channel.of([
+                    [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.mutect2_calls.vcf.gz', checkIfExists: true)
                 ])
-                input[3] = Channel.of([
-                    [ id:'test_sample' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
+                input[3] = channel.of(
+                    [
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
+                    ],
+                    [
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ]
+                )
+                input[4] = channel.empty()
+                input[5] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true)
                 ])
+                input[6] = channel.of(
+                    [
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.cns', checkIfExists: true)
+                    ],
+                    [
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.cns', checkIfExists: true)
+                    ]
+                )
+                input[7] = channel.of(
+                    [
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.jumble.csv', checkIfExists: true)
+                    ],
+                    [
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.jumble.csv', checkIfExists: true)
+                    ]
+                )
+                input[8] = channel.empty()
                 """
             }
         }
@@ -47,36 +82,49 @@ nextflow_workflow {
                     workflow.out.purecn_csv,
                     workflow.out.purecn_genes_csv,
                     workflow.out.dpyd_csv,
-                    workflow.out.dpyd_json
+                    workflow.out.dpyd_json,
+                    // The Frankenplot HTML embeds run-specific content, so only its name is asserted
+                    workflow.out.frankenplot_html.collect { meta, html -> [meta, file(html).name] }
                 ).match() }
             )
         }
     }
 
 
-    test("profile_tumor_biomarkers - without VCF") {
+    test("tumor only without VCF") {
 
         when {
 
             workflow {
                 """
-                input[0] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true)
                 ])
-                input[1] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[1] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
                 ])
-                input[2] = Channel.of([
+                input[2] = channel.of([
                     [ : ],
                     []
                 ])
-                input[3] = Channel.of([
-                    [ id:'test_sample' ],
+                input[3] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
                 ])
+                input[4] = channel.empty()
+                input[5] = channel.empty()
+                input[6] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.cns', checkIfExists: true)
+                ])
+                input[7] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.jumble.csv', checkIfExists: true)
+                ])
+                input[8] = channel.empty()
                 """
             }
         }
@@ -89,38 +137,72 @@ nextflow_workflow {
                     workflow.out.purecn_csv,
                     workflow.out.purecn_genes_csv,
                     workflow.out.dpyd_csv,
-                    workflow.out.dpyd_json
+                    workflow.out.dpyd_json,
+                    workflow.out.frankenplot_html.collect { meta, html -> [meta, file(html).name] }
                 ).match() }
             )
         }
     }
 
 
-    test("profile_tumor_biomarkers - stub") {
+    test("paired tumor-normal - stub") {
 
-        options " -stub "
+        options "-stub"
 
         when {
 
             workflow {
                 """
-                input[0] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[0] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true)
                 ])
-                input[1] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[1] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
                 ])
-                input[2] = Channel.of([
-                    [ : ],
-                    []
+                input[2] = channel.of([
+                    [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.mutect2_calls.vcf.gz', checkIfExists: true)
                 ])
-                input[3] = Channel.of([
-                    [ id:'test_sample' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
+                input[3] = channel.of(
+                    [
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
+                    ],
+                    [
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ]
+                )
+                input[4] = channel.empty()
+                input[5] = channel.of([
+                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/NORMAL_haplotypecaller.vcf.gz', checkIfExists: true)
                 ])
+                input[6] = channel.of(
+                    [
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.cns', checkIfExists: true)
+                    ],
+                    [
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.cns', checkIfExists: true)
+                    ]
+                )
+                input[7] = channel.of(
+                    [
+                        [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.jumble.csv', checkIfExists: true)
+                    ],
+                    [
+                        [ id:'NORMAL', case_id:'TEST', sample_name:'NORMAL', sample_type:'normal' ],
+                        file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.jumble.csv', checkIfExists: true)
+                    ]
+                )
+                input[8] = channel.empty()
                 """
             }
         }
