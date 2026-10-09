@@ -7,7 +7,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     take:
     ch_cnr                  // channel: [mandatory] [ val(meta), path(cnr) ] jumble cnr
     ch_seg                  // channel: [mandatory] [ val(meta), path(seg) ] jumble seg
-    ch_mutect2_vcf          // channel: [optional]  [ val(meta), path(vcf) ] unfiltered mutect2 vcf
+    ch_mutect2_vcf          // channel: [mandatory] [ val(meta), path(vcf) ] unfiltered mutect2 vcf
     ch_bam_bai              // channel: [mandatory] [ val(meta), path(bam), path(bai) ]
 
     main:
@@ -17,17 +17,15 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     //
 
     // The VCF carries the case meta, so it is joined to the tumor [meta, cnr, seg] on `case_id`.
-    // `remainder: true` preserves the tumor tuple [meta, cnr, seg] when no VCF exists (vcf -> []),
-    // and the filter drops VCF-only rows with no matching tumor CNR/SEG.
+    // The tumor meta is kept so PureCN outputs are named per tumor.
     def ch_purecn_input = ch_cnr
         .join(ch_seg)
         .map { meta, cnr, seg ->
             [meta.case_id, meta, cnr, seg]
         }
-        .join(ch_mutect2_vcf.map { meta, vcf -> [meta.case_id, vcf] }, remainder: true)
-        .filter { row -> row[1] != null }
+        .join(ch_mutect2_vcf.map { meta, vcf -> [meta.case_id, vcf] })
         .map { _case_id, meta, cnr, seg, vcf ->
-            [meta, cnr, seg, vcf ?: []]
+            [meta, cnr, seg, vcf]
         }
 
     def purecn_genome = params.genome.equals("GRCh37") ? 'hg19' : 'hg38'
