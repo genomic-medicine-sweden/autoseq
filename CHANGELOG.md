@@ -63,6 +63,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #120 ](https://github.com/genomic-medicine-sweden/autoseq/pull/120) Updated the nf-core `ensemblvep/vep` module to VEP 116.1, the optional GTF annotation source and the `versions` topic.
 - [ #121 ](https://github.com/genomic-medicine-sweden/autoseq/pull/121) Updated the nf-core `fastp` module to fastp 1.3.6 and the `versions` topic.
 - [ #117 ](https://github.com/genomic-medicine-sweden/autoseq/pull/117) Updated the nf-core `gatk4/haplotypecaller` module to GATK 4.7.0.0 and the `versions` topic.
+- [ #118 ](https://github.com/genomic-medicine-sweden/autoseq/pull/118) Updated the nf-core `picard/collecthsmetrics`, `picard/collectmultiplemetrics`, `samtools/flagstat` and `samtools/index` modules to Picard 3.5.0, samtools 1.24 and the `versions` topic, so `QC_ALIGNMENT` no longer emits a `versions` channel.
 
 ### `Fixed`
 
