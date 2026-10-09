@@ -145,7 +145,7 @@ SAGE is a somatic SNV (Single Nucleotide Variant) caller tailored for cancer res
 <details markdown="1">
 <summary>Output files for SAGE</summary>
 
-- `{outdir}/snvs/somatic/somatic/`
+- `{outdir}/snvs/somatic/`
   - `*.sage.somatic.vcf.gz`:
   - `*.sage.somatic.vcf.gz.tbi`:
 

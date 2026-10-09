@@ -1,5 +1,6 @@
 // This module is adapted from nf-core/oncoanalyser for use in this workflow
 // NOTE(SW): logic that determines BQR outputs assumes '-output_vcf' is a path that includes at least one non-empty directory (e.g. /path/to/results/filename.vcf)
+// The VCF is written as './<file>' so SAGE resolves the task work dir as its output dir and the published path stays flat
 
 process SAGE_SOMATIC {
     tag "${meta.id}"
@@ -28,10 +29,9 @@ process SAGE_SOMATIC {
     val min_avg_base_qual
 
     output:
-    tuple val(meta), path('somatic/*.sage.somatic.vcf.gz')     , emit: vcf
-    tuple val(meta), path('somatic/*.sage.somatic.vcf.gz.tbi') , emit: tbi
-    tuple val(meta), path('somatic/')                          , emit: sage_dir
-    path 'versions.yml'                                        , emit: versions
+    tuple val(meta), path('*.sage.somatic.vcf.gz')     , emit: vcf
+    tuple val(meta), path('*.sage.somatic.vcf.gz.tbi') , emit: tbi
+    path 'versions.yml'                                , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -55,8 +55,6 @@ process SAGE_SOMATIC {
     def base_qual_args = min_avg_base_qual ? " -min_avg_base_qual ${min_avg_base_qual}" : ''
 
     """
-    mkdir -p somatic/
-
     sage \\
         -Xmx${Math.round(task.memory.bytes * 0.95)} \\
         ${args} \\
@@ -80,7 +78,7 @@ process SAGE_SOMATIC {
         ${map_qual_args}  \\
         ${base_qual_args}  \\
         ${log_level_arg} \\
-        -output_vcf somatic/${meta.tumor_id}.sage.somatic.vcf.gz
+        -output_vcf ./${meta.tumor_id}.sage.somatic.vcf.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -90,15 +88,13 @@ process SAGE_SOMATIC {
 
     stub:
     """
-    mkdir -p somatic/
+    touch ${meta.tumor_id}.sage.somatic.vcf.gz
+    touch ${meta.tumor_id}.sage.somatic.vcf.gz.tbi
+    touch ${meta.tumor_id}.gene.coverage.tsv
+    touch ${meta.tumor_id}.sage.bqr.png
+    touch ${meta.tumor_id}.sage.bqr.tsv
 
-    touch somatic/${meta.tumor_id}.sage.somatic.vcf.gz
-    touch somatic/${meta.tumor_id}.sage.somatic.vcf.gz.tbi
-    touch somatic/${meta.tumor_id}.gene.coverage.tsv
-    touch somatic/${meta.tumor_id}.sage.bqr.png
-    touch somatic/${meta.tumor_id}.sage.bqr.tsv
-
-    ${ (meta.normal_id != null) ? "touch somatic/${meta.normal_id}.sage.bqr.{png,tsv}" : '' }
+    ${ (meta.normal_id != null) ? "touch ${meta.normal_id}.sage.bqr.{png,tsv}" : '' }
 
     echo -e '${task.process}:\\n  stub: noversions\\n' > versions.yml
     """
