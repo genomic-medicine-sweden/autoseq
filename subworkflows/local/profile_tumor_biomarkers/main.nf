@@ -65,12 +65,12 @@ workflow PROFILE_TUMOR_BIOMARKERS {
 
     def ch_tumor_jumble_by_case = ch_jumble.tumor
         .map { meta, cns, csv ->
-            return [meta.case_id, [meta, cns, csv]]
+            [meta.case_id, [meta, cns, csv]]
         }
 
     def ch_normal_jumble_by_case = ch_jumble.normal
         .map { meta, cns, csv ->
-            return [meta.case_id, [cns, csv]]
+            [meta.case_id, [cns, csv]]
         }
 
     // DPYD is a germline marker, so the normal typing is reported
@@ -78,7 +78,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
         .join(TYPEDPYD.out.csv)
         .filter { meta, _json, _csv -> meta.sample_type == "normal" }
         .map { meta, json, csv ->
-            return [meta.case_id, [json, csv]]
+            [meta.case_id, [json, csv]]
         }
 
     def ch_frankenplot_input = ch_tumor_jumble_by_case
@@ -92,7 +92,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
             def (meta, tumor_cns, tumor_csv) = tumor
             def (normal_cns, normal_csv)     = normal ?: [[], []]
             def (dpyd_json, dpyd_csv)        = dpyd ?: [[], []]
-            return [
+            [
                 meta,
                 tumor_cns,
                 normal_cns,
