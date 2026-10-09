@@ -103,16 +103,16 @@
                     "Jumble": "0.5.5"
                 },
                 "PASSFILTER_FOR_MUTECT2": {
-                    "bcftools": 1.22
+                    "bcftools": "1.23.1"
                 },
                 "PASSFILTER_FOR_SAGE": {
-                    "bcftools": 1.22
+                    "bcftools": "1.23.1"
                 },
                 "PICARD_COLLECTHSMETRICS": {
-                    "picard": "3.3.0"
+                    "picard": "3.5.0"
                 },
                 "PICARD_COLLECTMULTIPLEMETRICS": {
-                    "picard": "3.3.0"
+                    "picard": "3.5.0"
                 },
                 "PREPARE_HETSNPS_FOR_FRANKENPLOT": {
                     "prepare_hetsnps_for_frankenplot": "prepare_hetsnps_for_frankenplot.py 1.0.0"
@@ -122,6 +122,12 @@
                 },
                 "SAGE_SOMATIC": {
                     "sage": 4.1
+                },
+                "SAMTOOLS_FLAGSTAT": {
+                    "samtools": 1.24
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": 1.24
                 },
                 "SOMATIC_VCFMERGE": {
                     "bcftools": "bcftools 1.22",
@@ -431,16 +437,16 @@
                     "Jumble": "0.5.5"
                 },
                 "PASSFILTER_FOR_MUTECT2": {
-                    "bcftools": 1.22
+                    "bcftools": "1.23.1"
                 },
                 "PASSFILTER_FOR_SAGE": {
-                    "bcftools": 1.22
+                    "bcftools": "1.23.1"
                 },
                 "PICARD_COLLECTHSMETRICS": {
-                    "picard": "3.3.0"
+                    "picard": "3.5.0"
                 },
                 "PICARD_COLLECTMULTIPLEMETRICS": {
-                    "picard": "3.3.0"
+                    "picard": "3.5.0"
                 },
                 "PREPARE_HETSNPS_FOR_FRANKENPLOT": {
                     "prepare_hetsnps_for_frankenplot": "prepare_hetsnps_for_frankenplot.py 1.0.0"
@@ -450,6 +456,12 @@
                 },
                 "SAGE_SOMATIC": {
                     "stub": "noversions"
+                },
+                "SAMTOOLS_FLAGSTAT": {
+                    "samtools": 1.24
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": 1.24
                 },
                 "SOMATIC_VCFMERGE": {
                     "bcftools": "bcftools 1.22",

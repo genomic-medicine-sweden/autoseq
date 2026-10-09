@@ -63,12 +63,6 @@ output:
         Alignment counts reported by samtools flagstat
         Structure: [ val(meta), path(flagstat) ]
       pattern: "*.flagstat"
-  - versions:
-      type: file
-      description: |
-        File containing software versions
-        Structure: [ path(versions.yml) ]
-      pattern: "versions.yml"
 authors:
   - "@imsarath"
 maintainers:
