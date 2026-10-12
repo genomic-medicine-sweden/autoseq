@@ -55,8 +55,7 @@ nextflow_workflow {
                     workflow.out.hs_metrics.collect { meta, metrics ->
                         [meta, "${file(metrics).name}:md5,${listToMD5(path(metrics).readLines().findAll { line -> !line.startsWith("#") })}"]
                     },
-                    workflow.out.flagstat,
-                    workflow.out.versions
+                    workflow.out.flagstat
                 ).match() }
             )
         }

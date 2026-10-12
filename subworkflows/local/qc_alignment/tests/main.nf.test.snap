@@ -39,16 +39,11 @@
                     },
                     "TUMOR.flagstat:md5,9140f04f5f15fcb58cdb04c1c061c650"
                 ]
-            ],
-            [
-                "versions.yml:md5,386f1181f2d5010266e75252f86b1f8c",
-                "versions.yml:md5,65c1215c48474d67f90a87d4f82e9211",
-                "versions.yml:md5,65c1215c48474d67f90a87d4f82e9211"
             ]
         ],
-        "timestamp": "2026-08-10T12:52:15.063712267",
+        "timestamp": "2026-09-24T12:00:16.118053008",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     },
@@ -63,7 +58,7 @@
                             "sample_name": "TUMOR",
                             "sample_type": "tumor"
                         },
-                        "TUMOR.flagstat:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "TUMOR.flagstat:md5,67394650dbae96d1a4fcc70484822159"
                     ]
                 ],
                 "hs_metrics": [
@@ -93,17 +88,12 @@
                             "TUMOR.CollectMultipleMetrics.quality_distribution_metrics:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
-                ],
-                "versions": [
-                    "versions.yml:md5,386f1181f2d5010266e75252f86b1f8c",
-                    "versions.yml:md5,65c1215c48474d67f90a87d4f82e9211",
-                    "versions.yml:md5,65c1215c48474d67f90a87d4f82e9211"
                 ]
             }
         ],
-        "timestamp": "2026-08-10T12:58:05.295951031",
+        "timestamp": "2026-09-24T12:00:22.043028249",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     }
