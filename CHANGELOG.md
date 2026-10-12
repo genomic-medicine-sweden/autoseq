@@ -35,6 +35,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #109 ](https://github.com/genomic-medicine-sweden/autoseq/pull/109) Added the `JUMBLE_FRANKENPLOT` module to render the Frankenplot HTML genome report, with nf-test and `meta.yml`.
 - [ #115 ](https://github.com/genomic-medicine-sweden/autoseq/pull/115) Integrated the `PREPARE_HETSNPS_FOR_FRANKENPLOT` module into the `AUTOSEQ` workflow, publishing the heterozygous SNP VCF to `snvs/germline`.
 - [ #114 ](https://github.com/genomic-medicine-sweden/autoseq/pull/114) Integrated the `ANNOTATE_GERMLINE_TAF` subworkflow into the `AUTOSEQ` workflow, publishing the tumor allele fraction VCF to `snvs/germline`.
+- [ #126 ](https://github.com/genomic-medicine-sweden/autoseq/pull/126) Added nf-test and `meta.yml` for the `SAGE_SOMATIC` module.
 
 ### `Changed`
 
@@ -65,6 +66,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #117 ](https://github.com/genomic-medicine-sweden/autoseq/pull/117) Updated the nf-core `gatk4/haplotypecaller` module to GATK 4.7.0.0 and the `versions` topic.
 - [ #118 ](https://github.com/genomic-medicine-sweden/autoseq/pull/118) Updated the nf-core `picard/collecthsmetrics`, `picard/collectmultiplemetrics`, `samtools/flagstat` and `samtools/index` modules to Picard 3.5.0, samtools 1.24 and the `versions` topic, so `QC_ALIGNMENT` no longer emits a `versions` channel.
 - [ #119 ](https://github.com/genomic-medicine-sweden/autoseq/pull/119) Updated the nf-core `vt/decompose`, `vt/normalize` and `bcftools/filter` modules and the `bam_tumor_normal_somatic_variant_calling_gatk` subworkflow to bcftools 1.23.1 and the `versions` topic.
+- [ #126 ](https://github.com/genomic-medicine-sweden/autoseq/pull/126) Switched the `SAGE_SOMATIC` module to the `versions` topic, so `CALL_SOMATIC_SNVS` no longer mixes its `versions.yml`.
 
 ### `Fixed`
 
