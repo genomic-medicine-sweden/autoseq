@@ -35,34 +35,34 @@ include { ANNOTATE_GERMLINE_TAF                               } from '../subwork
 workflow AUTOSEQ {
 
     take:
-    ch_samplesheet     // channel: samplesheet read in from --input
-    ch_genome_fasta
-    ch_genome_fai
-    ch_dict
-    ch_bwamem2_index
-    ch_targets_bed
-    ch_interval_list_slopped20
-    ch_jumble_ref
-    ch_sage_known_hotspots_somatic
-    ch_sage_highconf_regions
-    ch_sage_pon
-    ch_ensembl_vep_cache
-    ch_ensembl_data_resources
-    ch_curation_ann
-    ch_germline_resource
-    ch_germline_resource_tbi
-    ch_genome_gridss_index
-    ch_pon_breakends    // channel: panel of normals breakends for SV calling
-    ch_pon_breakpoints  // channel: panel of normals breakpoints for SV calling
-    ch_known_fusions    // channel: known fusions for SV filtering
-    ch_repeatmasker_annotations // channel: repeatmasker annotations for SV filtering
-    ch_gridss_config   // path: optional GRIDSS config file
-    ch_dbsnp_vcf      // channel: optional dbSNP VCF for SNV annotation
-    ch_dbsnp_vcf_tbi  // channel: optional dbSNP VCF
-    val_multiqc_config                  // val: /path/to/multiqc_config.yaml
-    val_multiqc_logo                    // val: /path/to/multiqc_logo.png
-    val_multiqc_methods_description     // val: /path/to/multiqc_methods_description.md
-    val_outdir                          // val: /path/to/output/directory
+    ch_bwamem2_index                   // channel: [mandatory] [ val(meta), path(index) ] reference genome bwa-mem2 index
+    ch_curation_ann                    // channel: [mandatory] [ val(meta), path(csv) ] CNV curation annotation CSV
+    ch_dbsnp_vcf                       // channel: [optional]  [ val(meta), path(vcf) ] dbSNP VCF for germline SNV annotation
+    ch_dbsnp_vcf_tbi                   // channel: [optional]  [ val(meta), path(tbi) ] dbSNP VCF index
+    ch_dict                            // channel: [mandatory] [ val(meta), path(dict) ] reference genome sequence dictionary
+    ch_ensembl_vep_cache               // channel: [mandatory] [ val(meta), path(dir) ] Ensembl VEP cache directory
+    ch_genome_fai                      // channel: [mandatory] [ val(meta), path(fai) ] reference genome FASTA index
+    ch_genome_fasta                    // channel: [mandatory] [ val(meta), path(fasta) ] reference genome FASTA
+    ch_germline_resource               // channel: [mandatory] [ val(meta), path(vcf) ] germline resource VCF for Mutect2
+    ch_germline_resource_tbi           // channel: [mandatory] [ val(meta), path(tbi) ] germline resource VCF index
+    ch_gridss_config                   // channel: [optional]  [ val(meta), path(config) ] GRIDSS configuration file
+    ch_gridss_index                    // channel: [mandatory] [ val(meta), path(dir) ] GRIDSS genome index directory
+    ch_gridss_known_fusions            // channel: [mandatory] [ val(meta), path(bedpe) ] known fusions for SV filtering
+    ch_gridss_pon_breakends            // channel: [mandatory] [ val(meta), path(bed) ] panel of normals breakends for SV calling
+    ch_gridss_pon_breakpoints          // channel: [mandatory] [ val(meta), path(bedpe) ] panel of normals breakpoints for SV calling
+    ch_gridss_repeatmasker_annotations // channel: [mandatory] [ val(meta), path(bed) ] RepeatMasker annotations for SV filtering
+    ch_hmf_ensembl_data                // channel: [mandatory] [ val(meta), path(dir) ] HMF Ensembl data resources directory
+    ch_interval_list                   // channel: [mandatory] [ val(meta), path(interval_list) ] target regions interval list
+    ch_jumble_ref                      // channel: [mandatory] [ val(meta), path(rds) ] Jumble CNV reference
+    ch_sage_highconf_regions           // channel: [mandatory] [ val(meta), path(bed) ] SAGE high-confidence regions
+    ch_sage_known_hotspots_somatic     // channel: [mandatory] [ val(meta), path(vcf) ] SAGE somatic hotspots
+    ch_sage_pon                        // channel: [mandatory] [ val(meta), path(pon) ] SAGE panel of normals
+    ch_samplesheet                     // channel: [mandatory] [ val(meta), path(reads) ] samplesheet read in from --input
+    ch_targets_bed                     // channel: [mandatory] [ val(meta), path(bed) ] target regions BED
+    val_multiqc_config                 // string:  [optional]  path to MultiQC config
+    val_multiqc_logo                   // string:  [optional]  path to MultiQC logo
+    val_multiqc_methods_description    // string:  [optional]  path to MultiQC methods description
+    val_outdir                         // string:  [mandatory] path to output directory
 
     main:
 
@@ -168,7 +168,7 @@ workflow AUTOSEQ {
         ch_genome_fasta,
         ch_genome_fai,
         ch_dict,
-        ch_interval_list_slopped20
+        ch_interval_list
     )
 
     //
@@ -198,7 +198,7 @@ workflow AUTOSEQ {
     // Join tumor and normal by case_id and create somatic calling format
     ch_input_paired = tumor_ch
         .join(normal_ch, by: 0)
-        .combine(ch_interval_list_slopped20)
+        .combine(ch_interval_list)
         .map { case_id, tumor_meta, tumor_bam, tumor_bai, normal_meta, normal_bam, normal_bai, _meta_intervals, intervals_file ->
             // Create comprehensive meta map
             def meta = [
@@ -226,11 +226,11 @@ workflow AUTOSEQ {
         ch_germline_resource_tbi.collect{it -> it[1]},  // germline_resource_tbi
         [],
         [],
-        ch_interval_list_slopped20.collect{ it -> it[1] },
+        ch_interval_list.collect{ it -> it[1] },
         ch_sage_known_hotspots_somatic,
         ch_sage_highconf_regions,
         ch_sage_pon,
-        ch_ensembl_data_resources,
+        ch_hmf_ensembl_data,
         ch_ensembl_vep_cache,
         genome_version
     )
@@ -242,7 +242,7 @@ workflow AUTOSEQ {
     //
 
     ch_germline_input = normal_ch
-        .combine(ch_interval_list_slopped20)
+        .combine(ch_interval_list)
         .map { _case_id, meta, bam, bai, _meta_intervals, intervals ->
             [meta, bam, bai, intervals, []]
         }
@@ -276,11 +276,11 @@ workflow AUTOSEQ {
         ch_aligned_bam,
         ch_genome_fasta,
         ch_genome_fai,
-        ch_genome_gridss_index,
-        ch_pon_breakends,
-        ch_pon_breakpoints,
-        ch_known_fusions,
-        ch_repeatmasker_annotations,
+        ch_gridss_index,
+        ch_gridss_pon_breakends,
+        ch_gridss_pon_breakpoints,
+        ch_gridss_known_fusions,
+        ch_gridss_repeatmasker_annotations,
         ch_targets_bed,
         ch_gridss_config,
         genome_version
