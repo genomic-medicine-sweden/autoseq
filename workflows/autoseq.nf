@@ -77,24 +77,13 @@ workflow AUTOSEQ {
     )
 
     //
-    // MODULE: Run FastP
-    //
-    FASTP (
-        ch_samplesheet.map { meta, reads -> [meta, reads, []] }, // adapter_fasta: not used in this pipeline
-        params.discard_trimmed_pass,
-        params.save_trimmed_fail,
-        params.save_merged
-    )
-
-    ch_input_reads = FASTP.out.reads
-
-    //
     // SUBWORKFLOW: ALIGNMENT
     //
 
     if (params.umi_structure) {
 
-        ch_input_reads
+        // UMI reads skip FASTP and go to fgbio untrimmed, so the inline UMIs stay intact
+        def ch_input_reads = ch_samplesheet
             .map { meta, reads ->
                 def id = "${meta.case_id}.${meta.sample_name}".toString()
                 meta   = meta + [id: id]
@@ -110,7 +99,6 @@ workflow AUTOSEQ {
                 def files = sorted.collect{it -> it[1]}.flatten()
                 return [metas[0], files]
             }
-            .set { ch_input_reads }
 
         CAT_FASTQ (
             ch_input_reads
@@ -147,8 +135,20 @@ workflow AUTOSEQ {
 
     } else {
 
+        //
+        // MODULE: Run FastP
+        //
+        FASTP (
+            ch_samplesheet.map { meta, reads -> [meta, reads, []] }, // adapter_fasta: not used in this pipeline
+            params.discard_trimmed_pass,
+            params.save_trimmed_fail,
+            params.save_merged
+        )
+
+        ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it -> it[1]}.ifEmpty([]))
+
         ALIGNMENT(
-            ch_input_reads,
+            FASTP.out.reads,
             ch_genome_fasta,
             ch_genome_fai,
             ch_bwamem2_index
@@ -381,7 +381,6 @@ workflow AUTOSEQ {
     // MODULE: MultiQC
     //
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it -> it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it -> it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNMENT.out.multiple_metrics.collect{it -> it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNMENT.out.hs_metrics.collect{it -> it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNMENT.out.flagstat.collect{it -> it[1]}.ifEmpty([]))
