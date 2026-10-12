@@ -450,7 +450,7 @@
                     "PureCN": "2.12.0"
                 },
                 "SAGE_SOMATIC": {
-                    "stub": "noversions"
+                    "sage": 4.1
                 },
                 "SOMATIC_VCFMERGE": {
                     "bcftools": "bcftools 1.22",
@@ -574,7 +574,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-09-24T15:24:35.132395679",
+        "timestamp": "2026-10-12T11:41:47.283422436",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

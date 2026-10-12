@@ -121,7 +121,6 @@ workflow CALL_SOMATIC_SNVS {
 
     versions = versions.mix(VT_DECOMPOSE.out.versions)
     versions = versions.mix(VT_NORMALIZE.out.versions)
-    versions = versions.mix(SAGE_SOMATIC.out.versions)
     versions = versions.mix(PASSFILTER_FOR_MUTECT2.out.versions)
     versions = versions.mix(PASSFILTER_FOR_SAGE.out.versions)
     versions = versions.mix(SOMATIC_VCFMERGE.out.versions)
