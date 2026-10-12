@@ -90,6 +90,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #94 ](https://github.com/genomic-medicine-sweden/autoseq/pull/94) Sorted grouped lane FASTQs by filename before `CAT_FASTQ` in the UMI branch, since `groupTuple` does not guarantee ordering and multi-lane samples could be concatenated in a non-reproducible order.
 - [ #116 ](https://github.com/genomic-medicine-sweden/autoseq/pull/116) Updated `gatk4/genotypegvcfs` to share the `gatk4-main_gcnvkernel` container with the other GATK4 modules, as its previous image stalled on a 5.2 GB layer pull and timed out in CI.
 - [ #122 ](https://github.com/genomic-medicine-sweden/autoseq/pull/122) Emit the Jumble bin-level table (`bins_csv`) from the `CALL_CNVS` subworkflow so it can be used as input to the `JUMBLE_FRANKENPLOT` module for the genome report.
+- [ #128 ](https://github.com/genomic-medicine-sweden/autoseq/pull/128) Skipped `FASTP` in the UMI branch so raw reads go straight to `CAT_FASTQ` and `UMI_PROCESSING`, and updated the `test_umi` snapshots.
 
 ### `Removed`
 
