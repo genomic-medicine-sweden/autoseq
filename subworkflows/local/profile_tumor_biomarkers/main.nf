@@ -16,7 +16,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     // MODULE: purecn
     //
 
-    // The VCF carries the case meta, so it is joined to the tumor [meta, cnr, seg] on `case_id`.
+    // The meta from `ch_mutect2_vcf` carries the `case_id`, so this can be used to join it to the tumor [meta, cnr, seg] to ensure `ch_purecn_input` is separated per case.
     // The tumor meta is kept so PureCN outputs are named per tumor.
     def ch_purecn_input = ch_cnr
         .join(ch_seg)
