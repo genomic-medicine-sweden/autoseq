@@ -67,6 +67,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #119 ](https://github.com/genomic-medicine-sweden/autoseq/pull/119) Updated the nf-core `vt/decompose`, `vt/normalize` and `bcftools/filter` modules and the `bam_tumor_normal_somatic_variant_calling_gatk` subworkflow to bcftools 1.23.1 and the `versions` topic.
 - [ #127 ](https://github.com/genomic-medicine-sweden/autoseq/pull/127) Sorted the `AUTOSEQ` workflow inputs alphabetically with type comments, and renamed them to match the reference channel names in `main.nf`.
 - [ #124 ](https://github.com/genomic-medicine-sweden/autoseq/pull/124) The Mutect2 VCF is now a mandatory input to `PROFILE_TUMOR_BIOMARKERS`, so `PURECN_RUN` only runs for tumors with a VCF from the same case.
+- [ #129 ](https://github.com/genomic-medicine-sweden/autoseq/pull/129) Sorted the `ALIGNMENT` subworkflow inputs and outputs alphabetically with type comments, renamed its channels and moved its module options to `conf/subworkflows/alignment.config`.
 
 ### `Fixed`
 
