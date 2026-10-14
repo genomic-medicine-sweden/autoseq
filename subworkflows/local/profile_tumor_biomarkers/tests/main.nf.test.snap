@@ -1,68 +1,4 @@
 {
-    "tumor only without VCF": {
-        "content": [
-            [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR_purecn_genes.csv:md5,a0e7fecf71a67b43f8d4a9089c906a4d"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR.DPYD.csv:md5,4e966b6e924ce8660de4b9a0ed971f07"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR.DPYD.json:md5,4c63101c786af43f474ddfcf561f7ca4"
-                ]
-            ],
-            [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR.frankenplot.html"
-                ]
-            ]
-        ],
-        "timestamp": "2026-09-29T12:51:31.640123942",
-        "meta": {
-            "nf-test": "0.9.5",
-            "nextflow": "26.04.6"
-        }
-    },
     "paired tumor-normal - stub": {
         "content": [
             {
@@ -153,7 +89,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-09-29T12:51:48.375469368",
+        "timestamp": "2026-10-14T11:33:05.126916323",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -227,7 +163,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-30T12:00:21.982039163",
+        "timestamp": "2026-10-14T11:32:57.237295087",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

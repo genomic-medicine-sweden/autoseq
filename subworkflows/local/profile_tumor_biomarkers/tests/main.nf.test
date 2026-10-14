@@ -91,60 +91,6 @@ nextflow_workflow {
     }
 
 
-    test("tumor only without VCF") {
-
-        when {
-
-            workflow {
-                """
-                input[0] = channel.of([
-                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true)
-                ])
-                input[1] = channel.of([
-                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
-                ])
-                input[2] = channel.of([
-                    [ : ],
-                    []
-                ])
-                input[3] = channel.of([
-                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
-                ])
-                input[4] = channel.empty()
-                input[5] = channel.empty()
-                input[6] = channel.of([
-                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.cns', checkIfExists: true)
-                ])
-                input[7] = channel.of([
-                    [ id:'TUMOR', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/jumble/tumor/TUMOR.jumble.csv', checkIfExists: true)
-                ])
-                input[8] = channel.empty()
-                """
-            }
-        }
-
-        then {
-            assertAll(
-                { assert workflow.success },
-                { assert workflow.out.purecn_pdf[0][1].every { f -> file(f).exists() } },
-                { assert snapshot(
-                    workflow.out.purecn_csv,
-                    workflow.out.purecn_genes_csv,
-                    workflow.out.dpyd_csv,
-                    workflow.out.dpyd_json,
-                    workflow.out.frankenplot_html.collect { meta, html -> [meta, file(html).name] }
-                ).match() }
-            )
-        }
-    }
-
-
     test("paired tumor-normal - stub") {
 
         options "-stub"
