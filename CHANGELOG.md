@@ -35,6 +35,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #109 ](https://github.com/genomic-medicine-sweden/autoseq/pull/109) Added the `JUMBLE_FRANKENPLOT` module to render the Frankenplot HTML genome report, with nf-test and `meta.yml`.
 - [ #115 ](https://github.com/genomic-medicine-sweden/autoseq/pull/115) Integrated the `PREPARE_HETSNPS_FOR_FRANKENPLOT` module into the `AUTOSEQ` workflow, publishing the heterozygous SNP VCF to `snvs/germline`.
 - [ #114 ](https://github.com/genomic-medicine-sweden/autoseq/pull/114) Integrated the `ANNOTATE_GERMLINE_TAF` subworkflow into the `AUTOSEQ` workflow, publishing the tumor allele fraction VCF to `snvs/germline`.
+- [ #123 ](https://github.com/genomic-medicine-sweden/autoseq/pull/123) Integrated the `JUMBLE_FRANKENPLOT` module into the `PROFILE_TUMOR_BIOMARKERS` subworkflow, joining the Jumble CNV results, somatic and germline VCFs, heterozygous SNPs and normal DPYD typing per case, and publishing the HTML genome report to `frankenplot/`.
 
 ### `Changed`
 

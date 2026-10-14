@@ -1,7 +1,7 @@
 {
     "test profile - paired tumor-normal": {
         "content": [
-            62,
+            63,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -73,6 +73,9 @@
                 },
                 "GRIPSS_SOMATIC": {
                     "gripss": 2.4
+                },
+                "JUMBLE_FRANKENPLOT": {
+                    "Jumble": "0.5.6"
                 },
                 "JUMBLE_RUN": {
                     "Jumble": "0.5.5"
@@ -160,6 +163,8 @@
                 "dpyd/NORMAL.DPYD.json",
                 "dpyd/TUMOR.DPYD.csv",
                 "dpyd/TUMOR.DPYD.json",
+                "frankenplot",
+                "frankenplot/TEST.frankenplot.html",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
@@ -305,7 +310,7 @@
     },
     "test profile - paired tumor-normal - stub": {
         "content": [
-            62,
+            63,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -377,6 +382,9 @@
                 },
                 "GRIPSS_SOMATIC": {
                     "gripss": 2.4
+                },
+                "JUMBLE_FRANKENPLOT": {
+                    "Jumble": "0.5.6"
                 },
                 "JUMBLE_RUN": {
                     "Jumble": "0.5.5"
@@ -464,6 +472,8 @@
                 "dpyd/NORMAL.DPYD.json",
                 "dpyd/TUMOR.DPYD.csv",
                 "dpyd/TUMOR.DPYD.json",
+                "frankenplot",
+                "frankenplot/TEST.frankenplot.html",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
