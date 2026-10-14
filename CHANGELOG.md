@@ -66,6 +66,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #118 ](https://github.com/genomic-medicine-sweden/autoseq/pull/118) Updated the nf-core `picard/collecthsmetrics`, `picard/collectmultiplemetrics`, `samtools/flagstat` and `samtools/index` modules to Picard 3.5.0, samtools 1.24 and the `versions` topic, so `QC_ALIGNMENT` no longer emits a `versions` channel.
 - [ #119 ](https://github.com/genomic-medicine-sweden/autoseq/pull/119) Updated the nf-core `vt/decompose`, `vt/normalize` and `bcftools/filter` modules and the `bam_tumor_normal_somatic_variant_calling_gatk` subworkflow to bcftools 1.23.1 and the `versions` topic.
 - [ #127 ](https://github.com/genomic-medicine-sweden/autoseq/pull/127) Sorted the `AUTOSEQ` workflow inputs alphabetically with type comments, and renamed them to match the reference channel names in `main.nf`.
+- [ #124 ](https://github.com/genomic-medicine-sweden/autoseq/pull/124) The Mutect2 VCF is now a mandatory input to `PROFILE_TUMOR_BIOMARKERS`, so `PURECN_RUN` only runs for tumors with a VCF from the same case.
 
 ### `Fixed`
 
@@ -92,6 +93,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #116 ](https://github.com/genomic-medicine-sweden/autoseq/pull/116) Updated `gatk4/genotypegvcfs` to share the `gatk4-main_gcnvkernel` container with the other GATK4 modules, as its previous image stalled on a 5.2 GB layer pull and timed out in CI.
 - [ #122 ](https://github.com/genomic-medicine-sweden/autoseq/pull/122) Emit the Jumble bin-level table (`bins_csv`) from the `CALL_CNVS` subworkflow so it can be used as input to the `JUMBLE_FRANKENPLOT` module for the genome report.
 - [ #125 ](https://github.com/genomic-medicine-sweden/autoseq/pull/125) Write the `SAGE_SOMATIC` VCF to the task work dir root so it is published to `snvs/somatic/` instead of `snvs/somatic/somatic/`.
+- [ #124 ](https://github.com/genomic-medicine-sweden/autoseq/pull/124) Joined the `PURECN_RUN` inputs on `case_id` instead of `combine`, so tumor CNR/SEG are no longer cross-paired with other cases' Mutect2 VCFs. Added `case_id` to the `PROFILE_TUMOR_BIOMARKERS` nf-test inputs and removed the "without VCF" test.
 
 ### `Removed`
 
