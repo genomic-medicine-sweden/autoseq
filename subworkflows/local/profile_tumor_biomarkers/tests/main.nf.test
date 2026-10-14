@@ -68,7 +68,10 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.jumble.csv', checkIfExists: true)
                     ]
                 )
-                input[8] = channel.empty()
+                input[8] = channel.of([
+                    [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL-all.somatic.vep.vcf.gz', checkIfExists: true)
+                ])
                 """
             }
         }
@@ -148,7 +151,10 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.jumble.csv', checkIfExists: true)
                     ]
                 )
-                input[8] = channel.empty()
+                input[8] = channel.of([
+                    [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL-all.somatic.vep.vcf.gz', checkIfExists: true)
+                ])
                 """
             }
         }
