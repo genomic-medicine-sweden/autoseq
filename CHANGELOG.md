@@ -65,6 +65,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #117 ](https://github.com/genomic-medicine-sweden/autoseq/pull/117) Updated the nf-core `gatk4/haplotypecaller` module to GATK 4.7.0.0 and the `versions` topic.
 - [ #118 ](https://github.com/genomic-medicine-sweden/autoseq/pull/118) Updated the nf-core `picard/collecthsmetrics`, `picard/collectmultiplemetrics`, `samtools/flagstat` and `samtools/index` modules to Picard 3.5.0, samtools 1.24 and the `versions` topic, so `QC_ALIGNMENT` no longer emits a `versions` channel.
 - [ #119 ](https://github.com/genomic-medicine-sweden/autoseq/pull/119) Updated the nf-core `vt/decompose`, `vt/normalize` and `bcftools/filter` modules and the `bam_tumor_normal_somatic_variant_calling_gatk` subworkflow to bcftools 1.23.1 and the `versions` topic.
+- [ #124 ](https://github.com/genomic-medicine-sweden/autoseq/pull/124) The Mutect2 VCF is now a mandatory input to `PROFILE_TUMOR_BIOMARKERS`, so `PURECN_RUN` only runs for tumors with a VCF from the same case.
 
 ### `Fixed`
 
