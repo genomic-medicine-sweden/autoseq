@@ -226,6 +226,8 @@
                 "snvs/germline/TUMOR.hetsnps.vcf.gz",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
+                "snvs/somatic/TEST.TUMOR.sage.somatic.vcf.gz",
+                "snvs/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz.tbi",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vep.vcf.gz",
@@ -233,9 +235,6 @@
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz.tbi",
-                "snvs/somatic/somatic",
-                "snvs/somatic/somatic/TEST.TUMOR.sage.somatic.vcf.gz",
-                "snvs/somatic/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi",
                 "svs",
                 "svs/germline",
                 "svs/germline/TEST.TUMOR.gripss.filtered.germline.vcf.gz",
@@ -292,6 +291,10 @@
                     "2f0b81e018ed1fdee0c40e81ddc8b605"
                 ],
                 [
+                    "TEST.TUMOR.sage.somatic.vcf.gz",
+                    "1e426bb8e04150d6b456c5c5ea97cab1"
+                ],
+                [
                     "TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz",
                     "577a2c7c23c013078f4336465a0b11df"
                 ],
@@ -302,10 +305,6 @@
                 [
                     "TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz",
                     "fb103e4e03aa3923730617c98b166343"
-                ],
-                [
-                    "TEST.TUMOR.sage.somatic.vcf.gz",
-                    "44bb748424ab22a40e86851ddd29a8b8"
                 ],
                 [
                     "TEST.TUMOR.gripss.filtered.germline.vcf.gz",
@@ -557,6 +556,8 @@
                 "snvs/germline/TUMOR.hetsnps.vcf.gz",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
+                "snvs/somatic/TEST.TUMOR.sage.somatic.vcf.gz",
+                "snvs/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz.tbi",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vep.vcf.gz",
@@ -564,9 +565,6 @@
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
                 "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz.tbi",
-                "snvs/somatic/somatic",
-                "snvs/somatic/somatic/TEST.TUMOR.sage.somatic.vcf.gz",
-                "snvs/somatic/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi",
                 "svs",
                 "svs/germline",
                 "svs/germline/TEST.NORMAL.gripss.filtered.germline.vcf.gz",

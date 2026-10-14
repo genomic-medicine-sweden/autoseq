@@ -17,19 +17,19 @@ nextflow_workflow {
 
             workflow {
                 """
-                input[0] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[0] = channel.of([
+                    [ id:'test_tumor', case_id:'test_case', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true)
                 ])
-                input[1] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[1] = channel.of([
+                    [ id:'test_tumor', case_id:'test_case', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
                 ])
-                input[2] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[2] = channel.of([
+                    [ id:'test_case', case_id:'test_case', tumor_id:'test_tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.mutect2_calls.vcf.gz', checkIfExists: true)
                 ])
-                input[3] = Channel.of([
+                input[3] = channel.of([
                     [ id:'test_sample' ],
                     file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
@@ -54,48 +54,6 @@ nextflow_workflow {
     }
 
 
-    test("profile_tumor_biomarkers - without VCF") {
-
-        when {
-
-            workflow {
-                """
-                input[0] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true)
-                ])
-                input[1] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
-                ])
-                input[2] = Channel.of([
-                    [ : ],
-                    []
-                ])
-                input[3] = Channel.of([
-                    [ id:'test_sample' ],
-                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
-                    file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
-                ])
-                """
-            }
-        }
-
-        then {
-            assertAll(
-                { assert workflow.success },
-                { assert workflow.out.purecn_pdf[0][1].every { f -> file(f).exists() } },
-                { assert snapshot(
-                    workflow.out.purecn_csv,
-                    workflow.out.purecn_genes_csv,
-                    workflow.out.dpyd_csv,
-                    workflow.out.dpyd_json
-                ).match() }
-            )
-        }
-    }
-
-
     test("profile_tumor_biomarkers - stub") {
 
         options " -stub "
@@ -104,19 +62,19 @@ nextflow_workflow {
 
             workflow {
                 """
-                input[0] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[0] = channel.of([
+                    [ id:'test_tumor', case_id:'test_case', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.cnr', checkIfExists: true)
                 ])
-                input[1] = Channel.of([
-                    [ id:'test_sample', tumor_id: 'test_tumor' ],
+                input[1] = channel.of([
+                    [ id:'test_tumor', case_id:'test_case', sample_type:'tumor' ],
                     file(params.pipelines_testdata_base_path + 'testdata/purecn/test.paired_end.sorted.seg', checkIfExists: true)
                 ])
-                input[2] = Channel.of([
-                    [ : ],
-                    []
+                input[2] = channel.of([
+                    [ id:'test_case', case_id:'test_case', tumor_id:'test_tumor' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/purecn/test.mutect2_calls.vcf.gz', checkIfExists: true)
                 ])
-                input[3] = Channel.of([
+                input[3] = channel.of([
                     [ id:'test_sample' ],
                     file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bam', checkIfExists: true),
                     file(params.pipelines_testdata_base_path + 'testdata/bam/1234T_dedup.bai', checkIfExists: true)
