@@ -131,8 +131,7 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                // `sage_dir` is excluded as it is an absolute work dir path (removed from the module in #125)
-                { assert snapshot(sanitizeOutput(process.out).findAll { key, _val -> key != 'sage_dir' }).match() }
+                { assert snapshot(sanitizeOutput(process.out)).match() }
             )
         }
     }

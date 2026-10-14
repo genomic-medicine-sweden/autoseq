@@ -120,7 +120,7 @@ output:
           description: |
             Groovy Map containing sample information
             e.g. `[ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ]`
-      - somatic/*.sage.somatic.vcf.gz:
+      - "*.sage.somatic.vcf.gz":
           type: file
           description: Compressed VCF file with somatic variant calls
           pattern: "*.sage.somatic.vcf.gz"
@@ -132,20 +132,11 @@ output:
           description: |
             Groovy Map containing sample information
             e.g. `[ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ]`
-      - somatic/*.sage.somatic.vcf.gz.tbi:
+      - "*.sage.somatic.vcf.gz.tbi":
           type: file
           description: Tabix index of the somatic VCF file
           pattern: "*.sage.somatic.vcf.gz.tbi"
           ontologies: []
-  sage_dir:
-    - - meta:
-          type: map
-          description: |
-            Groovy Map containing sample information
-            e.g. `[ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ]`
-      - somatic/:
-          type: directory
-          description: SAGE output directory with the VCF, gene coverage and BQR files
   versions_sage:
     - - ${task.process}:
           type: string
