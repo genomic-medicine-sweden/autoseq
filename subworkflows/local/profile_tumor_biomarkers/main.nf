@@ -14,7 +14,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     ch_hetsnps_vcf          // channel: [optional]  [ val(meta), path(vcf) ] heterozygous SNPs with tumor allelic depths
     ch_jumble_cns           // channel: [mandatory] [ val(meta), path(cns) ] jumble cns
     ch_jumble_csv           // channel: [mandatory] [ val(meta), path(csv) ] jumble bin-level table
-    ch_somatic_vcf          // channel: [optional]  [ val(meta), path(vcf) ] VEP annotated somatic vcf
+    ch_somatic_vcf          // channel: [mandatory]  [ val(meta), path(vcf) ] VEP annotated somatic vcf
 
     main:
 
@@ -84,7 +84,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
 
     def ch_frankenplot_input = ch_tumor_jumble_by_case
         .join(ch_normal_jumble_by_case, remainder: true)
-        .join(ch_somatic_vcf.map { meta, vcf -> [meta.case_id, vcf] }, remainder: true)
+        .join(ch_somatic_vcf.map { meta, vcf -> [meta.case_id, vcf] })
         .join(ch_germline_vcf.map { meta, vcf -> [meta.case_id, vcf] }, remainder: true)
         .join(ch_hetsnps_vcf.map { meta, vcf -> [meta.case_id, vcf] }, remainder: true)
         .join(ch_normal_dpyd_by_case, remainder: true)
@@ -99,7 +99,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
                 normal_cns,
                 tumor_csv,
                 normal_csv,
-                somatic_vcf ?: [],
+                somatic_vcf,
                 germline_vcf ?: [],
                 hetsnps_vcf ?: [],
                 dpyd_json,
