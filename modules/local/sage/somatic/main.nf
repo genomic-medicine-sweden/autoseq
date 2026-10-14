@@ -1,5 +1,6 @@
 // This module is adapted from nf-core/oncoanalyser for use in this workflow
 // NOTE(SW): logic that determines BQR outputs assumes '-output_vcf' is a path that includes at least one non-empty directory (e.g. /path/to/results/filename.vcf)
+// The VCF is written as './<file>' so SAGE resolves the task work dir as its output dir and the published path stays flat
 
 process SAGE_SOMATIC {
     tag "${meta.id}"
@@ -30,7 +31,6 @@ process SAGE_SOMATIC {
     output:
     tuple val(meta), path('somatic/*.sage.somatic.vcf.gz')     , emit: vcf
     tuple val(meta), path('somatic/*.sage.somatic.vcf.gz.tbi') , emit: tbi
-    tuple val(meta), path('somatic/')                          , emit: sage_dir
     tuple val("${task.process}"), val('sage'), eval("sage -version | sed 's/^.* //'"), topic: versions, emit: versions_sage
 
     when:
@@ -55,8 +55,6 @@ process SAGE_SOMATIC {
     def base_qual_args = min_avg_base_qual ? " -min_avg_base_qual ${min_avg_base_qual}" : ''
 
     """
-    mkdir -p somatic/
-
     sage \\
         -Xmx${Math.round(task.memory.bytes * 0.95)} \\
         ${args} \\
@@ -80,19 +78,18 @@ process SAGE_SOMATIC {
         ${map_qual_args}  \\
         ${base_qual_args}  \\
         ${log_level_arg} \\
-        -output_vcf somatic/${meta.tumor_id}.sage.somatic.vcf.gz
+        -output_vcf ./${meta.tumor_id}.sage.somatic.vcf.gz
+
     """
 
     stub:
     """
-    mkdir -p somatic/
+    echo "" | gzip > ${meta.tumor_id}.sage.somatic.vcf.gz
+    touch ${meta.tumor_id}.sage.somatic.vcf.gz.tbi
+    touch ${meta.tumor_id}.gene.coverage.tsv
+    touch ${meta.tumor_id}.sage.bqr.png
+    touch ${meta.tumor_id}.sage.bqr.tsv
 
-    echo "" | gzip > somatic/${meta.tumor_id}.sage.somatic.vcf.gz
-    touch somatic/${meta.tumor_id}.sage.somatic.vcf.gz.tbi
-    touch somatic/${meta.tumor_id}.gene.coverage.tsv
-    touch somatic/${meta.tumor_id}.sage.bqr.png
-    touch somatic/${meta.tumor_id}.sage.bqr.tsv
-
-    ${ (meta.normal_id != null) ? "touch somatic/${meta.normal_id}.sage.bqr.{png,tsv}" : '' }
+    ${ (meta.normal_id != null) ? "touch ${meta.normal_id}.sage.bqr.{png,tsv}" : '' }
     """
 }

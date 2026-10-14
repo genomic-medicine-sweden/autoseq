@@ -32,7 +32,7 @@ include { channelFromPathWithMeta } from './subworkflows/local/utils_nfcore_auto
 workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
 
     take:
-    samplesheet                         // channel: [mandatory] samplesheet read in from --input
+    ch_samplesheet                      // channel: [mandatory] samplesheet read in from --input
     val_bwamem2_index                   // string:  [mandatory] path to reference genome bwa-mem2 index
     val_curation_ann                    // string:  [mandatory] path to CNV curation annotation CSV
     val_dbsnp_vcf                       // string:  [optional]  path to dbSNP VCF
@@ -44,7 +44,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     val_genome_fasta                    // string:  [mandatory] path to reference genome FASTA
     val_germline_resource               // string:  [mandatory] path to germline resource VCF
     val_germline_resource_tbi           // string:  [mandatory] path to germline resource VCF index
-    val_gridss_config                   // string:  [mandatory] path to GRIDSS configuration file
+    val_gridss_config                   // string:  [optional] path to GRIDSS configuration file
     val_gridss_index                    // string:  [mandatory] path to GRIDSS genome index directory
     val_gridss_index_tar                // string:  [optional]  path to GRIDSS genome index tarball
     val_gridss_known_fusions            // string:  [mandatory] path to GRIDSS known fusions
@@ -119,30 +119,30 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     // WORKFLOW: Run pipeline
     //
     AUTOSEQ (
-        samplesheet,
-        ch_genome_fasta,
-        ch_genome_fai,
-        ch_dict,
         ch_bwamem2_index,
-        ch_targets_bed,
-        ch_interval_list,
-        ch_jumble_ref,
-        ch_sage_known_hotspots_somatic,
-        ch_sage_highconf_regions,
-        ch_sage_pon,
-        ch_ensembl_vep_cache,
-        ch_hmf_ensembl_data,
         ch_curation_ann,
-        ch_germline_resource,
-        ch_germline_resource_tbi,
-        ch_gridss_index,
-        ch_gridss_pon_breakends,
-        ch_gridss_pon_breakpoints,
-        ch_gridss_known_fusions,
-        ch_gridss_repeatmasker_annotations,
-        ch_gridss_config,
         ch_dbsnp_vcf,
         ch_dbsnp_vcf_tbi,
+        ch_dict,
+        ch_ensembl_vep_cache,
+        ch_genome_fai,
+        ch_genome_fasta,
+        ch_germline_resource,
+        ch_germline_resource_tbi,
+        ch_gridss_config,
+        ch_gridss_index,
+        ch_gridss_known_fusions,
+        ch_gridss_pon_breakends,
+        ch_gridss_pon_breakpoints,
+        ch_gridss_repeatmasker_annotations,
+        ch_hmf_ensembl_data,
+        ch_interval_list,
+        ch_jumble_ref,
+        ch_sage_highconf_regions,
+        ch_sage_known_hotspots_somatic,
+        ch_sage_pon,
+        ch_samplesheet,
+        ch_targets_bed,
         val_multiqc_config,
         val_multiqc_logo,
         val_multiqc_methods_description,
