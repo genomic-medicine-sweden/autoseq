@@ -29,8 +29,8 @@ process SAGE_SOMATIC {
     val min_avg_base_qual
 
     output:
-    tuple val(meta), path('somatic/*.sage.somatic.vcf.gz')     , emit: vcf
-    tuple val(meta), path('somatic/*.sage.somatic.vcf.gz.tbi') , emit: tbi
+    tuple val(meta), path('*.sage.somatic.vcf.gz')     , emit: vcf
+    tuple val(meta), path('*.sage.somatic.vcf.gz.tbi') , emit: tbi
     tuple val("${task.process}"), val('sage'), eval("sage -version | sed 's/^.* //'"), topic: versions, emit: versions_sage
 
     when:
