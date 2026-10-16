@@ -1,0 +1,138 @@
+nextflow_process {
+
+    name "Test Process SAGE_SOMATIC"
+    script "../main.nf"
+    process "SAGE_SOMATIC"
+    config "./nextflow.config"
+
+    tag "modules"
+    tag "modules_local"
+    tag "sage"
+    tag "sage/somatic"
+    tag "untar"
+
+    setup {
+        run("UNTAR", alias: "UNTAR_ENSEMBL_DATA") {
+            script "../../../../nf-core/untar/main.nf"
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'ensembl_data' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz', checkIfExists: true)
+                ])
+                """
+            }
+        }
+    }
+
+    test("paired tumor and normal - targeted") {
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true)
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.interval_list', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.value([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                input[4]  = params.genome_version
+                input[5]  = file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/SageGermlinePon.1000x.37.tsv.gz', checkIfExists: true)
+                input[6]  = file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/KnownHotspots.somatic.37.vcf.gz', checkIfExists: true)
+                input[7]  = file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/NA12878_GIAB_highconf_IllFB-IllGATKHC-CG-Ion-Solid_ALLCHROM_v3.2.2_highconf.bed.gz', checkIfExists: true)
+                input[8]  = UNTAR_ENSEMBL_DATA.out.untar.map { _meta, dir -> dir }.collect()
+                input[9]  = params.sage_targeted_mode
+                input[10] = params.sage_min_tumor_vaf
+                input[11] = params.sage_min_tumor_qual
+                input[12] = params.sage_min_map_quality
+                input[13] = params.sage_hotspot_tumor_qual
+                input[14] = params.min_baseq
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    // SAGE writes its version and the full command line into the VCF header, so only the variant records are hashed
+                    process.out.vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}"] },
+                    process.out.tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    process.out.versions_sage
+                ).match() }
+            )
+        }
+    }
+
+    test("paired tumor and normal - targeted - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bam', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bam', checkIfExists: true)
+                    ],
+                    [
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/TUMOR_dedup.bai', checkIfExists: true),
+                        file(params.pipelines_testdata_base_path + 'testdata/bam/NORMAL_dedup.bai', checkIfExists: true)
+                    ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.interval_list', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.value([
+                    [ id:'genome_dict' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
+                ])
+                input[4]  = params.genome_version
+                input[5]  = file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/SageGermlinePon.1000x.37.tsv.gz', checkIfExists: true)
+                input[6]  = file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/KnownHotspots.somatic.37.vcf.gz', checkIfExists: true)
+                input[7]  = file(params.pipelines_testdata_base_path + 'reference/GRCh37/hmfdata/NA12878_GIAB_highconf_IllFB-IllGATKHC-CG-Ion-Solid_ALLCHROM_v3.2.2_highconf.bed.gz', checkIfExists: true)
+                input[8]  = UNTAR_ENSEMBL_DATA.out.untar.map { _meta, dir -> dir }.collect()
+                input[9]  = params.sage_targeted_mode
+                input[10] = params.sage_min_tumor_vaf
+                input[11] = params.sage_min_tumor_qual
+                input[12] = params.sage_min_map_quality
+                input[13] = params.sage_hotspot_tumor_qual
+                input[14] = params.min_baseq
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(sanitizeOutput(process.out)).match() }
+            )
+        }
+    }
+}

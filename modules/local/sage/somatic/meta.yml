@@ -1,0 +1,164 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+name: "sage_somatic"
+description: Call somatic SNVs and indels from paired tumor/normal BAMs using SAGE
+keywords:
+  - somatic
+  - variant calling
+  - snv
+  - indel
+  - targeted sequencing
+  - hmftools
+  - sage
+tools:
+  - sage:
+      description: |
+        SAGE (Somatic Alterations in Genome) is a precise and highly sensitive
+        somatic SNV, MNV and small indel caller from the Hartwig Medical Foundation.
+      homepage: "https://github.com/hartwigmedical/hmftools/tree/master/sage"
+      documentation: "https://github.com/hartwigmedical/hmftools/tree/master/sage"
+      tool_dev_url: "https://github.com/hartwigmedical/hmftools/tree/master/sage"
+      licence:
+        - "GPL v3"
+      identifier: ""
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing sample information
+          e.g. `[ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ]`
+    - input:
+        type: file
+        description: List of BAM files, tumor first followed by normal
+        pattern: "*.bam"
+        ontologies:
+          - edam: http://edamontology.org/format_2572
+    - input_index:
+        type: file
+        description: List of BAM index files, in the same order as the BAM files
+        pattern: "*.bai"
+        ontologies: []
+    - intervals:
+        type: file
+        description: Panel target regions passed to SAGE with `-panel_bed`
+        pattern: "*.{bed,interval_list}"
+        ontologies: []
+  - - meta2:
+        type: map
+        description: |
+          Groovy Map containing reference genome information
+          e.g. `[ id:'genome' ]`
+    - fasta:
+        type: file
+        description: Reference genome FASTA file
+        pattern: "*.{fa,fasta}"
+        ontologies:
+          - edam: http://edamontology.org/format_1929
+  - - meta3:
+        type: map
+        description: |
+          Groovy Map containing reference genome index information
+          e.g. `[ id:'genome_fai' ]`
+    - fai:
+        type: file
+        description: Reference genome FASTA index file
+        pattern: "*.fai"
+        ontologies: []
+  - - meta4:
+        type: map
+        description: |
+          Groovy Map containing reference genome dictionary information
+          e.g. `[ id:'genome_dict' ]`
+    - dict:
+        type: file
+        description: Reference genome sequence dictionary file
+        pattern: "*.dict"
+        ontologies: []
+  - genome_ver:
+      type: string
+      description: Numeric reference genome version (`37` or `38`)
+  - sage_pon:
+      type: file
+      description: SAGE germline panel of normals
+      pattern: "*.tsv.gz"
+      ontologies: []
+  - sage_known_hotspots_somatic:
+      type: file
+      description: Known somatic hotspots VCF
+      pattern: "*.vcf.gz"
+      ontologies:
+        - edam: http://edamontology.org/format_3989
+  - sage_highconf_regions:
+      type: file
+      description: High confidence regions BED file
+      pattern: "*.bed.gz"
+      ontologies: []
+  - ensembl_data_resources:
+      type: directory
+      description: HMF Ensembl data cache directory
+  - targeted_mode:
+      type: boolean
+      description: Run SAGE in high depth mode (`-high_depth_mode`) for targeted panels
+  - min_tumor_vaf:
+      type: float
+      description: Minimum tumor VAF applied to hard, hotspot and panel filters
+  - min_tumor_qual:
+      type: integer
+      description: Minimum tumor quality for panel variants
+  - min_map_quality:
+      type: integer
+      description: Minimum read mapping quality
+  - hotspot_tumor_qual:
+      type: integer
+      description: Minimum tumor quality for hotspot variants
+  - min_avg_base_qual:
+      type: integer
+      description: Minimum average base quality
+output:
+  vcf:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ]`
+      - "*.sage.somatic.vcf.gz":
+          type: file
+          description: Compressed VCF file with somatic variant calls
+          pattern: "*.sage.somatic.vcf.gz"
+          ontologies:
+            - edam: http://edamontology.org/format_3989
+  tbi:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ]`
+      - "*.sage.somatic.vcf.gz.tbi":
+          type: file
+          description: Tabix index of the somatic VCF file
+          pattern: "*.sage.somatic.vcf.gz.tbi"
+          ontologies: []
+  versions_sage:
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - sage:
+          type: string
+          description: The tool name
+      - sage -version | sed 's/^.* //':
+          type: eval
+          description: The expression to obtain the version of the tool
+topics:
+  versions:
+    - - ${task.process}:
+          type: string
+          description: The name of the process
+      - sage:
+          type: string
+          description: The tool name
+      - sage -version | sed 's/^.* //':
+          type: eval
+          description: The expression to obtain the version of the tool
+authors:
+  - "@imsarath"
+maintainers:
+  - "@imsarath"
