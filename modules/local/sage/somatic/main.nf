@@ -31,7 +31,7 @@ process SAGE_SOMATIC {
     output:
     tuple val(meta), path('*.sage.somatic.vcf.gz')     , emit: vcf
     tuple val(meta), path('*.sage.somatic.vcf.gz.tbi') , emit: tbi
-    path 'versions.yml'                                , emit: versions
+    tuple val("${task.process}"), val('sage'), eval("sage -version | sed 's/^.* //'"), topic: versions, emit: versions_sage
 
     when:
     task.ext.when == null || task.ext.when
@@ -80,22 +80,16 @@ process SAGE_SOMATIC {
         ${log_level_arg} \\
         -output_vcf ./${meta.tumor_id}.sage.somatic.vcf.gz
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        sage: \$(sage -version | sed 's/^.* //')
-    END_VERSIONS
     """
 
     stub:
     """
-    touch ${meta.tumor_id}.sage.somatic.vcf.gz
+    echo "" | gzip > ${meta.tumor_id}.sage.somatic.vcf.gz
     touch ${meta.tumor_id}.sage.somatic.vcf.gz.tbi
     touch ${meta.tumor_id}.gene.coverage.tsv
     touch ${meta.tumor_id}.sage.bqr.png
     touch ${meta.tumor_id}.sage.bqr.tsv
 
     ${ (meta.normal_id != null) ? "touch ${meta.normal_id}.sage.bqr.{png,tsv}" : '' }
-
-    echo -e '${task.process}:\\n  stub: noversions\\n' > versions.yml
     """
 }

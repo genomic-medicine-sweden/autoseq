@@ -1,0 +1,80 @@
+{
+    "paired tumor and normal - targeted - stub": {
+        "content": [
+            {
+                "tbi": [
+                    [
+                        {
+                            "id": "TEST",
+                            "case_id": "TEST",
+                            "tumor_id": "TUMOR",
+                            "normal_id": "NORMAL"
+                        },
+                        "TUMOR.sage.somatic.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "vcf": [
+                    [
+                        {
+                            "id": "TEST",
+                            "case_id": "TEST",
+                            "tumor_id": "TUMOR",
+                            "normal_id": "NORMAL"
+                        },
+                        "TUMOR.sage.somatic.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "versions_sage": [
+                    [
+                        "SAGE_SOMATIC",
+                        "sage",
+                        "4.1"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-10-12T11:22:08.905167722",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    },
+    "paired tumor and normal - targeted": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL"
+                    },
+                    "TUMOR.sage.somatic.vcf.gz:md5,b2181f9945a8d84ed2a8e40b94a9d675"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "case_id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL"
+                    },
+                    "TUMOR.sage.somatic.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    "SAGE_SOMATIC",
+                    "sage",
+                    "4.1"
+                ]
+            ]
+        ],
+        "timestamp": "2026-10-12T11:22:02.239515664",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}
