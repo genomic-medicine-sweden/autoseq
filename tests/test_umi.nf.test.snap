@@ -463,7 +463,7 @@
                     "PureCN": "2.12.0"
                 },
                 "SAGE_SOMATIC": {
-                    "stub": "noversions"
+                    "sage": 4.1
                 },
                 "SAMTOOLS_FLAGSTAT": {
                     "samtools": 1.24
@@ -594,7 +594,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-10-08T13:26:20.931958164",
+        "timestamp": "2026-10-12T11:41:47.283422436",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
