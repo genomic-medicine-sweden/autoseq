@@ -118,8 +118,6 @@ workflow CALL_SOMATIC_SNVS {
         [[], []] // no GTF, annotate from the cache
     )
 
-
-    versions = versions.mix(SAGE_SOMATIC.out.versions)
     versions = versions.mix(SOMATIC_VCFMERGE.out.versions)
 
 
