@@ -13,7 +13,7 @@ nextflow_workflow {
     tag "jumble/frankenplot"
 
 
-    test("paired tumor-normal with VCF") {
+    test("paired tumor-normal") {
 
         when {
 

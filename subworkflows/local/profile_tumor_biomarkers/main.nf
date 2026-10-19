@@ -2,6 +2,7 @@
 include { JUMBLE_FRANKENPLOT } from '../../../modules/local/jumble/frankenplot/main'
 include { PURECN_RUN         } from '../../../modules/local/purecn/run/main'
 include { TYPEDPYD           } from '../../../modules/local/typeDPYD/main'
+include { keyByCaseId        } from '../utils_nfcore_autoseq_pipeline'
 
 
 workflow PROFILE_TUMOR_BIOMARKERS {
@@ -57,37 +58,23 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     // Every input is keyed on `case_id` and its files are packed into a single element, so that
     // `join(remainder: true)` pads a missing optional input with one `null`. The tumor meta is
     // carried downstream because the report describes the tumor
-    def ch_jumble = ch_jumble_cns
-        .join(ch_jumble_csv)
-        .branch { meta, _cns, _csv ->
-            tumor: meta.sample_type == "tumor"
-            normal: meta.sample_type == "normal"
-        }
+    def ch_jumble = ch_jumble_cns.join(ch_jumble_csv)
+    def ch_dpyd   = TYPEDPYD.out.json.join(TYPEDPYD.out.csv)
 
-    def ch_tumor_jumble_by_case = ch_jumble.tumor
-        .map { meta, cns, csv ->
-            [meta.case_id, [meta, cns, csv]]
-        }
-
-    def ch_normal_jumble_by_case = ch_jumble.normal
-        .map { meta, cns, csv ->
-            [meta.case_id, [cns, csv]]
-        }
-
+    def ch_tumor_jumble  = ch_jumble.filter { meta, _cns, _csv -> meta.sample_type == "tumor" }
+    def ch_normal_jumble = ch_jumble.filter { meta, _cns, _csv -> meta.sample_type == "normal" }
     // DPYD is a germline marker, so the normal typing is reported
-    def ch_normal_dpyd_by_case = TYPEDPYD.out.json
-        .join(TYPEDPYD.out.csv)
-        .filter { meta, _json, _csv -> meta.sample_type == "normal" }
-        .map { meta, json, csv ->
-            [meta.case_id, [json, csv]]
-        }
+    def ch_normal_dpyd   = ch_dpyd.filter { meta, _json, _csv -> meta.sample_type == "normal" }
 
-    def ch_frankenplot_input = ch_tumor_jumble_by_case
-        .join(ch_normal_jumble_by_case, remainder: true)
-        .join(ch_somatic_vcf.map { meta, vcf -> [meta.case_id, vcf] })
-        .join(ch_germline_vcf.map { meta, vcf -> [meta.case_id, vcf] }, remainder: true)
-        .join(ch_hetsnps_vcf.map { meta, vcf -> [meta.case_id, vcf] }, remainder: true)
-        .join(ch_normal_dpyd_by_case, remainder: true)
+    // The somatic VCF is always produced (Mutect2 runs for every case). The normal Jumble output,
+    // germline VCF, het SNPs and normal DPYD come from the normal sample, so they are missing in
+    // tumor-only runs
+    def ch_frankenplot_input = keyByCaseId(ch_tumor_jumble, true)
+        .join(keyByCaseId(ch_normal_jumble), remainder: true)
+        .join(keyByCaseId(ch_somatic_vcf))
+        .join(keyByCaseId(ch_germline_vcf), remainder: true)
+        .join(keyByCaseId(ch_hetsnps_vcf), remainder: true)
+        .join(keyByCaseId(ch_normal_dpyd), remainder: true)
         .filter { row -> row[1] != null }
         .map { _case_id, tumor, normal, somatic_vcf, germline_vcf, hetsnps_vcf, dpyd ->
             def (meta, tumor_cns, tumor_csv) = tumor

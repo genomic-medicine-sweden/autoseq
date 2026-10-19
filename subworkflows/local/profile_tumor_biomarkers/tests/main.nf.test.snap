@@ -89,13 +89,13 @@
                 ]
             }
         ],
-        "timestamp": "2026-10-14T11:33:05.126916323",
+        "timestamp": "2026-10-19T12:48:35.991251491",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     },
-    "paired tumor-normal with VCF": {
+    "paired tumor-normal": {
         "content": [
             [
                 [
@@ -163,7 +163,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-10-14T11:32:57.237295087",
+        "timestamp": "2026-10-19T12:48:28.205034738",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

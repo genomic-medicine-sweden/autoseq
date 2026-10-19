@@ -301,3 +301,20 @@ def channelFromPathWithMeta(filePath, customId = null) {
         return [[id: meta_id], file]
     }.collect()
 }
+
+/**
+ * Re-keys a [meta, file, ...] channel on meta.case_id and packs the files into a single element,
+ * so that join(remainder: true) pads a missing optional input with one null
+ * @param ch_input Channel with [meta, file, ...] format, where meta contains case_id
+ * @param keepMeta Whether to keep the meta in the packed element (default: false)
+ * @return Channel with [case_id, file] format for a single file, [case_id, [file, ...]] for multiple
+ *         files, or [case_id, [meta, file, ...]] when keepMeta is true
+ */
+def keyByCaseId(ch_input, keepMeta = false) {
+    return ch_input.map { row ->
+        def meta  = row[0]
+        def files = row[1..-1]
+        def value = keepMeta ? [meta] + files : (files.size() == 1 ? files[0] : files)
+        return [meta.case_id, value]
+    }
+}
