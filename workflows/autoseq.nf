@@ -345,7 +345,12 @@ workflow AUTOSEQ {
         ch_tumor_cnr,
         ch_tumor_seg,
         CALL_SOMATIC_SNVS.out.mutect2_unfiltered_vcf,
-        ch_aligned_bam
+        ch_aligned_bam,
+        ANNOTATE_GERMLINE_TAF.out.germline_taf_vcf,
+        PREPARE_HETSNPS_FOR_FRANKENPLOT.out.vcf,
+        CALL_CNVS.out.jumble_cns,
+        CALL_CNVS.out.bins_csv,
+        CALL_SOMATIC_SNVS.out.vep_vcf,
     )
 
     //
@@ -423,6 +428,7 @@ workflow AUTOSEQ {
     dpyd_csv                       = PROFILE_TUMOR_BIOMARKERS.out.dpyd_csv                          // channel: [ val(meta), path(csv) ]
     dpyd_json                      = PROFILE_TUMOR_BIOMARKERS.out.dpyd_json                         // channel: [ val(meta), path(json) ]
     flagstat                       = QC_ALIGNMENT.out.flagstat                                      // channel: [ val(meta), path(flagstat) ]
+    frankenplot_html               = PROFILE_TUMOR_BIOMARKERS.out.frankenplot_html                  // channel: [ val(meta), path(html) ]
     germline_taf_tbi               = ANNOTATE_GERMLINE_TAF.out.germline_taf_tbi                     // channel: [ val(meta), path(tbi) ]
     germline_taf_vcf               = ANNOTATE_GERMLINE_TAF.out.germline_taf_vcf                     // channel: [ val(meta), path(vcf) ]
     germline_tbi                   = CALL_GERMLINE_SNVS.out.tbi                                     // channel: [ val(meta), path(tbi) ]
