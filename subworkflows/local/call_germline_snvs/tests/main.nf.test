@@ -3,6 +3,7 @@ nextflow_workflow {
     name "Test Subworkflow CALL_GERMLINE_SNVS"
     script "../main.nf"
     workflow "CALL_GERMLINE_SNVS"
+    config "./nextflow.config"
 
     tag "subworkflows"
     tag "subworkflows_local"
