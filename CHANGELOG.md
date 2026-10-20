@@ -70,6 +70,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #127 ](https://github.com/genomic-medicine-sweden/autoseq/pull/127) Sorted the `AUTOSEQ` workflow inputs alphabetically with type comments, and renamed them to match the reference channel names in `main.nf`.
 - [ #124 ](https://github.com/genomic-medicine-sweden/autoseq/pull/124) The Mutect2 VCF is now a mandatory input to `PROFILE_TUMOR_BIOMARKERS`, so `PURECN_RUN` only runs for tumors with a VCF from the same case.
 - [ #126 ](https://github.com/genomic-medicine-sweden/autoseq/pull/126) Switched the `SAGE_SOMATIC` module to the `versions` topic, so `CALL_SOMATIC_SNVS` no longer mixes its `versions.yml`.
+- [ #133 ](https://github.com/genomic-medicine-sweden/autoseq/pull/133) Aligned the `CALL_CNVS` subworkflow with the coding conventions.
 
 ### `Fixed`
 
