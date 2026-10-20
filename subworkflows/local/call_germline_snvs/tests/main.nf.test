@@ -3,7 +3,6 @@ nextflow_workflow {
     name "Test Subworkflow CALL_GERMLINE_SNVS"
     script "../main.nf"
     workflow "CALL_GERMLINE_SNVS"
-    config "./nextflow.config"
 
     tag "subworkflows"
     tag "subworkflows_local"
@@ -41,26 +40,29 @@ nextflow_workflow {
                     []
                 ])
                 input[1] = channel.value([
-                    [ id:'genome' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                    [ id:'dbsnp_vcf' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/dbsnp_138.b37.vcf.gz', checkIfExists: true)
                 ])
                 input[2] = channel.value([
-                    [ id:'genome_fai' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                    [ id:'dbsnp_vcf_tbi' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/dbsnp_138.b37.vcf.gz.tbi', checkIfExists: true)
                 ])
                 input[3] = channel.value([
                     [ id:'genome_dict' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
                 ])
-                input[4] = UNTAR.out.untar.collect()
+                input[4] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
                 input[5] = channel.value([
-                    [ id:'dbsnp_vcf' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/dbsnp_138.b37.vcf.gz', checkIfExists: true)
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
                 ])
-                input[6] = channel.value([
-                    [ id:'dbsnp_vcf_tbi' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/dbsnp_138.b37.vcf.gz.tbi', checkIfExists: true)
-                ])
+                input[6] = UNTAR.out.untar.collect()
+                input[7] = 115
+                input[8] = 'GRCh37'
+                input[9] = 'homo_sapiens'
                 """
             }
         }
@@ -71,8 +73,8 @@ nextflow_workflow {
                 { assert snapshot(
                     // GATK and VEP write the tool version and the full command line into the
                     // VCF header, so only the variant records are hashed
-                    workflow.out.vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}"] },
-                    workflow.out.tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.haplotypecaller_vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}"] },
+                    workflow.out.haplotypecaller_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
                     workflow.out.vep_vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:${path(vcf).vcf.variantsMD5}"] },
                     workflow.out.vep_tbi.collect { meta, tbi -> [meta, file(tbi).name] }
                 ).match() }
@@ -95,26 +97,29 @@ nextflow_workflow {
                     []
                 ])
                 input[1] = channel.value([
-                    [ id:'genome' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                    [ id:'dbsnp_vcf' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/dbsnp_138.b37.vcf.gz', checkIfExists: true)
                 ])
                 input[2] = channel.value([
-                    [ id:'genome_fai' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                    [ id:'dbsnp_vcf_tbi' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/dbsnp_138.b37.vcf.gz.tbi', checkIfExists: true)
                 ])
                 input[3] = channel.value([
                     [ id:'genome_dict' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.dict', checkIfExists: true)
                 ])
-                input[4] = UNTAR.out.untar.collect()
+                input[4] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
                 input[5] = channel.value([
-                    [ id:'dbsnp_vcf' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/dbsnp_138.b37.vcf.gz', checkIfExists: true)
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
                 ])
-                input[6] = channel.value([
-                    [ id:'dbsnp_vcf_tbi' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/dbsnp_138.b37.vcf.gz.tbi', checkIfExists: true)
-                ])
+                input[6] = UNTAR.out.untar.collect()
+                input[7] = 115
+                input[8] = 'GRCh37'
+                input[9] = 'homo_sapiens'
                 """
             }
         }
@@ -125,8 +130,8 @@ nextflow_workflow {
                 // the empty `.vcf.gz` written by the GATK stub cannot be decompressed and
                 // is serialised as an absolute work path, so only the file names are asserted
                 { assert snapshot(
-                    workflow.out.vcf.collect { meta, vcf -> [meta, file(vcf).name] },
-                    workflow.out.tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    workflow.out.haplotypecaller_vcf.collect { meta, vcf -> [meta, file(vcf).name] },
+                    workflow.out.haplotypecaller_tbi.collect { meta, tbi -> [meta, file(tbi).name] },
                     workflow.out.vep_vcf.collect { meta, vcf -> [meta, file(vcf).name] },
                     workflow.out.vep_tbi.collect { meta, tbi -> [meta, file(tbi).name] }
                 ).match() }

@@ -59,10 +59,13 @@ workflow AUTOSEQ {
     ch_sage_pon                        // channel: [mandatory] [ val(meta), path(pon) ] SAGE panel of normals
     ch_samplesheet                     // channel: [mandatory] [ val(meta), path(reads) ] samplesheet read in from --input
     ch_targets_bed                     // channel: [mandatory] [ val(meta), path(bed) ] target regions BED
+    val_ensemblvep_version             // string:  [mandatory] Ensembl VEP cache version
+    val_genome                         // string:  [mandatory] genome assembly (e.g. "GRCh37")
     val_multiqc_config                 // string:  [optional]  path to MultiQC config
     val_multiqc_logo                   // string:  [optional]  path to MultiQC logo
     val_multiqc_methods_description    // string:  [optional]  path to MultiQC methods description
     val_outdir                         // string:  [mandatory] path to output directory
+    val_vep_species                    // string:  [mandatory] Ensembl VEP species (e.g. "homo_sapiens")
 
     main:
 
@@ -250,12 +253,15 @@ workflow AUTOSEQ {
 
     CALL_GERMLINE_SNVS(
         ch_germline_input,  // normal samples only
-        ch_genome_fasta,
-        ch_genome_fai,
-        ch_dict,
-        ch_ensembl_vep_cache,
         ch_dbsnp_vcf,
-        ch_dbsnp_vcf_tbi
+        ch_dbsnp_vcf_tbi,
+        ch_dict,
+        ch_genome_fai,
+        ch_genome_fasta,
+        ch_ensembl_vep_cache,
+        val_ensemblvep_version,
+        val_genome,
+        val_vep_species
     )
 
     //
@@ -315,8 +321,8 @@ workflow AUTOSEQ {
     // MODULE: Prepare Heterozygous SNPs for Frankenplot BAF plotting
     //
 
-    def ch_germline_vcf_by_case = CALL_GERMLINE_SNVS.out.vcf
-        .join(CALL_GERMLINE_SNVS.out.tbi)
+    def ch_germline_vcf_by_case = CALL_GERMLINE_SNVS.out.haplotypecaller_vcf
+        .join(CALL_GERMLINE_SNVS.out.haplotypecaller_tbi)
         .map { meta, vcf, tbi ->
             return [meta.case_id, vcf, tbi]
         }
@@ -431,8 +437,8 @@ workflow AUTOSEQ {
     frankenplot_html               = PROFILE_TUMOR_BIOMARKERS.out.frankenplot_html                  // channel: [ val(meta), path(html) ]
     germline_taf_tbi               = ANNOTATE_GERMLINE_TAF.out.germline_taf_tbi                     // channel: [ val(meta), path(tbi) ]
     germline_taf_vcf               = ANNOTATE_GERMLINE_TAF.out.germline_taf_vcf                     // channel: [ val(meta), path(vcf) ]
-    germline_tbi                   = CALL_GERMLINE_SNVS.out.tbi                                     // channel: [ val(meta), path(tbi) ]
-    germline_vcf                   = CALL_GERMLINE_SNVS.out.vcf                                     // channel: [ val(meta), path(vcf) ]
+    germline_tbi                   = CALL_GERMLINE_SNVS.out.haplotypecaller_tbi                     // channel: [ val(meta), path(tbi) ]
+    germline_vcf                   = CALL_GERMLINE_SNVS.out.haplotypecaller_vcf                     // channel: [ val(meta), path(vcf) ]
     germline_vep_tbi               = CALL_GERMLINE_SNVS.out.vep_tbi                                 // channel: [ val(meta), path(tbi) ]
     germline_vep_vcf               = CALL_GERMLINE_SNVS.out.vep_vcf                                 // channel: [ val(meta), path(vcf) ]
     gripss_germline_filtered_vcf   = CALL_SVS.out.gripss_germline_filtered_vcf                      // channel: [ val(meta), path(vcf), path(tbi) ]

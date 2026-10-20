@@ -39,6 +39,8 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     val_dbsnp_vcf_tbi                   // string:  [optional]  path to dbSNP VCF index
     val_ensembl_vep_cache               // string:  [mandatory] path to Ensembl VEP cache directory
     val_ensembl_vep_cache_tar           // string:  [optional]  path to Ensembl VEP cache tarball
+    val_ensemblvep_version              // string:  [mandatory] Ensembl VEP cache version
+    val_genome                          // string:  [mandatory] genome assembly (e.g. "GRCh37")
     val_genome_dict                     // string:  [mandatory] path to reference genome sequence dictionary
     val_genome_fai                      // string:  [mandatory] path to reference genome FASTA index
     val_genome_fasta                    // string:  [mandatory] path to reference genome FASTA
@@ -63,6 +65,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     val_sage_known_hotspots_somatic     // string:  [mandatory] path to SAGE somatic hotspots
     val_sage_pon                        // string:  [mandatory] path to SAGE panel of normals
     val_targets_bed                     // string:  [mandatory] path to target regions BED
+    val_vep_species                     // string:  [mandatory] Ensembl VEP species (e.g. "homo_sapiens")
 
     main:
 
@@ -143,10 +146,13 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
         ch_sage_pon,
         ch_samplesheet,
         ch_targets_bed,
+        val_ensemblvep_version,
+        val_genome,
         val_multiqc_config,
         val_multiqc_logo,
         val_multiqc_methods_description,
         val_outdir,
+        val_vep_species
     )
 
     emit:
@@ -227,6 +233,8 @@ workflow {
         params.dbsnp_vcf_tbi,
         params.ensembl_vep_cache,
         params.ensembl_vep_cache_tar,
+        params.ensemblvep_version,
+        params.genome,
         params.genome_dict,
         params.genome_fai,
         params.genome_fasta,
@@ -250,7 +258,8 @@ workflow {
         params.sage_highconf_regions,
         params.sage_known_hotspots_somatic,
         params.sage_pon,
-        params.targets_bed
+        params.targets_bed,
+        params.vep_species
     )
     //
     // SUBWORKFLOW: Run completion tasks
