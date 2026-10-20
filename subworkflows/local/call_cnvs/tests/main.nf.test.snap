@@ -2,6 +2,26 @@
     "tumor and normal samples - stub": {
         "content": [
             {
+                "annotated_cns": [
+                    [
+                        {
+                            "id": "NORMAL",
+                            "case_id": "TEST",
+                            "sample_name": "NORMAL",
+                            "sample_type": "normal"
+                        },
+                        "NORMAL_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ],
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
                 "bins_csv": [
                     [
                         {
@@ -42,7 +62,7 @@
                         "TUMOR.cnr:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "cns": [
+                "cnv_plot_png": [
                     [
                         {
                             "id": "NORMAL",
@@ -50,7 +70,7 @@
                             "sample_name": "NORMAL",
                             "sample_type": "normal"
                         },
-                        "NORMAL_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "NORMAL.png:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ],
                     [
                         {
@@ -59,7 +79,7 @@
                             "sample_name": "TUMOR",
                             "sample_type": "tumor"
                         },
-                        "TUMOR_ann.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        "TUMOR.png:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "jumble_cns": [
@@ -80,26 +100,6 @@
                             "sample_type": "tumor"
                         },
                         "TUMOR.cns:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "png": [
-                    [
-                        {
-                            "id": "NORMAL",
-                            "case_id": "TEST",
-                            "sample_name": "NORMAL",
-                            "sample_type": "normal"
-                        },
-                        "NORMAL.png:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ],
-                    [
-                        {
-                            "id": "TUMOR",
-                            "case_id": "TEST",
-                            "sample_name": "TUMOR",
-                            "sample_type": "tumor"
-                        },
-                        "TUMOR.png:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
                 "profile_bedgraph": [
@@ -164,7 +164,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-09-29T12:30:14.296169603",
+        "timestamp": "2026-10-20T16:14:39.860089197",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

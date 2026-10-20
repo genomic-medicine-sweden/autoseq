@@ -264,8 +264,8 @@ workflow AUTOSEQ {
 
     CALL_CNVS(
         ch_aligned_bam,
-        ch_jumble_ref,
-        ch_curation_ann
+        ch_curation_ann,
+        ch_jumble_ref
     )
 
     //
@@ -419,11 +419,11 @@ workflow AUTOSEQ {
 
 
     emit:
-    annotated_cns                  = CALL_CNVS.out.cns                                              // channel: [ val(meta), path(cns) ]
+    annotated_cns                  = CALL_CNVS.out.annotated_cns                                    // channel: [ val(meta), path(cns) ]
     bai                            = ch_aligned_bam.map { meta, _bam, bai -> [ meta, bai ] }        // channel: [ val(meta), path(bai) ]
     bam                            = ch_aligned_bam.map { meta, bam, _bai -> [ meta, bam ] }        // channel: [ val(meta), path(bam) ]
     cnr                            = CALL_CNVS.out.cnr                                              // channel: [ val(meta), path(cnr) ]
-    cnv_plot_png                   = CALL_CNVS.out.png                                              // channel: [ val(meta), path(png) ]
+    cnv_plot_png                   = CALL_CNVS.out.cnv_plot_png                                     // channel: [ val(meta), path(png) ]
     contamination_table            = CALL_SOMATIC_SNVS.out.contamination_table                      // channel: [ val(meta), path(table) ]
     dpyd_csv                       = PROFILE_TUMOR_BIOMARKERS.out.dpyd_csv                          // channel: [ val(meta), path(csv) ]
     dpyd_json                      = PROFILE_TUMOR_BIOMARKERS.out.dpyd_json                         // channel: [ val(meta), path(json) ]
