@@ -1,4 +1,6 @@
-
+//
+// Subworkflow for alignment QC metrics
+//
 
 include { PICARD_COLLECTHSMETRICS       } from '../../../modules/nf-core/picard/collecthsmetrics/main'
 include { PICARD_COLLECTMULTIPLEMETRICS } from '../../../modules/nf-core/picard/collectmultiplemetrics/main'
