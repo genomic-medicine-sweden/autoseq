@@ -1,5 +1,5 @@
 //
-// Subworkflow for CNV calling
+// Subworkflow for Copy Number Variants calling
 //
 
 include { ANNOTATE_CNVS } from '../../../modules/local/annotate_cnvs/main'
