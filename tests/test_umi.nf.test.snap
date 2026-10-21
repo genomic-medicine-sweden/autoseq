@@ -96,6 +96,9 @@
                 "GROUPREADSBYUMI": {
                     "fgbio": "3.1.2"
                 },
+                "JUMBLE_FRANKENPLOT": {
+                    "Jumble": "0.5.6"
+                },
                 "JUMBLE_RUN": {
                     "Jumble": "0.5.5"
                 },
@@ -187,6 +190,8 @@
                 "dpyd/TEST.NORMAL.DPYD.json",
                 "dpyd/TEST.TUMOR.DPYD.csv",
                 "dpyd/TEST.TUMOR.DPYD.json",
+                "frankenplot",
+                "frankenplot/TEST.frankenplot.html",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
@@ -427,6 +432,9 @@
                 "GROUPREADSBYUMI": {
                     "fgbio": "3.1.2"
                 },
+                "JUMBLE_FRANKENPLOT": {
+                    "Jumble": "0.5.6"
+                },
                 "JUMBLE_RUN": {
                     "Jumble": "0.5.5"
                 },
@@ -518,6 +526,8 @@
                 "dpyd/TEST.NORMAL.DPYD.json",
                 "dpyd/TEST.TUMOR.DPYD.csv",
                 "dpyd/TEST.TUMOR.DPYD.json",
+                "frankenplot",
+                "frankenplot/TEST.frankenplot.html",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
