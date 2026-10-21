@@ -48,10 +48,8 @@ workflow ALIGNMENT {
         sort_bam
     )
 
-    ch_output_from_bwamem2_mem = BWAMEM2_MEM.out.bam
-
     // Merge the per-lane BAMs of each sample and remove duplicates
-    ch_bwamem2_for_markduplicates = ch_output_from_bwamem2_mem
+    ch_bwamem2_for_markduplicates = BWAMEM2_MEM.out.bam
         .map { meta, bam ->
             def sample_meta = [
                 id         : meta.sample_name,
