@@ -149,8 +149,8 @@ workflow AUTOSEQ {
 
         ALIGNMENT(
             ch_bwamem2_index,
-            ch_genome_fasta,
             ch_genome_fai,
+            ch_genome_fasta,
             FASTP.out.reads,
         )
 
