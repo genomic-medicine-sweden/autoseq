@@ -1,7 +1,7 @@
 {
     "test_umi profile - paired tumor-normal": {
         "content": [
-            78,
+            79,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -329,7 +329,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-10-19T11:17:03.912366465",
+        "timestamp": "2026-10-21T13:51:22.134975067",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -337,7 +337,7 @@
     },
     "test_umi profile - paired tumor-normal - stub": {
         "content": [
-            78,
+            79,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -588,7 +588,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-10-12T16:07:39.506554628",
+        "timestamp": "2026-10-21T13:52:17.282389815",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
