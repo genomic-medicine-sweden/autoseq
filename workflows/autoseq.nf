@@ -77,24 +77,13 @@ workflow AUTOSEQ {
     )
 
     //
-    // MODULE: Run FastP
-    //
-    FASTP (
-        ch_samplesheet.map { meta, reads -> [meta, reads, []] }, // adapter_fasta: not used in this pipeline
-        params.discard_trimmed_pass,
-        params.save_trimmed_fail,
-        params.save_merged
-    )
-
-    ch_input_reads = FASTP.out.reads
-
-    //
     // SUBWORKFLOW: ALIGNMENT
     //
 
     if (params.umi_structure) {
 
-        ch_input_reads
+        // UMI reads skip FASTP and go to fgbio untrimmed, so the inline UMIs stay intact
+        def ch_input_reads = ch_samplesheet
             .map { meta, reads ->
                 def id = "${meta.case_id}.${meta.sample_name}".toString()
                 meta   = meta + [id: id]
@@ -110,7 +99,6 @@ workflow AUTOSEQ {
                 def files = sorted.collect{it -> it[1]}.flatten()
                 return [metas[0], files]
             }
-            .set { ch_input_reads }
 
         CAT_FASTQ (
             ch_input_reads
@@ -147,11 +135,23 @@ workflow AUTOSEQ {
 
     } else {
 
+        //
+        // MODULE: Run FastP
+        //
+        FASTP (
+            ch_samplesheet.map { meta, reads -> [meta, reads, []] }, // adapter_fasta: not used in this pipeline
+            params.discard_trimmed_pass,
+            params.save_trimmed_fail,
+            params.save_merged
+        )
+
+        ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it -> it[1]}.ifEmpty([]))
+
         ALIGNMENT(
             ch_bwamem2_index,
-            ch_genome_fai,
             ch_genome_fasta,
-            ch_input_reads
+            ch_genome_fai,
+            FASTP.out.reads,
         )
 
         ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.dedup_metrics.collect{it -> it[1]}.ifEmpty([]))
@@ -345,7 +345,12 @@ workflow AUTOSEQ {
         ch_tumor_cnr,
         ch_tumor_seg,
         CALL_SOMATIC_SNVS.out.mutect2_unfiltered_vcf,
-        ch_aligned_bam
+        ch_aligned_bam,
+        ANNOTATE_GERMLINE_TAF.out.germline_taf_vcf,
+        PREPARE_HETSNPS_FOR_FRANKENPLOT.out.vcf,
+        CALL_CNVS.out.jumble_cns,
+        CALL_CNVS.out.bins_csv,
+        CALL_SOMATIC_SNVS.out.vep_vcf,
     )
 
     //
@@ -381,7 +386,6 @@ workflow AUTOSEQ {
     // MODULE: MultiQC
     //
     ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it -> it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it -> it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNMENT.out.multiple_metrics.collect{it -> it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNMENT.out.hs_metrics.collect{it -> it[1]}.ifEmpty([]))
     ch_multiqc_files = ch_multiqc_files.mix(QC_ALIGNMENT.out.flagstat.collect{it -> it[1]}.ifEmpty([]))
@@ -423,6 +427,7 @@ workflow AUTOSEQ {
     dpyd_csv                       = PROFILE_TUMOR_BIOMARKERS.out.dpyd_csv                          // channel: [ val(meta), path(csv) ]
     dpyd_json                      = PROFILE_TUMOR_BIOMARKERS.out.dpyd_json                         // channel: [ val(meta), path(json) ]
     flagstat                       = QC_ALIGNMENT.out.flagstat                                      // channel: [ val(meta), path(flagstat) ]
+    frankenplot_html               = PROFILE_TUMOR_BIOMARKERS.out.frankenplot_html                  // channel: [ val(meta), path(html) ]
     germline_taf_tbi               = ANNOTATE_GERMLINE_TAF.out.germline_taf_tbi                     // channel: [ val(meta), path(tbi) ]
     germline_taf_vcf               = ANNOTATE_GERMLINE_TAF.out.germline_taf_vcf                     // channel: [ val(meta), path(vcf) ]
     germline_tbi                   = CALL_GERMLINE_SNVS.out.tbi                                     // channel: [ val(meta), path(tbi) ]
