@@ -97,6 +97,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #122 ](https://github.com/genomic-medicine-sweden/autoseq/pull/122) Emit the Jumble bin-level table (`bins_csv`) from the `CALL_CNVS` subworkflow so it can be used as input to the `JUMBLE_FRANKENPLOT` module for the genome report.
 - [ #125 ](https://github.com/genomic-medicine-sweden/autoseq/pull/125) Write the `SAGE_SOMATIC` VCF to the task work dir root so it is published to `snvs/somatic/` instead of `snvs/somatic/somatic/`.
 - [ #124 ](https://github.com/genomic-medicine-sweden/autoseq/pull/124) Joined the `PURECN_RUN` inputs on `case_id` instead of `combine`, so tumor CNR/SEG are no longer cross-paired with other cases' Mutect2 VCFs. Added `case_id` to the `PROFILE_TUMOR_BIOMARKERS` nf-test inputs and removed the "without VCF" test.
+- [ #128 ](https://github.com/genomic-medicine-sweden/autoseq/pull/128) Skipped `FASTP` in the UMI branch so raw reads go straight to `CAT_FASTQ` and `UMI_PROCESSING`, and updated the `test_umi` snapshots.
 
 ### `Removed`
 
