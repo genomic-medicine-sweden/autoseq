@@ -165,9 +165,9 @@ workflow AUTOSEQ {
 
     QC_ALIGNMENT(
         ch_aligned_bam,
-        ch_genome_fasta,
-        ch_genome_fai,
         ch_dict,
+        ch_genome_fai,
+        ch_genome_fasta,
         ch_interval_list
     )
 

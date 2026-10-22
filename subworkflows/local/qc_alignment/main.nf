@@ -1,16 +1,18 @@
+//
+// Subworkflow for alignment QC metrics
+//
 
-
-include { PICARD_COLLECTMULTIPLEMETRICS  } from '../../../modules/nf-core/picard/collectmultiplemetrics/main'
-include { PICARD_COLLECTHSMETRICS        } from '../../../modules/nf-core/picard/collecthsmetrics/main'
-include { SAMTOOLS_FLAGSTAT              } from '../../../modules/nf-core/samtools/flagstat/main'
+include { PICARD_COLLECTHSMETRICS       } from '../../../modules/nf-core/picard/collecthsmetrics/main'
+include { PICARD_COLLECTMULTIPLEMETRICS } from '../../../modules/nf-core/picard/collectmultiplemetrics/main'
+include { SAMTOOLS_FLAGSTAT             } from '../../../modules/nf-core/samtools/flagstat/main'
 
 workflow QC_ALIGNMENT {
     take:
-    ch_input_bam // channel: input BAM files from alignment workflow
-    ch_genome_fasta
-    ch_genome_fai
-    ch_genome_dict
-    ch_interval_list
+    ch_bam_bai       // channel: [mandatory] [ val(meta), path(bam), path(bai) ]
+    ch_genome_dict   // channel: [mandatory] [ val(meta), path(dict) ]
+    ch_genome_fai    // channel: [mandatory] [ val(meta), path(fai) ]
+    ch_genome_fasta  // channel: [mandatory] [ val(meta), path(fasta) ]
+    ch_interval_list // channel: [mandatory] [ val(meta), path(interval_list) ]
 
     main:
 
@@ -19,14 +21,14 @@ workflow QC_ALIGNMENT {
     //
 
     PICARD_COLLECTMULTIPLEMETRICS(
-        ch_input_bam,
+        ch_bam_bai,
         ch_genome_fasta,
         ch_genome_fai
     )
 
-    ch_bam = ch_input_bam
+    ch_bam_for_picard_collecthsmetrics = ch_bam_bai
         .combine(ch_interval_list)
-        .map { meta, bam, bai, meta2, interval_list ->
+        .map { meta, bam, bai, _meta2, interval_list ->
             [meta, bam, bai, interval_list, interval_list]
         }
 
@@ -36,7 +38,7 @@ workflow QC_ALIGNMENT {
     //
 
     PICARD_COLLECTHSMETRICS(
-        ch_bam,
+        ch_bam_for_picard_collecthsmetrics,
         ch_genome_fasta,
         ch_genome_fai,
         ch_genome_dict,
@@ -48,12 +50,12 @@ workflow QC_ALIGNMENT {
     //
 
     SAMTOOLS_FLAGSTAT(
-        ch_input_bam
+        ch_bam_bai
     )
 
     emit:
-    multiple_metrics = PICARD_COLLECTMULTIPLEMETRICS.out.metrics
-    hs_metrics       = PICARD_COLLECTHSMETRICS.out.metrics
-    flagstat         = SAMTOOLS_FLAGSTAT.out.flagstat
+    flagstat         = SAMTOOLS_FLAGSTAT.out.flagstat            // channel: [ val(meta), path(flagstat) ]
+    hs_metrics       = PICARD_COLLECTHSMETRICS.out.metrics       // channel: [ val(meta), path(metrics) ]
+    multiple_metrics = PICARD_COLLECTMULTIPLEMETRICS.out.metrics // channel: [ val(meta), [ path(metrics) ] ]
 
 }
