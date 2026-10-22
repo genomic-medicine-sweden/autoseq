@@ -32,7 +32,16 @@ nextflow_workflow {
         when {
             workflow {
                 """
-                input[0] = channel.of(
+                input[0] = BWAMEM2_INDEX.out.index.collect()
+                input[1] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[3] = channel.of(
                     [
                         [ id:'TEST_TUMOR_L001', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor', lane:'L001', datatype:'fastq', single_end:false ],
                         [
@@ -48,15 +57,6 @@ nextflow_workflow {
                         ]
                     ]
                 )
-                input[1] = channel.value([
-                    [ id:'genome' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
-                ])
-                input[2] = channel.value([
-                    [ id:'genome_fai' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
-                ])
-                input[3] = BWAMEM2_INDEX.out.index.collect()
                 """
             }
         }
@@ -82,7 +82,16 @@ nextflow_workflow {
         when {
             workflow {
                 """
-                input[0] = channel.of(
+                input[0] = BWAMEM2_INDEX.out.index.collect()
+                input[1] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[3] = channel.of(
                     [
                         [ id:'TEST_TUMOR_L001', case_id:'TEST', sample_name:'TUMOR', sample_type:'tumor', lane:'L001', datatype:'fastq', single_end:false ],
                         [
@@ -98,15 +107,6 @@ nextflow_workflow {
                         ]
                     ]
                 )
-                input[1] = channel.value([
-                    [ id:'genome' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
-                ])
-                input[2] = channel.value([
-                    [ id:'genome_fai' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
-                ])
-                input[3] = BWAMEM2_INDEX.out.index.collect()
                 """
             }
         }

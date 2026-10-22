@@ -1,5 +1,5 @@
 //
-//
+// Align reads with BWA-MEM2, merge the per-lane alignments of each sample and remove duplicates
 //
 
 include { BWAMEM2_MEM                            } from '../../../modules/nf-core/bwamem2/mem/main'
@@ -8,10 +8,10 @@ include { GATK4_MARKDUPLICATES as MARKDUPLICATES } from '../../../modules/nf-cor
 
 workflow ALIGNMENT {
     take:
-    ch_input_reads // channel: input reads from samplesheet
-    ch_genome_fasta
-    ch_genome_fai
-    ch_bwamem2_index
+    ch_bwamem2_index // channel: [mandatory] [ val(meta), path(index) ]
+    ch_genome_fai    // channel: [mandatory] [ val(meta), path(fai) ]
+    ch_genome_fasta  // channel: [mandatory] [ val(meta), path(fasta) ]
+    ch_input_reads   // channel: [mandatory] [ val(meta), [ path(fastq_1), path(fastq_2) ] ]
 
     main:
 
@@ -19,7 +19,7 @@ workflow ALIGNMENT {
     // MODULE: Run BWA-MEM2 alignment
     //
 
-    ch_input_fastqs = ch_input_reads
+    ch_reads_for_bwamem2_mem = ch_input_reads
         .map { meta, reads ->
             tuple(meta.sample_name, meta, reads)
         }
@@ -37,59 +37,38 @@ workflow ALIGNMENT {
 
                 processed_reads.add( tuple(new_meta, reads_list[index]) )
             }
-
-            return processed_reads
+            processed_reads
         }
 
-
-    sort_bam = true
+    def sort_bam = true
     BWAMEM2_MEM(
-        ch_input_fastqs,
+        ch_reads_for_bwamem2_mem,
         ch_bwamem2_index,
         ch_genome_fasta,
         sort_bam
     )
 
-    ch_input_bam = BWAMEM2_MEM.out.bam
+    // Merge the per-lane BAMs of each sample and remove duplicates
+    ch_bwamem2_for_markduplicates = BWAMEM2_MEM.out.bam
         .map { meta, bam ->
-            def id = "${meta.case_id}_${meta.sample_name}".toString()
-            tuple(id, bam)
-        }
-        .groupTuple()
-
-
-    ch_bam_meta = BWAMEM2_MEM.out.bam
-        .map { meta, bam ->
-            def id = "${meta.case_id}_${meta.sample_name}".toString()
-            tuple(id, meta.case_id, meta.sample_name, meta.sample_type)
-        }
-        .groupTuple()
-        .map { id, case_id, sample_name, sample_type ->
-            def meta = [
-                id         : sample_name.first(),
-                case_id    : case_id.first(),
-                sample_name: sample_name.first(),
-                sample_type: sample_type.first()
+            def sample_meta = [
+                id         : meta.sample_name,
+                case_id    : meta.case_id,
+                sample_name: meta.sample_name,
+                sample_type: meta.sample_type
             ]
-
-            tuple(id, meta)
+            tuple(sample_meta, bam)
         }
-        .combine(ch_input_bam, by: 0)
-
-    ch_input_bam = ch_bam_meta
-        .map { id, meta, bam ->
-            tuple(meta, bam)
-        }
-
+        .groupTuple()
 
     MARKDUPLICATES (
-        ch_input_bam,
-        ch_genome_fasta.collect{it[1]},
-        ch_genome_fai.collect{it[1]}
+        ch_bwamem2_for_markduplicates,
+        ch_genome_fasta.map { _meta, fasta -> fasta }.collect(),
+        ch_genome_fai.map { _meta, fai -> fai }.collect()
     )
 
     emit:
-    dedup_bam        = MARKDUPLICATES.out.bam
-    dedup_bai        = MARKDUPLICATES.out.bai
-    dedup_metrics    = MARKDUPLICATES.out.metrics
+    dedup_bai     = MARKDUPLICATES.out.bai     // channel: [ val(meta), path(bai) ]
+    dedup_bam     = MARKDUPLICATES.out.bam     // channel: [ val(meta), path(bam) ]
+    dedup_metrics = MARKDUPLICATES.out.metrics // channel: [ val(meta), path(metrics) ]
 }

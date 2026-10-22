@@ -148,10 +148,10 @@ workflow AUTOSEQ {
         ch_multiqc_files = ch_multiqc_files.mix(FASTP.out.json.collect{it -> it[1]}.ifEmpty([]))
 
         ALIGNMENT(
-            FASTP.out.reads,
-            ch_genome_fasta,
+            ch_bwamem2_index,
             ch_genome_fai,
-            ch_bwamem2_index
+            ch_genome_fasta,
+            FASTP.out.reads,
         )
 
         ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.dedup_metrics.collect{it -> it[1]}.ifEmpty([]))
