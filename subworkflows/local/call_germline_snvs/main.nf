@@ -30,7 +30,7 @@ workflow CALL_GERMLINE_SNVS {
         ch_genome_fai,
         ch_dict,
         ch_dbsnp_vcf,
-        ch_dbsnp_vcf_tbi
+        ch_dbsnp_vcf_tbi,
     )
 
     ch_haplotypecaller_for_ensemblvep_vep = GATK4_HAPLOTYPECALLER.out.vcf
