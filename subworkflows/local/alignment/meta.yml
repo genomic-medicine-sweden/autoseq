@@ -11,6 +11,23 @@ components:
   - bwamem2/mem
   - gatk4/markduplicates
 input:
+  - ch_bwamem2_index:
+      type: directory
+      description: |
+        BWA-MEM2 genome index directory
+        Structure: [ val(meta), path(index) ]
+  - ch_genome_fai:
+      type: file
+      description: |
+        Index of the reference genome FASTA
+        Structure: [ val(meta), path(fai) ]
+      pattern: "*.fai"
+  - ch_genome_fasta:
+      type: file
+      description: |
+        Reference genome FASTA
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
   - ch_input_reads:
       type: file
       description: |
@@ -19,36 +36,19 @@ input:
         (`<sample_name>.<n>`) and read group before alignment.
         Structure: [ val(meta), [ path(fastq_1), path(fastq_2) ] ]
       pattern: "*.{fq,fastq}.gz"
-  - ch_genome_fasta:
-      type: file
-      description: |
-        Reference genome FASTA
-        Structure: [ val(meta), path(fasta) ]
-      pattern: "*.{fa,fasta}"
-  - ch_genome_fai:
-      type: file
-      description: |
-        Index of the reference genome FASTA
-        Structure: [ val(meta), path(fai) ]
-      pattern: "*.fai"
-  - ch_bwamem2_index:
-      type: directory
-      description: |
-        BWA-MEM2 genome index directory
-        Structure: [ val(meta), path(index) ]
 output:
-  - dedup_bam:
-      type: file
-      description: |
-        Deduplicated, coordinate-sorted alignments, one BAM per sample
-        Structure: [ val(meta), path(bam) ]
-      pattern: "*.bam"
   - dedup_bai:
       type: file
       description: |
         Index of the deduplicated BAM
         Structure: [ val(meta), path(bai) ]
       pattern: "*.bai"
+  - dedup_bam:
+      type: file
+      description: |
+        Deduplicated, coordinate-sorted alignments, one BAM per sample
+        Structure: [ val(meta), path(bam) ]
+      pattern: "*.bam"
   - dedup_metrics:
       type: file
       description: |

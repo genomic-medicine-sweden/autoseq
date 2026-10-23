@@ -8,34 +8,34 @@ keywords:
   - samtools
   - bam
 components:
-  - picard/collectmultiplemetrics
   - picard/collecthsmetrics
+  - picard/collectmultiplemetrics
   - samtools/flagstat
 input:
-  - ch_input_bam:
+  - ch_bam_bai:
       type: file
       description: |
         Aligned, deduplicated BAM files with their indices
         Structure: [ val(meta), path(bam), path(bai) ]
       pattern: "*.bam"
-  - ch_genome_fasta:
-      type: file
-      description: |
-        Reference genome FASTA
-        Structure: [ val(meta), path(fasta) ]
-      pattern: "*.{fa,fasta}"
-  - ch_genome_fai:
-      type: file
-      description: |
-        Index of the reference genome FASTA
-        Structure: [ val(meta), path(fai) ]
-      pattern: "*.fai"
   - ch_genome_dict:
       type: file
       description: |
         Sequence dictionary of the reference genome
         Structure: [ val(meta), path(dict) ]
       pattern: "*.dict"
+  - ch_genome_fai:
+      type: file
+      description: |
+        Index of the reference genome FASTA
+        Structure: [ val(meta), path(fai) ]
+      pattern: "*.fai"
+  - ch_genome_fasta:
+      type: file
+      description: |
+        Reference genome FASTA
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
   - ch_interval_list:
       type: file
       description: |
@@ -44,6 +44,18 @@ input:
         Structure: [ val(meta), path(interval_list) ]
       pattern: "*.interval_list"
 output:
+  - flagstat:
+      type: file
+      description: |
+        Alignment counts reported by samtools flagstat
+        Structure: [ val(meta), path(flagstat) ]
+      pattern: "*.flagstat"
+  - hs_metrics:
+      type: file
+      description: |
+        Hybrid-selection coverage metrics collected by Picard CollectHsMetrics
+        Structure: [ val(meta), path(metrics) ]
+      pattern: "*_metrics"
   - multiple_metrics:
       type: file
       description: |
@@ -51,18 +63,6 @@ output:
         collected by Picard CollectMultipleMetrics
         Structure: [ val(meta), [ path(metrics) ] ]
       pattern: "*_metrics"
-  - hs_metrics:
-      type: file
-      description: |
-        Hybrid-selection coverage metrics collected by Picard CollectHsMetrics
-        Structure: [ val(meta), path(metrics) ]
-      pattern: "*_metrics"
-  - flagstat:
-      type: file
-      description: |
-        Alignment counts reported by samtools flagstat
-        Structure: [ val(meta), path(flagstat) ]
-      pattern: "*.flagstat"
 authors:
   - "@imsarath"
 maintainers:
