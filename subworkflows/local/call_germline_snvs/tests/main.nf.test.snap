@@ -31,7 +31,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL-all.germline.vep.vcf.gz"
+                    "NORMAL_all.germline.vep.vcf.gz"
                 ]
             ],
             [
@@ -42,13 +42,13 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL-all.germline.vep.vcf.gz.tbi"
+                    "NORMAL_all.germline.vep.vcf.gz.tbi"
                 ]
             ]
         ],
-        "timestamp": "2026-08-10T14:22:34.250556764",
+        "timestamp": "2026-10-23T11:25:50.201844815",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     },
@@ -84,7 +84,7 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL-all.germline.vep.vcf.gz:d41d8cd98f00b204e9800998ecf8427e"
+                    "NORMAL_all.germline.vep.vcf.gz:d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ],
             [
@@ -95,13 +95,13 @@
                         "sample_name": "NORMAL",
                         "sample_type": "normal"
                     },
-                    "NORMAL-all.germline.vep.vcf.gz.tbi"
+                    "NORMAL_all.germline.vep.vcf.gz.tbi"
                 ]
             ]
         ],
-        "timestamp": "2026-08-13T14:21:00.73870608",
+        "timestamp": "2026-10-23T11:25:39.652100892",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     }

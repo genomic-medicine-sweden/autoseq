@@ -72,6 +72,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #126 ](https://github.com/genomic-medicine-sweden/autoseq/pull/126) Switched the `SAGE_SOMATIC` module to the `versions` topic, so `CALL_SOMATIC_SNVS` no longer mixes its `versions.yml`.
 - [ #129 ](https://github.com/genomic-medicine-sweden/autoseq/pull/129) Sorted the `ALIGNMENT` subworkflow inputs and outputs alphabetically with type comments, renamed its channels and moved its module options to `conf/subworkflows/alignment.config`.
 - [ #131 ](https://github.com/genomic-medicine-sweden/autoseq/pull/131) Aligned the `QC_ALIGNMENT` subworkflow with the coding conventions.
+- [ #132 ](https://github.com/genomic-medicine-sweden/autoseq/pull/132) Aligned the `CALL_GERMLINE_SNVS` subworkflow with the coding conventions.
 - [ #133 ](https://github.com/genomic-medicine-sweden/autoseq/pull/133) Aligned the `CALL_CNVS` subworkflow with the coding conventions.
 
 ### `Fixed`

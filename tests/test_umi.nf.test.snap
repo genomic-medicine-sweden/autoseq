@@ -222,8 +222,8 @@
                 "qc/samtools/TUMOR.flagstat",
                 "snvs",
                 "snvs/germline",
-                "snvs/germline/NORMAL-all.germline.vep.vcf.gz",
-                "snvs/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
+                "snvs/germline/NORMAL_all.germline.vep.vcf.gz",
+                "snvs/germline/NORMAL_all.germline.vep.vcf.gz.tbi",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
                 "snvs/germline/TUMOR-all.germline.taf.vcf.gz",
@@ -280,7 +280,7 @@
             ],
             [
                 [
-                    "NORMAL-all.germline.vep.vcf.gz",
+                    "NORMAL_all.germline.vep.vcf.gz",
                     "d41d8cd98f00b204e9800998ecf8427e"
                 ],
                 [
@@ -329,7 +329,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-10-21T13:51:22.134975067",
+        "timestamp": "2026-10-23T10:01:36.725564539",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -557,8 +557,8 @@
                 "qc/samtools/TUMOR.flagstat",
                 "snvs",
                 "snvs/germline",
-                "snvs/germline/NORMAL-all.germline.vep.vcf.gz",
-                "snvs/germline/NORMAL-all.germline.vep.vcf.gz.tbi",
+                "snvs/germline/NORMAL_all.germline.vep.vcf.gz",
+                "snvs/germline/NORMAL_all.germline.vep.vcf.gz.tbi",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz",
                 "snvs/germline/NORMAL_haplotypecaller.vcf.gz.tbi",
                 "snvs/germline/TUMOR-all.germline.taf.vcf.gz",
@@ -588,7 +588,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-10-21T13:52:17.282389815",
+        "timestamp": "2026-10-23T10:03:00.12675949",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
