@@ -265,7 +265,7 @@ workflow AUTOSEQ {
     CALL_CNVS(
         ch_aligned_bam,
         ch_curation_ann,
-        ch_jumble_ref
+        ch_jumble_ref,
     )
 
     //
