@@ -261,7 +261,7 @@ workflow AUTOSEQ {
         ch_ensembl_vep_cache,
         val_ensemblvep_version,
         val_genome,
-        val_vep_species
+        val_vep_species,
     )
 
     //

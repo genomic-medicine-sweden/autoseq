@@ -152,7 +152,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
         val_multiqc_logo,
         val_multiqc_methods_description,
         val_outdir,
-        val_vep_species
+        val_vep_species,
     )
 
     emit:
@@ -259,7 +259,7 @@ workflow {
         params.sage_known_hotspots_somatic,
         params.sage_pon,
         params.targets_bed,
-        params.vep_species
+        params.vep_species,
     )
     //
     // SUBWORKFLOW: Run completion tasks
