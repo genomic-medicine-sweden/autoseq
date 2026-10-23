@@ -20,7 +20,7 @@ workflow CALL_CNVS {
 
     JUMBLE_RUN(
         ch_bam_bai,
-        ch_jumble_ref
+        ch_jumble_ref,
     )
 
     //
@@ -35,7 +35,7 @@ workflow CALL_CNVS {
 
     ANNOTATE_CNVS(
         ch_jumble_run_for_annotate_cnvs,
-        ch_curation_ann
+        ch_curation_ann,
     )
 
     emit:
