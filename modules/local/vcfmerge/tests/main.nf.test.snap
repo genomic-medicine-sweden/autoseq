@@ -1,0 +1,68 @@
+{
+    "mutect2 and sage vcfs": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TUMOR_NORMAL",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL"
+                    },
+                    "TUMOR_NORMAL-all.somatic.vcf.gz:md5,15d5903edd6e671a148453861f88552f"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR_NORMAL",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL"
+                    },
+                    "TUMOR_NORMAL-all.somatic.vcf.gz.tbi"
+                ]
+            ],
+            [
+                "versions.yml:md5,1a5e1c42fc76ff655f5f551dd477ab3b"
+            ]
+        ],
+        "timestamp": "2026-10-26T12:29:47.789379505",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    },
+    "mutect2 and sage vcfs - stub": {
+        "content": [
+            {
+                "tbi": [
+                    [
+                        {
+                            "id": "TUMOR_NORMAL",
+                            "tumor_id": "TUMOR",
+                            "normal_id": "NORMAL"
+                        },
+                        "TUMOR_NORMAL-all.somatic.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "vcf": [
+                    [
+                        {
+                            "id": "TUMOR_NORMAL",
+                            "tumor_id": "TUMOR",
+                            "normal_id": "NORMAL"
+                        },
+                        "TUMOR_NORMAL-all.somatic.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,1a5e1c42fc76ff655f5f551dd477ab3b"
+                ]
+            }
+        ],
+        "timestamp": "2026-10-26T12:29:51.837447252",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}

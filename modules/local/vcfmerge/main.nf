@@ -60,7 +60,7 @@ process SOMATIC_VCFMERGE {
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
-    touch ${prefix}-all.somatic.vcf.gz
+    echo "" | gzip > ${prefix}-all.somatic.vcf.gz
     touch ${prefix}-all.somatic.vcf.gz.tbi
 
     cat <<-END_VERSIONS > versions.yml
