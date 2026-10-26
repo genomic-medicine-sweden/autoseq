@@ -1,0 +1,118 @@
+{
+    "paired tumor and normal - targeted - stub": {
+        "content": [
+            {
+                "filtered_vcf": [
+                    [
+                        {
+                            "id": "TEST",
+                            "tumor_id": "TUMOR",
+                            "normal_id": "NORMAL"
+                        },
+                        "NORMAL.gripss.filtered.germline.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                        "NORMAL.gripss.filtered.germline.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "unfiltered_vcf": [
+                    [
+                        {
+                            "id": "TEST",
+                            "tumor_id": "TUMOR",
+                            "normal_id": "NORMAL"
+                        },
+                        "NORMAL.gripss.germline.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                        "NORMAL.gripss.germline.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions_gripss": [
+                    [
+                        "GRIPSS_GERMLINE",
+                        "gripss",
+                        "2.4"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-10-26T12:05:13.823666207",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    },
+    "paired tumor and normal - targeted": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL"
+                    },
+                    "TUMOR.gripss.filtered.germline.vcf.gz:md5,226de79621fa18ce171c7407e4e1b8b7",
+                    "TUMOR.gripss.filtered.germline.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL"
+                    },
+                    "TUMOR.gripss.germline.vcf.gz:md5,6121830d6b20314c332d4aed9ed395a3",
+                    "TUMOR.gripss.germline.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    "GRIPSS_GERMLINE",
+                    "gripss",
+                    "2.4"
+                ]
+            ]
+        ],
+        "timestamp": "2026-10-26T12:05:03.799920432",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    },
+    "paired tumor and normal - untargeted": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL"
+                    },
+                    "TUMOR.gripss.filtered.germline.vcf.gz:md5,96ec21546adfb436db031baf6a0bb54",
+                    "TUMOR.gripss.filtered.germline.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TEST",
+                        "tumor_id": "TUMOR",
+                        "normal_id": "NORMAL"
+                    },
+                    "TUMOR.gripss.germline.vcf.gz:md5,96ec21546adfb436db031baf6a0bb54",
+                    "TUMOR.gripss.germline.vcf.gz.tbi"
+                ]
+            ],
+            [
+                [
+                    "GRIPSS_GERMLINE",
+                    "gripss",
+                    "2.4"
+                ]
+            ]
+        ],
+        "timestamp": "2026-10-26T12:05:08.955393304",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}

@@ -53,9 +53,9 @@ process GRIPSS_GERMLINE {
 
     stub:
     """
-    touch ${meta.normal_id}.gripss.filtered.germline.vcf.gz
+    echo "" | gzip > ${meta.normal_id}.gripss.filtered.germline.vcf.gz
+    echo "" | gzip > ${meta.normal_id}.gripss.germline.vcf.gz
     touch ${meta.normal_id}.gripss.filtered.germline.vcf.gz.tbi
-    touch ${meta.normal_id}.gripss.germline.vcf.gz
     touch ${meta.normal_id}.gripss.germline.vcf.gz.tbi
 
     """
