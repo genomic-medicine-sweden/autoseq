@@ -40,8 +40,8 @@
                         "normal_id": "NORMAL",
                         "tumor_id": "TUMOR"
                     },
-                    "NORMAL.gripss.filtered.germline.vcf.gz",
-                    "NORMAL.gripss.filtered.germline.vcf.gz.tbi"
+                    "TUMOR.gripss.filtered.germline.vcf.gz",
+                    "TUMOR.gripss.filtered.germline.vcf.gz.tbi"
                 ]
             ],
             [
@@ -51,8 +51,8 @@
                         "normal_id": "NORMAL",
                         "tumor_id": "TUMOR"
                     },
-                    "NORMAL.gripss.germline.vcf.gz",
-                    "NORMAL.gripss.germline.vcf.gz.tbi"
+                    "TUMOR.gripss.germline.vcf.gz",
+                    "TUMOR.gripss.germline.vcf.gz.tbi"
                 ]
             ]
         ],
