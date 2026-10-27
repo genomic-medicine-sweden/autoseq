@@ -29,12 +29,12 @@ nextflow_workflow {
                     ]
                 )
                 input[1] = channel.value([
-                    [ id:'test_panel' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
-                ])
-                input[2] = channel.value([
                     [ id:'curation_ann' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/cancer_gene_annotations_for_curation.37.v2.csv', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'test_panel' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
                 ])
                 """
             }
@@ -48,14 +48,14 @@ nextflow_workflow {
                     workflow.out.segments_bedgraph,
                     // `_ann.cns` is annotated as somatic for the tumor sample and germline for
                     // the normal sample, so the routing on `meta.sample_type` is covered here
-                    workflow.out.cns,
+                    workflow.out.annotated_cns,
                     // Jumble writes per-run values into the plots and the bin-level outputs,
                     // so only their file names are asserted
                     workflow.out.bins_csv.collect { meta, csv -> [meta, file(csv).name] },
                     workflow.out.cnr.collect { meta, cnr -> [meta, file(cnr).name] },
                     workflow.out.seg.collect { meta, seg -> [meta, file(seg).name] },
                     workflow.out.profile_bedgraph.collect { meta, bedgraph -> [meta, file(bedgraph).name] },
-                    workflow.out.png.collect { meta, png -> [meta, file(png).name] }
+                    workflow.out.cnv_plot_png.collect { meta, png -> [meta, file(png).name] }
                 ).match() }
             )
         }
@@ -81,12 +81,12 @@ nextflow_workflow {
                     ]
                 )
                 input[1] = channel.value([
-                    [ id:'test_panel' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
-                ])
-                input[2] = channel.value([
                     [ id:'curation_ann' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/annotations/cancer_gene_annotations_for_curation.37.v2.csv', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'test_panel' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.bed.reference.RDS', checkIfExists: true)
                 ])
                 """
             }
