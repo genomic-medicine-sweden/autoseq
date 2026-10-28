@@ -54,9 +54,9 @@ process GRIPSS_SOMATIC {
     def prefix = task.ext.prefix ?: "${meta.tumor_id}"
 
     """
-    touch ${prefix}.gripss.filtered.somatic.vcf.gz
+    echo "" | gzip > ${prefix}.gripss.filtered.somatic.vcf.gz
+    echo "" | gzip > ${prefix}.gripss.somatic.vcf.gz
     touch ${prefix}.gripss.filtered.somatic.vcf.gz.tbi
-    touch ${prefix}.gripss.somatic.vcf.gz
     touch ${prefix}.gripss.somatic.vcf.gz.tbi
 
     """
