@@ -106,6 +106,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #125 ](https://github.com/genomic-medicine-sweden/autoseq/pull/125) Write the `SAGE_SOMATIC` VCF to the task work dir root so it is published to `snvs/somatic/` instead of `snvs/somatic/somatic/`.
 - [ #124 ](https://github.com/genomic-medicine-sweden/autoseq/pull/124) Joined the `PURECN_RUN` inputs on `case_id` instead of `combine`, so tumor CNR/SEG are no longer cross-paired with other cases' Mutect2 VCFs. Added `case_id` to the `PROFILE_TUMOR_BIOMARKERS` nf-test inputs and removed the "without VCF" test.
 - [ #128 ](https://github.com/genomic-medicine-sweden/autoseq/pull/128) Skipped `FASTP` in the UMI branch so raw reads go straight to `CAT_FASTQ` and `UMI_PROCESSING`, and updated the `test_umi` snapshots.
+- [ #137 ](https://github.com/genomic-medicine-sweden/autoseq/pull/137) Added `-i 'FILTER="PASS"'` to `PASSFILTER_FOR_MUTECT2` and `PASSFILTER_FOR_SAGE` so only PASS variants are merged by `SOMATIC_VCFMERGE`.
 
 ### `Removed`
 
