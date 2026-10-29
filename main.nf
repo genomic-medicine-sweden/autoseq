@@ -57,12 +57,17 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     val_hmf_ensembl_data_tar            // string:  [optional]  path to HMF Ensembl data resources tarball
     val_interval_list                   // string:  [mandatory] path to target regions interval list
     val_jumble_ref                      // string:  [mandatory] path to Jumble reference RDS
+    val_min_baseq                       // integer: [mandatory] minimum base quality
     val_multiqc_config                  // string:  [optional]  path to MultiQC config
     val_multiqc_logo                    // string:  [optional]  path to MultiQC logo
     val_multiqc_methods_description     // string:  [optional]  path to MultiQC methods description
     val_outdir                          // string:  [mandatory] path to output directory
     val_sage_highconf_regions           // string:  [mandatory] path to SAGE high-confidence regions
+    val_sage_hotspot_tumor_qual         // integer: [mandatory] SAGE minimum tumor quality for hotspot variants
     val_sage_known_hotspots_somatic     // string:  [mandatory] path to SAGE somatic hotspots
+    val_sage_min_map_quality            // integer: [mandatory] SAGE minimum mapping quality
+    val_sage_min_tumor_qual             // integer: [mandatory] SAGE minimum tumor quality for panel variants
+    val_sage_min_tumor_vaf              // float:   [mandatory] SAGE minimum tumor VAF
     val_sage_pon                        // string:  [mandatory] path to SAGE panel of normals
     val_targets_bed                     // string:  [mandatory] path to target regions BED
     val_vep_species                     // string:  [mandatory] Ensembl VEP species (e.g. "homo_sapiens")
@@ -148,10 +153,15 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
         ch_targets_bed,
         val_ensemblvep_version,
         val_genome,
+        val_min_baseq,
         val_multiqc_config,
         val_multiqc_logo,
         val_multiqc_methods_description,
         val_outdir,
+        val_sage_hotspot_tumor_qual,
+        val_sage_min_map_quality,
+        val_sage_min_tumor_qual,
+        val_sage_min_tumor_vaf,
         val_vep_species,
     )
 
@@ -251,12 +261,17 @@ workflow {
         params.hmf_ensembl_data_tar,
         params.interval_list,
         params.jumble_ref,
+        params.min_baseq,
         params.multiqc_config,
         params.multiqc_logo,
         params.multiqc_methods_description,
         params.outdir,
         params.sage_highconf_regions,
+        params.sage_hotspot_tumor_qual,
         params.sage_known_hotspots_somatic,
+        params.sage_min_map_quality,
+        params.sage_min_tumor_qual,
+        params.sage_min_tumor_vaf,
         params.sage_pon,
         params.targets_bed,
         params.vep_species,

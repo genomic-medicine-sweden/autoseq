@@ -80,6 +80,8 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #134 ](https://github.com/genomic-medicine-sweden/autoseq/pull/134) The `GRIPSS_SOMATIC` stub now writes gzip VCFs so the stub outputs can be snapshotted.
 - [ #135 ](https://github.com/genomic-medicine-sweden/autoseq/pull/135) The `GRIPSS_GERMLINE` stub now writes gzip VCFs prefixed with `meta.tumor_id`, matching the GRIPSS output names.
 - [ #136 ](https://github.com/genomic-medicine-sweden/autoseq/pull/136) The `SOMATIC_VCFMERGE` stub now writes a gzip VCF so the stub output can be snapshotted.
+- [ #138 ](https://github.com/genomic-medicine-sweden/autoseq/pull/138) Moved the `CALL_SOMATIC_SNVS` module options from `conf/modules.config` to `conf/subworkflows/call_somatic_snvs.config`.
+- [ #139 ](https://github.com/genomic-medicine-sweden/autoseq/pull/139) Aligned the `CALL_SOMATIC_SNVS` subworkflow with the coding conventions.
 
 ### `Fixed`
 
@@ -108,6 +110,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #125 ](https://github.com/genomic-medicine-sweden/autoseq/pull/125) Write the `SAGE_SOMATIC` VCF to the task work dir root so it is published to `snvs/somatic/` instead of `snvs/somatic/somatic/`.
 - [ #124 ](https://github.com/genomic-medicine-sweden/autoseq/pull/124) Joined the `PURECN_RUN` inputs on `case_id` instead of `combine`, so tumor CNR/SEG are no longer cross-paired with other cases' Mutect2 VCFs. Added `case_id` to the `PROFILE_TUMOR_BIOMARKERS` nf-test inputs and removed the "without VCF" test.
 - [ #128 ](https://github.com/genomic-medicine-sweden/autoseq/pull/128) Skipped `FASTP` in the UMI branch so raw reads go straight to `CAT_FASTQ` and `UMI_PROCESSING`, and updated the `test_umi` snapshots.
+- [ #137 ](https://github.com/genomic-medicine-sweden/autoseq/pull/137) Added `-i 'FILTER="PASS"'` to `PASSFILTER_FOR_MUTECT2` and `PASSFILTER_FOR_SAGE` so only PASS variants are merged by `SOMATIC_VCFMERGE`.
 
 ### `Removed`
 
