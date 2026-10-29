@@ -38,6 +38,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #126 ](https://github.com/genomic-medicine-sweden/autoseq/pull/126) Added nf-test and `meta.yml` for the `SAGE_SOMATIC` module.
 - [ #123 ](https://github.com/genomic-medicine-sweden/autoseq/pull/123) Integrated the `JUMBLE_FRANKENPLOT` module into the `PROFILE_TUMOR_BIOMARKERS` subworkflow, joining the Jumble CNV results, somatic and germline VCFs, heterozygous SNPs and normal DPYD typing per case, and publishing the HTML genome report to `frankenplot/`.
 - [ #134 ](https://github.com/genomic-medicine-sweden/autoseq/pull/134) Added nf-test for the `GRIPSS_SOMATIC` module covering targeted, untargeted and stub cases.
+- [ #135 ](https://github.com/genomic-medicine-sweden/autoseq/pull/135) Added nf-test for the `GRIPSS_GERMLINE` module covering targeted, untargeted and stub cases.
 - [ #136 ](https://github.com/genomic-medicine-sweden/autoseq/pull/136) Added nf-test for the `SOMATIC_VCFMERGE` module covering Mutect2 and SAGE VCFs and a stub case.
 
 ### `Changed`
@@ -77,6 +78,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #132 ](https://github.com/genomic-medicine-sweden/autoseq/pull/132) Aligned the `CALL_GERMLINE_SNVS` subworkflow with the coding conventions.
 - [ #133 ](https://github.com/genomic-medicine-sweden/autoseq/pull/133) Aligned the `CALL_CNVS` subworkflow with the coding conventions.
 - [ #134 ](https://github.com/genomic-medicine-sweden/autoseq/pull/134) The `GRIPSS_SOMATIC` stub now writes gzip VCFs so the stub outputs can be snapshotted.
+- [ #135 ](https://github.com/genomic-medicine-sweden/autoseq/pull/135) The `GRIPSS_GERMLINE` stub now writes gzip VCFs prefixed with `meta.tumor_id`, matching the GRIPSS output names.
 - [ #136 ](https://github.com/genomic-medicine-sweden/autoseq/pull/136) The `SOMATIC_VCFMERGE` stub now writes a gzip VCF so the stub output can be snapshotted.
 
 ### `Fixed`
