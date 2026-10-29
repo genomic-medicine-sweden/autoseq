@@ -1,0 +1,69 @@
+nextflow_process {
+
+    name "Test Process SOMATIC_VCFMERGE"
+    script "../main.nf"
+    process "SOMATIC_VCFMERGE"
+
+    tag "modules"
+    tag "modules_local"
+    tag "vcfmerge"
+
+    test("mutect2 and sage vcfs") {
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR_NORMAL', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL_mutect2_pass_only.vcf.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL_mutect2_pass_only.vcf.gz.tbi', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'TUMOR_NORMAL', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL_sage_pass_only.vcf', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    // bcftools writes its command line into the VCF header, so only the variant records are hashed
+                    process.out.vcf.collect { meta, vcf -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}"] },
+                    process.out.tbi.collect { meta, tbi -> [meta, file(tbi).name] },
+                    process.out.versions
+                ).match() }
+            )
+        }
+    }
+
+    test("mutect2 and sage vcfs - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TUMOR_NORMAL', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL_mutect2_pass_only.vcf.gz', checkIfExists: true),
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL_mutect2_pass_only.vcf.gz.tbi', checkIfExists: true)
+                ])
+                input[1] = channel.of([
+                    [ id:'TUMOR_NORMAL', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL_sage_pass_only.vcf', checkIfExists: true)
+                ])
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(sanitizeOutput(process.out)).match() }
+            )
+        }
+    }
+}
