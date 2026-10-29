@@ -80,6 +80,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #134 ](https://github.com/genomic-medicine-sweden/autoseq/pull/134) The `GRIPSS_SOMATIC` stub now writes gzip VCFs so the stub outputs can be snapshotted.
 - [ #135 ](https://github.com/genomic-medicine-sweden/autoseq/pull/135) The `GRIPSS_GERMLINE` stub now writes gzip VCFs prefixed with `meta.tumor_id`, matching the GRIPSS output names.
 - [ #136 ](https://github.com/genomic-medicine-sweden/autoseq/pull/136) The `SOMATIC_VCFMERGE` stub now writes a gzip VCF so the stub output can be snapshotted.
+- [ #140 ](https://github.com/genomic-medicine-sweden/autoseq/pull/140) Aligned the `CALL_SVS` subworkflow with the coding conventions.
 
 ### `Fixed`
 

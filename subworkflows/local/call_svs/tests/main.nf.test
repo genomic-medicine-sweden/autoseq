@@ -44,37 +44,37 @@ nextflow_workflow {
                     ]
                 )
                 input[1] = channel.value([
-                    [ id:'genome' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
-                ])
-                input[2] = channel.value([
                     [ id:'genome_fai' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
                 ])
-                input[3] = UNTAR.out.untar.collect()
-                input[4] = channel.value([
-                    [ id:'pon_breakends' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
+                input[2] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
                 ])
+                input[3] = channel.value([
+                    [ id:'gridss_config' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
+                ])
+                input[4] = UNTAR.out.untar.collect()
                 input[5] = channel.value([
-                    [ id:'pon_breakpoints' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
-                ])
-                input[6] = channel.value([
                     [ id:'known_fusions' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/known_fusions.37.bedpe', checkIfExists: true)
                 ])
+                input[6] = channel.value([
+                    [ id:'pon_breakends' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
+                ])
                 input[7] = channel.value([
+                    [ id:'pon_breakpoints' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
+                ])
+                input[8] = channel.value([
                     [ id:'repeatmasker_annotations' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/repeat_mask_data.37.fa.gz', checkIfExists: true)
                 ])
-                input[8] = channel.value([
+                input[9] = channel.value([
                     [ id:'targets_bed' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.bed', checkIfExists: true)
-                ])
-                input[9] = channel.value([
-                    [ id:'gridss_config' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
                 ])
                 input[10] = '37'
                 """
@@ -117,37 +117,37 @@ nextflow_workflow {
                     ]
                 )
                 input[1] = channel.value([
-                    [ id:'genome' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
-                ])
-                input[2] = channel.value([
                     [ id:'genome_fai' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
                 ])
-                input[3] = UNTAR.out.untar.collect()
-                input[4] = channel.value([
-                    [ id:'pon_breakends' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
+                input[2] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
                 ])
+                input[3] = channel.value([
+                    [ id:'gridss_config' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
+                ])
+                input[4] = UNTAR.out.untar.collect()
                 input[5] = channel.value([
-                    [ id:'pon_breakpoints' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
-                ])
-                input[6] = channel.value([
                     [ id:'known_fusions' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/known_fusions.37.bedpe', checkIfExists: true)
                 ])
+                input[6] = channel.value([
+                    [ id:'pon_breakends' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
+                ])
                 input[7] = channel.value([
+                    [ id:'pon_breakpoints' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
+                ])
+                input[8] = channel.value([
                     [ id:'repeatmasker_annotations' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/repeat_mask_data.37.fa.gz', checkIfExists: true)
                 ])
-                input[8] = channel.value([
+                input[9] = channel.value([
                     [ id:'targets_bed' ],
                     file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.bed', checkIfExists: true)
-                ])
-                input[9] = channel.value([
-                    [ id:'gridss_config' ],
-                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/gridss.properties', checkIfExists: true)
                 ])
                 input[10] = '37'
                 """
