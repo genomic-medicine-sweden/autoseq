@@ -1,0 +1,174 @@
+nextflow_process {
+
+    name "Test Process GRIPSS_GERMLINE"
+    script "../main.nf"
+    process "GRIPSS_GERMLINE"
+    config "./nextflow.config"
+
+    tag "modules"
+    tag "modules_local"
+    tag "gripss"
+    tag "gripss/germline"
+
+    test("paired tumor and normal - targeted") {
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/gridss/TUMOR_NORMAL.gridss.vcf.gz', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.value([
+                    [ id:'pon_breakends' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
+                ])
+                input[4] = channel.value([
+                    [ id:'pon_breakpoints' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
+                ])
+                input[5] = channel.value([
+                    [ id:'known_fusions' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/known_fusions.37.bedpe', checkIfExists: true)
+                ])
+                input[6] = channel.value([
+                    [ id:'repeatmasker_annotations' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/repeat_mask_data.37.fa.gz', checkIfExists: true)
+                ])
+                input[7] = channel.value([
+                    [ id:'target_region_bed' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.bed', checkIfExists: true)
+                ])
+                input[8] = params.genome_version
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    // the GRIPSS header carries the tool version, so only the variant records are hashed
+                    process.out.filtered_vcf.collect { meta, vcf, tbi -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}", file(tbi).name] },
+                    process.out.unfiltered_vcf.collect { meta, vcf, tbi -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}", file(tbi).name] },
+                    process.out.versions_gripss
+                ).match() }
+            )
+        }
+    }
+
+    test("paired tumor and normal - untargeted") {
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/gridss/TUMOR_NORMAL.gridss.vcf.gz', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.value([
+                    [ id:'pon_breakends' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
+                ])
+                input[4] = channel.value([
+                    [ id:'pon_breakpoints' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
+                ])
+                input[5] = channel.value([
+                    [ id:'known_fusions' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/known_fusions.37.bedpe', checkIfExists: true)
+                ])
+                input[6] = channel.value([
+                    [ id:'repeatmasker_annotations' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/repeat_mask_data.37.fa.gz', checkIfExists: true)
+                ])
+                input[7] = channel.value([
+                    [ id:'target_region_bed' ],
+                    []
+                ])
+                input[8] = params.genome_version
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    // the GRIPSS header carries the tool version, so only the variant records are hashed
+                    process.out.filtered_vcf.collect { meta, vcf, tbi -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}", file(tbi).name] },
+                    process.out.unfiltered_vcf.collect { meta, vcf, tbi -> [meta, "${file(vcf).name}:md5,${path(vcf).vcf.variantsMD5}", file(tbi).name] },
+                    process.out.versions_gripss
+                ).match() }
+            )
+        }
+    }
+
+    test("paired tumor and normal - targeted - stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
+                    file(params.pipelines_testdata_base_path + 'testdata/gridss/TUMOR_NORMAL.gridss.vcf.gz', checkIfExists: true)
+                ])
+                input[1] = channel.value([
+                    [ id:'genome' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta', checkIfExists: true)
+                ])
+                input[2] = channel.value([
+                    [ id:'genome_fai' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai', checkIfExists: true)
+                ])
+                input[3] = channel.value([
+                    [ id:'pon_breakends' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sgl_pon.37.bed.gz', checkIfExists: true)
+                ])
+                input[4] = channel.value([
+                    [ id:'pon_breakpoints' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/sv_pon.37.bedpe.gz', checkIfExists: true)
+                ])
+                input[5] = channel.value([
+                    [ id:'known_fusions' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/known_fusions.37.bedpe', checkIfExists: true)
+                ])
+                input[6] = channel.value([
+                    [ id:'repeatmasker_annotations' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/gridss/repeat_mask_data.37.fa.gz', checkIfExists: true)
+                ])
+                input[7] = channel.value([
+                    [ id:'target_region_bed' ],
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/targets/test_panel.targets.slopped20.bed', checkIfExists: true)
+                ])
+                input[8] = params.genome_version
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(sanitizeOutput(process.out)).match() }
+            )
+        }
+    }
+}
