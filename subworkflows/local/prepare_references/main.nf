@@ -6,14 +6,14 @@ include { UNTAR as UNTAR_HMF_ENSEMBL_DATA } from '../../../modules/nf-core/untar
 workflow PREPARE_REFERENCES {
 
     take:
-    val_genome_fasta            // string: [mandatory] path to reference genome FASTA
-    val_bwamem2_index          // string: [optional] path to  pre-built BWA-MEM2 index directory
-    val_ensembl_vep_cache      // string: [optional] path to  pre-extracted Ensembl VEP cache directory
-    val_ensembl_vep_cache_tar   // string: [optional] path to  compressed Ensembl VEP cache archive
-    val_gridss_index            // string: [optional] path to  pre-built GRIDSS index directory
-    val_gridss_index_tar       // string: [optional] path to  compressed GRIDSS index archive
-    val_hmf_ensembl_data        // string: [optional] path to  pre-extracted HMF Ensembl data directory
-    val_hmf_ensembl_data_tar    // string: [optional] path to  compressed HMF Ensembl data archive
+    val_genome_fasta          // string: [mandatory] path to reference genome FASTA
+    val_bwamem2_index         // string: [optional] path to  pre-built BWA-MEM2 index directory
+    val_ensembl_vep_cache     // string: [optional] path to  pre-extracted Ensembl VEP cache directory
+    val_ensembl_vep_cache_tar // string: [optional] path to  compressed Ensembl VEP cache archive
+    val_gridss_index          // string: [optional] path to  pre-built GRIDSS index directory
+    val_gridss_index_tar      // string: [optional] path to  compressed GRIDSS index archive
+    val_hmf_ensembl_data      // string: [optional] path to  pre-extracted HMF Ensembl data directory
+    val_hmf_ensembl_data_tar  // string: [optional] path to  compressed HMF Ensembl data archive
 
     main:
     def ch_genome_fasta     = channel.empty()
