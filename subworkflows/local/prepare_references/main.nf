@@ -69,9 +69,9 @@ workflow PREPARE_REFERENCES {
 
 
     emit:
-    genome_fasta     = ch_genome_fasta              // channel: [ val(meta), path(fasta) ]
-    bwamem2_index    = ch_bwamem2_index             // channel: [ val(meta), path(index) ]
-    vep_cache        = ch_vep_cache                 // channel: [ val(meta), path(dir) ]
-    gridss_index     = ch_gridss_index              // channel: [ val(meta), path(dir) ]
-    hmf_ensembl_data = ch_hmf_ensembl_data          // channel: [ val(meta), path(dir) ]
+    genome_fasta     = ch_genome_fasta     // channel: [ val(meta), path(fasta) ]
+    bwamem2_index    = ch_bwamem2_index    // channel: [ val(meta), path(index) ]
+    vep_cache        = ch_vep_cache        // channel: [ val(meta), path(dir) ]
+    gridss_index     = ch_gridss_index     // channel: [ val(meta), path(dir) ]
+    hmf_ensembl_data = ch_hmf_ensembl_data // channel: [ val(meta), path(dir) ]
 }
