@@ -204,5 +204,61 @@
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
         }
+    },
+    "No indexing or untarring need": {
+        "content": [
+            {
+                "bwamem2_index": [
+                    [
+                        {
+                            "id": "human_g1k_v37_decoy"
+                        },
+                        "/imsarath/test-data/refs/heads/main/reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai"
+                    ]
+                ],
+                "genome_fasta": [
+                    [
+                        {
+                            "id": "human_g1k_v37_decoy"
+                        },
+                        "/imsarath/test-data/refs/heads/main/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
+                    ]
+                ],
+                "gridss_index": [
+                    [
+                        {
+                            "id": "gridss_index"
+                        },
+                        "/imsarath/test-data/refs/heads/main/reference/GRCh37/gridss_index"
+                    ]
+                ],
+                "hmf_ensembl_data": [
+                    [
+                        {
+                            "id": "directory"
+                        },
+                        "/imsarath/test-data/refs/heads/main/dummy/path/to/ensembl/data/directory"
+                    ]
+                ],
+                "vep_cache": [
+                    [
+                        {
+                            "id": "115_GRCh37"
+                        },
+                        "/imsarath/test-data/refs/heads/main/reference/GRCh37/vep/homo_sapiens/115_GRCh37"
+                    ]
+                ]
+            },
+            {
+                "versions": [
+                    
+                ]
+            }
+        ],
+        "timestamp": "2026-11-04T15:54:41.155057",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
     }
 }
