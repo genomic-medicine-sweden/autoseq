@@ -11,6 +11,36 @@ nextflow_workflow {
     tag "bwamem2/index"
     tag "untar"
 
+    topics "versions"
+
+    test("No indexing or untarring need") {
+
+        when {
+            workflow {
+                """
+                input[0] = params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta'
+                input[1] = params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai'
+                input[2] = params.pipelines_testdata_base_path + 'reference/GRCh37/vep/homo_sapiens/115_GRCh37'
+                input[3] = null
+                input[4] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index/'
+                input[5] = null
+                input[6] = params.pipelines_testdata_base_path + 'dummy/path/to/ensembl/data/directory'
+                input[7] = null
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    sanitizeOutput(workflow.out),
+                    topics, // Ensure that no processes are run
+                ).match() }
+            )
+        }
+    }
+
     test("build bwamem2 index and untar directories") {
 
         when {
@@ -34,11 +64,8 @@ nextflow_workflow {
             assertAll(
                 { assert workflow.success },
                 { assert snapshot(
-                    workflow.out.genome_fasta,
-                    workflow.out.bwamem2_index,
-                    workflow.out.vep_cache,
-                    workflow.out.gridss_index,
-                    workflow.out.hmf_ensembl_data
+                    sanitizeOutput(workflow.out),
+                    topics, // Ensure relevant processes are run
                 ).match() }
             )
         }
@@ -67,11 +94,8 @@ nextflow_workflow {
             assertAll(
                 { assert workflow.success },
                 { assert snapshot(
-                    workflow.out.genome_fasta,
-                    workflow.out.bwamem2_index,
-                    workflow.out.vep_cache,
-                    workflow.out.gridss_index,
-                    workflow.out.hmf_ensembl_data
+                    sanitizeOutput(workflow.out),
+                    topics, // Ensure relevant processes are run
                 ).match() }
             )
         }
