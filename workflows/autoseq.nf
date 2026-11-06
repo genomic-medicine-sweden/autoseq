@@ -280,16 +280,16 @@ workflow AUTOSEQ {
 
     CALL_SVS(
         ch_aligned_bam,
-        ch_genome_fasta,
         ch_genome_fai,
+        ch_genome_fasta,
+        ch_gridss_config,
         ch_gridss_index,
+        ch_gridss_known_fusions,
         ch_gridss_pon_breakends,
         ch_gridss_pon_breakpoints,
-        ch_gridss_known_fusions,
         ch_gridss_repeatmasker_annotations,
         ch_targets_bed,
-        ch_gridss_config,
-        genome_version
+        genome_version,
     )
 
     //
