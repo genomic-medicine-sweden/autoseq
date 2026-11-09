@@ -6,7 +6,7 @@
                     {
                         "id": "human_g1k_v37_decoy"
                     },
-                    "/imsarath/test-data/refs/heads/main/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
+                    "/genomic-medicine-sweden/test-datasets/autoseq/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
                 ]
             ],
             [
@@ -70,7 +70,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-15T16:03:21.937415544",
+        "timestamp": "2026-11-09T11:15:16.542588323",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -83,7 +83,7 @@
                     {
                         "id": "human_g1k_v37_decoy"
                     },
-                    "/imsarath/test-data/refs/heads/main/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
+                    "/genomic-medicine-sweden/test-datasets/autoseq/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
                 ]
             ],
             [
@@ -147,7 +147,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-15T16:03:15.807134467",
+        "timestamp": "2026-11-09T11:15:11.194693968",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
