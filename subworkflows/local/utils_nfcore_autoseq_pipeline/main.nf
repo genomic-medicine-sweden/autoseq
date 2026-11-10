@@ -230,6 +230,7 @@ def toolCitationText() {
     def citation_text = [
             "Tools used in the workflow included:",
             "FastQC (Andrews 2010),",
+            (params.msisensor2_models || params.msisensor2_models_tar) ? "MSIsensor2 (Niu et al.)," : "",
             "MultiQC (Ewels et al. 2016)",
             "."
         ].join(' ').trim()
@@ -243,6 +244,7 @@ def toolBibliographyText() {
     // Uncomment function in methodsDescriptionText to render in MultiQC report
     def reference_text = [
             "<li>Andrews S, (2010) FastQC, URL: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).</li>",
+            (params.msisensor2_models || params.msisensor2_models_tar) ? "<li>Niu B, Ye K. MSIsensor2, URL: https://github.com/niu-lab/msisensor2</li>" : "",
             "<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics , 32(19), 3047–3048. doi: /10.1093/bioinformatics/btw354</li>"
         ].join(' ').trim()
 

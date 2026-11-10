@@ -145,6 +145,11 @@
                         "git_sha": "ca25f8bcd92bd47aed93f806b9290c8b15782b40",
                         "installed_by": ["modules"]
                     },
+                    "msisensor2/msi": {
+                        "branch": "master",
+                        "git_sha": "7b3452a23773f687ededb4befd037920e5a51341",
+                        "installed_by": ["modules"]
+                    },
                     "multiqc": {
                         "branch": "master",
                         "git_sha": "98403d15b0e50edae1f3fec5eae5e24982f1fade",

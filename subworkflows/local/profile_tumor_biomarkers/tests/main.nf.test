@@ -11,6 +11,23 @@ nextflow_workflow {
     tag "typedpyd"
     tag "jumble"
     tag "jumble/frankenplot"
+    tag "msisensor2"
+    tag "msisensor2/msi"
+    tag "untar"
+
+    setup {
+        run("UNTAR", alias: "UNTAR_MSISENSOR2_MODELS") {
+            script "../../../../modules/nf-core/untar/main.nf"
+            process {
+                """
+                input[0] = channel.of([
+                    [ id:'msisensor2_models' ],
+                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/msisensor2/models_hg19_17sites.tar.gz', checkIfExists: true)
+                ])
+                """
+            }
+        }
+    }
 
 
     test("paired tumor-normal") {
@@ -68,7 +85,9 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.jumble.csv', checkIfExists: true)
                     ]
                 )
-                input[8] = channel.of([
+                // No MSIsensor2 models, so MSI detection is skipped
+                input[8] = channel.empty()
+                input[9] = channel.of([
                     [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
                     file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL-all.somatic.vep.vcf.gz', checkIfExists: true)
                 ])
@@ -81,6 +100,7 @@ nextflow_workflow {
                 { assert workflow.success },
                 // PDFs are non-deterministic (R embeds timestamps), so assert existence only
                 { assert workflow.out.purecn_pdf[0][1].every { f -> file(f).exists() } },
+                { assert workflow.out.msi_score.size() == 0 },
                 { assert snapshot(
                     workflow.out.purecn_csv,
                     workflow.out.purecn_genes_csv,
@@ -92,7 +112,6 @@ nextflow_workflow {
             )
         }
     }
-
 
     test("paired tumor-normal - stub") {
 
@@ -151,7 +170,8 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.jumble.csv', checkIfExists: true)
                     ]
                 )
-                input[8] = channel.of([
+                input[8] = UNTAR_MSISENSOR2_MODELS.out.untar.collect()
+                input[9] = channel.of([
                     [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
                     file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL-all.somatic.vep.vcf.gz', checkIfExists: true)
                 ])

@@ -60,6 +60,7 @@ results/
 ├── alignment
 ├── cnv
 ├── dpyd
+├── msi
 ├── multiqc
 ├── pipeline_info
 ├── purecn
@@ -298,10 +299,17 @@ typeDPYD genotypes clinically relevant DPYD pharmacogenomic variants directly fr
 
 #### MSIsensor2
 
-MSIsensor2 detects microsatellite instability (MSI), a hallmark of certain cancers. It is a fast and accurate tool for identifying MSI status in sequencing data.
+MSIsensor2 detects microsatellite instability (MSI), a hallmark of certain cancers. It is a fast and accurate tool for identifying MSI status in sequencing data. It uses only the tumor BAM, together with pretrained models, and is skipped when no models are given via `--msisensor2_models` or `--msisensor2_models_tar`.
 
-> [NOTE]
-> Yet to be implemented
+<details markdown="1">
+<summary>Output files for MSIsensor2:</summary>
+
+- `{outdir}/msi/`
+  - `*_msisensor2`: MSI score, with the total number of evaluated sites, the number of somatic (unstable) sites and their percentage.
+  - `*_msisensor2_dis`: Read count distributions for each evaluated microsatellite site.
+  - `*_msisensor2_somatic`: Microsatellite sites detected as somatic (unstable).
+
+</details>
 
 ### Quality Control and Reporting
 
