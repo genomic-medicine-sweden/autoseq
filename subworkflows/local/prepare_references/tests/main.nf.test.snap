@@ -21,7 +21,7 @@
                         {
                             "id": "human_g1k_v37_decoy"
                         },
-                        "/imsarath/test-data/refs/heads/main/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
+                        "/genomic-medicine-sweden/test-datasets/autoseq/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
                     ]
                 ],
                 "gridss_index": [
@@ -96,7 +96,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-11-04T15:31:33.887638",
+        "timestamp": "2026-11-11T13:27:10.609631",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -124,7 +124,7 @@
                         {
                             "id": "human_g1k_v37_decoy"
                         },
-                        "/imsarath/test-data/refs/heads/main/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
+                        "/genomic-medicine-sweden/test-datasets/autoseq/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
                     ]
                 ],
                 "gridss_index": [
@@ -199,63 +199,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-11-04T15:31:25.095599",
-        "meta": {
-            "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
-        }
-    },
-    "No indexing or untarring need": {
-        "content": [
-            {
-                "bwamem2_index": [
-                    [
-                        {
-                            "id": "human_g1k_v37_decoy"
-                        },
-                        "/imsarath/test-data/refs/heads/main/reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai"
-                    ]
-                ],
-                "genome_fasta": [
-                    [
-                        {
-                            "id": "human_g1k_v37_decoy"
-                        },
-                        "/imsarath/test-data/refs/heads/main/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
-                    ]
-                ],
-                "gridss_index": [
-                    [
-                        {
-                            "id": "gridss_index"
-                        },
-                        "/imsarath/test-data/refs/heads/main/reference/GRCh37/gridss_index"
-                    ]
-                ],
-                "hmf_ensembl_data": [
-                    [
-                        {
-                            "id": "directory"
-                        },
-                        "/imsarath/test-data/refs/heads/main/dummy/path/to/ensembl/data/directory"
-                    ]
-                ],
-                "vep_cache": [
-                    [
-                        {
-                            "id": "115_GRCh37"
-                        },
-                        "/imsarath/test-data/refs/heads/main/reference/GRCh37/vep/homo_sapiens/115_GRCh37"
-                    ]
-                ]
-            },
-            {
-                "versions": [
-                    
-                ]
-            }
-        ],
-        "timestamp": "2026-11-04T15:54:41.155057",
+        "timestamp": "2026-11-11T13:27:01.861739",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

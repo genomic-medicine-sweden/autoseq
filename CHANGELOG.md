@@ -80,7 +80,11 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #134 ](https://github.com/genomic-medicine-sweden/autoseq/pull/134) The `GRIPSS_SOMATIC` stub now writes gzip VCFs so the stub outputs can be snapshotted.
 - [ #135 ](https://github.com/genomic-medicine-sweden/autoseq/pull/135) The `GRIPSS_GERMLINE` stub now writes gzip VCFs prefixed with `meta.tumor_id`, matching the GRIPSS output names.
 - [ #136 ](https://github.com/genomic-medicine-sweden/autoseq/pull/136) The `SOMATIC_VCFMERGE` stub now writes a gzip VCF so the stub output can be snapshotted.
-- [#141](https://github.com/genomic-medicine-sweden/autoseq/pull/141) Refactored `PREPARE_REFERENCES` subworkflow to adhere to the coding conventions.
+- [ #140 ](https://github.com/genomic-medicine-sweden/autoseq/pull/140) Aligned the `CALL_SVS` subworkflow with the coding conventions.
+- [ #143 ](https://github.com/genomic-medicine-sweden/autoseq/pull/143) Upgraded `nf-test` version to 0.9.5 so that the CI check supports topic channels.
+- [ #144 ](https://github.com/genomic-medicine-sweden/autoseq/pull/144) Switched `pipelines_testdata_base_path` to the `autoseq` branch of `genomic-medicine-sweden/test-datasets`.
+- [ #145 ](https://github.com/genomic-medicine-sweden/autoseq/pull/145) Isolated the `CALL_SOMATIC_SNVS` nf-test config so it no longer relies on module options from the pipeline config.
+- [ #141 ](https://github.com/genomic-medicine-sweden/autoseq/pull/141) Refactored `PREPARE_REFERENCES` subworkflow to adhere to the coding conventions.
 
 ### `Fixed`
 
