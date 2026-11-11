@@ -11,6 +11,8 @@ nextflow_workflow {
     tag "bwamem2/index"
     tag "untar"
 
+    topics "versions"
+
     test("build bwamem2 index and untar directories") {
 
         when {
@@ -36,12 +38,8 @@ nextflow_workflow {
             assertAll(
                 { assert workflow.success },
                 { assert snapshot(
-                    workflow.out.genome_fasta,
-                    workflow.out.bwamem2_index,
-                    workflow.out.vep_cache,
-                    workflow.out.gridss_index,
-                    workflow.out.hmf_ensembl_data,
-                    workflow.out.msisensor2_models
+                    sanitizeOutput(workflow.out),
+                    topics, // Ensure relevant processes are run
                 ).match() }
             )
         }
@@ -72,12 +70,8 @@ nextflow_workflow {
             assertAll(
                 { assert workflow.success },
                 { assert snapshot(
-                    workflow.out.genome_fasta,
-                    workflow.out.bwamem2_index,
-                    workflow.out.vep_cache,
-                    workflow.out.gridss_index,
-                    workflow.out.hmf_ensembl_data,
-                    workflow.out.msisensor2_models
+                    sanitizeOutput(workflow.out),
+                    topics, // Ensure relevant processes are run
                 ).match() }
             )
         }

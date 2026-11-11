@@ -7,18 +7,19 @@ include { UNTAR as UNTAR_MSISENSOR2_MODELS } from '../../../modules/nf-core/unta
 workflow PREPARE_REFERENCES {
 
     take:
-    val_genome_fasta            // string: [mandatory] path to reference genome FASTA
-    val_bwamem2_index          // string: [optional] path to  pre-built BWA-MEM2 index directory
-    val_ensembl_vep_cache      // string: [optional] path to  pre-extracted Ensembl VEP cache directory
-    val_ensembl_vep_cache_tar   // string: [optional] path to  compressed Ensembl VEP cache archive
-    val_gridss_index            // string: [optional] path to  pre-built GRIDSS index directory
-    val_gridss_index_tar       // string: [optional] path to  compressed GRIDSS index archive
-    val_hmf_ensembl_data        // string: [optional] path to  pre-extracted HMF Ensembl data directory
-    val_hmf_ensembl_data_tar    // string: [optional] path to  compressed HMF Ensembl data archive
-    val_msisensor2_models       // string: [optional] path to  pre-extracted MSIsensor2 models directory
-    val_msisensor2_models_tar   // string: [optional] path to  compressed MSIsensor2 models archive
+    val_genome_fasta          // string: [mandatory] path to reference genome FASTA
+    val_bwamem2_index         // string: [optional]  path to pre-built BWA-MEM2 index directory
+    val_ensembl_vep_cache     // string: [optional]  path to pre-extracted Ensembl VEP cache directory
+    val_ensembl_vep_cache_tar // string: [optional]  path to compressed Ensembl VEP cache archive
+    val_gridss_index          // string: [optional]  path to pre-built GRIDSS index directory
+    val_gridss_index_tar      // string: [optional]  path to compressed GRIDSS index archive
+    val_hmf_ensembl_data      // string: [optional]  path to pre-extracted HMF Ensembl data directory
+    val_hmf_ensembl_data_tar  // string: [optional]  path to compressed HMF Ensembl data archive
+    val_msisensor2_models     // string: [optional] path to  pre-extracted MSIsensor2 models directory
+    val_msisensor2_models_tar // string: [optional] path to  compressed MSIsensor2 models archive
 
     main:
+    def ch_bwamem2_index    = channel.empty()
     def ch_genome_fasta     = channel.empty()
     def ch_vep_cache        = channel.empty()
     def ch_gridss_index     = channel.empty()
@@ -70,7 +71,7 @@ workflow PREPARE_REFERENCES {
         ch_hmf_ensembl_data = channel.fromPath(val_hmf_ensembl_data).map { it -> [[id: it.simpleName], it] }.collect()
     }
 
-    // MSIsensor2 models untar (optional: MSI detection is skipped when no models are given)
+    // MSIsensor2 models untar
     if (val_msisensor2_models) {
         ch_msisensor2_models = channel.fromPath(val_msisensor2_models).map { it -> [[id: it.simpleName], it] }.collect()
     } else if (val_msisensor2_models_tar) {
@@ -82,10 +83,10 @@ workflow PREPARE_REFERENCES {
 
 
     emit:
-    genome_fasta     = ch_genome_fasta              // channel: [ val(meta), path(fasta) ]
-    bwamem2_index    = ch_bwamem2_index             // channel: [ val(meta), path(index) ]
-    vep_cache        = ch_vep_cache                 // channel: [ val(meta), path(dir) ]
-    gridss_index     = ch_gridss_index              // channel: [ val(meta), path(dir) ]
-    hmf_ensembl_data = ch_hmf_ensembl_data          // channel: [ val(meta), path(dir) ]
-    msisensor2_models = ch_msisensor2_models        // channel: [ val(meta), path(dir) ] empty when no models are given
+    genome_fasta     = ch_genome_fasta       // channel: [ val(meta), path(fasta) ]
+    bwamem2_index    = ch_bwamem2_index      // channel: [ val(meta), path(index) ]
+    vep_cache        = ch_vep_cache          // channel: [ val(meta), path(dir) ]
+    gridss_index     = ch_gridss_index       // channel: [ val(meta), path(dir) ]
+    hmf_ensembl_data = ch_hmf_ensembl_data   // channel: [ val(meta), path(dir) ]
+    msisensor2_models = ch_msisensor2_models // channel: [ val(meta), path(dir) ]
 }
