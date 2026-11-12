@@ -29,7 +29,7 @@ nextflow_workflow {
                 input[6] = null
                 input[7] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
                 input[8] = null
-                input[9] = params.modules_testdata_base_path + 'genomics/homo_sapiens/msisensor2/models_hg19_17sites.tar.gz'
+                input[9] = params.pipelines_testdata_base_path + 'reference/GRCh37/msisensor2/models_b37_test.tar.gz'
                 """
             }
         }
@@ -61,7 +61,7 @@ nextflow_workflow {
                 input[6] = null
                 input[7] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
                 input[8] = null
-                input[9] = params.modules_testdata_base_path + 'genomics/homo_sapiens/msisensor2/models_hg19_17sites.tar.gz'
+                input[9] = params.pipelines_testdata_base_path + 'reference/GRCh37/msisensor2/models_b37_test.tar.gz'
                 """
             }
         }

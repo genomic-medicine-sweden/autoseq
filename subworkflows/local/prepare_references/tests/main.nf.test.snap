@@ -59,10 +59,42 @@
                 "msisensor2_models": [
                     [
                         {
-                            "id": "models_hg19_17sites"
+                            "id": "models_b37_test"
                         },
                         [
-                            
+                            "02354850e69564a83d11ec5a19cad10c:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "08b976ff5bcd086e28b352de902b1652:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "08fbb4c8fce29494d34bb67cbace8c86:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "09ba493c651885baf4e38604891331e0:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "1030c0aa35ca5c263daeae866ad18632:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "174981b13444a2be4c9756893c25900a:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "18eacc942b5a575070b79135f61d32c4:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "2ca92b957132832af1af3f8612e4b952:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "384665c14c7f239d87a55c4541cedf9c:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "41e4d3954a11cef2714b109148ce93d2:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "4db5b6e6238d4708c15101301a8f8e20:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "50ce1f9deacc1916a5d7b32a24865d05:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "517ea23189a660cf0a066d7128b9273c:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "54f32b8334989e4377d4faaa50287289:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "56364f67ea6447b2377030e5faa88541:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "5d2f1c72d13d3265962bff2794ab349f:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "604f790a169bc07de1a2c685cd8e6dd8:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "6b9971289543568f5f9a85a661152d22:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "7d6f1df8b686f7db2764b6a1428323fd:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "8e09b335a1c92c6fe9e0ca749e2c22c8:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "8fae7b15d925146b2f45d8a0e2b93879:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "91ee928486d744b039356c6fea398651:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "9b328cd6246e9553324f67d78eeb782f:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "a26acb86de183539c7a11f07343f51bc:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "a5fceb129921db923f867cc9babcdde3:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "c24d2dc034ffc1a4558224f49b714543:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "c8049461b6e1556ca2eac7a9dabf1c7b:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "cc3b7645310ed3e22bf1c023cfda4a72:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "d485f35f016b74f3da009ac130fd7e77:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "d5907d1d694360f406b43b0a7c7b1b19:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "e252be018770a6eb76630d50ae8e76ae:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "eac865683c6583d5068dddbdb25c65a3:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "ffe561d84244cc2f36834e2336b2dd70:md5,d41d8cd98f00b204e9800998ecf8427e"
                         ]
                     ]
                 ],
@@ -111,7 +143,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-11-11T14:37:00.779349228",
+        "timestamp": "2026-11-12T22:12:20.966866658",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -177,27 +209,42 @@
                 "msisensor2_models": [
                     [
                         {
-                            "id": "models_hg19_17sites"
+                            "id": "models_b37_test"
                         },
                         [
-                            "016a16e12aca2bdba3713a3be76f72cd:md5,26ddcb7b64f43835f254a13b29adf3fc",
-                            "02d42c2bda19aac304d6e86390c7f328:md5,15ab43fe84b8b7169979d62e267e2b5f",
-                            "1030c0aa35ca5c263daeae866ad18632:md5,41e6de8e7e35f66b691072d9839e128a",
-                            "15c3f5ec1c020d8f44283e40a2d9b6bb:md5,7fe77d6cd3e0714d5b4390e37df7e7b9",
-                            "15d6012f9a234b7adbbeecec524aea7d:md5,9b11cce514fc209f54501e042a7aad8e",
-                            "2cf9a58f57e78b88acd86d792fe6a7b3:md5,9d894caf8575df7a218d37f249e5d09f",
-                            "3ba04410c7ccbfc33e8b1b11d8132ae9:md5,71083a4e40f7b9e3e1ceaad6f58755f7",
-                            "4431c9dc08be932c460a9e67192e7c57:md5,f32023840c68cb430c79f4df7db8d36e",
-                            "4f5fa7bed97b48093375222d242fc982:md5,412fbe16dfdd680e5edb2d06c2aee0b6",
-                            "657a38415ac5a5d36609d9c180170b7a:md5,3aa2c66007f669e888e061649e92f0a0",
-                            "71e6c0d59ea09d2a7acc566560841e34:md5,994c5dfd8179ba3a230f84d6938eda8e",
-                            "8144b15900bba7086e86b31a0e1f8cfd:md5,cee5db3ea768ca6311048b9e2aa30ba9",
-                            "9bf6f7a544f369c3262a3a6f72cfdd7b:md5,0dee4e2124f75a2848f0864aa59647a2",
-                            "b8a36f2274b33cb0ed932e85cd1ddd5a:md5,92f84a4b951c4763bde72bf4f4ea875c",
-                            "c08f164ded323a8c2606c408c555d73d:md5,a9f42a43cb03a9ff37c238f13a75b614",
-                            "ceaa36ddbb76dc6eb6199ed946945788:md5,b4c563c94f59d7cb2c5c26d04d441a01",
-                            "e05d5da7208a924762311eddc4ec96c0:md5,0dd92cb27616630b4882bd71e4a85d9e",
-                            "f8a20acf51ccb2b0ce6af42f24a8b5ef:md5,2b3ede1d6fc4bc83ab2052f3eaa2618c"
+                            "02354850e69564a83d11ec5a19cad10c:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "08b976ff5bcd086e28b352de902b1652:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "08fbb4c8fce29494d34bb67cbace8c86:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "09ba493c651885baf4e38604891331e0:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "1030c0aa35ca5c263daeae866ad18632:md5,f93c93676a8cbd33ad86a75f5feaef81",
+                            "174981b13444a2be4c9756893c25900a:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "18eacc942b5a575070b79135f61d32c4:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "2ca92b957132832af1af3f8612e4b952:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "384665c14c7f239d87a55c4541cedf9c:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "41e4d3954a11cef2714b109148ce93d2:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "4db5b6e6238d4708c15101301a8f8e20:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "50ce1f9deacc1916a5d7b32a24865d05:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "517ea23189a660cf0a066d7128b9273c:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "54f32b8334989e4377d4faaa50287289:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "56364f67ea6447b2377030e5faa88541:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "5d2f1c72d13d3265962bff2794ab349f:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "604f790a169bc07de1a2c685cd8e6dd8:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "6b9971289543568f5f9a85a661152d22:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "7d6f1df8b686f7db2764b6a1428323fd:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "8e09b335a1c92c6fe9e0ca749e2c22c8:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "8fae7b15d925146b2f45d8a0e2b93879:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "91ee928486d744b039356c6fea398651:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "9b328cd6246e9553324f67d78eeb782f:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "a26acb86de183539c7a11f07343f51bc:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "a5fceb129921db923f867cc9babcdde3:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "c24d2dc034ffc1a4558224f49b714543:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "c8049461b6e1556ca2eac7a9dabf1c7b:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "cc3b7645310ed3e22bf1c023cfda4a72:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "d485f35f016b74f3da009ac130fd7e77:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "d5907d1d694360f406b43b0a7c7b1b19:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "e252be018770a6eb76630d50ae8e76ae:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "eac865683c6583d5068dddbdb25c65a3:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "ffe561d84244cc2f36834e2336b2dd70:md5,7e8cf185821154e5da6b1ca5d3f5babc"
                         ]
                     ]
                 ],
@@ -246,7 +293,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-11-11T14:36:54.083721363",
+        "timestamp": "2026-11-12T22:12:11.398568887",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

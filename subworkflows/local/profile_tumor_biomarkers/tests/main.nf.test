@@ -22,7 +22,7 @@ nextflow_workflow {
                 """
                 input[0] = channel.of([
                     [ id:'msisensor2_models' ],
-                    file(params.modules_testdata_base_path + 'genomics/homo_sapiens/msisensor2/models_hg19_17sites.tar.gz', checkIfExists: true)
+                    file(params.pipelines_testdata_base_path + 'reference/GRCh37/msisensor2/models_b37_test.tar.gz', checkIfExists: true)
                 ])
                 """
             }
@@ -85,8 +85,7 @@ nextflow_workflow {
                         file(params.pipelines_testdata_base_path + 'testdata/jumble/normal/NORMAL.jumble.csv', checkIfExists: true)
                     ]
                 )
-                // No MSIsensor2 models, so MSI detection is skipped
-                input[8] = channel.empty()
+                input[8] = UNTAR_MSISENSOR2_MODELS.out.untar.collect()
                 input[9] = channel.of([
                     [ id:'TEST', case_id:'TEST', tumor_id:'TUMOR', normal_id:'NORMAL' ],
                     file(params.pipelines_testdata_base_path + 'testdata/vcf/TUMOR_NORMAL-all.somatic.vep.vcf.gz', checkIfExists: true)
@@ -100,14 +99,16 @@ nextflow_workflow {
                 { assert workflow.success },
                 // PDFs are non-deterministic (R embeds timestamps), so assert existence only
                 { assert workflow.out.purecn_pdf[0][1].every { f -> file(f).exists() } },
-                { assert workflow.out.msi_score.size() == 0 },
                 { assert snapshot(
                     workflow.out.purecn_csv,
                     workflow.out.purecn_genes_csv,
                     workflow.out.dpyd_csv,
                     workflow.out.dpyd_json,
                     // The Frankenplot HTML embeds run-specific content, so only its name is asserted
-                    workflow.out.frankenplot_html.collect { meta, html -> [meta, file(html).name] }
+                    workflow.out.frankenplot_html.collect { meta, html -> [meta, file(html).name] },
+                    workflow.out.msi_distribution,
+                    workflow.out.msi_score,
+                    workflow.out.msi_somatic,
                 ).match() }
             )
         }
