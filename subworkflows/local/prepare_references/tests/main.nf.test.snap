@@ -251,5 +251,61 @@
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
+    },
+    "No indexing or untarring need": {
+        "content": [
+            {
+                "bwamem2_index": [
+                    [
+                        {
+                            "id": "human_g1k_v37_decoy"
+                        },
+                        "/genomic-medicine-sweden/test-datasets/autoseq/reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai"
+                    ]
+                ],
+                "genome_fasta": [
+                    [
+                        {
+                            "id": "human_g1k_v37_decoy"
+                        },
+                        "/genomic-medicine-sweden/test-datasets/autoseq/reference/GRCh37/genome/human_g1k_v37_decoy.fasta"
+                    ]
+                ],
+                "gridss_index": [
+                    [
+                        {
+                            "id": "gridss_index"
+                        },
+                        "/genomic-medicine-sweden/test-datasets/autoseq/reference/GRCh37/gridss_index"
+                    ]
+                ],
+                "hmf_ensembl_data": [
+                    [
+                        {
+                            "id": "directory"
+                        },
+                        "/genomic-medicine-sweden/test-datasets/autoseq/dummy/path/to/ensembl/data/directory"
+                    ]
+                ],
+                "vep_cache": [
+                    [
+                        {
+                            "id": "115_GRCh37"
+                        },
+                        "/genomic-medicine-sweden/test-datasets/autoseq/reference/GRCh37/vep/homo_sapiens/115_GRCh37"
+                    ]
+                ]
+            },
+            {
+                "versions": [
+                    
+                ]
+            }
+        ],
+        "timestamp": "2026-11-11T13:46:50.704177",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
     }
 }
