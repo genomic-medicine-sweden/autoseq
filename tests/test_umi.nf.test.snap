@@ -1,7 +1,7 @@
 {
     "test_umi profile - paired tumor-normal": {
         "content": [
-            79,
+            81,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -102,6 +102,9 @@
                 "JUMBLE_RUN": {
                     "Jumble": "0.5.5"
                 },
+                "MSISENSOR2_MSI": {
+                    "msisensor2": 0.1
+                },
                 "PASSFILTER_FOR_MUTECT2": {
                     "bcftools": "1.23.1"
                 },
@@ -143,6 +146,9 @@
                     "untar": 1.34
                 },
                 "UNTAR_HMF_ENSEMBL_DATA": {
+                    "untar": 1.34
+                },
+                "UNTAR_MSISENSOR2_MODELS": {
                     "untar": 1.34
                 },
                 "UNTAR_VEP_CACHE": {
@@ -192,6 +198,10 @@
                 "dpyd/TEST.TUMOR.DPYD.json",
                 "frankenplot",
                 "frankenplot/TEST.frankenplot.html",
+                "msi",
+                "msi/TUMOR_msisensor2",
+                "msi/TUMOR_msisensor2_dis",
+                "msi/TUMOR_msisensor2_somatic",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
@@ -263,6 +273,9 @@
                 "TEST.NORMAL.DPYD.json:md5,0cd8bc15aea6d369c31a7e55c23f3334",
                 "TEST.TUMOR.DPYD.csv:md5,bf70cd22e73b1146ee83d325c7de354b",
                 "TEST.TUMOR.DPYD.json:md5,5c5f9c12eaec9914c8884ef1103473fe",
+                "TUMOR_msisensor2:md5,a3290f7539dbbf83777e8590156c0e28",
+                "TUMOR_msisensor2_dis:md5,3a62613abc886884aa4b0ddcabbfed3c",
+                "TUMOR_msisensor2_somatic:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "TEST.TUMOR_TEST.NORMAL.contamination.table:md5,ff6e287b8fa6621479797a04907bcab9",
                 "NORMAL.flagstat:md5,15eaa053933a7b566eb94ce166bd9fb0",
                 "TUMOR.flagstat:md5,256095c6b50d717efd482584a55b2e94",
@@ -329,7 +342,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-10-29T12:02:07.758165285",
+        "timestamp": "2026-11-12T21:47:34.212329947",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -337,7 +350,7 @@
     },
     "test_umi profile - paired tumor-normal - stub": {
         "content": [
-            79,
+            81,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -438,6 +451,9 @@
                 "JUMBLE_RUN": {
                     "Jumble": "0.5.5"
                 },
+                "MSISENSOR2_MSI": {
+                    "msisensor2": 0.1
+                },
                 "PASSFILTER_FOR_MUTECT2": {
                     "bcftools": "1.23.1"
                 },
@@ -479,6 +495,9 @@
                     "untar": 1.34
                 },
                 "UNTAR_HMF_ENSEMBL_DATA": {
+                    "untar": 1.34
+                },
+                "UNTAR_MSISENSOR2_MODELS": {
                     "untar": 1.34
                 },
                 "UNTAR_VEP_CACHE": {
@@ -528,6 +547,10 @@
                 "dpyd/TEST.TUMOR.DPYD.json",
                 "frankenplot",
                 "frankenplot/TEST.frankenplot.html",
+                "msi",
+                "msi/TUMOR_msisensor2",
+                "msi/TUMOR_msisensor2_dis",
+                "msi/TUMOR_msisensor2_somatic",
                 "multiqc",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
@@ -588,7 +611,7 @@
                 "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-10-23T10:03:00.12675949",
+        "timestamp": "2026-11-12T21:49:21.619202062",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
