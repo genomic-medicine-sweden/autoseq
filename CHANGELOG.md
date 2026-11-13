@@ -41,6 +41,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #135 ](https://github.com/genomic-medicine-sweden/autoseq/pull/135) Added nf-test for the `GRIPSS_GERMLINE` module covering targeted, untargeted and stub cases.
 - [ #136 ](https://github.com/genomic-medicine-sweden/autoseq/pull/136) Added nf-test for the `SOMATIC_VCFMERGE` module covering Mutect2 and SAGE VCFs and a stub case.
 - [ #142 ](https://github.com/genomic-medicine-sweden/autoseq/pull/142) Added nf-test for the `PREPARE_REFERENCES` subworkflow covering scenario where no indexing of reference genome or untarring of reference file directories is needed.
+- [ #146 ](https://github.com/genomic-medicine-sweden/autoseq/pull/146) Added MSIsensor2 MSI detection on tumor BAMs to the `PROFILE_TUMOR_BIOMARKERS` subworkflow, publishing the results to `msi/`. It runs only when `--msisensor2_models` or `--msisensor2_models_tar` is set.
 
 ### `Changed`
 

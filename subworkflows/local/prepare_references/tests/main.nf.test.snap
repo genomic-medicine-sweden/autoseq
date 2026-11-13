@@ -56,6 +56,48 @@
                         ]
                     ]
                 ],
+                "msisensor2_models": [
+                    [
+                        {
+                            "id": "models_b37_test"
+                        },
+                        [
+                            "02354850e69564a83d11ec5a19cad10c:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "08b976ff5bcd086e28b352de902b1652:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "08fbb4c8fce29494d34bb67cbace8c86:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "09ba493c651885baf4e38604891331e0:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "1030c0aa35ca5c263daeae866ad18632:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "174981b13444a2be4c9756893c25900a:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "18eacc942b5a575070b79135f61d32c4:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "2ca92b957132832af1af3f8612e4b952:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "384665c14c7f239d87a55c4541cedf9c:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "41e4d3954a11cef2714b109148ce93d2:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "4db5b6e6238d4708c15101301a8f8e20:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "50ce1f9deacc1916a5d7b32a24865d05:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "517ea23189a660cf0a066d7128b9273c:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "54f32b8334989e4377d4faaa50287289:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "56364f67ea6447b2377030e5faa88541:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "5d2f1c72d13d3265962bff2794ab349f:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "604f790a169bc07de1a2c685cd8e6dd8:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "6b9971289543568f5f9a85a661152d22:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "7d6f1df8b686f7db2764b6a1428323fd:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "8e09b335a1c92c6fe9e0ca749e2c22c8:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "8fae7b15d925146b2f45d8a0e2b93879:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "91ee928486d744b039356c6fea398651:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "9b328cd6246e9553324f67d78eeb782f:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "a26acb86de183539c7a11f07343f51bc:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "a5fceb129921db923f867cc9babcdde3:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "c24d2dc034ffc1a4558224f49b714543:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "c8049461b6e1556ca2eac7a9dabf1c7b:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "cc3b7645310ed3e22bf1c023cfda4a72:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "d485f35f016b74f3da009ac130fd7e77:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "d5907d1d694360f406b43b0a7c7b1b19:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "e252be018770a6eb76630d50ae8e76ae:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "eac865683c6583d5068dddbdb25c65a3:md5,d41d8cd98f00b204e9800998ecf8427e",
+                            "ffe561d84244cc2f36834e2336b2dd70:md5,d41d8cd98f00b204e9800998ecf8427e"
+                        ]
+                    ]
+                ],
                 "vep_cache": [
                     [
                         {
@@ -89,6 +131,11 @@
                         "1.34"
                     ],
                     [
+                        "PREPARE_REFERENCES:UNTAR_MSISENSOR2_MODELS",
+                        "untar",
+                        "1.34"
+                    ],
+                    [
                         "PREPARE_REFERENCES:UNTAR_VEP_CACHE",
                         "untar",
                         "1.34"
@@ -96,10 +143,10 @@
                 ]
             }
         ],
-        "timestamp": "2026-11-11T13:27:10.609631",
+        "timestamp": "2026-11-12T22:12:20.966866658",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.6"
         }
     },
     "build bwamem2 index and untar directories": {
@@ -159,6 +206,48 @@
                         ]
                     ]
                 ],
+                "msisensor2_models": [
+                    [
+                        {
+                            "id": "models_b37_test"
+                        },
+                        [
+                            "02354850e69564a83d11ec5a19cad10c:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "08b976ff5bcd086e28b352de902b1652:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "08fbb4c8fce29494d34bb67cbace8c86:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "09ba493c651885baf4e38604891331e0:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "1030c0aa35ca5c263daeae866ad18632:md5,f93c93676a8cbd33ad86a75f5feaef81",
+                            "174981b13444a2be4c9756893c25900a:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "18eacc942b5a575070b79135f61d32c4:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "2ca92b957132832af1af3f8612e4b952:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "384665c14c7f239d87a55c4541cedf9c:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "41e4d3954a11cef2714b109148ce93d2:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "4db5b6e6238d4708c15101301a8f8e20:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "50ce1f9deacc1916a5d7b32a24865d05:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "517ea23189a660cf0a066d7128b9273c:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "54f32b8334989e4377d4faaa50287289:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "56364f67ea6447b2377030e5faa88541:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "5d2f1c72d13d3265962bff2794ab349f:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "604f790a169bc07de1a2c685cd8e6dd8:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "6b9971289543568f5f9a85a661152d22:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "7d6f1df8b686f7db2764b6a1428323fd:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "8e09b335a1c92c6fe9e0ca749e2c22c8:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "8fae7b15d925146b2f45d8a0e2b93879:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "91ee928486d744b039356c6fea398651:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "9b328cd6246e9553324f67d78eeb782f:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "a26acb86de183539c7a11f07343f51bc:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "a5fceb129921db923f867cc9babcdde3:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "c24d2dc034ffc1a4558224f49b714543:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "c8049461b6e1556ca2eac7a9dabf1c7b:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "cc3b7645310ed3e22bf1c023cfda4a72:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "d485f35f016b74f3da009ac130fd7e77:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "d5907d1d694360f406b43b0a7c7b1b19:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "e252be018770a6eb76630d50ae8e76ae:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "eac865683c6583d5068dddbdb25c65a3:md5,7e8cf185821154e5da6b1ca5d3f5babc",
+                            "ffe561d84244cc2f36834e2336b2dd70:md5,7e8cf185821154e5da6b1ca5d3f5babc"
+                        ]
+                    ]
+                ],
                 "vep_cache": [
                     [
                         {
@@ -192,6 +281,11 @@
                         "1.34"
                     ],
                     [
+                        "PREPARE_REFERENCES:UNTAR_MSISENSOR2_MODELS",
+                        "untar",
+                        "1.34"
+                    ],
+                    [
                         "PREPARE_REFERENCES:UNTAR_VEP_CACHE",
                         "untar",
                         "1.34"
@@ -199,10 +293,10 @@
                 ]
             }
         ],
-        "timestamp": "2026-11-11T13:27:01.861739",
+        "timestamp": "2026-11-12T22:12:11.398568887",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.6"
         }
     },
     "No indexing or untarring need": {
@@ -240,6 +334,14 @@
                         "/genomic-medicine-sweden/test-datasets/autoseq/dummy/path/to/ensembl/data/directory"
                     ]
                 ],
+                "msisensor2_models": [
+                    [
+                        {
+                            "id": "directory"
+                        },
+                        "/genomic-medicine-sweden/test-datasets/autoseq/dummy/path/to/msisensor_model/data/directory"
+                    ]
+                ],
                 "vep_cache": [
                     [
                         {
@@ -255,10 +357,10 @@
                 ]
             }
         ],
-        "timestamp": "2026-11-11T13:46:50.704177",
+        "timestamp": "2026-11-13T13:42:26.24020922",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.6"
         }
     }
 }

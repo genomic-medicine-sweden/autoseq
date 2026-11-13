@@ -54,6 +54,7 @@ workflow AUTOSEQ {
     ch_hmf_ensembl_data                // channel: [mandatory] [ val(meta), path(dir) ] HMF Ensembl data resources directory
     ch_interval_list                   // channel: [mandatory] [ val(meta), path(interval_list) ] target regions interval list
     ch_jumble_ref                      // channel: [mandatory] [ val(meta), path(rds) ] Jumble CNV reference
+    ch_msisensor2_models               // channel: [optional]  [ val(meta), path(dir) ] MSIsensor2 models
     ch_sage_highconf_regions           // channel: [mandatory] [ val(meta), path(bed) ] SAGE high-confidence regions
     ch_sage_known_hotspots_somatic     // channel: [mandatory] [ val(meta), path(vcf) ] SAGE somatic hotspots
     ch_sage_pon                        // channel: [mandatory] [ val(meta), path(pon) ] SAGE panel of normals
@@ -356,6 +357,7 @@ workflow AUTOSEQ {
         PREPARE_HETSNPS_FOR_FRANKENPLOT.out.vcf,
         CALL_CNVS.out.jumble_cns,
         CALL_CNVS.out.bins_csv,
+        ch_msisensor2_models,
         CALL_SOMATIC_SNVS.out.vep_vcf,
     )
 
@@ -448,6 +450,9 @@ workflow AUTOSEQ {
     hetsnps_vcf                    = PREPARE_HETSNPS_FOR_FRANKENPLOT.out.vcf                        // channel: [ val(meta), path(vcf) ]
     hs_metrics                     = QC_ALIGNMENT.out.hs_metrics                                    // channel: [ val(meta), path(metrics) ]
     jumble_cns                     = CALL_CNVS.out.jumble_cns                                       // channel: [ val(meta), path(cns) ]
+    msi_distribution               = PROFILE_TUMOR_BIOMARKERS.out.msi_distribution                  // channel: [ val(meta), path(dis) ]
+    msi_score                      = PROFILE_TUMOR_BIOMARKERS.out.msi_score                         // channel: [ val(meta), path(msi) ]
+    msi_somatic                    = PROFILE_TUMOR_BIOMARKERS.out.msi_somatic                       // channel: [ val(meta), path(somatic) ]
     multiple_metrics               = QC_ALIGNMENT.out.multiple_metrics                              // channel: [ val(meta), path(metrics) ]
     multiqc_report                 = MULTIQC.out.report.map { _meta, report -> [report] }.toList()  // channel: /path/to/multiqc_report.html
     mutect2_stats                  = CALL_SOMATIC_SNVS.out.mutect2_stats                            // channel: [ val(meta), path(stats) ]
