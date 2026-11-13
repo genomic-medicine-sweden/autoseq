@@ -334,6 +334,14 @@
                         "/genomic-medicine-sweden/test-datasets/autoseq/dummy/path/to/ensembl/data/directory"
                     ]
                 ],
+                "msisensor2_models": [
+                    [
+                        {
+                            "id": "directory"
+                        },
+                        "/genomic-medicine-sweden/test-datasets/autoseq/dummy/path/to/msisensor_model/data/directory"
+                    ]
+                ],
                 "vep_cache": [
                     [
                         {
@@ -349,10 +357,10 @@
                 ]
             }
         ],
-        "timestamp": "2026-11-11T13:46:50.704177",
+        "timestamp": "2026-11-13T13:42:26.24020922",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.6"
         }
     }
 }

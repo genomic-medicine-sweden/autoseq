@@ -26,6 +26,8 @@ nextflow_workflow {
                 input[5] = null
                 input[6] = params.pipelines_testdata_base_path + 'dummy/path/to/ensembl/data/directory'
                 input[7] = null
+                input[8] = params.pipelines_testdata_base_path + 'dummy/path/to/msisensor_model/data/directory'
+                input[9] = null
                 """
             }
         }
