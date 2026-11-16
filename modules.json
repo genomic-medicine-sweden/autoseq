@@ -127,12 +127,12 @@
                     },
                     "gridss/assemble": {
                         "branch": "master",
-                        "git_sha": "dba388cb6d87d390543f2c108bb8684c4c36c644",
+                        "git_sha": "2632114390d4d3b6135353c50e50e764aa589b7f",
                         "installed_by": ["modules"]
                     },
                     "gridss/call": {
                         "branch": "master",
-                        "git_sha": "26550158a8b044f1c390ea8dbb54ea4a6cd251b2",
+                        "git_sha": "2632114390d4d3b6135353c50e50e764aa589b7f",
                         "installed_by": ["modules"]
                     },
                     "gridss/extractoverlappingfragments": {
