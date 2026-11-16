@@ -91,28 +91,70 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
 
+    samplesheet_list = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
+
+    def case_id_to_sample_type_list = samplesheet_list.collect {
+                def meta = it[0]
+                [(meta.case_id), meta.sample_type]
+            }
+            .unique()
+            .groupBy{it[0]}
+            .collectEntries{ k, v -> [(k):v*.get(1)] }
+
+        println case_id_to_sample_type_list
+
+        def case_id_to_analysis_type_map = case_id_to_sample_type_list
+            .collectEntries {
+                case_id, sample_type_list ->
+                    [
+                        (case_id) : sample_type_list.size == 1 ? "tumor_only" : "tumor_normal"
+                    ]
+            }
+
+        println case_id_to_analysis_type_map
+
+
+
     def input_samples = channel
-        .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
+        .fromList(samplesheet_list)
         .map {
             meta, fastq_1, fastq_2, bam ->
+
             if (meta.lane && fastq_2 && !bam) {
                 meta = meta + [
                     id: "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString(),
                     datatype: 'fastq',
-                    single_end: false
+                    single_end: false,
+                    analysis_type: case_id_to_analysis_type_map[meta.case_id],
                 ]
                 def readgroup = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
 
                 return [ meta, [ fastq_1, fastq_2 ] ]
+
             } else if (bam) {
-                meta = meta + [id: "${meta.case_id}_${meta.sample_name}".toString()]
-                meta = meta + [datatype: 'bam']
+                meta = meta + [
+                    id: "${meta.case_id}_${meta.sample_name}".toString(),
+                    datatype: 'bam',
+                    analysis_type: case_id_to_analysis_type_map[meta.case_id],
+                ]
 
                 return [ meta, [ bam ] ]
+
             } else {
                 error("Please check input samplesheet -> Invalid FASTQ/BAM files provided for sample: ${meta.case_id}")
             }
         }
+
+        // input_samples.dump(tag: "input_samples")
+
+        // ch_case_id = channel.fromList(samplesheet_list)
+        //     .map {
+        //         meta, fastq_1, fastq_2, bam -> [meta, fastq_2, fastq_1]
+        //     }
+        // ch_case_id.dump(tag: "ch_case_id")
+
+
+
 
 
     emit:
@@ -317,4 +359,15 @@ def keyByCaseId(ch_input, keepMeta = false) {
         def value = keepMeta ? [meta] + files : (files.size() == 1 ? files[0] : files)
         return [meta.case_id, value]
     }
+}
+
+
+/**
+ * Retrieves the analysis type from the meta information.
+ * @param meta The meta map containing sample information
+ * @return The analysis type as a string
+ */
+def getAnalysisType(meta) {
+
+    return meta.analysis_type ?: ""
 }
