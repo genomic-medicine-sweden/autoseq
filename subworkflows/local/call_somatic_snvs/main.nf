@@ -41,15 +41,13 @@ workflow CALL_SOMATIC_SNVS {
     main:
     ch_versions = channel.empty()
 
-    //
-    // SUBWORKFLOW: Call somatic SNVs with GATK Mutect2 in tumor-normal mode
-    //
 
     // GATK4_MUTECT2 expects the index tuple as [ val(meta), path(fai), path(gzi) ]
     ch_fai_for_call_gatk_mutect2 = ch_fai.map { meta, fai ->
         return tuple(meta, fai, [])
     }
 
+    // Call somatic SNVs using GATK Mutect2 in tumor-normal mode
     CALL_GATK_MUTECT2(
         ch_bam_bai,
         ch_fasta,
@@ -63,10 +61,6 @@ workflow CALL_SOMATIC_SNVS {
         ch_panel_of_normals_tbi,
         ch_interval_file
     )
-
-    //
-    // MODULE: Decompose and normalize the filtered Mutect2 calls
-    //
 
     ch_call_gatk_mutect2_for_vt_decompose = CALL_GATK_MUTECT2.out.filtered_vcf
         .map { meta, vcf ->
@@ -86,10 +80,7 @@ workflow CALL_SOMATIC_SNVS {
     ch_vt_normalize_for_passfilter_for_mutect2 = VT_NORMALIZE.out.vcf
         .join(INDEX_VCF.out.tbi)
 
-    //
-    // MODULE: Call somatic SNVs with SAGE in tumor-normal mode
-    //
-
+    // Call somatic SNVs using SAGE in tumor-normal mode
     SAGE_SOMATIC(
         ch_bam_bai,
         ch_fasta,
@@ -111,10 +102,8 @@ workflow CALL_SOMATIC_SNVS {
     ch_sage_somatic_for_passfilter_for_sage = SAGE_SOMATIC.out.vcf
         .join(SAGE_SOMATIC.out.tbi)
 
-    //
-    // MODULE: Keep PASS variants and merge the Mutect2 and SAGE call sets
-    //
 
+    // Keep PASS variants and merge the Mutect2 and SAGE call sets
     PASSFILTER_FOR_MUTECT2(ch_vt_normalize_for_passfilter_for_mutect2)
     PASSFILTER_FOR_SAGE(ch_sage_somatic_for_passfilter_for_sage)
 
@@ -125,10 +114,8 @@ workflow CALL_SOMATIC_SNVS {
 
     ch_versions = ch_versions.mix(SOMATIC_VCFMERGE.out.versions)
 
-    //
-    // MODULE: Annotate somatic variants with Ensembl VEP
-    //
 
+    // Annotate somatic variants with Ensembl VEP
     ch_somatic_vcfmerge_for_annotate_vep = SOMATIC_VCFMERGE.out.vcf
         .map { meta, vcf ->
             return tuple(meta, vcf, []) // empty channel for custom files
