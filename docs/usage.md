@@ -113,6 +113,7 @@ genome_fai: /path/to/GRCh37/genome/human_g1k_v37_decoy.fasta.fai
 genome_dict: /path/to/GRCh37/genome/human_g1k_v37_decoy.dict
 bwamem2_index: /path/to/GRCh37/bwamem2_index
 # ... remaining reference parameters
+msisensor2_models: /path/to/GRCh37/msisensor2/models_b37_HumanG1Kv37 # optional, MSI detection is skipped when not set; must match the FASTA contig naming
 targets_bed: /path/to/GRCh37/targets/probio_comprehensive3.slopped20.bed
 interval_list: /path/to/GRCh37/targets/probio_comprehensive3.slopped20.interval_list
 jumble_ref: /path/to/GRCh37/targets/comprehensive3_baits_twist.bed.reference.RDS

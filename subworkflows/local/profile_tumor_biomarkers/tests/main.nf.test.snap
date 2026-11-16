@@ -53,6 +53,39 @@
                         "TUMOR.frankenplot.html:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
+                "msi_distribution": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR_dis:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "msi_score": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "msi_somatic": [
+                    [
+                        {
+                            "id": "TUMOR",
+                            "case_id": "TEST",
+                            "sample_name": "TUMOR",
+                            "sample_type": "tumor"
+                        },
+                        "TUMOR_somatic:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
                 "purecn_csv": [
                     [
                         {
@@ -89,7 +122,7 @@
                 ]
             }
         ],
-        "timestamp": "2026-10-19T12:48:35.991251491",
+        "timestamp": "2026-11-10T10:49:17.204314513",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -161,9 +194,42 @@
                     },
                     "TUMOR.frankenplot.html"
                 ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR_dis:md5,3a62613abc886884aa4b0ddcabbfed3c"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR:md5,a3290f7539dbbf83777e8590156c0e28"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR_somatic:md5,d41d8cd98f00b204e9800998ecf8427e"
+                ]
             ]
         ],
-        "timestamp": "2026-10-19T12:48:28.205034738",
+        "timestamp": "2026-11-12T22:17:34.606526668",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

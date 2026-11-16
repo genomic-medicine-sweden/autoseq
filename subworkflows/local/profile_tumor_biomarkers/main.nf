@@ -1,5 +1,6 @@
 
 include { JUMBLE_FRANKENPLOT } from '../../../modules/local/jumble/frankenplot/main'
+include { MSISENSOR2_MSI     } from '../../../modules/nf-core/msisensor2/msi/main'
 include { PURECN_RUN         } from '../../../modules/local/purecn/run/main'
 include { TYPEDPYD           } from '../../../modules/local/typeDPYD/main'
 include { keyByCaseId        } from '../utils_nfcore_autoseq_pipeline'
@@ -15,6 +16,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     ch_hetsnps_vcf          // channel: [optional]  [ val(meta), path(vcf) ] heterozygous SNPs with tumor allelic depths
     ch_jumble_cns           // channel: [mandatory] [ val(meta), path(cns) ] jumble cns
     ch_jumble_csv           // channel: [mandatory] [ val(meta), path(csv) ] jumble bin-level table
+    ch_msisensor2_models    // channel: [optional]  [ val(meta), path(dir) ] MSIsensor2 models; MSI is skipped when empty
     ch_somatic_vcf          // channel: [mandatory]  [ val(meta), path(vcf) ] VEP annotated somatic vcf
 
     main:
@@ -50,6 +52,15 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     //
     // MODULE: MSI status
     //
+
+    // MSIsensor2 required only tumor bam, An empty models channel leaves
+    // MSISENSOR2_MSI without input, so MSI detection is skipped
+    def ch_tumor_bam_bai = ch_bam_bai.filter { meta, _bam, _bai -> meta.sample_type == "tumor" }
+
+    MSISENSOR2_MSI(
+        ch_tumor_bam_bai,
+        ch_msisensor2_models.collect()
+    )
 
     //
     // MODULE: FRANKENPLOT (Genomic Overview, HRD, etc.)
@@ -105,5 +116,8 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     dpyd_csv            = TYPEDPYD.out.csv              // channel: [ val(meta), path(dpyd_csv) ]
     dpyd_json           = TYPEDPYD.out.json             // channel: [ val(meta), path(dpyd_json) ]
     frankenplot_html    = JUMBLE_FRANKENPLOT.out.html   // channel: [ val(meta), path(html) ]
+    msi_distribution    = MSISENSOR2_MSI.out.distribution // channel: [ val(meta), path(dis) ]
+    msi_score           = MSISENSOR2_MSI.out.msi          // channel: [ val(meta), path(msi) ]
+    msi_somatic         = MSISENSOR2_MSI.out.somatic      // channel: [ val(meta), path(somatic) ]
 
 }

@@ -45,6 +45,7 @@ Reference genome related files and options required for the workflow.
 | `targets_bed` | Path to the BED file containing target regions. | `string` |  |  |  |
 | `interval_list` | Path to the slopped interval list file. | `string` |  |  |  |
 | `jumble_ref` | Path to the reference RDS (R data object) for Jumble. | `string` |  |  |  |
+| `msisensor2_models` | Path to the MSIsensor2 models directory. The models must match the contig naming of the reference FASTA (e.g. `models_b37_HumanG1Kv37` for `human_g1k_v37_decoy.fasta`). MSI detection is skipped when neither this nor `--msisensor2_models_tar` is set. | `string` |  |  |  |
 
 ## Other options
 
@@ -75,6 +76,7 @@ Other options specific to this pipeline.
 | `ensembl_vep_cache_tar` | Path to Ensembl VEP cache tar archive | `string` |  |  |  |
 | `gridss_index_tar` | Path to GRIDSS index tar archive | `string` |  |  |  |
 | `hmf_ensembl_data_tar` | Path to HMF Ensembl data tar archive | `string` |  |  |  |
+| `msisensor2_models_tar` | Path to MSIsensor2 models tar archive | `string` |  |  |  |
 
 ## Generic options
 

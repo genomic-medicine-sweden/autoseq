@@ -187,6 +187,11 @@
                     "type": "string",
                     "description": "Path to the reference RDS (R data object) for Jumble.",
                     "fa_icon": "far fa-file-code"
+                },
+                "msisensor2_models": {
+                    "type": "string",
+                    "description": "Path to the MSIsensor2 models directory. The models must match the contig naming of the reference FASTA (e.g. `models_b37_HumanG1Kv37` for `human_g1k_v37_decoy.fasta`). MSI detection is skipped when neither this nor `--msisensor2_models_tar` is set.",
+                    "fa_icon": "far fa-file-code"
                 }
             }
         },
@@ -316,6 +321,10 @@
                 "hmf_ensembl_data_tar": {
                     "type": "string",
                     "description": "Path to HMF Ensembl data tar archive"
+                },
+                "msisensor2_models_tar": {
+                    "type": "string",
+                    "description": "Path to MSIsensor2 models tar archive"
                 }
             }
         },

@@ -26,6 +26,8 @@ nextflow_workflow {
                 input[5] = null
                 input[6] = params.pipelines_testdata_base_path + 'dummy/path/to/ensembl/data/directory'
                 input[7] = null
+                input[8] = params.pipelines_testdata_base_path + 'dummy/path/to/msisensor_model/data/directory'
+                input[9] = null
                 """
             }
         }
@@ -56,6 +58,8 @@ nextflow_workflow {
                 input[5] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz'
                 input[6] = null
                 input[7] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
+                input[8] = null
+                input[9] = params.pipelines_testdata_base_path + 'reference/GRCh37/msisensor2/models_b37_test.tar.gz'
                 """
             }
         }
@@ -86,6 +90,8 @@ nextflow_workflow {
                 input[5] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz'
                 input[6] = null
                 input[7] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
+                input[8] = null
+                input[9] = params.pipelines_testdata_base_path + 'reference/GRCh37/msisensor2/models_b37_test.tar.gz'
                 """
             }
         }

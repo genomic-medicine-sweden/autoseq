@@ -2,6 +2,7 @@ include { BWAMEM2_INDEX                   } from '../../../modules/nf-core/bwame
 include { UNTAR as UNTAR_VEP_CACHE        } from '../../../modules/nf-core/untar/main'
 include { UNTAR as UNTAR_GRIDSS_INDEX     } from '../../../modules/nf-core/untar/main'
 include { UNTAR as UNTAR_HMF_ENSEMBL_DATA } from '../../../modules/nf-core/untar/main'
+include { UNTAR as UNTAR_MSISENSOR2_MODELS } from '../../../modules/nf-core/untar/main'
 
 workflow PREPARE_REFERENCES {
 
@@ -14,6 +15,8 @@ workflow PREPARE_REFERENCES {
     val_gridss_index_tar      // string: [optional]  path to compressed GRIDSS index archive
     val_hmf_ensembl_data      // string: [optional]  path to pre-extracted HMF Ensembl data directory
     val_hmf_ensembl_data_tar  // string: [optional]  path to compressed HMF Ensembl data archive
+    val_msisensor2_models     // string: [optional] path to  pre-extracted MSIsensor2 models directory
+    val_msisensor2_models_tar // string: [optional] path to  compressed MSIsensor2 models archive
 
     main:
     def ch_bwamem2_index    = channel.empty()
@@ -21,6 +24,7 @@ workflow PREPARE_REFERENCES {
     def ch_vep_cache        = channel.empty()
     def ch_gridss_index     = channel.empty()
     def ch_hmf_ensembl_data = channel.empty()
+    def ch_msisensor2_models = channel.empty()
 
     ch_genome_fasta = channel.fromPath(val_genome_fasta).map { it -> [[id: it.simpleName], it] }.collect()
 
@@ -67,11 +71,22 @@ workflow PREPARE_REFERENCES {
         ch_hmf_ensembl_data = channel.fromPath(val_hmf_ensembl_data).map { it -> [[id: it.simpleName], it] }.collect()
     }
 
+    // MSIsensor2 models untar
+    if (val_msisensor2_models) {
+        ch_msisensor2_models = channel.fromPath(val_msisensor2_models).map { it -> [[id: it.simpleName], it] }.collect()
+    } else if (val_msisensor2_models_tar) {
+        ch_msisensor2_models_tar = channel.fromPath(val_msisensor2_models_tar).map { it -> [[id: it.simpleName], it] }.collect()
+        UNTAR_MSISENSOR2_MODELS ( ch_msisensor2_models_tar )
+
+        ch_msisensor2_models = UNTAR_MSISENSOR2_MODELS.out.untar.collect()
+    }
+
 
     emit:
-    genome_fasta     = ch_genome_fasta     // channel: [ val(meta), path(fasta) ]
-    bwamem2_index    = ch_bwamem2_index    // channel: [ val(meta), path(index) ]
-    vep_cache        = ch_vep_cache        // channel: [ val(meta), path(dir) ]
-    gridss_index     = ch_gridss_index     // channel: [ val(meta), path(dir) ]
-    hmf_ensembl_data = ch_hmf_ensembl_data // channel: [ val(meta), path(dir) ]
+    genome_fasta     = ch_genome_fasta       // channel: [ val(meta), path(fasta) ]
+    bwamem2_index    = ch_bwamem2_index      // channel: [ val(meta), path(index) ]
+    vep_cache        = ch_vep_cache          // channel: [ val(meta), path(dir) ]
+    gridss_index     = ch_gridss_index       // channel: [ val(meta), path(dir) ]
+    hmf_ensembl_data = ch_hmf_ensembl_data   // channel: [ val(meta), path(dir) ]
+    msisensor2_models = ch_msisensor2_models // channel: [ val(meta), path(dir) ]
 }
