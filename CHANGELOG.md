@@ -86,6 +86,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #144 ](https://github.com/genomic-medicine-sweden/autoseq/pull/144) Switched `pipelines_testdata_base_path` to the `autoseq` branch of `genomic-medicine-sweden/test-datasets`.
 - [ #145 ](https://github.com/genomic-medicine-sweden/autoseq/pull/145) Isolated the `CALL_SOMATIC_SNVS` nf-test config so it no longer relies on module options from the pipeline config.
 - [ #141 ](https://github.com/genomic-medicine-sweden/autoseq/pull/141) Refactored `PREPARE_REFERENCES` subworkflow to adhere to the coding conventions.
+- [ #138 ](https://github.com/genomic-medicine-sweden/autoseq/pull/138) Moved the `CALL_SOMATIC_SNVS` module options from `conf/modules.config` to `conf/subworkflows/call_somatic_snvs.config`.
 
 ### `Fixed`
 
