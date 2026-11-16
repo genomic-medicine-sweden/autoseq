@@ -18,31 +18,41 @@ components:
   - vcfmerge
   - ensemblvep/vep
 input:
-  - ch_input:
+  - ch_bam_bai:
       type: file
       description: |
         Aligned, deduplicated tumor and normal BAM files with their indices and the
         intervals to restrict calling to. The tumor sample must come first in both lists.
         Structure: [ val(meta), [ path(tumor_bam), path(normal_bam) ], [ path(tumor_bai), path(normal_bai) ], path(intervals) ]
       pattern: "*.bam"
-  - ch_fasta:
-      type: file
-      description: |
-        Reference genome FASTA
-        Structure: [ val(meta), path(fasta) ]
-      pattern: "*.{fa,fasta}"
-  - ch_fai:
-      type: file
-      description: |
-        Index of the reference genome FASTA
-        Structure: [ val(meta), path(fai) ]
-      pattern: "*.fai"
   - ch_dict:
       type: file
       description: |
         Sequence dictionary of the reference genome
         Structure: [ val(meta), path(dict) ]
       pattern: "*.dict"
+  - ch_ensembl_data_resources:
+      type: directory
+      description: |
+        HMF Ensembl data resource directory used by SAGE
+        Structure: [ val(meta), path(dir) ]
+  - ch_ensembl_vep_cache:
+      type: directory
+      description: |
+        Ensembl VEP cache directory
+        Structure: [ val(meta), path(cache) ]
+  - ch_fai:
+      type: file
+      description: |
+        Index of the reference genome FASTA
+        Structure: [ val(meta), path(fai) ]
+      pattern: "*.fai"
+  - ch_fasta:
+      type: file
+      description: |
+        Reference genome FASTA
+        Structure: [ val(meta), path(fasta) ]
+      pattern: "*.{fa,fasta}"
   - ch_germline_resource:
       type: file
       description: |
@@ -55,55 +65,69 @@ input:
         Index of the germline resource
         Structure: [ path(tbi) ]
       pattern: "*.vcf.gz.tbi"
-  - ch_panel_of_normals:
-      type: file
-      description: |
-        Panel of normals used by Mutect2
-        Structure: [ path(vcf) ]
-      pattern: "*.vcf.gz"
-  - ch_panel_of_normals_tbi:
-      type: file
-      description: |
-        Index of the panel of normals
-        Structure: [ path(tbi) ]
-      pattern: "*.vcf.gz.tbi"
   - ch_interval_file:
       type: file
       description: |
         Interval list used for the pileup summaries
         Structure: [ path(intervals) ]
       pattern: "*.interval_list"
-  - ch_sage_known_hotspots_somatic:
+  - ch_panel_of_normals:
       type: file
       description: |
-        Known somatic hotspots rescued by SAGE
-        Structure: [ val(meta), path(vcf) ]
+        Panel of normals used by Mutect2 (optional)
+        Structure: [ path(vcf) ]
       pattern: "*.vcf.gz"
+  - ch_panel_of_normals_tbi:
+      type: file
+      description: |
+        Index of the panel of normals (optional)
+        Structure: [ path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
   - ch_sage_highconf_regions:
       type: file
       description: |
         High confidence regions used by SAGE
         Structure: [ val(meta), path(bed) ]
       pattern: "*.bed.gz"
+  - ch_sage_known_hotspots_somatic:
+      type: file
+      description: |
+        Known somatic hotspots rescued by SAGE
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
   - ch_sage_pon:
       type: file
       description: |
         SAGE panel of normals
         Structure: [ val(meta), path(tsv) ]
       pattern: "*.tsv.gz"
-  - ch_ensembl_data_resources:
-      type: directory
-      description: |
-        HMF Ensembl data resource directory used by SAGE
-        Structure: [ val(meta), path(dir) ]
-  - ch_ensembl_vep_cache:
-      type: directory
-      description: |
-        Ensembl VEP cache directory
-        Structure: [ val(meta), path(cache) ]
-  - genome_version:
+  - val_ensemblvep_version:
+      type: string
+      description: Ensembl VEP cache version
+  - val_genome:
+      type: string
+      description: Genome assembly passed to Ensembl VEP (e.g. "GRCh37")
+  - val_genome_version:
       type: string
       description: Numeric reference genome version passed to SAGE ('37' or '38')
+  - val_min_baseq:
+      type: integer
+      description: Minimum average base quality used by SAGE
+  - val_sage_hotspot_tumor_qual:
+      type: integer
+      description: SAGE minimum tumor quality for hotspot variants
+  - val_sage_min_map_quality:
+      type: integer
+      description: SAGE minimum mapping quality
+  - val_sage_min_tumor_qual:
+      type: integer
+      description: SAGE minimum tumor quality for panel variants
+  - val_sage_min_tumor_vaf:
+      type: float
+      description: SAGE minimum tumor variant allele frequency
+  - val_vep_species:
+      type: string
+      description: Ensembl VEP species (e.g. "homo_sapiens")
 output:
   - contamination_table:
       type: file
@@ -111,22 +135,34 @@ output:
         Contamination estimate of the tumor sample
         Structure: [ val(meta), path(table) ]
       pattern: "*.contamination.table"
+  - mutect2_filtered_tbi:
+      type: file
+      description: |
+        Index of the filtered Mutect2 VCF
+        Structure: [ val(meta), path(tbi) ]
+      pattern: "*.vcf.gz.tbi"
+  - mutect2_filtered_vcf:
+      type: file
+      description: |
+        Filtered Mutect2 call set
+        Structure: [ val(meta), path(vcf) ]
+      pattern: "*.vcf.gz"
   - mutect2_stats:
       type: file
       description: |
         Filtering statistics of the Mutect2 call set
         Structure: [ val(meta), path(stats) ]
       pattern: "*.filteringStats.tsv"
-  - mutect2_tbi:
+  - mutect2_unfiltered_tbi:
       type: file
       description: |
-        Index of the filtered Mutect2 VCF
+        Index of the raw Mutect2 VCF
         Structure: [ val(meta), path(tbi) ]
       pattern: "*.vcf.gz.tbi"
-  - mutect2_vcf:
+  - mutect2_unfiltered_vcf:
       type: file
       description: |
-        Filtered Mutect2 call set
+        Raw Mutect2 call set before filtering
         Structure: [ val(meta), path(vcf) ]
       pattern: "*.vcf.gz"
   - pileup_table_normal:
@@ -141,16 +177,10 @@ output:
         Pileup summaries of the tumor sample
         Structure: [ val(meta), path(table) ]
       pattern: "*.pileups.table"
-  - mutect2_unfiltered_vcf:
+  - sage_tbi:
       type: file
       description: |
-        Raw Mutect2 call set before filtering
-        Structure: [ val(meta), path(vcf) ]
-      pattern: "*.vcf.gz"
-  - mutect2_unfiltered_tbi:
-      type: file
-      description: |
-        Index of the raw Mutect2 VCF
+        Index of the SAGE VCF
         Structure: [ val(meta), path(tbi) ]
       pattern: "*.vcf.gz.tbi"
   - sage_vcf:
@@ -159,10 +189,16 @@ output:
         SAGE call set
         Structure: [ val(meta), path(vcf) ]
       pattern: "*.vcf.gz"
-  - sage_tbi:
+  - segmentation_table:
       type: file
       description: |
-        Index of the SAGE VCF
+        Tumor segmentation table from the contamination estimate
+        Structure: [ val(meta), path(table) ]
+      pattern: "*.segmentation.table"
+  - somatic_tbi:
+      type: file
+      description: |
+        Index of the merged VCF
         Structure: [ val(meta), path(tbi) ]
       pattern: "*.vcf.gz.tbi"
   - somatic_vcf:
@@ -171,10 +207,10 @@ output:
         Merged Mutect2 and SAGE call set
         Structure: [ val(meta), path(vcf) ]
       pattern: "*.vcf.gz"
-  - somatic_tbi:
+  - vep_tbi:
       type: file
       description: |
-        Index of the merged VCF
+        Index of the VEP annotated VCF
         Structure: [ val(meta), path(tbi) ]
       pattern: "*.vcf.gz.tbi"
   - vep_vcf:
@@ -183,12 +219,6 @@ output:
         Merged call set annotated with Ensembl VEP
         Structure: [ val(meta), path(vcf) ]
       pattern: "*.vcf.gz"
-  - vep_tbi:
-      type: file
-      description: |
-        Index of the VEP annotated VCF
-        Structure: [ val(meta), path(tbi) ]
-      pattern: "*.vcf.gz.tbi"
   - versions:
       type: file
       description: |

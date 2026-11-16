@@ -61,10 +61,15 @@ workflow AUTOSEQ {
     ch_targets_bed                     // channel: [mandatory] [ val(meta), path(bed) ] target regions BED
     val_ensemblvep_version             // string:  [mandatory] Ensembl VEP cache version
     val_genome                         // string:  [mandatory] genome assembly (e.g. "GRCh37")
+    val_min_baseq                      // integer: [mandatory] minimum base quality
     val_multiqc_config                 // string:  [optional]  path to MultiQC config
     val_multiqc_logo                   // string:  [optional]  path to MultiQC logo
     val_multiqc_methods_description    // string:  [optional]  path to MultiQC methods description
     val_outdir                         // string:  [mandatory] path to output directory
+    val_sage_hotspot_tumor_qual        // integer: [mandatory] SAGE minimum tumor quality for hotspot variants
+    val_sage_min_map_quality           // integer: [mandatory] SAGE minimum mapping quality
+    val_sage_min_tumor_qual            // integer: [mandatory] SAGE minimum tumor quality for panel variants
+    val_sage_min_tumor_vaf             // float:   [mandatory] SAGE minimum tumor VAF
     val_vep_species                    // string:  [mandatory] Ensembl VEP species (e.g. "homo_sapiens")
 
     main:
@@ -125,7 +130,7 @@ workflow AUTOSEQ {
             "bwa-mem2",
             params.duplex,
             params.min_reads,
-            params.min_baseq,
+            val_min_baseq,
             params.max_base_error_rate
         )
 
@@ -218,24 +223,32 @@ workflow AUTOSEQ {
         }
 
     // genome version for sage and gripss
-    def genome_version = params.genome.equals("GRCh37") ? '37' : '38'
+    def genome_version = val_genome.equals("GRCh37") ? '37' : '38'
 
     CALL_SOMATIC_SNVS (
         ch_input_paired,
-        ch_genome_fasta,
-        ch_genome_fai,
         ch_dict,
-        ch_germline_resource.collect{it -> it[1]},  // germline_resource
-        ch_germline_resource_tbi.collect{it -> it[1]},  // germline_resource_tbi
-        [],
-        [],
-        ch_interval_list.collect{ it -> it[1] },
-        ch_sage_known_hotspots_somatic,
-        ch_sage_highconf_regions,
-        ch_sage_pon,
         ch_hmf_ensembl_data,
         ch_ensembl_vep_cache,
-        genome_version
+        ch_genome_fai,
+        ch_genome_fasta,
+        ch_germline_resource.collect{it -> it[1]},
+        ch_germline_resource_tbi.collect{it -> it[1]},
+        ch_interval_list.collect{ it -> it[1] },
+        [], // panel_of_normals
+        [], // panel_of_normals_tbi
+        ch_sage_highconf_regions,
+        ch_sage_known_hotspots_somatic,
+        ch_sage_pon,
+        val_ensemblvep_version,
+        val_genome,
+        genome_version,
+        val_min_baseq,
+        val_sage_hotspot_tumor_qual,
+        val_sage_min_map_quality,
+        val_sage_min_tumor_qual,
+        val_sage_min_tumor_vaf,
+        val_vep_species,
     )
 
     ch_versions = ch_versions.mix(CALL_SOMATIC_SNVS.out.versions)
@@ -451,8 +464,8 @@ workflow AUTOSEQ {
     multiple_metrics               = QC_ALIGNMENT.out.multiple_metrics                              // channel: [ val(meta), path(metrics) ]
     multiqc_report                 = MULTIQC.out.report.map { _meta, report -> [report] }.toList()  // channel: /path/to/multiqc_report.html
     mutect2_stats                  = CALL_SOMATIC_SNVS.out.mutect2_stats                            // channel: [ val(meta), path(stats) ]
-    mutect2_tbi                    = CALL_SOMATIC_SNVS.out.mutect2_tbi                              // channel: [ val(meta), path(tbi) ]
-    mutect2_vcf                    = CALL_SOMATIC_SNVS.out.mutect2_vcf                              // channel: [ val(meta), path(vcf) ]
+    mutect2_tbi                    = CALL_SOMATIC_SNVS.out.mutect2_filtered_tbi                     // channel: [ val(meta), path(tbi) ]
+    mutect2_vcf                    = CALL_SOMATIC_SNVS.out.mutect2_filtered_vcf                     // channel: [ val(meta), path(vcf) ]
     profile_bedgraph               = CALL_CNVS.out.profile_bedgraph                                 // channel: [ val(meta), path(bedgraph) ]
     purecn_csv                     = PROFILE_TUMOR_BIOMARKERS.out.purecn_csv                        // channel: [ val(meta), path(csv) ]
     purecn_pdf                     = PROFILE_TUMOR_BIOMARKERS.out.purecn_pdf                        // channel: [ val(meta), path(pdf) ]
