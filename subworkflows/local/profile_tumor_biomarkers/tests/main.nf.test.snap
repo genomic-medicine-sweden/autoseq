@@ -98,15 +98,7 @@
     "paired tumor-normal": {
         "content": [
             [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR_purecn.csv:md5,6509c326c007900ef35aed58bfc34d55"
-                ]
+                
             ],
             [
                 
@@ -152,18 +144,10 @@
                 ]
             ],
             [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR.frankenplot.html"
-                ]
+                
             ]
         ],
-        "timestamp": "2026-10-19T12:48:28.205034738",
+        "timestamp": "2026-11-16T14:33:39.88421454",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

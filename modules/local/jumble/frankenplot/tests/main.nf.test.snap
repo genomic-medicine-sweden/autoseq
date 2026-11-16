@@ -2,27 +2,15 @@
     "tumor and normal with het snps": {
         "content": [
             [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR.frankenplot.html"
-                ]
+                
             ],
             [
-                [
-                    "JUMBLE_FRANKENPLOT",
-                    "Jumble",
-                    "0.5.6"
-                ]
+                
             ]
         ],
-        "timestamp": "2026-09-10T15:08:27.678655125",
+        "timestamp": "2026-11-16T14:32:27.32194588",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     },
@@ -44,41 +32,29 @@
                     [
                         "JUMBLE_FRANKENPLOT",
                         "Jumble",
-                        "0.5.6"
+                        "0.6.0"
                     ]
                 ]
             }
         ],
-        "timestamp": "2026-09-10T15:08:35.768126982",
+        "timestamp": "2026-11-16T14:32:32.794534225",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     },
     "tumor only": {
         "content": [
             [
-                [
-                    {
-                        "id": "TUMOR",
-                        "case_id": "TEST",
-                        "sample_name": "TUMOR",
-                        "sample_type": "tumor"
-                    },
-                    "TUMOR.frankenplot.html"
-                ]
+                
             ],
             [
-                [
-                    "JUMBLE_FRANKENPLOT",
-                    "Jumble",
-                    "0.5.6"
-                ]
+                
             ]
         ],
-        "timestamp": "2026-09-10T15:07:56.212357223",
+        "timestamp": "2026-11-16T14:32:12.770356783",
         "meta": {
-            "nf-test": "0.9.4",
+            "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     }
