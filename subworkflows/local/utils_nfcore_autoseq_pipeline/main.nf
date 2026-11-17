@@ -182,7 +182,8 @@ def validateInputParameters() {
 def validateInputSamplesheet(ch_input_samplesheet) {
 
     // Validation for each entry in the samplesheet
-    ch_input_samplesheet.flatMap { entry -> validateSamplesheetEntry(entry) }
+    ch_input_samplesheet.map { entry -> validateSamplesheetEntry(entry) }
+    // validateSamplesheetEntry(ch_input_samplesheet)
 
     // Validation for each case
     // validateSamplesheetCases() to be implemented in the future
@@ -196,13 +197,13 @@ def validateSamplesheetEntry(entry) {
 
 }
 
-def validateInputType(entry) {
+def validateInputType(entry_tuple) {
 
-    entry.map { meta, fastq_1, fastq_2, bam ->
-            if (!((meta.lane && fastq_1 && fastq_2 && !bam) || (bam))) {
-                error("Please check input samplesheet -> Invalid FASTQ/BAM files provided for entry: ${entry}")
-            }
-    }
+    def (meta, fastq_1, fastq_2, bam) = entry_tuple
+
+    if (!((meta.lane && fastq_1 && fastq_2 && !bam) || (bam))) {
+                error("Please check input samplesheet -> Invalid FASTQ/BAM files provided for entry: ${entry_tuple}")
+        }
 
 }
 
