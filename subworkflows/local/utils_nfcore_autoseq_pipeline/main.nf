@@ -91,34 +91,12 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
 
-    samplesheet_list = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
-
-    def case_id_to_sample_type_list = samplesheet_list.collect {
-                def meta = it[0]
-                [(meta.case_id), meta.sample_type]
-            }
-            .unique()
-            .groupBy{it[0]}
-            .collectEntries{ k, v -> [(k):v*.get(1)] }
-
-        println case_id_to_sample_type_list
-
-        def case_id_to_analysis_type_map = case_id_to_sample_type_list
-            .collectEntries {
-                case_id, sample_type_list ->
-                    [
-                        (case_id) : sample_type_list.size == 1 ? "tumor_only" : "tumor_normal"
-                    ]
-            }
-
-        println case_id_to_analysis_type_map
-
-
-
     def ch_input_samplesheet = channel
         .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
 
     validateInputSamplesheet(ch_input_samplesheet)
+
+    case_id_to_analysis_type_map = getCaseIdToAnalysisTypeMap(ch_input_samplesheet)
 
     def input_samples = ch_input_samplesheet
         .map {
@@ -140,17 +118,6 @@ workflow PIPELINE_INITIALISATION {
 
                 return [ meta, input_data ]
         }
-
-        // input_samples.dump(tag: "input_samples")
-
-        // ch_case_id = channel.fromList(samplesheet_list)
-        //     .map {
-        //         meta, fastq_1, fastq_2, bam -> [meta, fastq_2, fastq_1]
-        //     }
-        // ch_case_id.dump(tag: "ch_case_id")
-
-
-
 
 
     emit:
@@ -245,6 +212,35 @@ def validateInputType(entry_tuple) {
 
 }
 
+//
+// Get mapping of case IDs to analysis types (tumor_only or tumor_normal)
+//
+def getCaseIdToAnalysisTypeMap(input) {
+
+    def samplesheet_list = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
+
+    def case_id_to_sample_type_list = samplesheet_list.collect {
+                def meta = it[0]
+                [(meta.case_id), meta.sample_type]
+            }
+            .unique()
+            .groupBy{it[0]}
+            .collectEntries{ k, v -> [(k):v*.get(1)] }
+
+        println case_id_to_sample_type_list
+
+    def case_id_to_analysis_type_map = case_id_to_sample_type_list
+        .collectEntries {
+            case_id, sample_type_list ->
+                [
+                    (case_id) : sample_type_list.size == 1 ? "tumor_only" : "tumor_normal"
+                ]
+        }
+
+    println case_id_to_analysis_type_map
+
+    return case_id_to_analysis_type_map
+}
 
 //
 // Get attribute from genome config file e.g. fasta
