@@ -183,7 +183,6 @@ def validateInputSamplesheet(ch_input_samplesheet) {
 
     // Validation for each entry in the samplesheet
     ch_input_samplesheet.map { entry -> validateSamplesheetEntry(entry) }
-    // validateSamplesheetEntry(ch_input_samplesheet)
 
     // Validation for each case
     // validateSamplesheetCases() to be implemented in the future
