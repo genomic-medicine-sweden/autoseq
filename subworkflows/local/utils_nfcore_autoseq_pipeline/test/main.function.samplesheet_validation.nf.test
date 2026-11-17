@@ -1,0 +1,39 @@
+nextflow_function {
+
+    name "Test Samplesheet Validation Functions"
+    script "../main.nf"
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "utils_nfcore_autoseq_pipeline"
+    tag "subworkflows/utils_nfcore_autoseq_pipeline"
+    tag "samplesheet_validation"
+
+    test ("Valid samplesheet") {
+        function "validateInputSamplesheet"
+        when {
+            function {
+                """
+                input[0] = channel.fromList(
+                    [
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_bam",   sample_name:"TUMOR",  sample_type:"tumor",  lane:[]],     [],                   [],                   "path/to/bam/file"],
+                        [[case_id:"test_tumor_normal_bam",   sample_name:"NORMAL", sample_type:"normal", lane:[]],     [],                   [],                   "path/to/bam/file"],
+                        [[case_id:"test_tumor_only_bam",     sample_name:"TUMOR",  sample_type:"tumor",  lane:[]],     [],                   [],                   "path/to/bam/file"]
+                    ]
+                )
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert function.success },
+            )
+        }
+    }
+
+}
