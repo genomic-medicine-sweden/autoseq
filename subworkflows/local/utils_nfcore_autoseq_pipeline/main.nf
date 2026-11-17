@@ -115,8 +115,12 @@ workflow PIPELINE_INITIALISATION {
 
 
 
-    def input_samples = channel
-        .fromList(samplesheet_list)
+    def ch_input_samplesheet = channel
+        .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
+
+    validateInputSamplesheet(ch_input_samplesheet)
+
+    def input_samples = ch_input_samplesheet
         .map {
             meta, fastq_1, fastq_2, bam ->
 
@@ -139,9 +143,6 @@ workflow PIPELINE_INITIALISATION {
                 ]
 
                 return [ meta, [ bam ] ]
-
-            } else {
-                error("Please check input samplesheet -> Invalid FASTQ/BAM files provided for sample: ${meta.case_id}")
             }
         }
 
@@ -222,16 +223,31 @@ def validateInputParameters() {
 //
 // Validate channels from input samplesheet
 //
-def validateInputSamplesheet(input) {
-    def (metas, fastqs) = input[1..2]
+def validateInputSamplesheet(ch_input_samplesheet) {
 
-    // Check that multiple runs of the same sample are of the same datatype i.e. single-end / paired-end
-    def endedness_ok = metas.collect{ meta -> meta.single_end }.unique().size == 1
-    if (!endedness_ok) {
-        error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
-    }
+    // Validation for each entry in the samplesheet
+    ch_input_samplesheet.map { entry -> validateSamplesheetEntry(entry) }
 
-    return [ metas[0], fastqs ]
+    // Validation for each case
+    // validateSamplesheetCases() to be implemented in the future
+}
+
+def validateSamplesheetEntry(entry) {
+
+    validateInputType(entry)
+
+    // Other validation checks for a single samplesheet entry can be added here later
+
+}
+
+def validateInputType(entry_tuple) {
+
+    def (meta, fastq_1, fastq_2, bam) = entry_tuple
+
+    if (!(meta.lane && fastq_1 && fastq_2 && !bam)) {
+            error("Please check input samplesheet -> Invalid format for FASTQ entry: ${entry_tuple}\nLane, fastq_1 and fastq_2 must be provided and bam must not be provided.")
+        }
+
 }
 
 

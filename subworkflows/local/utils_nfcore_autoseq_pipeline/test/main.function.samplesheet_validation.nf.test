@@ -1,0 +1,93 @@
+nextflow_function {
+
+    name "Test Samplesheet Validation Functions"
+    script "../main.nf"
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "utils_nfcore_autoseq_pipeline"
+    tag "subworkflows/utils_nfcore_autoseq_pipeline"
+    tag "samplesheet_validation"
+
+    test ("Test validateInputSamplesheet - with valid samplesheet") {
+        function "validateInputSamplesheet"
+        when {
+            function {
+                """
+                input[0] = channel.fromList(
+                    [
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
+                    ]
+                )
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert function.success },
+            )
+        }
+    }
+
+    test ("Test validateInputSamplesheet - with invalid samplesheet") {
+        function "validateInputSamplesheet"
+        when {
+            function {
+                """
+                input[0] = channel.fromList(
+                    [
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", [],                   []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:[]],     "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", "path/to/bam/file"],
+                        [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
+                    ]
+                )
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert function.failed },
+            )
+        }
+    }
+
+    test ("Test validateInputType - fastq entry with no lane") {
+        function "validateInputType"
+        when {
+            function {
+                """
+                input[0] = [[case_id:"test", sample_name:"TUMOR", sample_type:"tumor", lane:[]], "path/to/fastq/file", "path/to/fastq/file", []]
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert function.failed },
+            )
+        }
+    }
+
+    test ("Test validateInputType - entry with both fastq and bam file") {
+        function "validateInputType"
+        when {
+            function {
+                """
+                input[0] = [[case_id:"test", sample_name:"TUMOR", sample_type:"tumor", lane:[]], "path/to/fastq/file", "path/to/fastq/file", "path/to/bam/file"]
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert function.failed },
+            )
+        }
+    }
+
+}
