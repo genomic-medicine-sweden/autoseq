@@ -2,13 +2,25 @@
     "tumor and normal with het snps": {
         "content": [
             [
-                
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.frankenplot.html"
+                ]
             ],
             [
-                
+                [
+                    "JUMBLE_FRANKENPLOT",
+                    "Jumble",
+                    "0.6.0"
+                ]
             ]
         ],
-        "timestamp": "2026-11-16T14:32:27.32194588",
+        "timestamp": "2026-11-16T15:01:24.414947446",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -46,13 +58,25 @@
     "tumor only": {
         "content": [
             [
-                
+                [
+                    {
+                        "id": "TUMOR",
+                        "case_id": "TEST",
+                        "sample_name": "TUMOR",
+                        "sample_type": "tumor"
+                    },
+                    "TUMOR.frankenplot.html"
+                ]
             ],
             [
-                
+                [
+                    "JUMBLE_FRANKENPLOT",
+                    "Jumble",
+                    "0.6.0"
+                ]
             ]
         ],
-        "timestamp": "2026-11-16T14:32:12.770356783",
+        "timestamp": "2026-11-16T15:01:04.257849199",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

@@ -75,10 +75,10 @@
                     "gripss": 2.4
                 },
                 "JUMBLE_FRANKENPLOT": {
-                    "Jumble": "0.5.6"
+                    "Jumble": "0.6.0"
                 },
                 "JUMBLE_RUN": {
-                    "Jumble": "0.5.5"
+                    "Jumble": "0.6.0"
                 },
                 "MARKDUPLICATES": {
                     "gatk4": "4.7.0.0",
@@ -302,7 +302,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-10-29T11:58:35.764620029",
+        "timestamp": "2026-11-16T15:12:26.492556396",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
@@ -384,10 +384,10 @@
                     "gripss": 2.4
                 },
                 "JUMBLE_FRANKENPLOT": {
-                    "Jumble": "0.5.6"
+                    "Jumble": "0.6.0"
                 },
                 "JUMBLE_RUN": {
-                    "Jumble": "0.5.5"
+                    "Jumble": "0.6.0"
                 },
                 "MARKDUPLICATES": {
                     "gatk4": "4.7.0.0",
@@ -534,7 +534,7 @@
                 "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-10-23T09:56:46.458640702",
+        "timestamp": "2026-11-16T15:13:21.730463721",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
