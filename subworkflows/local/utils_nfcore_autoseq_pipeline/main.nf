@@ -99,19 +99,21 @@ workflow PIPELINE_INITIALISATION {
     def input_samples = ch_input_samplesheet
         .map {
             meta, fastq_1, fastq_2, bam ->
-
-            def id = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
-            def datatype = bam ? 'bam' : 'fastq'
-            def single_end = bam ? null : false
-            def input_data = bam ? [bam] : [ fastq_1, fastq_2 ]
-
-            meta = meta + [
-                    id: id,
-                    datatype: datatype,
-                    single_end: single_end
+            if (meta.lane && fastq_2 && !bam) {
+                meta = meta + [
+                    id: "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString(),
+                    datatype: 'fastq',
+                    single_end: false
                 ]
+                def readgroup = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
 
-            return [ meta, input_data ]
+                return [ meta, [ fastq_1, fastq_2 ] ]
+            } else {
+                meta = meta + [id: "${meta.case_id}_${meta.sample_name}".toString()]
+                meta = meta + [datatype: 'bam']
+
+                return [ meta, [ bam ] ]
+            }
         }
 
     emit:
