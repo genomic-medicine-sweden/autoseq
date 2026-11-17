@@ -88,6 +88,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #141 ](https://github.com/genomic-medicine-sweden/autoseq/pull/141) Refactored `PREPARE_REFERENCES` subworkflow to adhere to the coding conventions.
 - [ #138 ](https://github.com/genomic-medicine-sweden/autoseq/pull/138) Moved the `CALL_SOMATIC_SNVS` module options from `conf/modules.config` to `conf/subworkflows/call_somatic_snvs.config`.
 - [ #147 ](https://github.com/genomic-medicine-sweden/autoseq/pull/147) Updated the nf-core `gridss/assemble` and `gridss/call` modules, which now symlink the BWA index files from the index directory.
+- [ #149 ](https://github.com/genomic-medicine-sweden/autoseq/pull/149) Refactor samplesheet validation logic to decouple it from samplesheet processing.
 
 ### `Fixed`
 
