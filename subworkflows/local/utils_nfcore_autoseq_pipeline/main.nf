@@ -91,29 +91,28 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
 
-    def input_samples = channel
+    def ch_input_samplesheet = channel
         .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
+
+    validateInputSamplesheet(ch_input_samplesheet)
+
+    def input_samples = ch_input_samplesheet
         .map {
             meta, fastq_1, fastq_2, bam ->
-            if (meta.lane && fastq_2 && !bam) {
-                meta = meta + [
-                    id: "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString(),
-                    datatype: 'fastq',
-                    single_end: false
+
+            def id = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
+            def datatype = bam ? 'bam' : 'fastq'
+            def single_end = bam ? null : false
+            def input_data = bam ? [bam] : [ fastq_1, fastq_2 ]
+
+            meta = meta + [
+                    id: id,
+                    datatype: datatype,
+                    single_end: single_end
                 ]
-                def readgroup = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
 
-                return [ meta, [ fastq_1, fastq_2 ] ]
-            } else if (bam) {
-                meta = meta + [id: "${meta.case_id}_${meta.sample_name}".toString()]
-                meta = meta + [datatype: 'bam']
-
-                return [ meta, [ bam ] ]
-            } else {
-                error("Please check input samplesheet -> Invalid FASTQ/BAM files provided for sample: ${meta.case_id}")
-            }
+            return [ meta, input_data ]
         }
-
 
     emit:
     samplesheet = input_samples // channel: [ [meta, fastq_1, fastq_2, bam], ... ]
@@ -180,16 +179,31 @@ def validateInputParameters() {
 //
 // Validate channels from input samplesheet
 //
-def validateInputSamplesheet(input) {
-    def (metas, fastqs) = input[1..2]
+def validateInputSamplesheet(ch_input_samplesheet) {
 
-    // Check that multiple runs of the same sample are of the same datatype i.e. single-end / paired-end
-    def endedness_ok = metas.collect{ meta -> meta.single_end }.unique().size == 1
-    if (!endedness_ok) {
-        error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
+    // Validation for each entry in the samplesheet
+    ch_input_samplesheet.flatMap { entry -> validateSamplesheetEntry(entry) }
+
+    // Validation for each case
+    // validateSamplesheetCases() to be implemented in the future
+}
+
+def validateSamplesheetEntry(entry) {
+
+    validateInputType(entry)
+
+    // Other validation checks for a single samplesheet entry can be added here later
+
+}
+
+def validateInputType(entry) {
+
+    entry.map { meta, fastq_1, fastq_2, bam ->
+            if (!((meta.lane && fastq_1 && fastq_2 && !bam) || (bam))) {
+                error("Please check input samplesheet -> Invalid FASTQ/BAM files provided for entry: ${entry}")
+            }
     }
 
-    return [ metas[0], fastqs ]
 }
 
 
