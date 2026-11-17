@@ -21,9 +21,6 @@ nextflow_function {
                         [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
                         [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
                         [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
-                        [[case_id:"test_tumor_normal_bam",   sample_name:"TUMOR",  sample_type:"tumor",  lane:[]],     [],                   [],                   "path/to/bam/file"],
-                        [[case_id:"test_tumor_normal_bam",   sample_name:"NORMAL", sample_type:"normal", lane:[]],     [],                   [],                   "path/to/bam/file"],
-                        [[case_id:"test_tumor_only_bam",     sample_name:"TUMOR",  sample_type:"tumor",  lane:[]],     [],                   [],                   "path/to/bam/file"]
                     ]
                 )
                 """
@@ -49,11 +46,40 @@ nextflow_function {
                         [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", "path/to/bam/file"],
                         [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
                         [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
-                        [[case_id:"test_tumor_normal_bam",   sample_name:"TUMOR",  sample_type:"tumor",  lane:[]],     [],                   [],                   "path/to/bam/file"],
-                        [[case_id:"test_tumor_normal_bam",   sample_name:"NORMAL", sample_type:"normal", lane:[]],     [],                   [],                   "path/to/bam/file"],
-                        [[case_id:"test_tumor_only_bam",     sample_name:"TUMOR",  sample_type:"tumor",  lane:[]],     [],                   [],                   "path/to/bam/file"]
                     ]
                 )
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert function.failed },
+            )
+        }
+    }
+
+    test ("Test validateInputType - fastq entry with no lane") {
+        function "validateInputType"
+        when {
+            function {
+                """
+                input[0] = [[case_id:"test", sample_name:"TUMOR", sample_type:"tumor", lane:[]], "path/to/fastq/file", "path/to/fastq/file", []]
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert function.failed },
+            )
+        }
+    }
+
+    test ("Test validateInputType - entry with both fastq and bam file") {
+        function "validateInputType"
+        when {
+            function {
+                """
+                input[0] = [[case_id:"test", sample_name:"TUMOR", sample_type:"tumor", lane:[]], "path/to/fastq/file", "path/to/fastq/file", "path/to/bam/file"]
                 """
             }
         }
