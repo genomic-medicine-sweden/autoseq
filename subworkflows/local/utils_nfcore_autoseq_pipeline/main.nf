@@ -124,26 +124,18 @@ workflow PIPELINE_INITIALISATION {
         .map {
             meta, fastq_1, fastq_2, bam ->
 
-            if (meta.lane && fastq_2 && !bam) {
-                meta = meta + [
-                    id: "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString(),
-                    datatype: 'fastq',
-                    single_end: false,
-                    analysis_type: case_id_to_analysis_type_map[meta.case_id],
-                ]
-                def readgroup = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
+            def id = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
+            def datatype = bam ? 'bam' : 'fastq'
+            def single_end = bam ? null : false
+            def input_data = bam ? [bam] : [ fastq_1, fastq_2 ]
 
-                return [ meta, [ fastq_1, fastq_2 ] ]
-
-            } else if (bam) {
-                meta = meta + [
-                    id: "${meta.case_id}_${meta.sample_name}".toString(),
-                    datatype: 'bam',
-                    analysis_type: case_id_to_analysis_type_map[meta.case_id],
+            meta = meta + [
+                    id: id,
+                    datatype: datatype,
+                    single_end: single_end
                 ]
 
-                return [ meta, [ bam ] ]
-            }
+                return [ meta, input_data ]
         }
 
         // input_samples.dump(tag: "input_samples")
