@@ -200,8 +200,8 @@ def validateInputType(entry_tuple) {
 
     def (meta, fastq_1, fastq_2, bam) = entry_tuple
 
-    if (!((meta.lane && fastq_1 && fastq_2 && !bam) || (bam))) {
-                error("Please check input samplesheet -> Invalid FASTQ/BAM files provided for entry: ${entry_tuple}")
+    if (!(meta.lane && fastq_1 && fastq_2 && !bam)) {
+            error("Please check input samplesheet -> Invalid format for FASTQ entry: ${entry_tuple}\nLane, fastq_1 and fastq_2 must be provided and bam must not be provided.")
         }
 
 }
