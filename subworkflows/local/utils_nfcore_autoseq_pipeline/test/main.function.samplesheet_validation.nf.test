@@ -8,7 +8,7 @@ nextflow_function {
     tag "subworkflows/utils_nfcore_autoseq_pipeline"
     tag "samplesheet_validation"
 
-    test ("Valid samplesheet") {
+    test ("Test validateInputSamplesheet - with valid samplesheet") {
         function "validateInputSamplesheet"
         when {
             function {
@@ -36,7 +36,7 @@ nextflow_function {
         }
     }
 
-    test ("Invalid samplesheet") {
+    test ("Test validateInputSamplesheet - with invalid samplesheet") {
         function "validateInputSamplesheet"
         when {
             function {
