@@ -91,12 +91,14 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
 
+    def samplesheet_list = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
+
+    def case_id_to_analysis_type_map = getCaseIdToAnalysisTypeMap(samplesheet_list)
+
     def ch_input_samplesheet = channel
-        .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
+        .fromList(samplesheet_list)
 
     validateInputSamplesheet(ch_input_samplesheet)
-
-    case_id_to_analysis_type_map = getCaseIdToAnalysisTypeMap(ch_input_samplesheet)
 
     def input_samples = ch_input_samplesheet
         .map {
@@ -116,9 +118,8 @@ workflow PIPELINE_INITIALISATION {
                     analysis_type: analysis_type,
                 ]
 
-                return [ meta, input_data ]
+            return [ meta, input_data ]
         }
-
 
     emit:
     samplesheet = input_samples // channel: [ [meta, fastq_1, fastq_2, bam], ... ]
@@ -215,31 +216,24 @@ def validateInputType(entry_tuple) {
 //
 // Get mapping of case IDs to analysis types (tumor_only or tumor_normal)
 //
-def getCaseIdToAnalysisTypeMap(input) {
+def getCaseIdToAnalysisTypeMap(samplesheet_list) {
 
-    def samplesheet_list = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
-
-    def case_id_to_sample_type_list = samplesheet_list.collect {
-                def meta = it[0]
+    def case_id_to_sample_type_map = samplesheet_list.collect { entry ->
+                def meta = entry[0]
                 [(meta.case_id), meta.sample_type]
             }
-            .unique()
-            .groupBy{it[0]}
-            .collectEntries{ k, v -> [(k):v*.get(1)] }
+            .unique() // Remove duplicated entries for different lanes
+            .groupBy{meta -> meta[0]} // Group by case_id
+            .collectEntries{ case_id, case_id_sample_type_list ->
 
-        println case_id_to_sample_type_list
+                def sample_type_list = case_id_sample_type_list*.get(1)
 
-    def case_id_to_analysis_type_map = case_id_to_sample_type_list
-        .collectEntries {
-            case_id, sample_type_list ->
-                [
-                    (case_id) : sample_type_list.size == 1 ? "tumor_only" : "tumor_normal"
-                ]
-        }
+                def analysis_type = sample_type_list.size == 1 ? "tumor_only" : "tumor_normal"
 
-    println case_id_to_analysis_type_map
+                [(case_id):analysis_type]
+            }
 
-    return case_id_to_analysis_type_map
+    return case_id_to_sample_type_map
 }
 
 //
