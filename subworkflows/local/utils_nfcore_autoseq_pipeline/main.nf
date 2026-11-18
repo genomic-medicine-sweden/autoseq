@@ -91,29 +91,33 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
 
+    def samplesheet_list = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
+
+    validateInputSamplesheet(samplesheet_list)
+
+    def case_id_to_analysis_type_map = getCaseIdToAnalysisTypeMap(samplesheet_list)
+
     def input_samples = channel
-        .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
+        .fromList(samplesheet_list)
         .map {
             meta, fastq_1, fastq_2, bam ->
-            if (meta.lane && fastq_2 && !bam) {
-                meta = meta + [
-                    id: "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString(),
-                    datatype: 'fastq',
-                    single_end: false
+
+            def id = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
+            def datatype = bam ? 'bam' : 'fastq'
+            def single_end = bam ? null : false
+            def analysis_type = case_id_to_analysis_type_map[meta.case_id]
+
+            def input_data = bam ? [bam] : [ fastq_1, fastq_2 ]
+
+            meta = meta + [
+                    id: id,
+                    datatype: datatype,
+                    single_end: single_end,
+                    analysis_type: analysis_type,
                 ]
-                def readgroup = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
 
-                return [ meta, [ fastq_1, fastq_2 ] ]
-            } else if (bam) {
-                meta = meta + [id: "${meta.case_id}_${meta.sample_name}".toString()]
-                meta = meta + [datatype: 'bam']
-
-                return [ meta, [ bam ] ]
-            } else {
-                error("Please check input samplesheet -> Invalid FASTQ/BAM files provided for sample: ${meta.case_id}")
-            }
+            return [ meta, input_data ]
         }
-
 
     emit:
     samplesheet = input_samples // channel: [ [meta, fastq_1, fastq_2, bam], ... ]
@@ -180,18 +184,55 @@ def validateInputParameters() {
 //
 // Validate channels from input samplesheet
 //
-def validateInputSamplesheet(input) {
-    def (metas, fastqs) = input[1..2]
+def validateInputSamplesheet(input_samplesheet_list) {
 
-    // Check that multiple runs of the same sample are of the same datatype i.e. single-end / paired-end
-    def endedness_ok = metas.collect{ meta -> meta.single_end }.unique().size == 1
-    if (!endedness_ok) {
-        error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
-    }
+    // Validation for each entry in the samplesheet
+    input_samplesheet_list.each { entry -> validateSamplesheetEntry(entry) }
 
-    return [ metas[0], fastqs ]
+    // Validation for each case
+    // validateSamplesheetCases() to be implemented in the future
 }
 
+def validateSamplesheetEntry(entry_list) {
+
+    validateInputType(entry_list)
+
+    // Other validation checks for a single samplesheet entry can be added here later
+
+}
+
+def validateInputType(entry_list) {
+
+    def (meta, fastq_1, fastq_2, bam) = entry_list
+
+    if (!(meta.lane && fastq_1 && fastq_2 && !bam)) {
+            error("Please check input samplesheet -> Invalid format for FASTQ entry: ${entry_list}\nLane, fastq_1 and fastq_2 must be provided and bam must not be provided.")
+        }
+
+}
+
+//
+// Get mapping of case IDs to analysis types (tumor_only or tumor_normal)
+//
+def getCaseIdToAnalysisTypeMap(samplesheet_list) {
+
+    def case_id_to_sample_type_map = samplesheet_list.collect { entry ->
+                def meta = entry[0]
+                [(meta.case_id), meta.sample_type]
+            }
+            .unique() // Remove duplicated entries for different lanes
+            .groupBy{meta -> meta[0]} // Group by case_id
+            .collectEntries{ case_id, case_id_sample_type_list ->
+
+                def sample_type_list = case_id_sample_type_list*.get(1)
+
+                def analysis_type = sample_type_list.size == 1 ? "tumor_only" : "tumor_normal"
+
+                [(case_id):analysis_type]
+            }
+
+    return case_id_to_sample_type_map
+}
 
 //
 // Get attribute from genome config file e.g. fasta
@@ -317,4 +358,15 @@ def keyByCaseId(ch_input, keepMeta = false) {
         def value = keepMeta ? [meta] + files : (files.size() == 1 ? files[0] : files)
         return [meta.case_id, value]
     }
+}
+
+
+/**
+ * Retrieves the analysis type from the meta information.
+ * @param meta The meta map containing sample information
+ * @return The analysis type as a string
+ */
+def getAnalysisType(meta) {
+
+    return meta.analysis_type ?: ""
 }
