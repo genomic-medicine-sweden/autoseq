@@ -91,12 +91,12 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
 
-    def ch_input_samplesheet = channel
-        .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
+    def samplesheet_list = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
 
-    validateInputSamplesheet(ch_input_samplesheet)
+    validateInputSamplesheet(samplesheet_list)
 
-    def input_samples = ch_input_samplesheet
+    def input_samples = channel
+        .fromList(samplesheet_list)
         .map {
             meta, fastq_1, fastq_2, bam ->
 
@@ -179,29 +179,29 @@ def validateInputParameters() {
 //
 // Validate channels from input samplesheet
 //
-def validateInputSamplesheet(ch_input_samplesheet) {
+def validateInputSamplesheet(input_samplesheet_list) {
 
     // Validation for each entry in the samplesheet
-    ch_input_samplesheet.map { entry -> validateSamplesheetEntry(entry) }
+    input_samplesheet_list.each { entry -> validateSamplesheetEntry(entry) }
 
     // Validation for each case
     // validateSamplesheetCases() to be implemented in the future
 }
 
-def validateSamplesheetEntry(entry) {
+def validateSamplesheetEntry(entry_list) {
 
-    validateInputType(entry)
+    validateInputType(entry_list)
 
     // Other validation checks for a single samplesheet entry can be added here later
 
 }
 
-def validateInputType(entry_tuple) {
+def validateInputType(entry_list) {
 
-    def (meta, fastq_1, fastq_2, bam) = entry_tuple
+    def (meta, fastq_1, fastq_2, bam) = entry_list
 
     if (!(meta.lane && fastq_1 && fastq_2 && !bam)) {
-            error("Please check input samplesheet -> Invalid format for FASTQ entry: ${entry_tuple}\nLane, fastq_1 and fastq_2 must be provided and bam must not be provided.")
+            error("Please check input samplesheet -> Invalid format for FASTQ entry: ${entry_list}\nLane, fastq_1 and fastq_2 must be provided and bam must not be provided.")
         }
 
 }
