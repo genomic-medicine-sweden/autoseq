@@ -13,8 +13,7 @@ nextflow_function {
         when {
             function {
                 """
-                input[0] = channel.fromList(
-                    [
+                input[0] = [
                         [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
                         [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
                         [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
@@ -22,7 +21,6 @@ nextflow_function {
                         [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
                         [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
                     ]
-                )
                 """
             }
         }
@@ -38,8 +36,7 @@ nextflow_function {
         when {
             function {
                 """
-                input[0] = channel.fromList(
-                    [
+                input[0] = [
                         [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
                         [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", [],                   []],
                         [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:[]],     "path/to/fastq/file", "path/to/fastq/file", []],
@@ -47,7 +44,6 @@ nextflow_function {
                         [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
                         [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
                     ]
-                )
                 """
             }
         }
