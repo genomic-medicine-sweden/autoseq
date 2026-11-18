@@ -93,6 +93,8 @@ workflow PIPELINE_INITIALISATION {
 
     def samplesheet_list = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
 
+    validateInputSamplesheet(samplesheet_list)
+
     def case_id_to_analysis_type_map = getCaseIdToAnalysisTypeMap(samplesheet_list)
 
     def input_samples = channel
