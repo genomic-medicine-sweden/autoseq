@@ -227,11 +227,11 @@ workflow AUTOSEQ {
 
     CALL_SOMATIC_SNVS (
         ch_input_paired,
-        ch_dict,
         ch_hmf_ensembl_data,
         ch_ensembl_vep_cache,
         ch_genome_fai,
         ch_genome_fasta,
+        ch_dict,
         ch_germline_resource.collect{it -> it[1]},
         ch_germline_resource_tbi.collect{it -> it[1]},
         ch_interval_list.collect{ it -> it[1] },

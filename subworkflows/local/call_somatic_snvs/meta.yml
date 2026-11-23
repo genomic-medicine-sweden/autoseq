@@ -25,12 +25,6 @@ input:
         intervals to restrict calling to. The tumor sample must come first in both lists.
         Structure: [ val(meta), [ path(tumor_bam), path(normal_bam) ], [ path(tumor_bai), path(normal_bai) ], path(intervals) ]
       pattern: "*.bam"
-  - ch_dict:
-      type: file
-      description: |
-        Sequence dictionary of the reference genome
-        Structure: [ val(meta), path(dict) ]
-      pattern: "*.dict"
   - ch_ensembl_data_resources:
       type: directory
       description: |
@@ -53,6 +47,12 @@ input:
         Reference genome FASTA
         Structure: [ val(meta), path(fasta) ]
       pattern: "*.{fa,fasta}"
+  - ch_genome_dict:
+      type: file
+      description: |
+        Sequence dictionary of the reference genome
+        Structure: [ val(meta), path(dict) ]
+      pattern: "*.dict"
   - ch_germline_resource:
       type: file
       description: |
@@ -189,12 +189,6 @@ output:
         SAGE call set
         Structure: [ val(meta), path(vcf) ]
       pattern: "*.vcf.gz"
-  - segmentation_table:
-      type: file
-      description: |
-        Tumor segmentation table from the contamination estimate
-        Structure: [ val(meta), path(table) ]
-      pattern: "*.segmentation.table"
   - somatic_tbi:
       type: file
       description: |

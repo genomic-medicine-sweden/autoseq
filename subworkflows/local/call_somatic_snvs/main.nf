@@ -15,11 +15,11 @@ include { VT_NORMALIZE                                                      } fr
 workflow CALL_SOMATIC_SNVS {
     take:
     ch_bam_bai                     // channel: [mandatory] [ val(meta), [ path(tumor_bam), path(normal_bam) ], [ path(tumor_bai), path(normal_bai) ], path(intervals) ]
-    ch_genome_dict                 // channel: [mandatory] [ val(meta), path(dict) ]
     ch_ensembl_data_resources      // channel: [mandatory] [ val(meta), path(dir) ]
     ch_ensembl_vep_cache           // channel: [mandatory] [ val(meta), path(cache) ]
     ch_fai                         // channel: [mandatory] [ val(meta), path(fai) ]
     ch_fasta                       // channel: [mandatory] [ val(meta), path(fasta) ]
+    ch_genome_dict                 // channel: [mandatory] [ val(meta), path(dict) ]
     ch_germline_resource           // channel: [mandatory] [ path(vcf) ]
     ch_germline_resource_tbi       // channel: [mandatory] [ path(tbi) ]
     ch_interval_file               // channel: [mandatory] [ path(interval_list) ]
