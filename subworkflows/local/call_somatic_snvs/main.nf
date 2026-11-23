@@ -15,7 +15,7 @@ include { VT_NORMALIZE                                                      } fr
 workflow CALL_SOMATIC_SNVS {
     take:
     ch_bam_bai                     // channel: [mandatory] [ val(meta), [ path(tumor_bam), path(normal_bam) ], [ path(tumor_bai), path(normal_bai) ], path(intervals) ]
-    ch_dict                        // channel: [mandatory] [ val(meta), path(dict) ]
+    ch_genome_dict                 // channel: [mandatory] [ val(meta), path(dict) ]
     ch_ensembl_data_resources      // channel: [mandatory] [ val(meta), path(dir) ]
     ch_ensembl_vep_cache           // channel: [mandatory] [ val(meta), path(cache) ]
     ch_fai                         // channel: [mandatory] [ val(meta), path(fai) ]
@@ -52,7 +52,7 @@ workflow CALL_SOMATIC_SNVS {
         ch_bam_bai,
         ch_fasta,
         ch_fai_for_call_gatk_mutect2,
-        ch_dict,
+        ch_genome_dict,
         [], // alleles
         [], // alleles_tbi
         ch_germline_resource,
@@ -85,7 +85,7 @@ workflow CALL_SOMATIC_SNVS {
         ch_bam_bai,
         ch_fasta,
         ch_fai,
-        ch_dict,
+        ch_genome_dict,
         val_genome_version,
         ch_sage_pon.collect{ it -> it[1] },
         ch_sage_known_hotspots_somatic.collect{ it -> it[1] },
@@ -143,7 +143,6 @@ workflow CALL_SOMATIC_SNVS {
     pileup_table_tumor     = CALL_GATK_MUTECT2.out.pileup_table_tumor  // channel: [ val(meta), path(table) ]
     sage_tbi               = SAGE_SOMATIC.out.tbi                      // channel: [ val(meta), path(tbi) ]
     sage_vcf               = SAGE_SOMATIC.out.vcf                      // channel: [ val(meta), path(vcf) ]
-    segmentation_table     = CALL_GATK_MUTECT2.out.segmentation_table  // channel: [ val(meta), path(table) ]
     somatic_tbi            = SOMATIC_VCFMERGE.out.tbi                  // channel: [ val(meta), path(tbi) ]
     somatic_vcf            = SOMATIC_VCFMERGE.out.vcf                  // channel: [ val(meta), path(vcf) ] merged Mutect2 + SAGE calls
     vep_tbi                = ANNOTATE_VEP.out.tbi                      // channel: [ val(meta), path(tbi) ]
