@@ -75,7 +75,7 @@ nextflow_function {
         when {
             function {
                 """
-                input[0] = [[case_id:"test", sample_name:"TUMOR", sample_type:"tumor", lane:[]], "path/to/fastq/file", "path/to/fastq/file", "path/to/bam/file"]
+                input[0] = [[case_id:"test", sample_name:"TUMOR", sample_type:"tumor", lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", "path/to/bam/file"]
                 """
             }
         }
