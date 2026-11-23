@@ -54,7 +54,7 @@ workflow AUTOSEQ {
     ch_hmf_ensembl_data                // channel: [mandatory] [ val(meta), path(dir) ] HMF Ensembl data resources directory
     ch_interval_list                   // channel: [mandatory] [ val(meta), path(interval_list) ] target regions interval list
     ch_jumble_ref                      // channel: [mandatory] [ val(meta), path(rds) ] Jumble CNV reference
-    ch_msisensor2_models               // channel: [optional]  [ val(meta), path(dir) ] MSIsensor2 models
+    ch_msisensor2_models               // channel: [mandatory] [ val(meta), path(dir) ] MSIsensor2 models
     ch_sage_highconf_regions           // channel: [mandatory] [ val(meta), path(bed) ] SAGE high-confidence regions
     ch_sage_known_hotspots_somatic     // channel: [mandatory] [ val(meta), path(vcf) ] SAGE somatic hotspots
     ch_sage_pon                        // channel: [mandatory] [ val(meta), path(pon) ] SAGE panel of normals
