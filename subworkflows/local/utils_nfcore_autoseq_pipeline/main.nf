@@ -95,9 +95,8 @@ workflow PIPELINE_INITIALISATION {
 
     validateInputSamplesheet(samplesheet_list)
 
-    def input_samples = channel
-        .fromList(samplesheet_list)
-        .map {
+    def input_samples = channel.fromList(samplesheet_list)
+        map {
             meta, fastq_1, fastq_2, bam ->
             if (meta.lane && fastq_2 && !bam) {
                 meta = meta + [
@@ -198,6 +197,7 @@ def validateSamplesheetEntry(entry_list) {
 
 }
 
+// Validate that an entry has latne information and both fastboth fastq files, but no bam filedateInputType(entry_list) {
 def validateInputType(entry_list) {
 
     def (meta, fastq_1, fastq_2, bam) = entry_list
