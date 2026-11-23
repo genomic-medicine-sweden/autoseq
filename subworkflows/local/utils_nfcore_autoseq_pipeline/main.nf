@@ -96,7 +96,7 @@ workflow PIPELINE_INITIALISATION {
     validateInputSamplesheet(samplesheet_list)
 
     def input_samples = channel.fromList(samplesheet_list)
-        map {
+        .map {
             meta, fastq_1, fastq_2, bam ->
             if (meta.lane && fastq_2 && !bam) {
                 meta = meta + [
