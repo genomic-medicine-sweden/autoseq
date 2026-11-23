@@ -35,6 +35,12 @@ nextflow_function {
         function "validateInputSamplesheet"
         when {
             function {
+                // Entry 1 OK
+                // Entry 2 missing fastq_2
+                // Entry 3 missing lane
+                // Entry 4 has both fastq and bam file paths
+                // Entry 5 OK
+                // Entry 6 OK
                 """
                 input[0] = [
                         [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
