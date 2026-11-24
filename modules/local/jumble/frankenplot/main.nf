@@ -4,7 +4,7 @@ process JUMBLE_FRANKENPLOT {
 
     // Jumble is not distributed via CRAN, Bioconda or Seqera Containers, so use the image
     // hosted on the Clinical Genomics Docker Hub account.
-    container "docker.io/clinicalgenomics/jumble:0.5.6"
+    container "docker.io/clinicalgenomics/jumble:0.6.0"
 
     input:
     tuple val(meta), path(tcns), path(ncns), path(t_csv), path(n_csv), path(svcf), path(gvcf), path(het_snps), path(dpyd_json), path(dpyd_csv)

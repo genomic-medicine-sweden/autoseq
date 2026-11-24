@@ -97,8 +97,7 @@ workflow PIPELINE_INITIALISATION {
 
     def case_id_to_analysis_type_map = getCaseIdToAnalysisTypeMap(samplesheet_list)
 
-    def input_samples = channel
-        .fromList(samplesheet_list)
+    def input_samples = channel.fromList(samplesheet_list)
         .map {
             meta, fastq_1, fastq_2, bam ->
 
@@ -201,6 +200,7 @@ def validateSamplesheetEntry(entry_list) {
 
 }
 
+// Validate that an entry has latne information and both fastboth fastq files, but no bam filedateInputType(entry_list) {
 def validateInputType(entry_list) {
 
     def (meta, fastq_1, fastq_2, bam) = entry_list
@@ -233,6 +233,7 @@ def getCaseIdToAnalysisTypeMap(samplesheet_list) {
 
     return case_id_to_sample_type_map
 }
+
 
 //
 // Get attribute from genome config file e.g. fasta
