@@ -106,7 +106,7 @@ workflow PIPELINE_INITIALISATION {
             def single_end = bam ? null : false
             def analysis_type = case_id_to_analysis_type_map[meta.case_id]
 
-            def input_data = bam ? [bam] : [ fastq_1, fastq_2 ]
+            def input_data = bam ? [ bam ] : [ fastq_1, fastq_2 ]
 
             meta = meta + [
                     id: id,
@@ -218,7 +218,7 @@ def getCaseIdToAnalysisTypeMap(samplesheet_list) {
 
     def case_id_to_sample_type_map = samplesheet_list.collect { entry ->
                 def meta = entry[0]
-                [(meta.case_id), meta.sample_type]
+                [ (meta.case_id), meta.sample_type ]
             }
             .unique() // Remove duplicated entries for different lanes
             .groupBy{meta -> meta[0]} // Group by case_id
@@ -228,7 +228,7 @@ def getCaseIdToAnalysisTypeMap(samplesheet_list) {
 
                 def analysis_type = sample_type_list.size == 1 ? "tumor_only" : "tumor_normal"
 
-                [(case_id):analysis_type]
+                [ (case_id): analysis_type ]
             }
 
     return case_id_to_sample_type_map
