@@ -299,7 +299,7 @@ typeDPYD genotypes clinically relevant DPYD pharmacogenomic variants directly fr
 
 #### MSIsensor2
 
-MSIsensor2 detects microsatellite instability (MSI), a hallmark of certain cancers. It is a fast and accurate tool for identifying MSI status in sequencing data. It uses only the tumor BAM, together with pretrained models, and is skipped when no models are given via `--msisensor2_models` or `--msisensor2_models_tar`.
+MSIsensor2 detects microsatellite instability (MSI), a hallmark of certain cancers. It is a fast and accurate tool for identifying MSI status in sequencing data. It uses only the tumor BAM, together with pretrained models given via the required `--msisensor2_models` parameter (a directory or a `.tar.gz` archive).
 
 <details markdown="1">
 <summary>Output files for MSIsensor2:</summary>

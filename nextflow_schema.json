@@ -190,10 +190,14 @@
                 },
                 "msisensor2_models": {
                     "type": "string",
-                    "description": "Path to the MSIsensor2 models directory. The models must match the contig naming of the reference FASTA (e.g. `models_b37_HumanG1Kv37` for `human_g1k_v37_decoy.fasta`). Either this or `--msisensor2_models_tar` must be provided; if both are set, this takes precedence.",
-                    "fa_icon": "far fa-file-code"
+                    "format": "path",
+                    "exists": true,
+                    "fa_icon": "fas fa-folder-open",
+                    "description": "Path to the MSIsensor2 models directory or a `.tar.gz` archive of it.",
+                    "help_text": "The models must match the contig naming of the reference FASTA (e.g. `models_b37_HumanG1Kv37` for `human_g1k_v37_decoy.fasta`). If the path ends with `.tar.gz`, the archive is extracted before use."
                 }
-            }
+            },
+            "required": ["msisensor2_models"]
         },
         "other_options": {
             "title": "Other options",
@@ -321,10 +325,6 @@
                 "hmf_ensembl_data_tar": {
                     "type": "string",
                     "description": "Path to HMF Ensembl data tar archive"
-                },
-                "msisensor2_models_tar": {
-                    "type": "string",
-                    "description": "Path to MSIsensor2 models tar archive. Either this or `--msisensor2_models` must be provided."
                 }
             }
         },
@@ -466,13 +466,5 @@
         "config_profile_url": {
             "type": "string"
         }
-    },
-    "anyOf": [
-        {
-            "required": ["msisensor2_models"]
-        },
-        {
-            "required": ["msisensor2_models_tar"]
-        }
-    ]
+    }
 }

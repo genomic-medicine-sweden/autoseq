@@ -15,8 +15,7 @@ workflow PREPARE_REFERENCES {
     val_gridss_index_tar      // string: [optional]  path to compressed GRIDSS index archive
     val_hmf_ensembl_data      // string: [optional]  path to pre-extracted HMF Ensembl data directory
     val_hmf_ensembl_data_tar  // string: [optional]  path to compressed HMF Ensembl data archive
-    val_msisensor2_models     // string: [optional] path to  pre-extracted MSIsensor2 models directory
-    val_msisensor2_models_tar // string: [optional] path to  compressed MSIsensor2 models archive
+    val_msisensor2_models     // string: [mandatory] path to MSIsensor2 models directory or .tar.gz archive
 
     main:
     def ch_bwamem2_index    = channel.empty()
@@ -71,14 +70,14 @@ workflow PREPARE_REFERENCES {
         ch_hmf_ensembl_data = channel.fromPath(val_hmf_ensembl_data).map { it -> [[id: it.simpleName], it] }.collect()
     }
 
-    // MSIsensor2 models untar
-    if (val_msisensor2_models) {
-        ch_msisensor2_models = channel.fromPath(val_msisensor2_models).map { it -> [[id: it.simpleName], it] }.collect()
-    } else if (val_msisensor2_models_tar) {
-        ch_msisensor2_models_tar = channel.fromPath(val_msisensor2_models_tar).map { it -> [[id: it.simpleName], it] }.collect()
+    // MSIsensor2 models: untar when given a .tar.gz archive, otherwise use the directory as is
+    if (val_msisensor2_models.endsWith('.tar.gz')) {
+        ch_msisensor2_models_tar = channel.fromPath(val_msisensor2_models).map { it -> [[id: it.simpleName], it] }.collect()
         UNTAR_MSISENSOR2_MODELS ( ch_msisensor2_models_tar )
 
         ch_msisensor2_models = UNTAR_MSISENSOR2_MODELS.out.untar.collect()
+    } else {
+        ch_msisensor2_models = channel.fromPath(val_msisensor2_models).map { it -> [[id: it.simpleName], it] }.collect()
     }
 
 

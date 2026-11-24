@@ -57,8 +57,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     val_hmf_ensembl_data_tar            // string:  [optional]  path to HMF Ensembl data resources tarball
     val_interval_list                   // string:  [mandatory] path to target regions interval list
     val_jumble_ref                      // string:  [mandatory] path to Jumble reference RDS
-    val_msisensor2_models               // string:  [optional]  path to MSIsensor2 models directory
-    val_msisensor2_models_tar           // string:  [optional]  path to MSIsensor2 models tarball
+    val_msisensor2_models               // string:  [mandatory] path to MSIsensor2 models directory or .tar.gz archive
     val_multiqc_config                  // string:  [optional]  path to MultiQC config
     val_multiqc_logo                    // string:  [optional]  path to MultiQC logo
     val_multiqc_methods_description     // string:  [optional]  path to MultiQC methods description
@@ -81,8 +80,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
                             val_gridss_index_tar,
                             val_hmf_ensembl_data,
                             val_hmf_ensembl_data_tar,
-                            val_msisensor2_models,
-                            val_msisensor2_models_tar
+                            val_msisensor2_models
                         )
 
 
@@ -261,7 +259,6 @@ workflow {
         params.interval_list,
         params.jumble_ref,
         params.msisensor2_models,
-        params.msisensor2_models_tar,
         params.multiqc_config,
         params.multiqc_logo,
         params.multiqc_methods_description,
