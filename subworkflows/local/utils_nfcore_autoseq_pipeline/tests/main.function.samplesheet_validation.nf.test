@@ -1,12 +1,17 @@
 nextflow_function {
 
-    name "Test Samplesheet Validation Functions"
+    name "Test helper functions"
     script "../main.nf"
     tag "subworkflows"
     tag "subworkflows_local"
     tag "utils_nfcore_autoseq_pipeline"
     tag "subworkflows/utils_nfcore_autoseq_pipeline"
     tag "samplesheet_validation"
+
+
+    //
+    // Test Samplesheet Validation Functions
+    //
 
     test ("Test validateInputSamplesheet - with valid samplesheet") {
         function "validateInputSamplesheet"
@@ -88,6 +93,32 @@ nextflow_function {
         then {
             assertAll(
                 { assert function.failed },
+            )
+        }
+    }
+
+    //
+    // Test other helper Functions
+    //
+    test ("Test getCaseIdToAnalysisTypeMap") {
+        function "getCaseIdToAnalysisTypeMap"
+        when {
+            function {
+                """
+                input[0] = [
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_normal_fastq", sample_name:"NORMAL", sample_type:"normal", lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L002"], "path/to/fastq/file", "path/to/fastq/file", []],
+                        [[case_id:"test_tumor_only_fastq",   sample_name:"TUMOR",  sample_type:"tumor",  lane:"L001"], "path/to/fastq/file", "path/to/fastq/file", []],
+                    ]
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert snapshot(function.result).match() },
             )
         }
     }
