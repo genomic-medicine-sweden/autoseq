@@ -223,7 +223,7 @@ def getCaseIdToAnalysisTypeMap(samplesheet_list) {
             .groupBy{meta -> meta[0]} // Group by case_id
             .collectEntries{ case_id, case_id_sample_type_list ->
 
-                def sample_type_list = case_id_sample_type_list*.get(1)
+                def sample_type_list = case_id_sample_type_list*.get(1) // Extract only the list of sample types and discard the case_id
 
                 def analysis_type = sample_type_list.size == 1 ? "tumor_only" : "tumor_normal"
 
