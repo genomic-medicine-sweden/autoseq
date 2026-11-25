@@ -102,7 +102,7 @@ workflow PIPELINE_INITIALISATION {
             def id = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
             def datatype = bam ? 'bam' : 'fastq'
             def single_end = bam ? null : false
-            def input_data = bam ? [bam] : [ fastq_1, fastq_2 ]
+            def input_data = bam ? [bam] : [fastq_1, fastq_2]
 
             meta = meta + [
                     id: id,
@@ -110,7 +110,7 @@ workflow PIPELINE_INITIALISATION {
                     single_end: single_end
                 ]
 
-            return [ meta, input_data ]
+            return [meta, input_data]
         }
 
     emit:
