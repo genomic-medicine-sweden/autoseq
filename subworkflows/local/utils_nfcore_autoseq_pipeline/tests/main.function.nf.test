@@ -9,7 +9,7 @@ nextflow_function {
     tag "samplesheet_validation"
 
     //
-    // Test Samplesheet Validation Functions
+    // Test samplesheet validation functions
     //
     test ("Test validateInputSamplesheet - with valid samplesheet") {
         function "validateInputSamplesheet"
@@ -96,7 +96,7 @@ nextflow_function {
     }
 
     //
-    // Test other helper Functions
+    // Test other helper functions
     //
     test ("Test getCaseIdToAnalysisTypeMap") {
         function "getCaseIdToAnalysisTypeMap"
