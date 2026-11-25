@@ -12,7 +12,6 @@ nextflow_function {
     //
     // Test Samplesheet Validation Functions
     //
-
     test ("Test validateInputSamplesheet - with valid samplesheet") {
         function "validateInputSamplesheet"
         when {
