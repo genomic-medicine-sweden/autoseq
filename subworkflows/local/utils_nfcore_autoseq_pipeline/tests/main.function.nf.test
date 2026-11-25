@@ -8,7 +8,6 @@ nextflow_function {
     tag "subworkflows/utils_nfcore_autoseq_pipeline"
     tag "samplesheet_validation"
 
-
     //
     // Test Samplesheet Validation Functions
     //
