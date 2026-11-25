@@ -360,14 +360,3 @@ def keyByCaseId(ch_input, keepMeta = false) {
         return [meta.case_id, value]
     }
 }
-
-
-/**
- * Retrieves the analysis type from the meta information.
- * @param meta The meta map containing sample information
- * @return The analysis type as a string
- */
-def getAnalysisType(meta) {
-
-    return meta.analysis_type ?: ""
-}
