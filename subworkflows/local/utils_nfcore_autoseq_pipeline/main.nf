@@ -105,7 +105,6 @@ workflow PIPELINE_INITIALISATION {
             def datatype = bam ? 'bam' : 'fastq'
             def single_end = bam ? null : false
             def analysis_type = case_id_to_analysis_type_map[meta.case_id]
-
             def input_data = bam ? [bam] : [fastq_1, fastq_2]
 
             meta = meta + [
