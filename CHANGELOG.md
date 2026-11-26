@@ -94,7 +94,6 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #152 ](https://github.com/genomic-medicine-sweden/autoseq/pull/152) Updated the nf-core `gridss/assemble`, `gridss/call`, `gridss/extractoverlappingfragments` and `gridss/preprocess` modules, which now strip JVM `Picked up ...` lines from the version capture.
 - [ #153 ](https://github.com/genomic-medicine-sweden/autoseq/pull/153) Refactored test configs to include a `test_base.config` for common test parameters and a separate config with specific inputs for each analysis type.
 
-
 ### `Fixed`
 
 - [ #35 ](https://github.com/genomic-medicine-sweden/nf-autoseq/pull/35) Rebuilt `nextflow_schema.json` to pass `nf-core schema build` validation after the organisation rename.
