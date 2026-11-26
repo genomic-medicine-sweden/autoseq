@@ -91,6 +91,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #148 ](https://github.com/genomic-medicine-sweden/autoseq/pull/148) Updated the `JUMBLE_RUN` and `JUMBLE_FRANKENPLOT` modules to the `clinicalgenomics/jumble:0.6.0` container.
 - [ #149 ](https://github.com/genomic-medicine-sweden/autoseq/pull/149) Refactored samplesheet validation logic to decouple it from samplesheet processing.
 - [ #150 ](https://github.com/genomic-medicine-sweden/autoseq/pull/150) Refactored samplesheet processing logic to remove code duplication.
+- [ #152 ](https://github.com/genomic-medicine-sweden/autoseq/pull/152) Updated the nf-core `gridss/assemble`, `gridss/call`, `gridss/extractoverlappingfragments` and `gridss/preprocess` modules, which now strip JVM `Picked up ...` lines from the version capture.
 
 ### `Fixed`
 
