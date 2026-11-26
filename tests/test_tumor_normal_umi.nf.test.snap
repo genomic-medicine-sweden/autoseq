@@ -1,7 +1,7 @@
 {
-    "test profile - paired tumor-normal": {
+    "Tumor Normal UMI analysis with '-profile test_tumor_normal_umi'": {
         "content": [
-            63,
+            79,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -11,26 +11,45 @@
                     "perl-math-cdf": 0.1,
                     "tabix": "1.23.1"
                 },
+                "BAM2FASTQ_POST": {
+                    "samtools": 1.24
+                },
+                "BAM2FASTQ_PRE": {
+                    "samtools": 1.24
+                },
                 "BCFTOOLS_MERGE": {
                     "bcftools": "1.23.1"
                 },
                 "BWAMEM2_INDEX": {
                     "bwamem2": "2.2.1"
                 },
-                "BWAMEM2_MEM": {
+                "BWAMEM2_MEM_POST": {
                     "bwamem2": "2.2.1",
                     "samtools": "1.22.1"
+                },
+                "BWAMEM2_MEM_PRE": {
+                    "bwamem2": "2.2.1",
+                    "samtools": "1.22.1"
+                },
+                "CALLDUPLEXCONSENSUS": {
+                    "fgbio": "3.1.2"
+                },
+                "CAT_FASTQ": {
+                    "cat": 9.5
                 },
                 "ENSEMBLVEP_VEP": {
                     "ensemblvep": 116.1,
                     "perl-math-cdf": 0.1,
                     "tabix": "1.23.1"
                 },
-                "FASTP": {
-                    "fastp": "1.3.6"
-                },
                 "FASTQC": {
                     "fastqc": "0.12.1"
+                },
+                "FASTQTOBAM": {
+                    "fgbio": "3.1.2"
+                },
+                "FILTERCONSENSUS": {
+                    "fgbio": "3.1.2"
                 },
                 "GATK4_CALCULATECONTAMINATION": {
                     "gatk4": "4.7.0.0"
@@ -74,15 +93,14 @@
                 "GRIPSS_SOMATIC": {
                     "gripss": 2.4
                 },
+                "GROUPREADSBYUMI": {
+                    "fgbio": "3.1.2"
+                },
                 "JUMBLE_FRANKENPLOT": {
                     "Jumble": "0.6.0"
                 },
                 "JUMBLE_RUN": {
                     "Jumble": "0.6.0"
-                },
-                "MARKDUPLICATES": {
-                    "gatk4": "4.7.0.0",
-                    "samtools": 1.21
                 },
                 "PASSFILTER_FOR_MUTECT2": {
                     "bcftools": "1.23.1"
@@ -115,6 +133,9 @@
                     "bcftools": "bcftools 1.22",
                     "tabix": "tabix (htslib) 1.22.1"
                 },
+                "SORTBAM": {
+                    "samtools": 1.24
+                },
                 "TYPEDPYD": {
                     "typeDPYD": "0.1.0"
                 },
@@ -135,34 +156,40 @@
                 },
                 "Workflow": {
                     "genomic-medicine-sweden/autoseq": "v1.0.0dev"
+                },
+                "ZIPPERBAMS_POST": {
+                    "fgbio": "3.1.2"
+                },
+                "ZIPPERBAMS_PRE": {
+                    "fgbio": "3.1.2"
                 }
             },
             [
                 "alignment",
-                "alignment/NORMAL_dedup.bai",
-                "alignment/NORMAL_dedup.bam",
-                "alignment/TUMOR_dedup.bai",
-                "alignment/TUMOR_dedup.bam",
+                "alignment/NORMAL_consensus_mapped.bam",
+                "alignment/NORMAL_consensus_mapped.bam.bai",
+                "alignment/TUMOR_consensus_mapped.bam",
+                "alignment/TUMOR_consensus_mapped.bam.bai",
                 "cnv",
-                "cnv/NORMAL.cnr",
-                "cnv/NORMAL.cns",
-                "cnv/NORMAL.png",
-                "cnv/NORMAL_ann.cns",
-                "cnv/NORMAL_dnacopy.seg",
-                "cnv/NORMAL_profile.bedgraph",
-                "cnv/NORMAL_segments.bedgraph",
-                "cnv/TUMOR.cnr",
-                "cnv/TUMOR.cns",
-                "cnv/TUMOR.png",
-                "cnv/TUMOR_ann.cns",
-                "cnv/TUMOR_dnacopy.seg",
-                "cnv/TUMOR_profile.bedgraph",
-                "cnv/TUMOR_segments.bedgraph",
+                "cnv/TEST.NORMAL.cnr",
+                "cnv/TEST.NORMAL.cns",
+                "cnv/TEST.NORMAL.png",
+                "cnv/TEST.NORMAL_ann.cns",
+                "cnv/TEST.NORMAL_dnacopy.seg",
+                "cnv/TEST.NORMAL_profile.bedgraph",
+                "cnv/TEST.NORMAL_segments.bedgraph",
+                "cnv/TEST.TUMOR.cnr",
+                "cnv/TEST.TUMOR.cns",
+                "cnv/TEST.TUMOR.png",
+                "cnv/TEST.TUMOR_ann.cns",
+                "cnv/TEST.TUMOR_dnacopy.seg",
+                "cnv/TEST.TUMOR_profile.bedgraph",
+                "cnv/TEST.TUMOR_segments.bedgraph",
                 "dpyd",
-                "dpyd/NORMAL.DPYD.csv",
-                "dpyd/NORMAL.DPYD.json",
-                "dpyd/TUMOR.DPYD.csv",
-                "dpyd/TUMOR.DPYD.json",
+                "dpyd/TEST.NORMAL.DPYD.csv",
+                "dpyd/TEST.NORMAL.DPYD.json",
+                "dpyd/TEST.TUMOR.DPYD.csv",
+                "dpyd/TEST.TUMOR.DPYD.json",
                 "frankenplot",
                 "frankenplot/TEST.frankenplot.html",
                 "multiqc",
@@ -170,13 +197,13 @@
                 "pipeline_info",
                 "pipeline_info/autoseq_software_mqc_versions.yml",
                 "purecn",
-                "purecn/TUMOR_purecn.csv",
-                "purecn/TUMOR_purecn.pdf",
-                "purecn/TUMOR_purecn_local_optima.pdf",
-                "purecn/TUMOR_purecn_segmentation.pdf",
+                "purecn/TEST.TUMOR_purecn.csv",
+                "purecn/TEST.TUMOR_purecn.pdf",
+                "purecn/TEST.TUMOR_purecn_local_optima.pdf",
+                "purecn/TEST.TUMOR_purecn_segmentation.pdf",
                 "qc",
                 "qc/contamination",
-                "qc/contamination/TUMOR_NORMAL.contamination.table",
+                "qc/contamination/TEST.TUMOR_TEST.NORMAL.contamination.table",
                 "qc/picard",
                 "qc/picard/NORMAL.CollectHsMetrics.coverage_metrics",
                 "qc/picard/NORMAL.CollectMultipleMetrics.alignment_summary_metrics",
@@ -204,51 +231,51 @@
                 "snvs/germline/TUMOR.hetsnps.vcf.gz",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
-                "snvs/somatic/TUMOR.sage.somatic.vcf.gz",
-                "snvs/somatic/TUMOR.sage.somatic.vcf.gz.tbi",
-                "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz",
-                "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz.tbi",
-                "snvs/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz",
-                "snvs/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz.tbi",
-                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz",
-                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
-                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi",
+                "snvs/somatic/TEST.TUMOR.sage.somatic.vcf.gz",
+                "snvs/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz.tbi",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vep.vcf.gz",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vep.vcf.gz.tbi",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz.tbi",
                 "svs",
                 "svs/germline",
-                "svs/germline/TUMOR.gripss.filtered.germline.vcf.gz",
-                "svs/germline/TUMOR.gripss.filtered.germline.vcf.gz.tbi",
-                "svs/germline/TUMOR.gripss.germline.vcf.gz",
-                "svs/germline/TUMOR.gripss.germline.vcf.gz.tbi",
+                "svs/germline/TEST.TUMOR.gripss.filtered.germline.vcf.gz",
+                "svs/germline/TEST.TUMOR.gripss.filtered.germline.vcf.gz.tbi",
+                "svs/germline/TEST.TUMOR.gripss.germline.vcf.gz",
+                "svs/germline/TEST.TUMOR.gripss.germline.vcf.gz.tbi",
                 "svs/somatic",
-                "svs/somatic/TUMOR.gripss.filtered.somatic.vcf.gz",
-                "svs/somatic/TUMOR.gripss.filtered.somatic.vcf.gz.tbi",
-                "svs/somatic/TUMOR.gripss.somatic.vcf.gz",
-                "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
+                "svs/somatic/TEST.TUMOR.gripss.filtered.somatic.vcf.gz",
+                "svs/somatic/TEST.TUMOR.gripss.filtered.somatic.vcf.gz.tbi",
+                "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz",
+                "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ],
             [
-                "NORMAL.cns:md5,9430d1649900c63ba34a40d064e0cb20",
-                "NORMAL_ann.cns:md5,6bc35f7c1969157f511a4b2b9e9cccb0",
-                "NORMAL_segments.bedgraph:md5,3ec54917a94542887c7e0e4f6b5ac6db",
-                "TUMOR.cns:md5,e41dbdf513a19b863d6b930db5ab8646",
-                "TUMOR_ann.cns:md5,27d3bbef1a64909bb9177a7ccfec1c4b",
-                "TUMOR_segments.bedgraph:md5,9e0c544b55f85ef593dfd8d65865d583",
-                "NORMAL.DPYD.csv:md5,7ace75e81aecf36a3cd6227532b6e96a",
-                "NORMAL.DPYD.json:md5,bc844dd3cb9083e2c914ddc8300def2c",
-                "TUMOR.DPYD.csv:md5,1421172466850143df4b9eca249156dc",
-                "TUMOR.DPYD.json:md5,d2035d04b6bba7cdad1da8b35309f9bd",
-                "TUMOR_NORMAL.contamination.table:md5,a47aaa6933a5cfd12bcba937d74c0991",
-                "NORMAL.flagstat:md5,7a13b0d1418967691bda2c72ad4443cb",
-                "TUMOR.flagstat:md5,9140f04f5f15fcb58cdb04c1c061c650",
-                "TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv:md5,eb61b96f3d2566a2c05aaf68f08a584d"
+                "TEST.NORMAL.cns:md5,fd123bb07c095238dd57f968b099079e",
+                "TEST.NORMAL_ann.cns:md5,45ffb435c0b22d3696f9743d3762bbcf",
+                "TEST.NORMAL_segments.bedgraph:md5,6bfb83e9511a0b8490c9daa82950a37f",
+                "TEST.TUMOR.cns:md5,d8c745a8f212ea4520a1cf146924c7d9",
+                "TEST.TUMOR_ann.cns:md5,37835a7f60c71904928707f1304f3af3",
+                "TEST.TUMOR_segments.bedgraph:md5,736afe37ad803d4641fcc685adbde2b8",
+                "TEST.NORMAL.DPYD.csv:md5,143ffaa9d7b70b853f022dcc02d45800",
+                "TEST.NORMAL.DPYD.json:md5,0cd8bc15aea6d369c31a7e55c23f3334",
+                "TEST.TUMOR.DPYD.csv:md5,bf70cd22e73b1146ee83d325c7de354b",
+                "TEST.TUMOR.DPYD.json:md5,5c5f9c12eaec9914c8884ef1103473fe",
+                "TEST.TUMOR_TEST.NORMAL.contamination.table:md5,ff6e287b8fa6621479797a04907bcab9",
+                "NORMAL.flagstat:md5,15eaa053933a7b566eb94ce166bd9fb0",
+                "TUMOR.flagstat:md5,256095c6b50d717efd482584a55b2e94",
+                "TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv:md5,f691a3ac02b19c099af363639a784f37"
             ],
             [
                 [
-                    "NORMAL_dedup.bam",
-                    "e94316aaa4b76ad44bc6d6b327a9c69b"
+                    "NORMAL_consensus_mapped.bam",
+                    "535fe3e25cf8ea41b442b8ff6cc9cc3b"
                 ],
                 [
-                    "TUMOR_dedup.bam",
-                    "e94238ca6fa6435316f0d212afa0b84"
+                    "TUMOR_consensus_mapped.bam",
+                    "c4606bc63e290c53727854abea39048f"
                 ]
             ],
             [
@@ -258,7 +285,7 @@
                 ],
                 [
                     "NORMAL_haplotypecaller.vcf.gz",
-                    "52b988e94f0b29a95e76ba24a654ac5c"
+                    "9d9e788ca1721bc664befcacc8655557"
                 ],
                 [
                     "TUMOR-all.germline.taf.vcf.gz",
@@ -266,51 +293,51 @@
                 ],
                 [
                     "TUMOR.hetsnps.vcf.gz",
-                    "81c20457e174fdb5a65ddd5b4060f126"
+                    "2f0b81e018ed1fdee0c40e81ddc8b605"
                 ],
                 [
-                    "TUMOR.sage.somatic.vcf.gz",
-                    "b2181f9945a8d84ed2a8e40b94a9d675"
+                    "TEST.TUMOR.sage.somatic.vcf.gz",
+                    "44bb748424ab22a40e86851ddd29a8b8"
                 ],
                 [
-                    "TUMOR_NORMAL-all.somatic.vcf.gz",
-                    "c17d2b6276b5f7b40b2afb3f25f055b3"
+                    "TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz",
+                    "ca0b203537e32e390d333a3ca00c126d"
                 ],
                 [
-                    "TUMOR_NORMAL-all.somatic.vep.vcf.gz",
+                    "TEST.TUMOR_TEST.NORMAL-all.somatic.vep.vcf.gz",
                     "d41d8cd98f00b204e9800998ecf8427e"
                 ],
                 [
-                    "TUMOR_NORMAL_mutect2_filtered.vcf.gz",
-                    "673d3ee2ad91e129bf8137aeeba1cd04"
+                    "TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz",
+                    "fb103e4e03aa3923730617c98b166343"
                 ],
                 [
-                    "TUMOR.gripss.filtered.germline.vcf.gz",
+                    "TEST.TUMOR.gripss.filtered.germline.vcf.gz",
                     "d41d8cd98f00b204e9800998ecf8427e"
                 ],
                 [
-                    "TUMOR.gripss.germline.vcf.gz",
+                    "TEST.TUMOR.gripss.germline.vcf.gz",
                     "d41d8cd98f00b204e9800998ecf8427e"
                 ],
                 [
-                    "TUMOR.gripss.filtered.somatic.vcf.gz",
+                    "TEST.TUMOR.gripss.filtered.somatic.vcf.gz",
                     "d41d8cd98f00b204e9800998ecf8427e"
                 ],
                 [
-                    "TUMOR.gripss.somatic.vcf.gz",
+                    "TEST.TUMOR.gripss.somatic.vcf.gz",
                     "d41d8cd98f00b204e9800998ecf8427e"
                 ]
             ]
         ],
-        "timestamp": "2026-11-16T15:12:26.492556396",
+        "timestamp": "2026-11-16T15:15:47.977045114",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
         }
     },
-    "test profile - paired tumor-normal - stub": {
+    "test_umi profile - paired tumor-normal - stub": {
         "content": [
-            63,
+            79,
             {
                 "ANNOTATE_CNVS": {
                     "annotate_cnvs": "annotate_cnvs.py 1.0.0"
@@ -320,26 +347,45 @@
                     "perl-math-cdf": 0.1,
                     "tabix": "1.23.1"
                 },
+                "BAM2FASTQ_POST": {
+                    "samtools": 1.24
+                },
+                "BAM2FASTQ_PRE": {
+                    "samtools": 1.24
+                },
                 "BCFTOOLS_MERGE": {
                     "bcftools": "1.23.1"
                 },
                 "BWAMEM2_INDEX": {
                     "bwamem2": "2.2.1"
                 },
-                "BWAMEM2_MEM": {
+                "BWAMEM2_MEM_POST": {
                     "bwamem2": "2.2.1",
                     "samtools": "1.22.1"
+                },
+                "BWAMEM2_MEM_PRE": {
+                    "bwamem2": "2.2.1",
+                    "samtools": "1.22.1"
+                },
+                "CALLDUPLEXCONSENSUS": {
+                    "fgbio": "3.1.2"
+                },
+                "CAT_FASTQ": {
+                    "cat": 9.5
                 },
                 "ENSEMBLVEP_VEP": {
                     "ensemblvep": 116.1,
                     "perl-math-cdf": 0.1,
                     "tabix": "1.23.1"
                 },
-                "FASTP": {
-                    "fastp": "1.3.6"
-                },
                 "FASTQC": {
                     "fastqc": "0.12.1"
+                },
+                "FASTQTOBAM": {
+                    "fgbio": "3.1.2"
+                },
+                "FILTERCONSENSUS": {
+                    "fgbio": "3.1.2"
                 },
                 "GATK4_CALCULATECONTAMINATION": {
                     "gatk4": "4.7.0.0"
@@ -383,15 +429,14 @@
                 "GRIPSS_SOMATIC": {
                     "gripss": 2.4
                 },
+                "GROUPREADSBYUMI": {
+                    "fgbio": "3.1.2"
+                },
                 "JUMBLE_FRANKENPLOT": {
                     "Jumble": "0.6.0"
                 },
                 "JUMBLE_RUN": {
                     "Jumble": "0.6.0"
-                },
-                "MARKDUPLICATES": {
-                    "gatk4": "4.7.0.0",
-                    "samtools": 1.21
                 },
                 "PASSFILTER_FOR_MUTECT2": {
                     "bcftools": "1.23.1"
@@ -424,6 +469,9 @@
                     "bcftools": "bcftools 1.22",
                     "tabix": "tabix (htslib) 1.22.1"
                 },
+                "SORTBAM": {
+                    "samtools": 1.24
+                },
                 "TYPEDPYD": {
                     "typeDPYD": "0.1.0"
                 },
@@ -444,34 +492,40 @@
                 },
                 "Workflow": {
                     "genomic-medicine-sweden/autoseq": "v1.0.0dev"
+                },
+                "ZIPPERBAMS_POST": {
+                    "fgbio": "3.1.2"
+                },
+                "ZIPPERBAMS_PRE": {
+                    "fgbio": "3.1.2"
                 }
             },
             [
                 "alignment",
-                "alignment/NORMAL_dedup.bai",
-                "alignment/NORMAL_dedup.bam",
-                "alignment/TUMOR_dedup.bai",
-                "alignment/TUMOR_dedup.bam",
+                "alignment/NORMAL_consensus_mapped.bam",
+                "alignment/NORMAL_consensus_mapped.bam.bai",
+                "alignment/TUMOR_consensus_mapped.bam",
+                "alignment/TUMOR_consensus_mapped.bam.bai",
                 "cnv",
-                "cnv/NORMAL.cnr",
-                "cnv/NORMAL.cns",
-                "cnv/NORMAL.png",
-                "cnv/NORMAL_ann.cns",
-                "cnv/NORMAL_dnacopy.seg",
-                "cnv/NORMAL_profile.bedgraph",
-                "cnv/NORMAL_segments.bedgraph",
-                "cnv/TUMOR.cnr",
-                "cnv/TUMOR.cns",
-                "cnv/TUMOR.png",
-                "cnv/TUMOR_ann.cns",
-                "cnv/TUMOR_dnacopy.seg",
-                "cnv/TUMOR_profile.bedgraph",
-                "cnv/TUMOR_segments.bedgraph",
+                "cnv/TEST.NORMAL.cnr",
+                "cnv/TEST.NORMAL.cns",
+                "cnv/TEST.NORMAL.png",
+                "cnv/TEST.NORMAL_ann.cns",
+                "cnv/TEST.NORMAL_dnacopy.seg",
+                "cnv/TEST.NORMAL_profile.bedgraph",
+                "cnv/TEST.NORMAL_segments.bedgraph",
+                "cnv/TEST.TUMOR.cnr",
+                "cnv/TEST.TUMOR.cns",
+                "cnv/TEST.TUMOR.png",
+                "cnv/TEST.TUMOR_ann.cns",
+                "cnv/TEST.TUMOR_dnacopy.seg",
+                "cnv/TEST.TUMOR_profile.bedgraph",
+                "cnv/TEST.TUMOR_segments.bedgraph",
                 "dpyd",
-                "dpyd/NORMAL.DPYD.csv",
-                "dpyd/NORMAL.DPYD.json",
-                "dpyd/TUMOR.DPYD.csv",
-                "dpyd/TUMOR.DPYD.json",
+                "dpyd/TEST.NORMAL.DPYD.csv",
+                "dpyd/TEST.NORMAL.DPYD.json",
+                "dpyd/TEST.TUMOR.DPYD.csv",
+                "dpyd/TEST.TUMOR.DPYD.json",
                 "frankenplot",
                 "frankenplot/TEST.frankenplot.html",
                 "multiqc",
@@ -479,12 +533,12 @@
                 "pipeline_info",
                 "pipeline_info/autoseq_software_mqc_versions.yml",
                 "purecn",
-                "purecn/TUMOR_purecn.csv",
-                "purecn/TUMOR_purecn.pdf",
-                "purecn/TUMOR_purecn_local_optima.pdf",
+                "purecn/TEST.TUMOR_purecn.csv",
+                "purecn/TEST.TUMOR_purecn.pdf",
+                "purecn/TEST.TUMOR_purecn_local_optima.pdf",
                 "qc",
                 "qc/contamination",
-                "qc/contamination/TUMOR_NORMAL.contamination.table",
+                "qc/contamination/TEST.TUMOR_TEST.NORMAL.contamination.table",
                 "qc/picard",
                 "qc/picard/NORMAL.CollectHsMetrics.coverage_metrics",
                 "qc/picard/NORMAL.CollectMultipleMetrics.alignment_summary_metrics",
@@ -512,29 +566,29 @@
                 "snvs/germline/TUMOR.hetsnps.vcf.gz",
                 "snvs/germline/TUMOR.hetsnps.vcf.gz.tbi",
                 "snvs/somatic",
-                "snvs/somatic/TUMOR.sage.somatic.vcf.gz",
-                "snvs/somatic/TUMOR.sage.somatic.vcf.gz.tbi",
-                "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz",
-                "snvs/somatic/TUMOR_NORMAL-all.somatic.vcf.gz.tbi",
-                "snvs/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz",
-                "snvs/somatic/TUMOR_NORMAL-all.somatic.vep.vcf.gz.tbi",
-                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz",
-                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
-                "snvs/somatic/TUMOR_NORMAL_mutect2_filtered.vcf.gz.tbi",
+                "snvs/somatic/TEST.TUMOR.sage.somatic.vcf.gz",
+                "snvs/somatic/TEST.TUMOR.sage.somatic.vcf.gz.tbi",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vcf.gz.tbi",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vep.vcf.gz",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL-all.somatic.vep.vcf.gz.tbi",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz.filteringStats.tsv",
+                "snvs/somatic/TEST.TUMOR_TEST.NORMAL_mutect2_filtered.vcf.gz.tbi",
                 "svs",
                 "svs/germline",
-                "svs/germline/TUMOR.gripss.filtered.germline.vcf.gz",
-                "svs/germline/TUMOR.gripss.filtered.germline.vcf.gz.tbi",
-                "svs/germline/TUMOR.gripss.germline.vcf.gz",
-                "svs/germline/TUMOR.gripss.germline.vcf.gz.tbi",
+                "svs/germline/TEST.TUMOR.gripss.filtered.germline.vcf.gz",
+                "svs/germline/TEST.TUMOR.gripss.filtered.germline.vcf.gz.tbi",
+                "svs/germline/TEST.TUMOR.gripss.germline.vcf.gz",
+                "svs/germline/TEST.TUMOR.gripss.germline.vcf.gz.tbi",
                 "svs/somatic",
-                "svs/somatic/TUMOR.gripss.filtered.somatic.vcf.gz",
-                "svs/somatic/TUMOR.gripss.filtered.somatic.vcf.gz.tbi",
-                "svs/somatic/TUMOR.gripss.somatic.vcf.gz",
-                "svs/somatic/TUMOR.gripss.somatic.vcf.gz.tbi"
+                "svs/somatic/TEST.TUMOR.gripss.filtered.somatic.vcf.gz",
+                "svs/somatic/TEST.TUMOR.gripss.filtered.somatic.vcf.gz.tbi",
+                "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz",
+                "svs/somatic/TEST.TUMOR.gripss.somatic.vcf.gz.tbi"
             ]
         ],
-        "timestamp": "2026-11-16T15:13:21.730463721",
+        "timestamp": "2026-11-16T15:16:51.30766045",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

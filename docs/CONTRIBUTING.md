@@ -155,7 +155,7 @@ You can also run `nf-test test <path> (...)` or `nf-test test --tag <tag> (...)`
 > It is also possible to test run the pipeline using test profiles, without running nf-test. There are currently two test profiles available and you can run:
 >
 > - `nextflow run . -profile test` for a default test run of a Tumor Normal analysis.
-> - `nextflow run . -profile test_tumor_only` for a test run of a Tumor only analysis.
+> - `nextflow run . -profile test_tumor_normal_umi` for a test run of a Tumor Normal UMI analysis.
 >
 > When running nf-test with the command mentioned above, the correct test profile will be automatically applied for each test.
 
