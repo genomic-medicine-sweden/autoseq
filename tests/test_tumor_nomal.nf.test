@@ -1,10 +1,10 @@
 nextflow_pipeline {
 
-    name "Test pipeline"
+    name "Test pipeline - Tumor Normal"
     script "../main.nf"
     tag "pipeline"
 
-    test("test profile - paired tumor-normal") {
+    test("Tumor Normal analysis with '-profile test'") {
 
         when {
             params {
