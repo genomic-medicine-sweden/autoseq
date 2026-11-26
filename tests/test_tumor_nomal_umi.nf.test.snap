@@ -1,5 +1,5 @@
 {
-    "test_umi profile - paired tumor-normal": {
+    "Tumor Normal UMI analysis with '-profile test_tumor_normal_umi'": {
         "content": [
             79,
             {
