@@ -215,7 +215,7 @@ def validateInputType(entry_list) {
 //
 def getCaseIdToAnalysisTypeMap(samplesheet_list) {
 
-    def case_id_to_sample_type_map = samplesheet_list.collect { entry ->
+    def case_id_to_analysis_type_map = samplesheet_list.collect { entry ->
                 def meta = entry[0]
                 return [(meta.case_id), meta.sample_type]
             }
@@ -226,7 +226,7 @@ def getCaseIdToAnalysisTypeMap(samplesheet_list) {
                 def analysis_type = sample_type_list.size == 1 ? "tumor_only" : "tumor_normal"
                 return [(case_id): analysis_type]
             }
-    return case_id_to_sample_type_map
+    return case_id_to_analysis_type_map
 }
 
 
