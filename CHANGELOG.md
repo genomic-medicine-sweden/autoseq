@@ -42,7 +42,8 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #136 ](https://github.com/genomic-medicine-sweden/autoseq/pull/136) Added nf-test for the `SOMATIC_VCFMERGE` module covering Mutect2 and SAGE VCFs and a stub case.
 - [ #142 ](https://github.com/genomic-medicine-sweden/autoseq/pull/142) Added nf-test for the `PREPARE_REFERENCES` subworkflow covering scenario where no indexing of reference genome or untarring of reference file directories is needed.
 - [ #151 ](https://github.com/genomic-medicine-sweden/autoseq/pull/151) Added logic in samplesheet processing for determining analysis type ("tumor_only" or "tumor_normal") based on case configuration. Analysis type information is added to the meta of each sample entry.
-- [ #146 ](https://github.com/genomic-medicine-sweden/autoseq/pull/146) Added MSIsensor2 MSI detection on tumor BAMs to the `PROFILE_TUMOR_BIOMARKERS` subworkflow, publishing the results to `msi/`. `--msisensor2_models` (models directory or `.tar.gz` archive) is required, enforced by schema validation.
+- [ #146 ](https://github.com/genomic-medicine-sweden/autoseq/pull/146) Added MSIsensor2 MSI detection on tumor BAMs to the `PROFILE_TUMOR_BIOMARKERS` subworkflow, publishing the results to `msi/`.
+- [ #146 ](https://github.com/genomic-medicine-sweden/autoseq/pull/146) Added the required `--msisensor2_models` input parameter, accepting the MSIsensor2 models directory or a `.tar.gz` archive of it, enforced by schema validation.
 
 ### `Changed`
 

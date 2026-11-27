@@ -16,7 +16,7 @@ workflow PROFILE_TUMOR_BIOMARKERS {
     ch_hetsnps_vcf          // channel: [optional]  [ val(meta), path(vcf) ] heterozygous SNPs with tumor allelic depths
     ch_jumble_cns           // channel: [mandatory] [ val(meta), path(cns) ] jumble cns
     ch_jumble_csv           // channel: [mandatory] [ val(meta), path(csv) ] jumble bin-level table
-    ch_msisensor2_models    // channel: [mandatory] [ val(meta), path(dir) ] MSIsensor2 models
+    ch_msisensor2_models    // channel: [mandatory] [ val(meta), path(dir) ] MSIsensor2 models directory
     ch_somatic_vcf          // channel: [mandatory]  [ val(meta), path(vcf) ] VEP annotated somatic vcf
 
     main:
