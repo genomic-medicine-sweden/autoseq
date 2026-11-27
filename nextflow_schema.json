@@ -130,12 +130,12 @@
                 },
                 "ensembl_vep_cache": {
                     "type": "string",
-                    "description": "Path to Ensembl VEP cache directory.",
+                    "description": "Path to Ensembl VEP cache directory or a `.tar.gz` archive of it.",
                     "fa_icon": "far fa-file-code"
                 },
                 "hmf_ensembl_data": {
                     "type": "string",
-                    "description": "Path to HMF Ensembl data resources directory.",
+                    "description": "Path to HMF Ensembl data resources directory or a `.tar.gz` archive of it.",
                     "fa_icon": "far fa-file-code"
                 },
                 "curation_ann": {
@@ -145,7 +145,7 @@
                 },
                 "gridss_index": {
                     "type": "string",
-                    "description": "Path to GRIDSS genome index.",
+                    "description": "Path to GRIDSS genome index directory or a `.tar.gz` archive of it.",
                     "fa_icon": "far fa-file-code"
                 },
                 "gridss_config": {
@@ -304,18 +304,6 @@
                     "type": "number",
                     "default": 0.01,
                     "description": "Minimum variant allele frequency for a SNV to be considered by PureCN"
-                },
-                "ensembl_vep_cache_tar": {
-                    "type": "string",
-                    "description": "Path to Ensembl VEP cache tar archive"
-                },
-                "gridss_index_tar": {
-                    "type": "string",
-                    "description": "Path to GRIDSS index tar archive"
-                },
-                "hmf_ensembl_data_tar": {
-                    "type": "string",
-                    "description": "Path to HMF Ensembl data tar archive"
                 }
             }
         },

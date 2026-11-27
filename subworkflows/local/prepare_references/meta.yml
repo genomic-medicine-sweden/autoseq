@@ -24,33 +24,18 @@ input:
   - val_ensembl_vep_cache:
       type: string
       description: |
-        Path to a pre-extracted Ensembl VEP cache directory. When set, the
-        VEP cache archive is not untarred.
-  - val_ensembl_vep_cache_tar:
-      type: string
-      description: |
-        Path to the VEP cache directory packaged as a tar archive
-      pattern: "*.{tar,tar.gz}"
+        Path to the Ensembl VEP cache directory or a .tar.gz archive of it.
+        Paths ending with .tar.gz are untarred, otherwise used as-is.
   - val_gridss_index:
       type: string
       description: |
-        Path to a pre-extracted GRIDSS index directory. When set, the GRIDSS
-        index archive is not untarred.
-  - val_gridss_index_tar:
-      type: string
-      description: |
-        Path to the GRIDSS index directory packaged as a tar archive
-      pattern: "*.{tar,tar.gz}"
+        Path to the GRIDSS index directory or a .tar.gz archive of it.
+        Paths ending with .tar.gz are untarred, otherwise used as-is.
   - val_hmf_ensembl_data:
       type: string
       description: |
-        Path to a pre-extracted HMF ensembl_data directory. When set, the
-        HMF ensembl_data archive is not untarred.
-  - val_hmf_ensembl_data_tar:
-      type: string
-      description: |
-        Path to the HMF ensembl_data directory packaged as a tar archive
-      pattern: "*.{tar,tar.gz}"
+        Path to the HMF ensembl_data directory or a .tar.gz archive of it.
+        Paths ending with .tar.gz are untarred, otherwise used as-is.
 output:
   - genome_fasta:
       type: file

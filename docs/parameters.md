@@ -33,10 +33,10 @@ Reference genome related files and options required for the workflow.
 | `sage_known_hotspots_somatic` | Path to known somatic hotspots file for SAGE. | `string` |  |  |  |
 | `sage_highconf_regions` | Path to high confidence regions file for SAGE. | `string` |  |  |  |
 | `sage_pon` | Path to Panel of Normals file for SAGE. | `string` |  |  |  |
-| `ensembl_vep_cache` | Path to Ensembl VEP cache directory. | `string` |  |  |  |
-| `hmf_ensembl_data` | Path to HMF Ensembl data resources directory. | `string` |  |  |  |
+| `ensembl_vep_cache` | Path to Ensembl VEP cache directory or a `.tar.gz` archive of it. | `string` |  |  |  |
+| `hmf_ensembl_data` | Path to HMF Ensembl data resources directory or a `.tar.gz` archive of it. | `string` |  |  |  |
 | `curation_ann` | Path to curation annotation file. | `string` |  |  |  |
-| `gridss_index` | Path to GRIDSS genome index. | `string` |  |  |  |
+| `gridss_index` | Path to GRIDSS genome index directory or a `.tar.gz` archive of it. | `string` |  |  |  |
 | `gridss_config` | Path to GRIDSS configuration file. | `string` |  |  |  |
 | `gridss_pon_breakends` | Path to GRIDSS Panel of Normals breakends file. | `string` |  |  |  |
 | `gridss_pon_breakpoints` | Path to GRIDSS Panel of Normals breakpoints file. | `string` |  |  |  |
@@ -72,9 +72,6 @@ Other options specific to this pipeline.
 | `minpurity` | Minimum tumour purity estimate accepted by PureCN; solutions below this threshold are discarded | `number` | 0.05 |  |  |
 | `purecn_error` | Expected sequencing error rate passed to PureCN for modelling variant allele frequencies | `number` | 0.0005 |  |  |
 | `minaf` | Minimum variant allele frequency for a SNV to be considered by PureCN | `number` | 0.01 |  |  |
-| `ensembl_vep_cache_tar` | Path to Ensembl VEP cache tar archive | `string` |  |  |  |
-| `gridss_index_tar` | Path to GRIDSS index tar archive | `string` |  |  |  |
-| `hmf_ensembl_data_tar` | Path to HMF Ensembl data tar archive | `string` |  |  |  |
 
 ## Generic options
 
