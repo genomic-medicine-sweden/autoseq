@@ -1,0 +1,15 @@
+{
+    "Test getCaseIdToAnalysisTypeMap": {
+        "content": [
+            {
+                "test_tumor_normal_fastq": "tumor_normal",
+                "test_tumor_only_fastq": "tumor_only"
+            }
+        ],
+        "timestamp": "2026-11-25T11:52:33.660216",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
+    }
+}

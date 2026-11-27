@@ -1,11 +1,13 @@
 nextflow_pipeline {
 
-    name "Test pipeline - UMI"
+    name "Test pipeline - Tumor Normal UMI"
     script "../main.nf"
     tag "pipeline"
-    profile "test_umi"
+    tag "tumor_normal"
+    tag "tumor_normal_umi"
+    profile "test_tumor_normal_umi"
 
-    test("test_umi profile - paired tumor-normal") {
+    test("Tumor Normal UMI analysis with '-profile test_tumor_normal_umi'") {
 
         when {
             params {

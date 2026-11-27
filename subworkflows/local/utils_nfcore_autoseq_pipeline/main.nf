@@ -95,6 +95,8 @@ workflow PIPELINE_INITIALISATION {
 
     validateInputSamplesheet(samplesheet_list)
 
+    def case_id_to_analysis_type_map = getCaseIdToAnalysisTypeMap(samplesheet_list)
+
     def input_samples = channel.fromList(samplesheet_list)
         .map {
             meta, fastq_1, fastq_2, bam ->
@@ -102,12 +104,14 @@ workflow PIPELINE_INITIALISATION {
             def id = "${meta.case_id}_${meta.sample_name}_${meta.lane}".toString()
             def datatype = bam ? 'bam' : 'fastq'
             def single_end = bam ? null : false
+            def analysis_type = case_id_to_analysis_type_map[meta.case_id]
             def input_data = bam ? [bam] : [fastq_1, fastq_2]
 
             meta = meta + [
                     id: id,
                     datatype: datatype,
-                    single_end: single_end
+                    single_end: single_end,
+                    analysis_type: analysis_type,
                 ]
 
             return [meta, input_data]
@@ -204,6 +208,25 @@ def validateInputType(entry_list) {
             error("Please check input samplesheet -> Invalid format for FASTQ entry: ${entry_list}\nLane, fastq_1 and fastq_2 must be provided and bam must not be provided.")
         }
 
+}
+
+//
+// Get mapping of case IDs to analysis types (tumor_only or tumor_normal)
+//
+def getCaseIdToAnalysisTypeMap(samplesheet_list) {
+
+    def case_id_to_analysis_type_map = samplesheet_list.collect { entry ->
+                def meta = entry[0]
+                return [(meta.case_id), meta.sample_type]
+            }
+            .unique() // Remove duplicated entries for different lanes
+            .groupBy{meta -> meta[0]} // Group by case_id
+            .collectEntries{ case_id, case_id_sample_type_list ->
+                def sample_type_list = case_id_sample_type_list*.get(1) // Extract only the list of sample types and discard the case_id
+                def analysis_type = sample_type_list.size == 1 ? "tumor_only" : "tumor_normal"
+                return [(case_id): analysis_type]
+            }
+    return case_id_to_analysis_type_map
 }
 
 

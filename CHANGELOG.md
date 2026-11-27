@@ -41,6 +41,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #135 ](https://github.com/genomic-medicine-sweden/autoseq/pull/135) Added nf-test for the `GRIPSS_GERMLINE` module covering targeted, untargeted and stub cases.
 - [ #136 ](https://github.com/genomic-medicine-sweden/autoseq/pull/136) Added nf-test for the `SOMATIC_VCFMERGE` module covering Mutect2 and SAGE VCFs and a stub case.
 - [ #142 ](https://github.com/genomic-medicine-sweden/autoseq/pull/142) Added nf-test for the `PREPARE_REFERENCES` subworkflow covering scenario where no indexing of reference genome or untarring of reference file directories is needed.
+- [ #151 ](https://github.com/genomic-medicine-sweden/autoseq/pull/151) Added logic in samplesheet processing for determining analysis type ("tumor_only" or "tumor_normal") based on case configuration. Analysis type information is added to the meta of each sample entry.
 
 ### `Changed`
 
@@ -92,6 +93,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #149 ](https://github.com/genomic-medicine-sweden/autoseq/pull/149) Refactored samplesheet validation logic to decouple it from samplesheet processing.
 - [ #150 ](https://github.com/genomic-medicine-sweden/autoseq/pull/150) Refactored samplesheet processing logic to remove code duplication.
 - [ #152 ](https://github.com/genomic-medicine-sweden/autoseq/pull/152) Updated the nf-core `gridss/assemble`, `gridss/call`, `gridss/extractoverlappingfragments` and `gridss/preprocess` modules, which now strip JVM `Picked up ...` lines from the version capture.
+- [ #153 ](https://github.com/genomic-medicine-sweden/autoseq/pull/153) Refactored test configs to include a `test_base.config` for common test parameters and a separate config with specific inputs for each analysis type.
 - [ #139 ](https://github.com/genomic-medicine-sweden/autoseq/pull/139) Aligned the `CALL_SOMATIC_SNVS` subworkflow with the coding conventions.
 
 ### `Fixed`
