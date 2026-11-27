@@ -193,12 +193,14 @@
                     "vt/decompose": {
                         "branch": "master",
                         "git_sha": "daeecdc9319bae12590a92f403f1b6bd5573c3b9",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/vt/decompose/vt-decompose.diff"
                     },
                     "vt/normalize": {
                         "branch": "master",
                         "git_sha": "daeecdc9319bae12590a92f403f1b6bd5573c3b9",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/vt/normalize/vt-normalize.diff"
                     }
                 }
             },
