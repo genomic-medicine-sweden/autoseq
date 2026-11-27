@@ -37,8 +37,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     val_curation_ann                    // string:  [mandatory] path to CNV curation annotation CSV
     val_dbsnp_vcf                       // string:  [optional]  path to dbSNP VCF
     val_dbsnp_vcf_tbi                   // string:  [optional]  path to dbSNP VCF index
-    val_ensembl_vep_cache               // string:  [mandatory] path to Ensembl VEP cache directory
-    val_ensembl_vep_cache_tar           // string:  [optional]  path to Ensembl VEP cache tarball
+    val_ensembl_vep_cache               // string:  [mandatory] path to Ensembl VEP cache directory or .tar.gz archive
     val_ensemblvep_version              // string:  [mandatory] Ensembl VEP cache version
     val_genome                          // string:  [mandatory] genome assembly (e.g. "GRCh37")
     val_genome_dict                     // string:  [mandatory] path to reference genome sequence dictionary
@@ -47,14 +46,12 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     val_germline_resource               // string:  [mandatory] path to germline resource VCF
     val_germline_resource_tbi           // string:  [mandatory] path to germline resource VCF index
     val_gridss_config                   // string:  [optional] path to GRIDSS configuration file
-    val_gridss_index                    // string:  [mandatory] path to GRIDSS genome index directory
-    val_gridss_index_tar                // string:  [optional]  path to GRIDSS genome index tarball
+    val_gridss_index                    // string:  [mandatory] path to GRIDSS genome index directory or .tar.gz archive
     val_gridss_known_fusions            // string:  [mandatory] path to GRIDSS known fusions
     val_gridss_pon_breakends            // string:  [mandatory] path to GRIDSS PON breakends
     val_gridss_pon_breakpoints          // string:  [mandatory] path to GRIDSS PON breakpoints
     val_gridss_repeatmasker_annotations // string:  [mandatory] path to GRIDSS RepeatMasker annotations
-    val_hmf_ensembl_data                // string:  [mandatory] path to HMF Ensembl data resources directory
-    val_hmf_ensembl_data_tar            // string:  [optional]  path to HMF Ensembl data resources tarball
+    val_hmf_ensembl_data                // string:  [mandatory] path to HMF Ensembl data resources directory or .tar.gz archive
     val_interval_list                   // string:  [mandatory] path to target regions interval list
     val_jumble_ref                      // string:  [mandatory] path to Jumble reference RDS
     val_min_baseq                       // integer: [mandatory] minimum base quality
@@ -79,11 +76,8 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
                             val_genome_fasta,
                             val_bwamem2_index,
                             val_ensembl_vep_cache,
-                            val_ensembl_vep_cache_tar,
                             val_gridss_index,
-                            val_gridss_index_tar,
-                            val_hmf_ensembl_data,
-                            val_hmf_ensembl_data_tar
+                            val_hmf_ensembl_data
                         )
 
 
@@ -242,7 +236,6 @@ workflow {
         params.dbsnp_vcf,
         params.dbsnp_vcf_tbi,
         params.ensembl_vep_cache,
-        params.ensembl_vep_cache_tar,
         params.ensemblvep_version,
         params.genome,
         params.genome_dict,
@@ -252,13 +245,11 @@ workflow {
         params.germline_resource_tbi,
         params.gridss_config,
         params.gridss_index,
-        params.gridss_index_tar,
         params.gridss_known_fusions,
         params.gridss_pon_breakends,
         params.gridss_pon_breakpoints,
         params.gridss_repeatmasker_annotations,
         params.hmf_ensembl_data,
-        params.hmf_ensembl_data_tar,
         params.interval_list,
         params.jumble_ref,
         params.min_baseq,

@@ -21,11 +21,8 @@ nextflow_workflow {
                 input[0] = params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta'
                 input[1] = params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta.fai'
                 input[2] = params.pipelines_testdata_base_path + 'reference/GRCh37/vep/homo_sapiens/115_GRCh37'
-                input[3] = null
-                input[4] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index/'
-                input[5] = null
-                input[6] = params.pipelines_testdata_base_path + 'dummy/path/to/ensembl/data/directory'
-                input[7] = null
+                input[3] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index/'
+                input[4] = params.pipelines_testdata_base_path + 'dummy/path/to/ensembl/data/directory'
                 """
             }
         }
@@ -50,12 +47,9 @@ nextflow_workflow {
                 // builds the BWA-MEM2 index and untars the VEP, GRIDSS and HMF archives.
                 input[0] = params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta'
                 input[1] = null
-                input[2] = null
-                input[3] = params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz'
-                input[4] = null
-                input[5] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz'
-                input[6] = null
-                input[7] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
+                input[2] = params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz'
+                input[3] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz'
+                input[4] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
                 """
             }
         }
@@ -80,12 +74,9 @@ nextflow_workflow {
                 """
                 input[0] = params.pipelines_testdata_base_path + 'reference/GRCh37/genome/human_g1k_v37_decoy.fasta'
                 input[1] = null
-                input[2] = null
-                input[3] = params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz'
-                input[4] = null
-                input[5] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz'
-                input[6] = null
-                input[7] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
+                input[2] = params.pipelines_testdata_base_path + 'reference/GRCh37/vep.tar.gz'
+                input[3] = params.pipelines_testdata_base_path + 'reference/GRCh37/gridss_index.tar.gz'
+                input[4] = params.pipelines_testdata_base_path + 'reference/GRCh37/ensembl_data.tar.gz'
                 """
             }
         }

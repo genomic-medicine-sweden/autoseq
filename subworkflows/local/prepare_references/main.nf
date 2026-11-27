@@ -1,19 +1,17 @@
 include { BWAMEM2_INDEX                   } from '../../../modules/nf-core/bwamem2/index/main'
-include { UNTAR as UNTAR_VEP_CACHE        } from '../../../modules/nf-core/untar/main'
 include { UNTAR as UNTAR_GRIDSS_INDEX     } from '../../../modules/nf-core/untar/main'
 include { UNTAR as UNTAR_HMF_ENSEMBL_DATA } from '../../../modules/nf-core/untar/main'
+include { UNTAR as UNTAR_VEP_CACHE        } from '../../../modules/nf-core/untar/main'
+include { channelFromPathWithMeta         } from '../utils_nfcore_autoseq_pipeline'
 
 workflow PREPARE_REFERENCES {
 
     take:
-    val_genome_fasta          // string: [mandatory] path to reference genome FASTA
-    val_bwamem2_index         // string: [optional]  path to pre-built BWA-MEM2 index directory
-    val_ensembl_vep_cache     // string: [optional]  path to pre-extracted Ensembl VEP cache directory
-    val_ensembl_vep_cache_tar // string: [optional]  path to compressed Ensembl VEP cache archive
-    val_gridss_index          // string: [optional]  path to pre-built GRIDSS index directory
-    val_gridss_index_tar      // string: [optional]  path to compressed GRIDSS index archive
-    val_hmf_ensembl_data      // string: [optional]  path to pre-extracted HMF Ensembl data directory
-    val_hmf_ensembl_data_tar  // string: [optional]  path to compressed HMF Ensembl data archive
+    val_genome_fasta      // string: [mandatory] path to reference genome FASTA
+    val_bwamem2_index     // string: [optional]  path to pre-built BWA-MEM2 index directory
+    val_ensembl_vep_cache // string: [mandatory] path to Ensembl VEP cache directory or .tar.gz archive
+    val_gridss_index      // string: [mandatory] path to GRIDSS index directory or .tar.gz archive
+    val_hmf_ensembl_data  // string: [mandatory] path to HMF Ensembl data directory or .tar.gz archive
 
     main:
     def ch_bwamem2_index    = channel.empty()
@@ -34,37 +32,34 @@ workflow PREPARE_REFERENCES {
         ch_bwamem2_index = channel.fromPath(val_bwamem2_index).map { it -> [[id: it.simpleName], it] }.collect()
     }
 
-    // Ensembl VEP Cache download and untar
-
-    if (!val_ensembl_vep_cache) {
-        ch_vep_cache_tar = channel.fromPath(val_ensembl_vep_cache_tar).map { it -> [[id: it.simpleName], it] }.collect()
+    // Ensembl VEP cache: untar when given a .tar.gz archive, otherwise use the directory as is
+    if (val_ensembl_vep_cache.endsWith('.tar.gz')) {
+        ch_vep_cache_tar = channelFromPathWithMeta(val_ensembl_vep_cache)
         UNTAR_VEP_CACHE ( ch_vep_cache_tar )
 
-        ch_vep_cache = UNTAR_VEP_CACHE.out.untar
+        ch_vep_cache = UNTAR_VEP_CACHE.out.untar.collect()
     } else {
-        ch_vep_cache = channel.fromPath(val_ensembl_vep_cache).map { it -> [[id: it.simpleName], it] }.collect()
+        ch_vep_cache = channelFromPathWithMeta(val_ensembl_vep_cache)
     }
 
-
-    // GRIDSS index download and untar
-    if (!val_gridss_index) {
-        ch_gridss_index_tar = channel.fromPath(val_gridss_index_tar).map { it -> [[id: it.simpleName], it] }.collect()
+    // GRIDSS index: untar when given a .tar.gz archive, otherwise use the directory as is
+    if (val_gridss_index.endsWith('.tar.gz')) {
+        ch_gridss_index_tar = channelFromPathWithMeta(val_gridss_index)
         UNTAR_GRIDSS_INDEX ( ch_gridss_index_tar )
 
-        ch_gridss_index = UNTAR_GRIDSS_INDEX.out.untar
+        ch_gridss_index = UNTAR_GRIDSS_INDEX.out.untar.collect()
     } else {
-        ch_gridss_index = channel.fromPath(val_gridss_index).map { it -> [[id: it.simpleName], it] }.collect()
+        ch_gridss_index = channelFromPathWithMeta(val_gridss_index)
     }
 
-
-    // HMF Ensembl Data download and untar
-    if (!val_hmf_ensembl_data) {
-        ch_hmf_ensembl_data_tar = channel.fromPath(val_hmf_ensembl_data_tar).map { it -> [[id: it.simpleName], it] }.collect()
+    // HMF Ensembl data: untar when given a .tar.gz archive, otherwise use the directory as is
+    if (val_hmf_ensembl_data.endsWith('.tar.gz')) {
+        ch_hmf_ensembl_data_tar = channelFromPathWithMeta(val_hmf_ensembl_data)
         UNTAR_HMF_ENSEMBL_DATA ( ch_hmf_ensembl_data_tar )
 
-        ch_hmf_ensembl_data = UNTAR_HMF_ENSEMBL_DATA.out.untar
+        ch_hmf_ensembl_data = UNTAR_HMF_ENSEMBL_DATA.out.untar.collect()
     } else {
-        ch_hmf_ensembl_data = channel.fromPath(val_hmf_ensembl_data).map { it -> [[id: it.simpleName], it] }.collect()
+        ch_hmf_ensembl_data = channelFromPathWithMeta(val_hmf_ensembl_data)
     }
 
 
