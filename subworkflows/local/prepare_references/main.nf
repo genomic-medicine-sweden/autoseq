@@ -1,7 +1,9 @@
-include { BWAMEM2_INDEX                   } from '../../../modules/nf-core/bwamem2/index/main'
-include { UNTAR as UNTAR_VEP_CACHE        } from '../../../modules/nf-core/untar/main'
-include { UNTAR as UNTAR_GRIDSS_INDEX     } from '../../../modules/nf-core/untar/main'
-include { UNTAR as UNTAR_HMF_ENSEMBL_DATA } from '../../../modules/nf-core/untar/main'
+include { BWAMEM2_INDEX                     } from '../../../modules/nf-core/bwamem2/index/main'
+include { UNTAR as UNTAR_GRIDSS_INDEX       } from '../../../modules/nf-core/untar/main'
+include { UNTAR as UNTAR_HMF_ENSEMBL_DATA   } from '../../../modules/nf-core/untar/main'
+include { UNTAR as UNTAR_MSISENSOR2_MODELS  } from '../../../modules/nf-core/untar/main'
+include { UNTAR as UNTAR_VEP_CACHE          } from '../../../modules/nf-core/untar/main'
+include { channelFromPathWithMeta           } from '../utils_nfcore_autoseq_pipeline'
 
 workflow PREPARE_REFERENCES {
 
@@ -14,6 +16,7 @@ workflow PREPARE_REFERENCES {
     val_gridss_index_tar      // string: [optional]  path to compressed GRIDSS index archive
     val_hmf_ensembl_data      // string: [optional]  path to pre-extracted HMF Ensembl data directory
     val_hmf_ensembl_data_tar  // string: [optional]  path to compressed HMF Ensembl data archive
+    val_msisensor2_models     // string: [mandatory] path to MSIsensor2 models directory or .tar.gz archive
 
     main:
     def ch_bwamem2_index    = channel.empty()
@@ -21,6 +24,7 @@ workflow PREPARE_REFERENCES {
     def ch_vep_cache        = channel.empty()
     def ch_gridss_index     = channel.empty()
     def ch_hmf_ensembl_data = channel.empty()
+    def ch_msisensor2_models = channel.empty()
 
     ch_genome_fasta = channel.fromPath(val_genome_fasta).map { it -> [[id: it.simpleName], it] }.collect()
 
@@ -67,11 +71,22 @@ workflow PREPARE_REFERENCES {
         ch_hmf_ensembl_data = channel.fromPath(val_hmf_ensembl_data).map { it -> [[id: it.simpleName], it] }.collect()
     }
 
+    // MSIsensor2 models: untar when given a .tar.gz archive, otherwise use the directory as is
+    if (val_msisensor2_models.endsWith('.tar.gz')) {
+        ch_msisensor2_models_tar = channelFromPathWithMeta(val_msisensor2_models)
+        UNTAR_MSISENSOR2_MODELS ( ch_msisensor2_models_tar )
+
+        ch_msisensor2_models = UNTAR_MSISENSOR2_MODELS.out.untar.collect()
+    } else {
+        ch_msisensor2_models = channelFromPathWithMeta(val_msisensor2_models)
+    }
+
 
     emit:
-    genome_fasta     = ch_genome_fasta     // channel: [ val(meta), path(fasta) ]
-    bwamem2_index    = ch_bwamem2_index    // channel: [ val(meta), path(index) ]
-    vep_cache        = ch_vep_cache        // channel: [ val(meta), path(dir) ]
-    gridss_index     = ch_gridss_index     // channel: [ val(meta), path(dir) ]
-    hmf_ensembl_data = ch_hmf_ensembl_data // channel: [ val(meta), path(dir) ]
+    genome_fasta      = ch_genome_fasta      // channel: [ val(meta), path(fasta) ]
+    bwamem2_index     = ch_bwamem2_index     // channel: [ val(meta), path(index) ]
+    vep_cache         = ch_vep_cache         // channel: [ val(meta), path(dir) ]
+    gridss_index      = ch_gridss_index      // channel: [ val(meta), path(dir) ]
+    hmf_ensembl_data  = ch_hmf_ensembl_data  // channel: [ val(meta), path(dir) ]
+    msisensor2_models = ch_msisensor2_models // channel: [ val(meta), path(dir) ]
 }

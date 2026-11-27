@@ -58,6 +58,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     val_interval_list                   // string:  [mandatory] path to target regions interval list
     val_jumble_ref                      // string:  [mandatory] path to Jumble reference RDS
     val_min_baseq                       // integer: [mandatory] minimum base quality
+    val_msisensor2_models               // string:  [mandatory] path to MSIsensor2 models directory or .tar.gz archive
     val_multiqc_config                  // string:  [optional]  path to MultiQC config
     val_multiqc_logo                    // string:  [optional]  path to MultiQC logo
     val_multiqc_methods_description     // string:  [optional]  path to MultiQC methods description
@@ -83,7 +84,8 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
                             val_gridss_index,
                             val_gridss_index_tar,
                             val_hmf_ensembl_data,
-                            val_hmf_ensembl_data_tar
+                            val_hmf_ensembl_data_tar,
+                            val_msisensor2_models
                         )
 
 
@@ -95,6 +97,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     ch_ensembl_vep_cache       = ch_references.vep_cache
     ch_hmf_ensembl_data        = ch_references.hmf_ensembl_data
     ch_gridss_index            = ch_references.gridss_index
+    ch_msisensor2_models       = ch_references.msisensor2_models
 
     // channelFromPathWithMeta() builds a [[id:simpleName], file] channel from a path,
     // or channel.empty() when the path is null
@@ -146,6 +149,7 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
         ch_hmf_ensembl_data,
         ch_interval_list,
         ch_jumble_ref,
+        ch_msisensor2_models,
         ch_sage_highconf_regions,
         ch_sage_known_hotspots_somatic,
         ch_sage_pon,
@@ -190,6 +194,9 @@ workflow GENOMICMEDICINESWEDEN_AUTOSEQ {
     hetsnps_vcf                    = AUTOSEQ.out.hetsnps_vcf                    // channel: [ val(meta), path(vcf) ]
     hs_metrics                     = AUTOSEQ.out.hs_metrics                     // channel: [ val(meta), path(metrics) ]
     jumble_cns                     = AUTOSEQ.out.jumble_cns                     // channel: [ val(meta), path(cns) ]
+    msi_distribution               = AUTOSEQ.out.msi_distribution               // channel: [ val(meta), path(dis) ]
+    msi_score                      = AUTOSEQ.out.msi_score                      // channel: [ val(meta), path(msi) ]
+    msi_somatic                    = AUTOSEQ.out.msi_somatic                    // channel: [ val(meta), path(somatic) ]
     multiple_metrics               = AUTOSEQ.out.multiple_metrics               // channel: [ val(meta), path(metrics) ]
     multiqc_report                 = AUTOSEQ.out.multiqc_report                 // channel: /path/to/multiqc_report.html
     mutect2_stats                  = AUTOSEQ.out.mutect2_stats                  // channel: [ val(meta), path(stats) ]
@@ -262,6 +269,7 @@ workflow {
         params.interval_list,
         params.jumble_ref,
         params.min_baseq,
+        params.msisensor2_models,
         params.multiqc_config,
         params.multiqc_logo,
         params.multiqc_methods_description,
@@ -309,6 +317,12 @@ workflow {
     def ch_dpyd = channel.empty().mix(
         GENOMICMEDICINESWEDEN_AUTOSEQ.out.dpyd_csv,
         GENOMICMEDICINESWEDEN_AUTOSEQ.out.dpyd_json
+    )
+
+    def ch_msi = channel.empty().mix(
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.msi_distribution,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.msi_score,
+        GENOMICMEDICINESWEDEN_AUTOSEQ.out.msi_somatic
     )
 
     def ch_purecn = channel.empty().mix(
@@ -359,6 +373,7 @@ workflow {
     cnv              = ch_cnv                                                // channel: [ val(meta), path(file) ]
     dpyd             = ch_dpyd                                               // channel: [ val(meta), path(file) ]
     frankenplot      = GENOMICMEDICINESWEDEN_AUTOSEQ.out.frankenplot_html    // channel: [ val(meta), path(html) ]
+    msi              = ch_msi                                                // channel: [ val(meta), path(file) ]
     multiqc_report   = GENOMICMEDICINESWEDEN_AUTOSEQ.out.multiqc_report      // channel: /path/to/multiqc_report.html
     purecn           = ch_purecn                                             // channel: [ val(meta), path(file) ]
     qc_contamination = GENOMICMEDICINESWEDEN_AUTOSEQ.out.contamination_table // channel: [ val(meta), path(table) ]
@@ -383,6 +398,9 @@ output {
     }
     frankenplot {
         path { "frankenplot" }
+    }
+    msi {
+        path { "msi" }
     }
     multiqc_report {
         path { "multiqc" }

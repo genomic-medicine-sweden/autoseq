@@ -45,6 +45,7 @@ Reference genome related files and options required for the workflow.
 | `targets_bed` | Path to the BED file containing target regions. | `string` |  |  |  |
 | `interval_list` | Path to the slopped interval list file. | `string` |  |  |  |
 | `jumble_ref` | Path to the reference RDS (R data object) for Jumble. | `string` |  |  |  |
+| `msisensor2_models` | Path to the MSIsensor2 models directory or a `.tar.gz` archive of it. <details><summary>Help</summary><small>The models must match the contig naming of the reference FASTA (e.g. `models_b37_HumanG1Kv37` for `human_g1k_v37_decoy.fasta`). If the path ends with `.tar.gz`, the archive is extracted before use.</small></details>| `string` |  | True |  |
 
 ## Other options
 
