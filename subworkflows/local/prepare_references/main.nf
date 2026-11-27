@@ -20,7 +20,7 @@ workflow PREPARE_REFERENCES {
     def ch_gridss_index     = channel.empty()
     def ch_hmf_ensembl_data = channel.empty()
 
-    ch_genome_fasta = channel.fromPath(val_genome_fasta).map { it -> [[id: it.simpleName], it] }.collect()
+    ch_genome_fasta = channelFromPathWithMeta(val_genome_fasta)
 
     // Genome Indexing
 
@@ -29,7 +29,7 @@ workflow PREPARE_REFERENCES {
 
         ch_bwamem2_index = BWAMEM2_INDEX.out.index
     } else {
-        ch_bwamem2_index = channel.fromPath(val_bwamem2_index).map { it -> [[id: it.simpleName], it] }.collect()
+        ch_bwamem2_index = channelFromPathWithMeta(val_bwamem2_index)
     }
 
     // Ensembl VEP cache: untar when given a .tar.gz archive, otherwise use the directory as is
