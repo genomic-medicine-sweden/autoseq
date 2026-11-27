@@ -96,6 +96,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #150 ](https://github.com/genomic-medicine-sweden/autoseq/pull/150) Refactored samplesheet processing logic to remove code duplication.
 - [ #152 ](https://github.com/genomic-medicine-sweden/autoseq/pull/152) Updated the nf-core `gridss/assemble`, `gridss/call`, `gridss/extractoverlappingfragments` and `gridss/preprocess` modules, which now strip JVM `Picked up ...` lines from the version capture.
 - [ #153 ](https://github.com/genomic-medicine-sweden/autoseq/pull/153) Refactored test configs to include a `test_base.config` for common test parameters and a separate config with specific inputs for each analysis type.
+- [ #139 ](https://github.com/genomic-medicine-sweden/autoseq/pull/139) Aligned the `CALL_SOMATIC_SNVS` subworkflow with the coding conventions.
 
 ### `Fixed`
 
