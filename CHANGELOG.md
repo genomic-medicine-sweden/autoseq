@@ -95,7 +95,7 @@ Initial release of genomic-medicine-sweden/autoseq, created with the [nf-core](h
 - [ #152 ](https://github.com/genomic-medicine-sweden/autoseq/pull/152) Updated the nf-core `gridss/assemble`, `gridss/call`, `gridss/extractoverlappingfragments` and `gridss/preprocess` modules, which now strip JVM `Picked up ...` lines from the version capture.
 - [ #153 ](https://github.com/genomic-medicine-sweden/autoseq/pull/153) Refactored test configs to include a `test_base.config` for common test parameters and a separate config with specific inputs for each analysis type.
 - [ #139 ](https://github.com/genomic-medicine-sweden/autoseq/pull/139) Aligned the `CALL_SOMATIC_SNVS` subworkflow with the coding conventions.
-- [ #155 ](https://github.com/genomic-medicine-sweden/autoseq/pull/155) `--ensembl_vep_cache`, `--gridss_index` and `--hmf_ensembl_data` now accept either a directory or a `.tar.gz` archive, which `PREPARE_REFERENCES` untars when needed.
+- [ #155 ](https://github.com/genomic-medicine-sweden/autoseq/pull/155) `--ensembl_vep_cache`, `--gridss_index` and `--hmf_ensembl_data` now accept either a directory or a `.tar.gz` archive, which `PREPARE_REFERENCES` untars when needed. Replaced `channel.fromPath` with `channelFromPathWithMeta` for these reference channels.
 
 ### `Fixed`
 
