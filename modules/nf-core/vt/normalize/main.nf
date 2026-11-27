@@ -5,8 +5,8 @@ process VT_NORMALIZE {
     // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/vt:2015.11.10--h5ef6573_4':
-        'quay.io/biocontainers/vt:2015.11.10--h5ef6573_4' }"
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/86/86ff597a007e321dd32c284c4955b8a23645b7959a99ffe63ce09fe5b7c73b82/data':
+        'community.wave.seqera.io/library/tabix_vt:156210dffeda133d' }"
 
     input:
     tuple val(meta) , path(vcf), path(tbi), path(intervals)
